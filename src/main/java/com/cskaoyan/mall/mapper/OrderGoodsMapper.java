@@ -19,7 +19,7 @@ public interface OrderGoodsMapper {
     int updateByPrimaryKey(OrderGoods record);
 
     /**
-     * 根据orderId查询orderGoods
+     * jszza:根据orderId查询orderGoods
      * @param orderId
      * @return
      */

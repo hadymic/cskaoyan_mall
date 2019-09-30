@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Order;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
+import com.cskaoyan.mall.vo.StatOrderVo;
+
 
 public interface OrderMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,7 +16,7 @@ public interface OrderMapper {
     int insertSelective(Order record);
 
     /**
-     * 查询订单详细
+     * jszza:查询订单详细
      * @param id
      * @return
      */
@@ -26,7 +28,7 @@ public interface OrderMapper {
 
 
     /**
-     * 分页查询order
+     * jszza:分页查询order
      * @param userId
      * @param orderSn
      * @param orderStatusArray
@@ -34,4 +36,5 @@ public interface OrderMapper {
      */
     List<Order> queryOrderList(@Param("userId") Integer userId, @Param("orderSn") String orderSn, @Param("orderStatusArray") Integer[] orderStatusArray);
 
+    List<StatOrderVo> selectOrderByDay();
 }

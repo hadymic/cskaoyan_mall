@@ -29,6 +29,11 @@
     from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.StatUserVo">
+    select birthday as `day`,count(birthday) as users
+    from cskaoyan_mall_user
+    group by birthday;
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
@@ -225,5 +230,26 @@
     select avatar, nickname
     from cskaoyan_mall_user
     where id = #{id} and deleted = 0
+  </select>
+
+  <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
+    select
+    id,
+    username,
+    password,
+    gender,
+    birthday,
+    last_login_time as  lastLoginTime,
+    last_login_ip as lastLoginIp,
+    user_level asuserLevel,
+    nickname,
+    mobile,
+    avatar,
+    weixin_openid as weixinOpenid,
+    status,
+    add_time as addTime,
+    update_time as updateTime,
+    deleted
+    from cskaoyan_mall_user where (username like #{username}) and (mobile like #{mobile})
   </select>
 </mapper>

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface KeywordMapper {
     /**
-     * 删除keyword
+     * jszza:删除keyword
      * @param id
      * @return
      */
@@ -22,7 +22,7 @@ public interface KeywordMapper {
     int updateByPrimaryKeySelective(Keyword record);
 
     /**
-     * 更新keyword
+     * jszza:更新keyword
      * @param record
      * @return
      */
@@ -30,7 +30,7 @@ public interface KeywordMapper {
 
 
     /**
-     * 查询关键字
+     * jszza:查询关键字
      * @param keyword
      * @param url
      * @return
@@ -38,7 +38,7 @@ public interface KeywordMapper {
     List<Keyword> queryKeywordList(@Param("keyword") String keyword, @Param("url")String url);
 
     /**
-     * 创建keyword
+     * jszza:创建keyword
      * @param record
      * @return
      */

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IssueMapper {
     /**
-     * 删除issue
+     * jszza:删除issue
      * @param id
      * @return
      */
@@ -21,7 +21,7 @@ public interface IssueMapper {
 
     int updateByPrimaryKeySelective(Issue record);
     /**
-     * 更新issue
+     * jszza:更新issue
      * @param record
      * @return
      */
@@ -29,14 +29,14 @@ public interface IssueMapper {
 
 
     /**
-     * 分页查询通用问题
+     * jszza:分页查询通用问题
      * @param question
      * @return
      */
     List<Issue> queryIssueList(@Param("question") String question);
 
     /**
-     * 创建issue
+     * jszza:创建issue
      * @param issue
      * @return
      */
