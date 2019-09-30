@@ -1,6 +1,11 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.User;
+import com.cskaoyan.mall.vo.StatUserVo;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +19,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<StatUserVo> selectUsersByDay();
 }

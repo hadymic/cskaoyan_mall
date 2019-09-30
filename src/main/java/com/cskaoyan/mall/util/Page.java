@@ -11,6 +11,13 @@ public class Page {
     private String sort;
     private String order;
 
+    public Page(int page, int limit, String sort, String order) {
+        this.page = page;
+        this.limit = limit;
+        this.sort = sort;
+        this.order = order;
+    }
+
     public int getPage() {
         return page;
     }
