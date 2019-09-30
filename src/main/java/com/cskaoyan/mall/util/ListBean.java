@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author hadymic
  */
-public class ListBean<T> {
+public class ListBean<T> implements List {
     private List<T> items;
     private int total;
 
