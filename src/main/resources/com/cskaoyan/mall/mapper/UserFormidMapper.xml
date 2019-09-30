@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.UserFormidMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.UserFormid">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="formId" jdbcType="VARCHAR" property="formid" />
+    <result column="isprepay" jdbcType="BIT" property="isprepay" />
+    <result column="useAmount" jdbcType="INTEGER" property="useamount" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, formId, isprepay, useAmount, expire_time, openId, add_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_user_formid
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_user_formid
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cskaoyan.mall.bean.UserFormid">
+    insert into cskaoyan_mall_user_formid (id, formId, isprepay, 
+      useAmount, expire_time, openId, 
+      add_time, update_time, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{formid,jdbcType=VARCHAR}, #{isprepay,jdbcType=BIT}, 
+      #{useamount,jdbcType=INTEGER}, #{expireTime,jdbcType=TIMESTAMP}, #{openid,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.UserFormid">
+    insert into cskaoyan_mall_user_formid
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="formid != null">
+        formId,
+      </if>
+      <if test="isprepay != null">
+        isprepay,
+      </if>
+      <if test="useamount != null">
+        useAmount,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+      <if test="openid != null">
+        openId,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="formid != null">
+        #{formid,jdbcType=VARCHAR},
+      </if>
+      <if test="isprepay != null">
+        #{isprepay,jdbcType=BIT},
+      </if>
+      <if test="useamount != null">
+        #{useamount,jdbcType=INTEGER},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.UserFormid">
+    update cskaoyan_mall_user_formid
+    <set>
+      <if test="formid != null">
+        formId = #{formid,jdbcType=VARCHAR},
+      </if>
+      <if test="isprepay != null">
+        isprepay = #{isprepay,jdbcType=BIT},
+      </if>
+      <if test="useamount != null">
+        useAmount = #{useamount,jdbcType=INTEGER},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="openid != null">
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.UserFormid">
+    update cskaoyan_mall_user_formid
+    set formId = #{formid,jdbcType=VARCHAR},
+      isprepay = #{isprepay,jdbcType=BIT},
+      useAmount = #{useamount,jdbcType=INTEGER},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      openId = #{openid,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
