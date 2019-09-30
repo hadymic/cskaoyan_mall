@@ -14,5 +14,5 @@ public interface OrderService {
      * @param page
      * @return
      */
-    BaseRespVo<ListBean<Order>> queryOrderList(Page page);
+    ListBean<Order> queryOrderList(Page page);
 }
