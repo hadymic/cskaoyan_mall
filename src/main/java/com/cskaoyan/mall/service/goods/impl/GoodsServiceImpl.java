@@ -5,7 +5,7 @@ import com.cskaoyan.mall.mapper.GoodsMapper;
 import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.github.pagehelper.PageHelper;
+import com.cskaoyan.mall.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,8 @@ public class GoodsServiceImpl implements GoodsService {
     GoodsMapper goodsMapper;
     @Override
     public ListBean queryGoods(Page page) {
-        com.github.pagehelper.Page<Object> startPage = PageHelper.startPage(page.getPage(), page.getLimit());
-        List<Goods> goodsList = goodsMapper.selectGoodsList(page);
-        int total = (int) startPage.getTotal();
-        ListBean listBean = new ListBean();
-        listBean.setItems(goodsList);
-        listBean.setTotal(total);
+        List<Goods> goodsList = goodsMapper.selectGoodsList();
+        ListBean<Goods> listBean = PageUtils.page(page, goodsList);
         return listBean;
     }
 }

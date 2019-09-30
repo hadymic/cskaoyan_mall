@@ -20,5 +20,7 @@ public interface GoodsMapper {
 
     int updateByPrimaryKey(Goods record);
     //显示商品分页
-    List<Goods> selectGoodsList(Page page);
+    List<Goods> selectGoodsList();
+   //根据goodsSn 或者 name 查找商品
+    List<Goods> selectGoodsByGoodsSnOrName(Goods goods);
 }
