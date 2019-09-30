@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.bean;
 
+import java.util.List;
+
 public class Region {
     private Integer id;
 
@@ -10,6 +12,16 @@ public class Region {
     private Byte type;
 
     private Integer code;
+
+    private List<Region> children;
+
+    public List<Region> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Region> children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;
