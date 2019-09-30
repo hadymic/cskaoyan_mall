@@ -1,8 +1,10 @@
 package com.cskaoyan.mall.controller;
 
+import com.cskaoyan.mall.service.AuthService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.LoginVo;
 import com.cskaoyan.mall.vo.UserInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @RestController
 public class AuthController {
+    @Autowired
+    private AuthService authService;
 
     /**
      * 后台登录
