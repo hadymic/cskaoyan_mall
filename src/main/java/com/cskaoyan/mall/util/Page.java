@@ -10,6 +10,26 @@ public class Page {
     private int limit;
     private String sort;
     private String order;
+    private String username;
+    private String id;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Page setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Page setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public int getPage() {
         return page;

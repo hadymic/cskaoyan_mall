@@ -4,6 +4,6 @@ import com.cskaoyan.mall.util.Page;
 
 import java.util.List;
 
-public interface AdminManageServer {
+public interface UserManageServer {
     public List dispaly(Page page);
 }
