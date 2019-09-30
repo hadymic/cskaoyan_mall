@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class ListBean<T> {
     private List<T> items;
-    private int total;
+    private long total;
 
-    public ListBean(List<T> items, int total) {
+    public ListBean(List<T> items, long total) {
         this.items = items;
         this.total = total;
     }
@@ -25,12 +25,13 @@ public class ListBean<T> {
         return this;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public ListBean<T> setTotal(int total) {
+
+
+    public void setTotal(long total) {
         this.total = total;
-        return this;
     }
 }

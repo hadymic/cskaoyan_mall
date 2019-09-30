@@ -18,6 +18,6 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    List<User> updataByNameAndId(@Param("username") String username,
-                                 @Param("id") String id);
+    List<User> selectByNameAndMobile(@Param("username") String username,
+                                 @Param("mobile") String mobile);
 }

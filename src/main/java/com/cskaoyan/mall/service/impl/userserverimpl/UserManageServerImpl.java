@@ -11,26 +11,23 @@ import org.apache.ibatis.session.SqlSession;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class UserManageServerImpl implements UserManageServer {
-    private SqlSession sqlSession;
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    SqlSessionFactory sqlSessionFactory;
     @Override
     public ListBean dispaly(Page utipage) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        sqlSession = sqlSessionFactory.openSession();
-        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         String username = utipage.getUsername();
-        String id = utipage.getId();
+        String mobile = utipage.getMobile();
         if (username==null)username="";
-        if (id==null)id="%%";
+        if (mobile==null)mobile="";
         username = "%"+username+"%";
-        List<User> users = mapper.updataByNameAndId(username, id);
+        mobile = "%"+mobile+"%";
+        List<User> users = userMapper.selectByNameAndMobile(username, mobile);
         PageInfo<User> pageInfo = new PageInfo<User>(users);
         int total =  (int)pageInfo.getTotal();
         ListBean listBean = new ListBean(users,total);
