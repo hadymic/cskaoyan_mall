@@ -23,7 +23,8 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public ListBean<Ad> queryAllAds(Page page) {
+        PageUtils.startPage(page);
         List<Ad> ads = adMapper.queryAllAds();
-        return PageUtils.page(page, ads);
+        return PageUtils.page(ads);
     }
 }

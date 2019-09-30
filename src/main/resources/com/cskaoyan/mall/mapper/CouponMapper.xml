@@ -24,7 +24,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, desc, tag, total, discount, min, limit, type, status, goods_type, goods_value, 
+    id, name, `desc`, tag, total, discount, min, `limit`, type, status, goods_type, goods_value,
     code, time_type, days, start_time, end_time, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -266,4 +266,9 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryAllCoupons" resultType="com.cskaoyan.mall.bean.Coupon">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_coupon
+  </select>
 </mapper>
