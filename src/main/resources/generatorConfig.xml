@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="testTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/cskaoyanmall?useSSL=false&amp;serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="123456">
+            <!--是否去除同名表-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!--&lt;!&ndash;
+            for oracle
+           &ndash;&gt;
+        <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:yycg"
+            userId="yycg"
+            password="yycg">
+        </jdbcConnection>-->
+
+        <!-- 默认false，
+            为false把JDBC DECIMAL 和 NUMERIC 类型解析为Integer，
+            为 true把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal -->
+        <!--<javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>-->
+
+        <!-- javaModelGenerator javaBean生成的配置信息
+             targetProject:生成PO类的位置
+             targetPackage：生成PO类的类名-->
+        <javaModelGenerator targetPackage="com.cskaoyan.mall.bean"
+                            targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否允许子包,是否让schema作为包的后缀
+                 即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值是否清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+
+        <!-- sqlMapGenerator Mapper映射文件的配置信息
+            targetProject:mapper映射文件生成的位置
+            targetPackage:生成mapper映射文件放在哪个包下-->
+        <sqlMapGenerator targetPackage="com.cskaoyan.mall.mapper"
+                         targetProject=".\src\main\resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--
+           javaClientGenerator 生成 Model对象(JavaBean)和 mapper XML配置文件 对应的Dao代码
+           targetProject:mapper接口生成的位置
+           targetPackage:生成mapper接口放在哪个包下
+
+           ANNOTATEDMAPPER
+           XMLMAPPER
+           MIXEDMAPPER
+        -->
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.cskaoyan.mall.mapper"
+                             targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator><!---->
+        <!-- 指定数据库表 -->
+
+        <!-- 指定所有数据库表 -->
+
+        <!--<table tableName="%"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableInsert="true"
+               enableDeleteByPrimaryKey="true"
+               enableSelectByPrimaryKey="true"
+               selectByExampleQueryId="false" ></table>-->
+
+        <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
+        <table  tableName="cskaoyan_mall_ad"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Ad"
+        > </table>
+        <table  tableName="cskaoyan_mall_address"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Address"
+        > </table>
+        <table  tableName="cskaoyan_mall_admin"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Admin"
+        > </table>
+        <table  tableName="cskaoyan_mall_brand"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Brand"
+        > </table>
+        <table  tableName="cskaoyan_mall_cart"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Cart"
+        > </table>
+        <table  tableName="cskaoyan_mall_category"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Category"
+        > </table>
+        <table  tableName="cskaoyan_mall_collect"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Collect"
+        > </table>
+        <table  tableName="cskaoyan_mall_comment"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Comment"
+        > </table>
+        <table  tableName="cskaoyan_mall_coupon"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Coupon"
+        > </table>
+        <table  tableName="cskaoyan_mall_coupon_user"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="CouponUser"
+        > </table>
+        <table  tableName="cskaoyan_mall_feedback"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Feedback"
+        > </table>
+        <table  tableName="cskaoyan_mall_footprint"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Footprint"
+        > </table>
+        <table  tableName="cskaoyan_mall_goods"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Goods"
+        > </table>
+        <table  tableName="cskaoyan_mall_goods_attribute"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="GoodsAttribute"
+        > </table>
+        <table  tableName="cskaoyan_mall_goods_product"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="GoodsProduct"
+        > </table>
+        <table  tableName="cskaoyan_mall_goods_specification"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="GoodsSpecification"
+        > </table>
+        <table  tableName="cskaoyan_mall_groupon"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Groupon"
+        > </table>
+        <table  tableName="cskaoyan_mall_groupon_rules"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="GrouponRules"
+        > </table>
+        <table  tableName="cskaoyan_mall_issue"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Issue"
+        > </table>
+        <table  tableName="cskaoyan_mall_keyword"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Keyword"
+        > </table>
+        <table  tableName="cskaoyan_mall_log"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Log"
+        > </table>
+        <table  tableName="cskaoyan_mall_order"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Order"
+        > </table>
+        <table  tableName="cskaoyan_mall_order_goods"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="OrderGoods"
+        > </table>
+        <table  tableName="cskaoyan_mall_permission"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Permission"
+        > </table>
+        <table  tableName="cskaoyan_mall_region"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Region"
+        > </table>
+        <table  tableName="cskaoyan_mall_role"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Role"
+        > </table>
+        <table  tableName="cskaoyan_mall_search_history"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="SearchHistory"
+        > </table>
+        <table  tableName="cskaoyan_mall_storage"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Storage"
+        > </table>
+        <table  tableName="cskaoyan_mall_system"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="System"
+        > </table>
+        <table  tableName="cskaoyan_mall_topic"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="Topic"
+        > </table>
+        <table  tableName="cskaoyan_mall_user"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="User"
+        > </table>
+        <table  tableName="cskaoyan_mall_user_formid"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                enableInsert="true"
+                enableDeleteByPrimaryKey="true"
+                enableSelectByPrimaryKey="true"
+                selectByExampleQueryId="false"
+                domainObjectName="UserFormid"
+        > </table>
+        <!--<table tableName="admin" domainObjectName="Admin"/>
+        <table tableName="comment" domainObjectName="Comment"/>-->
+
+
+        <!--<table schema="" tableName="orders"></table>
+        <table schema="" tableName="items"></table>
+        <table schema="" tableName="orderdetail"></table>-->
+        <!-- 有些表的字段需要指定java类型
+         <table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table> -->
+    </context>
+</generatorConfiguration>

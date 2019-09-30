@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.KeywordMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Keyword">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="is_default" jdbcType="BIT" property="isDefault" />
+    <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_keyword
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_keyword
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cskaoyan.mall.bean.Keyword">
+    insert into cskaoyan_mall_keyword (id, keyword, url, 
+      is_hot, is_default, sort_order, 
+      add_time, update_time, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{isHot,jdbcType=BIT}, #{isDefault,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Keyword">
+    insert into cskaoyan_mall_keyword
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isDefault != null">
+        is_default,
+      </if>
+      <if test="sortOrder != null">
+        sort_order,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="sortOrder != null">
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.Keyword">
+    update cskaoyan_mall_keyword
+    <set>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=BIT},
+      </if>
+      <if test="sortOrder != null">
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Keyword">
+    update cskaoyan_mall_keyword
+    set keyword = #{keyword,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      is_hot = #{isHot,jdbcType=BIT},
+      is_default = #{isDefault,jdbcType=BIT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

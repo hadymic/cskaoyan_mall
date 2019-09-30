@@ -1,0 +1,15 @@
+server:
+  port: 80
+
+# log
+logging:
+  level:
+    com:
+      cskaoyan:
+        mall:
+          mapper: debug
+
+# 数据源激活
+spring:
+  profiles:
+    active: db5
