@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.OrderGoods;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderGoodsMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,11 @@ public interface OrderGoodsMapper {
     int updateByPrimaryKeySelective(OrderGoods record);
 
     int updateByPrimaryKey(OrderGoods record);
+
+    /**
+     * 根据orderId查询orderGoods
+     * @param orderId
+     * @return
+     */
+    List<OrderGoods> queryOrderGoodsByOrderId(@Param("orderId") int orderId);
 }

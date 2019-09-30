@@ -16,22 +16,23 @@
     id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_keyword
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_keyword
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update cskaoyan_mall_keyword
+    set deleted = 1
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Keyword">
-    insert into cskaoyan_mall_keyword (id, keyword, url, 
-      is_hot, is_default, sort_order, 
+    insert into cskaoyan_mall_keyword (id, keyword, url,
+      is_hot, is_default, sort_order,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{isHot,jdbcType=BIT}, #{isDefault,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{keyword,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{isHot,jdbcType=BIT}, #{isDefault,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
@@ -138,4 +139,27 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryKeywordList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_keyword
+    <where>
+      deleted = 0
+      <if test="keyword != '%null%'">
+        and keyword like #{keyword}
+      </if>
+      <if test="url != '%null%'">
+        and url like #{url}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insertKeyWord">
+    <selectKey resultType="int" keyProperty="record.id" keyColumn="id" order="AFTER">
+      select last_insert_id() as id
+    </selectKey>
+    insert into cskaoyan_mall_keyword
+    (id, keyword, url, is_hot, is_default, add_time, update_time, deleted)
+    value
+    (null,#{record.keyword},#{record.url},#{record.isHot},#{record.isDefault},#{record.addTime},#{record.updateTime},0)
+  </insert>
 </mapper>
