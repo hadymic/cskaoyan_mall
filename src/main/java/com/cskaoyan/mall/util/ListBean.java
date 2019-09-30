@@ -20,13 +20,16 @@ public class ListBean<T> {
         return items;
     }
 
-    public void setItems(List<T> items) {
+    public ListBean<T> setItems(List<T> items) {
         this.items = items;
+        return this;
     }
 
     public long getTotal() {
         return total;
     }
+
+
 
     public void setTotal(long total) {
         this.total = total;
