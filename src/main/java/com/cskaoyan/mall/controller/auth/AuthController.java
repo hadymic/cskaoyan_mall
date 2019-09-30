@@ -1,7 +1,9 @@
-package com.cskaoyan.mall.controller;
+package com.cskaoyan.mall.controller.auth;
+
+
 
 import com.cskaoyan.mall.service.AuthService;
-import com.cskaoyan.mall.util.Page;
+
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.LoginVo;
 import com.cskaoyan.mall.vo.UserInfo;
@@ -52,15 +54,5 @@ public class AuthController {
         userInfo.setRoles(roles);
         return BaseRespVo.success(userInfo);
     }
-
-
-    /**
-     * 系统管理分页
-     *
-     */
-      @RequestMapping("admin/admin/list")
-       public  BaseRespVo showByPage(Page page){
-
-      }
 
 }
