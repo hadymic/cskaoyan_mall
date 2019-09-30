@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author hadymic
  */
-public class ListBean<T> implements List {
+public class ListBean<T> {
     private List<T> items;
     private int total;
 
@@ -20,15 +20,17 @@ public class ListBean<T> implements List {
         return items;
     }
 
-    public void setItems(List<T> items) {
+    public ListBean<T> setItems(List<T> items) {
         this.items = items;
+        return this;
     }
 
     public int getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public ListBean<T> setTotal(int total) {
         this.total = total;
+        return this;
     }
 }

@@ -32,8 +32,8 @@ public class UserManageServerImpl implements UserManageServer {
         username = "%"+username+"%";
         List<User> users = mapper.updataByNameAndId(username, id);
         PageInfo<User> pageInfo = new PageInfo<User>(users);
-        Long total =  pageInfo.getTotal();
-        //ListBean listBean = new ListBean(users,total);
-        return null;
+        int total =  (int)pageInfo.getTotal();
+        ListBean listBean = new ListBean(users,total);
+        return listBean;
     }
 }
