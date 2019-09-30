@@ -2,6 +2,8 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.CouponUser;
 
+import java.util.List;
+
 public interface CouponUserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface CouponUserMapper {
     int updateByPrimaryKeySelective(CouponUser record);
 
     int updateByPrimaryKey(CouponUser record);
+
+    List<CouponUser> queryCouponUsersByCouponId(int couponId);
 }
