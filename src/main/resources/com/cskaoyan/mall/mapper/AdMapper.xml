@@ -174,4 +174,9 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryAllAds" resultType="com.cskaoyan.mall.bean.Ad">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_ad
+  </select>
 </mapper>
