@@ -222,22 +222,23 @@
   </update>
   <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
     select
-    id,
-    username,
-    password,
-    gender,
-    birthday,
-    last_login_time as  lastLoginTime,
-    last_login_ip as lastLoginIp,
-    user_level asuserLevel,
-    nickname,
-    mobile,
-    avatar,
-    weixin_openid as weixinOpenid,
-    status,
-    add_time as addTime,
-    update_time as updateTime,
-    deleted
-    from cskaoyan_mall_user where (username like #{username}) and (mobile like #{mobile})
+          id,
+          username,
+          password,
+          gender,
+          birthday,
+          last_login_time as  lastLoginTime,
+          last_login_ip as lastLoginIp,
+          user_level asuserLevel,
+          nickname,
+          mobile,
+          avatar,
+          weixin_openid as weixinOpenid,
+          status,
+          add_time as addTime,
+          update_time as updateTime,
+          deleted
+          from cskaoyan_mall_user
+          where (username like #{username}) and (mobile like #{mobile})
   </select>
 </mapper>

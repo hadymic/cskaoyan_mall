@@ -16,11 +16,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, user_id, province_id, city_id, area_id, address, mobile, is_default, add_time, 
+    id, name, user_id, province_id, city_id, area_id, address, mobile, is_default, add_time,
     update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_address
     where id = #{id,jdbcType=INTEGER}
@@ -30,14 +30,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Address">
-    insert into cskaoyan_mall_address (id, name, user_id, 
-      province_id, city_id, area_id, 
-      address, mobile, is_default, 
+    insert into cskaoyan_mall_address (id, name, user_id,
+      province_id, city_id, area_id,
+      address, mobile, is_default,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
+      #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER},
+      #{address,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
@@ -174,4 +174,30 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByIdAndNameKey" resultType="com.cskaoyan.mall.bean.Address">
+    select
+            id,
+            `name`,
+            user_id as userId,
+            province_id as provinceId,
+            city_id as cityId,
+            area_id as areaId,
+            address,
+            mobile,
+            is_default as  isDefault,
+            add_time as  addTime,
+            update_time as updateTime,
+            deleted from cskaoyan_mall_address
+   <if test="userId != null or name != null ">
+            where
+   </if>
+   <trim prefix="values (" suffix=")" prefixOverrides="and">
+            <if test="name != null">
+              and name like ('%'#{name}'%')
+            </if>
+            <if test="userId!=null">
+              and userId = #{userId}
+            </if>
+   </trim>
+  </select>
 </mapper>

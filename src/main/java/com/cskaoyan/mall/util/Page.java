@@ -13,32 +13,36 @@ public class Page {
     private String username;
     private String id;
     private String mobile;
+    private String name;
+    private String userId;
+    private int valueId;
 
-    public String getMobile() {
-        return mobile;
-    }
+    public int getValueId() { return valueId; }
 
-    public Page setMobile(String mobile) {
-        this.mobile = mobile;
-        return this;
-    }
+    public Page setValueId(int valueId) { this.valueId = valueId;return this; }
+
+    public String getUserId() { return userId; }
+
+    public Page setUserId(String userId) { this.userId = userId;return this; }
+
+    public String getName() { return name; }
+
+    public Page setName(String name) { this.name = name;return this; }
+
+    public String getMobile() { return mobile; }
+
+    public Page setMobile(String mobile) { this.mobile = mobile;return this; }
     public String getId() {
         return id;
     }
 
-    public Page setId(String id) {
-        this.id = id;
-        return this;
-    }
+    public Page setId(String id) { this.id = id;return this; }
 
     public String getUsername() {
         return username;
     }
 
-    public Page setUsername(String username) {
-        this.username = username;
-        return this;
-    }
+    public Page setUsername(String username) { this.username = username;return this; }
 
     public int getPage() {
         return page;
