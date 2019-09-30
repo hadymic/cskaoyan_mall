@@ -6,5 +6,5 @@ import com.cskaoyan.mall.util.Page;
 import java.util.List;
 
 public interface UserManageServer {
-    public ListBean dispaly(Page page);
+    ListBean dispaly(Page page);
 }

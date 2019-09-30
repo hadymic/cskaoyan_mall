@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service.impl.userserverimpl;
+package com.cskaoyan.mall.service.userserver.userserverimpl;
 
 import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.mapper.UserMapper;
@@ -7,9 +7,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.session.SqlSession;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,4 +31,5 @@ public class UserManageServerImpl implements UserManageServer {
         ListBean listBean = new ListBean(users,total);
         return listBean;
     }
+
 }
