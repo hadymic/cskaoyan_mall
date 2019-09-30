@@ -26,7 +26,7 @@ public class AdminController {
      */
       @RequestMapping("admin/admin/list")
        public  BaseRespVo showByPage(Page page){
-    //          BaseRespVo baseRespVo=  adminService.queryAdminByPage(page.getPage(),page.getLimit());
+              BaseRespVo baseRespVo=  adminService.queryAdminByPage(page.getPage(),page.getLimit());
       }
 
 }
