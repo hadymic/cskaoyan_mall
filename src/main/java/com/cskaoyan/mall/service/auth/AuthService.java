@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service;
+package com.cskaoyan.mall.service.auth;
 
 /**
  * 登录service

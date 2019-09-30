@@ -1,6 +1,6 @@
-package com.cskaoyan.mall.service.impl;
+package com.cskaoyan.mall.service.auth.impl;
 
-import com.cskaoyan.mall.service.AuthService;
+import com.cskaoyan.mall.service.auth.AuthService;
 import org.springframework.stereotype.Service;
 
 /**
