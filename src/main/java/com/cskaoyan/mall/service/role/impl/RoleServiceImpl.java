@@ -5,6 +5,7 @@ import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.mapper.AdminMapper;
 import com.cskaoyan.mall.mapper.RoleMapper;
 import com.cskaoyan.mall.service.admin.AdminService;
+import com.cskaoyan.mall.service.role.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
@@ -20,32 +21,11 @@ import java.util.List;
  * @author hadymic
  */
 @Service
-public class AdminServiceImpl implements AdminService {
-    @Autowired
-    AdminMapper adminMapper;
+public class RoleServiceImpl implements RoleService {
+
     @Autowired
     RoleMapper roleMapper;
-    @Override
-    public ListBean<Admin> queryAdmin(Page page,String username) {
-       List<Admin> admins=  adminMapper.queryAdmin(username);
-        return PageUtils.page(page, admins);
-    }
 
-    /**
-     * 新增管理员
-     * @param admin
-     * @return
-     */
-    @Override
-    public List insertAdmin(Admin admin) {
-        adminMapper.insert(admin);
-        ArrayList list = new ArrayList();
-        list.add(admin);
-        list.add(admin.getAddTime());
-        list.add(admin.getUpdateTime());
-        list.add(admin.getId());
-        return list;
-    }
 
     @Override
     public ListBean<Role> queryRole(Page page, String name) {

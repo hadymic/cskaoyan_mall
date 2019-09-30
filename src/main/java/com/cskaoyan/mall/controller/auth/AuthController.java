@@ -2,7 +2,7 @@ package com.cskaoyan.mall.controller.auth;
 
 
 
-import com.cskaoyan.mall.service.AuthService;
+import com.cskaoyan.mall.service.auth.AuthService;
 
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.LoginVo;
