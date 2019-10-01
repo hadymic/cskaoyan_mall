@@ -5,6 +5,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
+import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
 
 import java.util.List;
 
@@ -26,5 +27,5 @@ public interface GoodsService {
     //删除商品(将deleted置为1)
     void deleteGoods(Goods goods);
 
-    Goods selectGoodsDetail(int id);
+    GoodsEditVo selectGoodsDetail(int id);
 }

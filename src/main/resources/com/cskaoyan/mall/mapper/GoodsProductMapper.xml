@@ -12,11 +12,17 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
+  <select id="selectProductsByGoodsId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods_product
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
   <sql id="Base_Column_List">
     id, goods_id, specifications, price, number, url, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_goods_product
     where id = #{id,jdbcType=INTEGER}
@@ -26,12 +32,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.GoodsProduct">
-    insert into cskaoyan_mall_goods_product (id, goods_id, specifications, 
-      price, number, url, 
+    insert into cskaoyan_mall_goods_product (id, goods_id, specifications,
+      price, number, url,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
