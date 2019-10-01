@@ -23,12 +23,12 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
-    @Autowired
-    RoleMapper roleMapper;
+
     @Override
     public ListBean<Admin> queryAdmin(Page page,String username) {
+        PageUtils.startPage(page);
        List<Admin> admins=  adminMapper.queryAdmin(username);
-        return PageUtils.page(page, admins);
+        return PageUtils.page( admins);
     }
 
     /**
@@ -49,8 +49,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public ListBean<Role> queryRole(Page page, String name) {
-        List<Role> roles=  roleMapper.queryRole(name);
-        return PageUtils.page(page,roles);
+        return null;
     }
 
 

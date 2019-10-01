@@ -20,31 +20,36 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, gender, birthday, last_login_time, last_login_ip, user_level, 
+    id, username, password, gender, birthday, last_login_time, last_login_ip, user_level,
     nickname, mobile, avatar, weixin_openid, status, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.StatUserVo">
+    select birthday as `day`,count(birthday) as users
+    from cskaoyan_mall_user
+    group by birthday;
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.User">
-    insert into cskaoyan_mall_user (id, username, password, 
-      gender, birthday, last_login_time, 
-      last_login_ip, user_level, nickname, 
-      mobile, avatar, weixin_openid, 
-      status, add_time, update_time, 
+    insert into cskaoyan_mall_user (id, username, password,
+      gender, birthday, last_login_time,
+      last_login_ip, user_level, nickname,
+      mobile, avatar, weixin_openid,
+      status, add_time, update_time,
       deleted)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{lastLoginIp,jdbcType=VARCHAR}, #{userLevel,jdbcType=TINYINT}, #{nickname,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{lastLoginTime,jdbcType=TIMESTAMP},
+      #{lastLoginIp,jdbcType=VARCHAR}, #{userLevel,jdbcType=TINYINT}, #{nickname,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.User">
@@ -220,4 +225,27 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
+    select
+    id,
+    username,
+    password,
+    gender,
+    birthday,
+    last_login_time as  lastLoginTime,
+    last_login_ip as lastLoginIp,
+    user_level asuserLevel,
+    nickname,
+    mobile,
+    avatar,
+    weixin_openid as weixinOpenid,
+    status,
+    add_time as addTime,
+    update_time as updateTime,
+    deleted
+    from cskaoyan_mall_user where (username like #{username}) and (mobile like #{mobile})
+  </select>
+
 </mapper>

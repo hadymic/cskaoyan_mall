@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.vo.CategoryVo;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
     List<Role> queryRole(String name);
+
+    List<CategoryVo> roleOptions();
 }

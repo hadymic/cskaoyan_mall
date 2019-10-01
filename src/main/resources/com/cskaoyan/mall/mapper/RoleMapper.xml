@@ -127,5 +127,8 @@
     </if>
   </select>
 
+  <!--<select id="roleOptions" resultType="com.cskaoyan.mall.vo.CategoryVo">-->
+    <!--select  id,name from cskaoyan_mall_role-->
+  <!--</select>-->
 
 </mapper>
