@@ -164,8 +164,4 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-<<<<<<< .merge_file_a18136
-
-=======
->>>>>>> .merge_file_a10728
 </mapper>

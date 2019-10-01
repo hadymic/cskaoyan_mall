@@ -7,6 +7,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -20,13 +22,5 @@ public interface CommentMapper {
 
     int updateByPrimaryKey(Comment record);
 
-<<<<<<< .merge_file_a07956
-
-=======
-    /**
-     * 显示商品评论
-     * @return
-     */
     List<Comment> selectComentList();
->>>>>>> .merge_file_a04840
 }

@@ -64,13 +64,6 @@ public class Page {
 
     public Page setUsername(String username) { this.username = username;return this; }
 
-    public Page(int page, int limit, String sort, String order) {
-        this.page = page;
-        this.limit = limit;
-        this.sort = sort;
-        this.order = order;
-    }
-
     public int getPage() {
         return page;
     }
