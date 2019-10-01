@@ -161,10 +161,16 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="queryCouponUsersByCouponId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryCouponUsers" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_coupon_user
     where coupon_id = #{couponId,jdbcType=INTEGER}
+    <if test="status != null">
+      and status = #{status}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId}
+    </if>
   </select>
 </mapper>

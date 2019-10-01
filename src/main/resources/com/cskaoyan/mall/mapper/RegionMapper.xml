@@ -22,13 +22,13 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_region
-    where `type` = 1 and deleted = 0
+    where `type` = 1
   </select>
   <select id="selectChildren" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from cskaoyan_mall_region
-    where pid = #{id} and deleted = 0
+    where pid = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_region

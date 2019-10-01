@@ -17,7 +17,7 @@ public interface CouponService {
      * @param page
      * @return
      */
-    ListBean<Coupon> queryAllCoupons(Page page);
+    ListBean<Coupon> queryCoupons(Page page, String name, Integer type, Integer status);
 
     /**
      * 通过优惠券id查询优惠券详情
@@ -34,5 +34,11 @@ public interface CouponService {
      * @param couponId
      * @return
      */
-    ListBean<CouponUser> queryCouponUser(Page page, int couponId);
+    ListBean<CouponUser> queryCouponUser(Page page, int couponId, Integer status, Integer userId);
+
+    String insertCoupon(Coupon coupon);
+
+    String updateCoupon(Coupon coupon);
+
+    boolean deleteCoupon(Integer id);
 }

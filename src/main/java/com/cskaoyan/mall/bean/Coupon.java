@@ -34,9 +34,9 @@ public class Coupon {
 
     private Short days;
 
-//    private Date startTime;
+    private Date startTime;
 
-//    private Date endTime;
+    private Date endTime;
 
     private Date addTime;
 
@@ -164,7 +164,7 @@ public class Coupon {
         this.days = days;
     }
 
-    /*public Date getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
@@ -178,7 +178,7 @@ public class Coupon {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
-    }*/
+    }
 
     public Date getAddTime() {
         return addTime;

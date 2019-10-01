@@ -8,8 +8,8 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="position" jdbcType="TINYINT" property="position" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-<!--    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />-->
-<!--    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />-->
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="enabled" jdbcType="BIT" property="enabled" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -17,10 +17,6 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, name, link, url, position, content, start_time, end_time, enabled, add_time,
-    update_time, deleted
-  </sql>
-  <sql id="Return_Column_List">
-    id, name, link, url, position, content, enabled, add_time,
     update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -180,14 +176,14 @@
   </update>
   <select id="queryAds" resultMap="BaseResultMap">
     select
-    <include refid="Return_Column_List" />
+    <include refid="Base_Column_List" />
     from cskaoyan_mall_ad
     where deleted = 0
     <if test="name != null">
-      and name like #{name}
+      and name like concat('%',#{name},'%')
     </if>
     <if test="content != null">
-      and content like #{content}
+      and content like concat('%',#{content},'%')
     </if>
   </select>
 </mapper>

@@ -40,7 +40,7 @@ public class AdController {
     @PostMapping("create")
     public BaseRespVo insertAd(@RequestBody Ad ad) {
         boolean flag = adService.insertAd(ad);
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("广告更新失败");
+        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("广告添加失败");
     }
 
     /**

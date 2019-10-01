@@ -6,6 +6,7 @@ import com.cskaoyan.mall.service.promotion.AdService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,11 @@ public class AdServiceImpl implements AdService {
     @Override
     public ListBean<Ad> queryAds(Page page, String name, String content) {
         PageUtils.startPage(page);
-        //如果广告标题不为空
-        if (name != null) {
-            name = "%" + name + "%";
+        if (!StringUtils.isEmpty(name)) {
+            name = name.trim();
         }
-        //如果广告内容不为空
-        if (content != null) {
-            content = "%" + content + "%";
+        if (!StringUtils.isEmpty(content)) {
+            content = content.trim();
         }
         List<Ad> ads = adMapper.queryAds(name, content);
         return PageUtils.page(ads);
@@ -56,6 +55,6 @@ public class AdServiceImpl implements AdService {
     public boolean insertAd(Ad ad) {
         ad.setAddTime(new Date());
         ad.setDeleted(false);
-        return adMapper.insert(ad) == 1;
+        return adMapper.insertSelective(ad) == 1;
     }
 }

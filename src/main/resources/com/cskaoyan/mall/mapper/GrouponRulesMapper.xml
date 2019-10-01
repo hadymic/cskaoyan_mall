@@ -150,4 +150,13 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryGrouponRuless" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_groupon_rules
+    where deleted = 0
+    <if test="goodsId != null">
+      and goods_id = #{goodsId}
+    </if>
+  </select>
 </mapper>

@@ -14,11 +14,11 @@
     <result column="status" jdbcType="SMALLINT" property="status" />
     <result column="goods_type" jdbcType="SMALLINT" property="goodsType" />
     <result column="goods_value" jdbcType="VARCHAR" property="goodsValue" />
-<!--    <result column="code" jdbcType="VARCHAR" property="code" />-->
+    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="time_type" jdbcType="SMALLINT" property="timeType" />
     <result column="days" jdbcType="SMALLINT" property="days" />
-<!--    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />-->
-<!--    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />-->
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
@@ -27,13 +27,9 @@
     id, name, `desc`, tag, total, discount, min, `limit`, type, status, goods_type, goods_value,
     code, time_type, days, start_time, end_time, add_time, update_time, deleted
   </sql>
-  <sql id="Return_Column_List">
-    id, name, `desc`, tag, total, discount, min, `limit`, type, status, goods_type, goods_value,
-    time_type, days, add_time, update_time, deleted
-  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
-    <include refid="Return_Column_List" />
+    <include refid="Base_Column_List" />
     from cskaoyan_mall_coupon
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -270,10 +266,19 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="queryAllCoupons" resultMap="BaseResultMap">
+  <select id="queryCoupons" resultMap="BaseResultMap">
     select
-    <include refid="Return_Column_List" />
+    <include refid="Base_Column_List" />
     from cskaoyan_mall_coupon
     where deleted = 0
+    <if test="name != null">
+      and name like concat('%',#{name},'%')
+    </if>
+    <if test="type != null">
+      and type = #{type,jdbcType=SMALLINT}
+    </if>
+    <if test="status != null">
+      and status = #{status,jdbcType=SMALLINT}
+    </if>
   </select>
 </mapper>

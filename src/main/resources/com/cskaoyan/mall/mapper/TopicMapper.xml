@@ -195,4 +195,18 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryTopics" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cskaoyan_mall_topic
+    where deleted = 0
+    <if test="title != null">
+      and title like concat('%',#{title},'%')
+    </if>
+    <if test="subtitle != null">
+      and subtitle like concat('%',#{subtitle},'%')
+    </if>
+  </select>
 </mapper>

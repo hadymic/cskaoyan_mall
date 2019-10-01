@@ -15,9 +15,9 @@ public class Ad {
 
     private String content;
 
-//    private Date startTime;
+    private Date startTime;
 
-//    private Date endTime;
+    private Date endTime;
 
     private Boolean enabled;
 
@@ -75,7 +75,7 @@ public class Ad {
         this.content = content == null ? null : content.trim();
     }
 
-    /*public Date getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
@@ -89,7 +89,7 @@ public class Ad {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
-    }*/
+    }
 
     public Boolean getEnabled() {
         return enabled;
