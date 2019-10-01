@@ -160,11 +160,14 @@
   <select id="queryAdmin"  resultType="com.cskaoyan.mall.bean.Admin">
     select
     <include refid="Base_Column_List"/>
-    from cskaoyan_mall_admin
+    from cskaoyan_mall_admin  where  deleted=0
     <if test="username != null">
-  where   username like  "%"#{username}"%"
+     and username like  "%"#{username}"%"
     </if>
   </select>
 
+<update id="deleteAdmin">
+  update  cskaoyan_mall_admin set deleted=1 where id=#{id}
+</update>
 
 </mapper>

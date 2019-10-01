@@ -20,4 +20,6 @@ public interface RoleMapper {
     List<Role> queryRole(String name);
 
     List<CategoryVo> roleOptions();
+
+    int deleteRloe(Integer id);
 }

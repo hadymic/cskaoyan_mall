@@ -24,4 +24,6 @@ public interface AdminMapper {
 
 
     List<Role> queryRole(String name);
+
+    int deleteAdmin(Integer id);
 }

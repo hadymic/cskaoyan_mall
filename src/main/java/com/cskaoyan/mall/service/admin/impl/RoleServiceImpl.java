@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,8 +43,23 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int update(Role role) {
+
         int i = roleMapper.updateByPrimaryKey(role);
         return 1;
+    }
+
+    @Override
+    public void delete(Role role) {
+        int i = roleMapper.deleteRloe(role.getId());
+    }
+
+    @Override
+    public Role insertRole(Role role) {
+        role.setAddTime(new Date());
+        role.setUpdateTime(new Date());
+        role.setDeleted(false);
+        roleMapper.insert(role);
+        return  role;
     }
 
 

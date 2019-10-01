@@ -24,7 +24,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Role">
-    insert into cskaoyan_mall_role (id, name, desc,
+    insert into cskaoyan_mall_role (id, name, `desc`,
       enabled, add_time, update_time,
       deleted)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR},
@@ -86,7 +86,7 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
+      <if test="`desc` != null">
         desc = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="enabled != null">
@@ -107,7 +107,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Role">
     update cskaoyan_mall_role
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       enabled = #{enabled,jdbcType=BIT},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -121,14 +121,16 @@
   <select id="queryRole"  resultType="com.cskaoyan.mall.bean.Role">
     select
 <include refid="Base_Column_List"/>
-    from cskaoyan_mall_role
+    from cskaoyan_mall_role  where  deleted=0
     <if test="name != null">
-      where   name like  "%"#{name}"%"
+     and   name like  "%"#{name}"%"
     </if>
   </select>
 
   <select id="roleOptions" resultType="com.cskaoyan.mall.vo.CategoryVo">
     select  id as  value,name as label from cskaoyan_mall_role
   </select>
-
+<update id="deleteRloe">
+  update  cskaoyan_mall_role set deleted=1 where id=#{id}
+</update>
 </mapper>

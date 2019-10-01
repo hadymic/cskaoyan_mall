@@ -7,6 +7,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +38,7 @@ public class RoleController {
     }
 
     /**
-     * optons
+     * 角色管理类别
      * @return
      */
      @RequestMapping("admin/role/options")
@@ -53,14 +54,38 @@ public class RoleController {
      * @return
      */
      @RequestMapping("admin/role/update")
-    public  BaseRespVo update(Role role){
-          role.setUpdateTime(new Date());
-          role.setAddTime(new Date());
+    public  BaseRespVo update(@RequestBody Role role){
+         role.setUpdateTime(new Date());
+         role.setAddTime(new Date());
          int flag= roleService.update(role);
          if(flag==1){
              return  BaseRespVo.success(null);
          }
          else  return  BaseRespVo.fail("更新失败");
+     }
+
+
+    /**
+     * 删除角色管理
+     * @param role
+     * @return
+     */
+     @RequestMapping("admin/role/delete")
+    public  BaseRespVo delete(@RequestBody  Role role){
+         roleService.delete(role);
+         return  BaseRespVo.success(null);
+     }
+
+
+    /**
+     * 新增角色管理
+     * @param role
+     * @return
+     */
+     @RequestMapping("admin/role/create")
+    public  BaseRespVo create(@RequestBody Role role){
+         Role  roleMsg = roleService.insertRole(role);
+         return  BaseRespVo.success(roleMsg);
      }
 
 

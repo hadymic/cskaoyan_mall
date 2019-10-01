@@ -25,6 +25,10 @@
     delete from cskaoyan_mall_storage
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <update id="deleteStorage">
+    update cskaoyan_mall_storage set  deleted = 1 where id = #{id}
+  </update>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Storage">
     insert into cskaoyan_mall_storage (id, key, name,
       type, size, url, add_time,
@@ -126,10 +130,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Storage">
     update cskaoyan_mall_storage
-    set key = #{key,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      size = #{size,jdbcType=INTEGER},
+    set `key` = #{key,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `size` = #{size,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -152,7 +156,7 @@
   <select id="queryStorage" resultType="com.cskaoyan.mall.bean.Storage">
     select
     <include refid="Base_Column_List" />
-    from cskaoyan_mall_storage
+    from cskaoyan_mall_storage   where deleted=0
     <where>
       <if test="key != null">
        key= #{key}

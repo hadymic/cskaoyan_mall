@@ -21,4 +21,16 @@ public class StorageServiceImpl implements StorageService {
         List<Storage> storages = storageMapper.queryStorage(key,  name);
         return PageUtils.page(storages);
     }
+
+    @Override
+    public void delete(Storage storage) {
+        int i = storageMapper.deleteStorage(storage.getId());
+
+
+    }
+
+    @Override
+    public void update(Storage storage) {
+        storageMapper.updateByPrimaryKey(storage);
+    }
 }

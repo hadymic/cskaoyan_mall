@@ -19,7 +19,7 @@ public interface AdminService {
     ListBean<Admin> queryAdmin(Page page,String username);
 
 
-    List insertAdmin(Admin admin);
+     Admin insertAdmin(Admin admin);
 
 
     int update(Admin admin);

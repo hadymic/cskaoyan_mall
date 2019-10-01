@@ -18,4 +18,6 @@ public interface StorageMapper {
     int updateByPrimaryKey(Storage record);
 
     List<Storage> queryStorage(String key, String name);
+
+    int deleteStorage(Integer id);
 }

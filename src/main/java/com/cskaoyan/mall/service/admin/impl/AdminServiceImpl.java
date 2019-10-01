@@ -38,14 +38,12 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public List insertAdmin(Admin admin) {
+    public Admin insertAdmin(Admin admin) {
+        admin.setAddTime(new Date());
+        admin.setUpdateTime(new Date());
+
         adminMapper.insert(admin);
-        ArrayList list = new ArrayList();
-        list.add(admin);
-        list.add(admin.getAddTime());
-        list.add(admin.getUpdateTime());
-        list.add(admin.getId());
-        return list;
+        return  admin;
     }
 
     /**
@@ -60,9 +58,13 @@ public class AdminServiceImpl implements AdminService {
         return 1;
     }
 
+    /**
+     * 删除管理员
+     * @param admin
+     */
     @Override
     public void delete(Admin admin) {
-        int i = adminMapper.deleteByPrimaryKey(admin.getId());
+        int i = adminMapper.deleteAdmin(admin.getId());
     }
 
 

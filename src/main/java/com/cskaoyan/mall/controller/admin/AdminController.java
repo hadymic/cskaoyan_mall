@@ -1,15 +1,12 @@
-package com.cskaoyan.mall.controller.auth;
+package com.cskaoyan.mall.controller.admin;
 
-
-import com.cskaoyan.mall.bean.Ad;
 import com.cskaoyan.mall.bean.Admin;
-import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.service.admin.AdminService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +39,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("admin/admin/update")
-    public  BaseRespVo update(Admin admin){
+    public  BaseRespVo update(@RequestBody  Admin admin){
 
       int flag= adminService.update(admin);
       if(flag==1){
@@ -52,10 +49,27 @@ public class AdminController {
     }
 
 
+    /**
+     * 删除管理员
+     * @param admin
+     * @return
+     */
     @RequestMapping("admin/admin/delete")
-    public  BaseRespVo delete(Admin admin){
+    public  BaseRespVo delete(@RequestBody Admin admin){
         adminService.delete(admin);
         return  BaseRespVo.success(null);
+    }
+
+
+    /**
+     * 新增管理员
+     * @param admin
+     * @return
+     */
+    @RequestMapping("admin/admin/create")
+    public  BaseRespVo create(@RequestBody Admin admin){
+        Admin adminMsg = adminService.insertAdmin(admin);
+        return  BaseRespVo.success(adminMsg);
     }
 
 

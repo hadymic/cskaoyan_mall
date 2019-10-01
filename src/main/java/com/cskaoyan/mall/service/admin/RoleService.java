@@ -13,4 +13,8 @@ public interface RoleService {
     List<CategoryVo> roleOptions();
 
     int update(Role role);
+
+    void delete(Role role);
+
+    Role insertRole(Role role);
 }

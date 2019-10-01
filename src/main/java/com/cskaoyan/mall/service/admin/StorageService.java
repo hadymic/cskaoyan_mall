@@ -6,4 +6,9 @@ import com.cskaoyan.mall.util.Page;
 
 public interface StorageService {
     ListBean<Storage> queryStorage(String key, String name, Page page);
+
+    void delete(Storage storage);
+
+    void update(Storage storage);
+
 }

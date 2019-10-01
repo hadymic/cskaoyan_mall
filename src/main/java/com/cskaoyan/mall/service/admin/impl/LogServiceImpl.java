@@ -16,6 +16,14 @@ import java.util.List;
 public class LogServiceImpl implements LogService {
     @Autowired
     LogMapper logMapper;
+
+    /**
+     * 操作日志
+     * 分页&查找
+     * @param page
+     * @param admin
+     * @return
+     */
     @Override
     public ListBean<Log> queryLogs(Page page, String admin) {
         PageUtils.startPage(page);
