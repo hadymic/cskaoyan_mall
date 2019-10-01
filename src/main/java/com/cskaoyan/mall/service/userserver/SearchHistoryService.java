@@ -5,6 +5,6 @@ import com.cskaoyan.mall.util.Page;
 
 import java.util.List;
 
-public interface SearchHistoryServer {
+public interface SearchHistoryService {
     ListBean getSearchHistoryList(Page utipage);
 }
