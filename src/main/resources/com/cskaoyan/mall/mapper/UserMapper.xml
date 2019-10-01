@@ -29,6 +29,11 @@
     from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.StatUserVo">
+    select birthday as `day`,count(birthday) as users
+    from cskaoyan_mall_user
+    group by birthday;
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
@@ -220,6 +225,13 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryUserForOrder" resultType="com.cskaoyan.mall.bean.User">
+    select avatar, nickname
+    from cskaoyan_mall_user
+    where id = #{id} and deleted = 0
+  </select>
+
   <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
     select
           id,
