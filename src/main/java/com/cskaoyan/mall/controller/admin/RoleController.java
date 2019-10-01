@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * 后台登录系统
  *角色管理
@@ -39,8 +42,25 @@ public class RoleController {
      */
      @RequestMapping("admin/role/options")
     public  BaseRespVo roleOptions(){
-         ListBean<CategoryVo> category = roleService.roleOptions();
+         List<CategoryVo> category = roleService.roleOptions();
          return  BaseRespVo.success(category);
+     }
+
+
+    /**
+     * 修改角色管理信息
+     * @param role
+     * @return
+     */
+     @RequestMapping("admin/role/update")
+    public  BaseRespVo update(Role role){
+          role.setUpdateTime(new Date());
+          role.setAddTime(new Date());
+         int flag= roleService.update(role);
+         if(flag==1){
+             return  BaseRespVo.success(null);
+         }
+         else  return  BaseRespVo.fail("更新失败");
      }
 
 

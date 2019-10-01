@@ -22,4 +22,7 @@ public interface AdminService {
     List insertAdmin(Admin admin);
 
 
+    int update(Admin admin);
+
+    void delete(Admin admin);
 }

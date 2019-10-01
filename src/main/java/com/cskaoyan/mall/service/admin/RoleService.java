@@ -5,8 +5,12 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.CategoryVo;
 
+import java.util.List;
+
 public interface RoleService {
     ListBean<Role> queryRole(Page page, String name);
 
-    ListBean<CategoryVo> roleOptions();
+    List<CategoryVo> roleOptions();
+
+    int update(Role role);
 }

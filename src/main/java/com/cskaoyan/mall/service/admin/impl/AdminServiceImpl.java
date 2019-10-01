@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,8 +48,25 @@ public class AdminServiceImpl implements AdminService {
         return list;
     }
 
-
+    /**
+     * 修改管理员信息
+     * @param admin
+     * @return
+     */
+    @Override
+    public int update(Admin admin) {
+          admin.setUpdateTime(new Date());
+        int update= adminMapper.updateByPrimaryKey(admin);
+        return 1;
     }
+
+    @Override
+    public void delete(Admin admin) {
+        int i = adminMapper.deleteByPrimaryKey(admin.getId());
+    }
+
+
+}
 
 
 

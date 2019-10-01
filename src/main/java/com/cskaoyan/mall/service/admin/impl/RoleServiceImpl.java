@@ -10,6 +10,7 @@ import com.cskaoyan.mall.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,11 +29,21 @@ public class RoleServiceImpl implements RoleService {
         return PageUtils.page(roles);
     }
 
+    /**
+     * 管理员类目
+     * @return
+     */
     @Override
-    public ListBean<CategoryVo> roleOptions() {
-       List<CategoryVo>roles= roleMapper.roleOptions();
+    public List<CategoryVo> roleOptions() {
+        List<CategoryVo> options= roleMapper.roleOptions();
+        return options;
 
-        return null;
+    }
+
+    @Override
+    public int update(Role role) {
+        int i = roleMapper.updateByPrimaryKey(role);
+        return 1;
     }
 
 
