@@ -1,15 +1,14 @@
 package com.cskaoyan.mall.service.goods.impl;
 
 import com.cskaoyan.mall.bean.Goods;
-import com.cskaoyan.mall.mapper.BrandMapper;
-import com.cskaoyan.mall.mapper.CategoryMapper;
-import com.cskaoyan.mall.mapper.GoodsMapper;
+import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
+import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,12 @@ public class GoodsServiceImpl implements GoodsService {
     BrandMapper brandMapper;
     @Autowired
     CategoryMapper categoryMapper;
+    @Autowired
+    GoodsAttributeMapper goodsAttributeMapper;
+    @Autowired
+    GoodsSpecificationMapper goodsSpecificationMapper;
+    @Autowired
+    GoodsProductMapper goodsProductMapper;
 
     @Override
     public ListBean queryGoods(Page page) {
@@ -71,8 +76,11 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Goods selectGoodsDetail(int id) {
-        Goods goods = goodsMapper.selectByPrimaryKey(id);
-        return goods;
+    public GoodsEditVo selectGoodsDetail(int id) {
+        Integer categoryId = goodsMapper.selectByPrimaryKey(id).getCategoryId();
+        Integer pid = categoryMapper.selectByPrimaryKey(categoryId).getPid();
+        int[] categoryIds ={pid,categoryId};
+        return new GoodsEditVo(categoryIds,goodsMapper.selectByPrimaryKey(id),goodsAttributeMapper.selectAttributesByGoodsId(id),
+                goodsSpecificationMapper.selectSpecificationsByGoodsId(id),goodsProductMapper.selectProductsByGoodsId(id));
     }
 }

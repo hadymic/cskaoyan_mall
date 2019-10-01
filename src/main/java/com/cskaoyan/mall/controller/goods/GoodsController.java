@@ -7,6 +7,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
+import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +56,7 @@ public class GoodsController {
 
     @RequestMapping("detail")
     public BaseRespVo GoodsDetail(int id) {
-        Goods goods = goodsService.selectGoodsDetail(id);
-        return BaseRespVo.success(goods);
+        GoodsEditVo goodsEditVo = goodsService.selectGoodsDetail(id);
+        return BaseRespVo.success(goodsEditVo);
     }
 }
