@@ -30,12 +30,9 @@ public class GoodsController {
 
     @RequestMapping("list")
     public BaseRespVo GoodsList(Page page, Goods goods) {
-        if (goods != null) {
-            ListBean listBean = goodsService.selectGoodsByGoodsSnOrName(page, goods);
+            ListBean listBean = goodsService.selectGoods(page, goods);
             return BaseRespVo.success(listBean);
-        }
-        ListBean listBean = goodsService.queryGoods(page);
-        return BaseRespVo.success(listBean);
+
     }
 
     @RequestMapping("catAndBrand")
@@ -58,5 +55,14 @@ public class GoodsController {
     public BaseRespVo GoodsDetail(int id) {
         GoodsEditVo goodsEditVo = goodsService.selectGoodsDetail(id);
         return BaseRespVo.success(goodsEditVo);
+    }
+
+    /**
+     * 更新商品信息，对输入参数进行判断
+     */
+    @RequestMapping("update")
+    public BaseRespVo updateGoods(@RequestBody GoodsEditVo goodsEditVo) {
+        boolean b = goodsService.updateGoods(goodsEditVo);
+        return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
     }
 }

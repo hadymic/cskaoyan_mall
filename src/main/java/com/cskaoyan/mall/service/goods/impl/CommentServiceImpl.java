@@ -15,9 +15,15 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
     @Override
-    public ListBean queryAllComment(Page page) {
+    public ListBean queryComment(Page page,Comment comment) {
         PageUtils.startPage(page);
-        List<Comment> commentList = commentMapper.selectComentList();
+        List<Comment> commentList = commentMapper.selectCommentList(comment);
         return PageUtils.page(commentList);
     }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        commentMapper.updateCommentDeleted(comment.getId());
+    }
+
 }

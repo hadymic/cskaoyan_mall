@@ -14,10 +14,8 @@ import java.util.List;
  * @author stark_h
  */
 public interface GoodsService {
-    ListBean queryGoods(Page page);
-
-    //根据goodsSn(精确查找) 或 name(模糊查找)
-    ListBean selectGoodsByGoodsSnOrName(Page page, Goods goods);
+    //不为空的话，根据goodsSn(精确查找) 或 name(模糊查找)
+    ListBean selectGoods(Page page, Goods goods);
 
     List<BaseValueLabel> selectBrandList();
 
@@ -28,4 +26,6 @@ public interface GoodsService {
     void deleteGoods(Goods goods);
 
     GoodsEditVo selectGoodsDetail(int id);
+//商品编辑，更新goods，goodsAttribute，goodsProduct，goodsSpecification,category
+    boolean updateGoods(GoodsEditVo goodsEditVo);
 }

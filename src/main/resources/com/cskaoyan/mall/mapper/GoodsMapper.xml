@@ -18,13 +18,7 @@
             </if>
         </where>
     </select>
-    <select id="selectGoodsList" resultMap="ResultMapWithBLOBs">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from cskaoyan_mall_goods where deleted = 0
-    </select>
+
     <update id="deleteGoods">
     update cskaoyan_mall_goods set  deleted = 1 where id = #{id}
 </update>
