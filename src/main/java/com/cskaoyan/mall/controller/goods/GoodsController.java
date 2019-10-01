@@ -8,6 +8,7 @@ import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * 商品管理
+ * @author stark_h
+ */
 @RestController
 @RequestMapping("admin/goods")
 public class GoodsController {
@@ -43,7 +48,7 @@ public class GoodsController {
     }
 
     @RequestMapping("delete")
-    public BaseRespVo deleteGoods(Goods goods) {
+    public BaseRespVo deleteGoods(@RequestBody Goods goods) {
         goodsService.deleteGoods(goods);
         return BaseRespVo.success(null);
     }
