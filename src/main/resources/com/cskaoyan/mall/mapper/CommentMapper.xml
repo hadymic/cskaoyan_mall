@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.CommentMapper">
-  <select id="selectComentList" resultMap="BaseResultMap">
+  <select id="selectCommentList" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from cskaoyan_mall_comment
+    <where>
+    deleted = 0
+      <if test="comment.userId != null">
+        user_id = comment.userId
+      </if>
+      <if test="comment.valueId != null">
+       and value_id like concat('%',#{comment.valueId},'%')
+      </if>
+    </where>
   </select>
+  <update id="updateCommentDeleted" >
+    update cskaoyan_mall_comment set deleted = 1 where id = #{id}
+  </update>
+
   <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Comment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="value_id" jdbcType="INTEGER" property="valueId" />

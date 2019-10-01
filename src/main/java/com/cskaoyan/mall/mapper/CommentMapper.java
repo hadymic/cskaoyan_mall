@@ -5,9 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-import java.util.List;
-
-import java.util.List;
 
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,5 +19,8 @@ public interface CommentMapper {
 
     int updateByPrimaryKey(Comment record);
 
-    List<Comment> selectComentList();
+    List<Comment> selectCommentList(@Param("comment") Comment comment);
+
+    //设置deleted=1
+    void updateCommentDeleted(@Param("id") Integer id);
 }

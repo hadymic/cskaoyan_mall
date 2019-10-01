@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.service.goods.impl;
 
 import com.cskaoyan.mall.bean.Goods;
+import com.cskaoyan.mall.bean.GoodsAttribute;
+import com.cskaoyan.mall.bean.GoodsProduct;
+import com.cskaoyan.mall.bean.GoodsSpecification;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
@@ -36,14 +39,7 @@ public class GoodsServiceImpl implements GoodsService {
     GoodsProductMapper goodsProductMapper;
 
     @Override
-    public ListBean queryGoods(Page page) {
-        PageUtils.startPage(page);
-        List<Goods> goodsList = goodsMapper.selectGoodsList();
-        return PageUtils.page(goodsList);
-    }
-
-    @Override
-    public ListBean selectGoodsByGoodsSnOrName(Page page, Goods goods) {
+    public ListBean selectGoods(Page page, Goods goods) {
         PageUtils.startPage(page);
         List<Goods> goodsList = goodsMapper.selectGoodsByGoodsSnOrName(goods);
         return PageUtils.page(goodsList);
@@ -82,5 +78,37 @@ public class GoodsServiceImpl implements GoodsService {
         int[] categoryIds ={pid,categoryId};
         return new GoodsEditVo(categoryIds,goodsMapper.selectByPrimaryKey(id),goodsAttributeMapper.selectAttributesByGoodsId(id),
                 goodsSpecificationMapper.selectSpecificationsByGoodsId(id),goodsProductMapper.selectProductsByGoodsId(id));
+    }
+
+    @Override
+    public boolean updateGoods(GoodsEditVo goodsEditVo) {
+        goodsMapper.updateByPrimaryKeySelective(goodsEditVo.getGoods());//更新商品信息
+        int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
+        List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();
+        for (GoodsSpecification specification : specifications) {//更新规格信息
+            if (specification.getId()==null){
+                specification.setGoodsId(goodsId);//设置goodsId
+                specification.setDeleted(false);//deleted置为0
+                goodsSpecificationMapper.insertSelective(specification);
+            }else {//删除规格未返回，如何设置为deleted=1？
+                goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
+            }
+        }
+        List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
+        for (GoodsAttribute attribute : attributes) {
+            if (attribute.getGoodsId()==null){
+                attribute.setGoodsId(goodsId);
+                attribute.setDeleted(false);
+                goodsAttributeMapper.insertSelective(attribute);
+            }else{
+                goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
+            }
+        }
+//根据["1.5m床垫*1+枕头*2","浅杏粉"]和goodsId找到对应product
+        List<GoodsProduct> products = goodsEditVo.getProducts();
+        for (GoodsProduct product : products) {
+
+        }
+        return true;
     }
 }

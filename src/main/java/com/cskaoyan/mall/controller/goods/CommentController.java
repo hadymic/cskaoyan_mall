@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.controller.goods;
 
+import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +20,14 @@ public class CommentController {
     @Autowired
     CommentService commentService;
     @RequestMapping("list")
-    public BaseRespVo list(Page page){
-        ListBean listBean = commentService.queryAllComment(page);
+    public BaseRespVo list(Page page, Comment comment){
+        ListBean listBean = commentService.queryComment(page,comment);
         return BaseRespVo.success(listBean);
+    }
+
+    @RequestMapping("delete")
+    public BaseRespVo deleteComment(@RequestBody Comment comment){
+        commentService.deleteComment(comment);
+        return BaseRespVo.success(null);
     }
 }
