@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.auth;
 
 
+import com.cskaoyan.mall.bean.Ad;
 import com.cskaoyan.mall.bean.Admin;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.service.admin.AdminService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,18 +37,26 @@ public class AdminController {
       }
 
     /**
-     * 新增管理员
+     * 修改管理员信息
      * @param admin
      * @return
      */
-    @RequestMapping("admin/admin/create")
-          public BaseRespVo  insertAdmin(Admin admin){
-        List adminList = new ArrayList();
-         adminList=adminService.insertAdmin(admin);
-          return  BaseRespVo.success(adminList);
-        }
+    @RequestMapping("admin/admin/update")
+    public  BaseRespVo update(Admin admin){
+
+      int flag= adminService.update(admin);
+      if(flag==1){
+          return  BaseRespVo.success(admin);
+      }
+           else  return  BaseRespVo.fail("更新失败");
+    }
 
 
+    @RequestMapping("admin/admin/delete")
+    public  BaseRespVo delete(Admin admin){
+        adminService.delete(admin);
+        return  BaseRespVo.success(null);
+    }
 
 
     }
