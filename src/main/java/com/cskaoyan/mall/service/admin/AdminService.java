@@ -21,5 +21,5 @@ public interface AdminService {
 
     List insertAdmin(Admin admin);
 
-    ListBean<Role> queryRole(Page page, String name);
+
 }

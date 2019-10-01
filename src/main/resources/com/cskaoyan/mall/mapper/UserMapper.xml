@@ -227,6 +227,14 @@
   </update>
 
 
+
+  <select id="queryUserForOrder" resultType="com.cskaoyan.mall.bean.User">
+    select avatar, nickname
+    from cskaoyan_mall_user
+    where id = #{id} and deleted = 0
+  </select>
+
+
   <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
     select
     id,

@@ -1,14 +1,14 @@
-package com.cskaoyan.mall.service.role.impl;
+package com.cskaoyan.mall.service.admin.impl;
+
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.mapper.RoleMapper;
-import com.cskaoyan.mall.service.role.RoleService;
+import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 

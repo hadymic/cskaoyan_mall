@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service.role;
+package com.cskaoyan.mall.service.admin;
 
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.util.ListBean;

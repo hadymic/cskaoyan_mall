@@ -39,7 +39,7 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_order
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <select id="selectOrderByDay" resultType="com.cskaoyan.mall.vo.StatOrderVo">
     select birthday as `day`,count(birthday) as users
@@ -343,4 +343,23 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryOrderList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_order
+    <where>
+      deleted = 0
+      <if test="userId != null">
+        and user_id = #{userId}
+      </if>
+      <if test="orderSn != null and orderSn != ''">
+        and order_sn = #{orderSn}
+      </if>
+      <if test="orderStatusArray != null">
+        and <foreach collection="orderStatusArray" item="orderStatus" separator="or" open="(" close=")">
+        order_status = #{orderStatus}
+      </foreach>
+      </if>
+    </where>
+  </select>
+
 </mapper>

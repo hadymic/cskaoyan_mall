@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.CommentMapper">
+  <select id="selectComentList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_comment
+  </select>
   <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Comment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="value_id" jdbcType="INTEGER" property="valueId" />
@@ -15,11 +18,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, value_id, type, content, user_id, has_picture, pic_urls, star, add_time, update_time, 
+    id, value_id, type, content, user_id, has_picture, pic_urls, star, add_time, update_time,
     deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_comment
     where id = #{id,jdbcType=INTEGER}
@@ -29,13 +32,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Comment">
-    insert into cskaoyan_mall_comment (id, value_id, type, 
-      content, user_id, has_picture, 
-      pic_urls, star, add_time, 
+    insert into cskaoyan_mall_comment (id, value_id, type,
+      content, user_id, has_picture,
+      pic_urls, star, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
-      #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT}, 
-      #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+      #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT},
+      #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Comment">

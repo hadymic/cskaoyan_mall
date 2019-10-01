@@ -47,10 +47,8 @@ public class AdminServiceImpl implements AdminService {
         return list;
     }
 
-    @Override
-    public ListBean<Role> queryRole(Page page, String name) {
-        return null;
+
     }
 
 
-}
+
