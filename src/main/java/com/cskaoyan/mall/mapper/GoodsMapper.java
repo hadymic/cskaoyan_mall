@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Goods;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GoodsMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +19,12 @@ public interface GoodsMapper {
     int updateByPrimaryKeyWithBLOBs(Goods record);
 
     int updateByPrimaryKey(Goods record);
+
+    /**根据(goodsSn 或者 name)不为空的话 查找商品
+     * @author hjl
+     * @return
+     */
+    List<Goods> selectGoodsByGoodsSnOrName(@Param("goods") Goods goods);
+    //删除商品(实际将deleted 更新为1 )
+    void deleteGoods(@Param("id") int id);
 }

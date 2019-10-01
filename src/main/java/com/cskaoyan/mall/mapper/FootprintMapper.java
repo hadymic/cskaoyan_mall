@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Footprint;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface FootprintMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,7 @@ public interface FootprintMapper {
     int updateByPrimaryKeySelective(Footprint record);
 
     int updateByPrimaryKey(Footprint record);
+
+    List<Footprint> selectByUserIdAndGoodsId(@Param("userId")String userId,
+                                             @Param("goodsId")String goodsid);
 }
