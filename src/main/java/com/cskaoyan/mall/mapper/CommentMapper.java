@@ -1,6 +1,11 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Comment;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -17,9 +22,5 @@ public interface CommentMapper {
 
     int updateByPrimaryKey(Comment record);
 
-    /**
-     * 显示商品评论
-     * @return
-     */
     List<Comment> selectComentList();
 }

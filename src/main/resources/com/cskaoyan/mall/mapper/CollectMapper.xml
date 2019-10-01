@@ -14,7 +14,7 @@
     id, user_id, value_id, type, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_collect
     where id = #{id,jdbcType=INTEGER}
@@ -24,11 +24,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Collect">
-    insert into cskaoyan_mall_collect (id, user_id, value_id, 
-      type, add_time, update_time, 
+    insert into cskaoyan_mall_collect (id, user_id, value_id,
+      type, add_time, update_time,
       deleted)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, 
-      #{type,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER},
+      #{type,jdbcType=TINYINT}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Collect">
@@ -114,4 +114,25 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByTwoId" resultType="com.cskaoyan.mall.bean.Collect">
+    select
+    id,
+    user_id,
+    value_id as valueId,
+    `type`,
+    add_time,
+    update_time as updateTime,
+    deleted from cskaoyan_mall_collect
+    <if test="valueId != null or userId != null">
+      where
+    </if>
+    <trim  prefixOverrides="and">
+      <if test="userId != null">
+        and userId = #{userId}
+      </if>
+      <if test="valueId != null">
+        and valueId = #{valueId}
+      </if>
+    </trim>
+  </select>
 </mapper>

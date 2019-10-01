@@ -5,6 +5,6 @@ import com.cskaoyan.mall.util.Page;
 
 import java.util.List;
 
-public interface UserManageServer {
-    ListBean getDispalyList(Page page);
+public interface SearchHistoryServer {
+    ListBean getSearchHistoryList(Page utipage);
 }
