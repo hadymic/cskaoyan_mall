@@ -37,6 +37,7 @@ public class BaseRespVo<T> {
 
     public static <T> BaseRespVo success(T data) {
         BaseRespVo<T> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setErrmsg("成功");
         baseRespVo.setData(data);
         return baseRespVo;
     }

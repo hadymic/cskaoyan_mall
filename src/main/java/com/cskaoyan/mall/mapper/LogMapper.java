@@ -2,7 +2,13 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Log;
 
+import java.util.List;
+
 public interface LogMapper {
+
+
+  List<Log> queryLogs(String admin) ;
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Log record);

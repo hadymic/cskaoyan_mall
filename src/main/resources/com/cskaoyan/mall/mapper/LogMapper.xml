@@ -18,7 +18,7 @@
     id, admin, ip, type, action, status, result, comment, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_log
     where id = #{id,jdbcType=INTEGER}
@@ -28,13 +28,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Log">
-    insert into cskaoyan_mall_log (id, admin, ip, 
-      type, action, status, result, 
-      comment, add_time, update_time, 
+    insert into cskaoyan_mall_log (id, admin, ip,
+      type, action, status, result,
+      comment, add_time, update_time,
       deleted)
-    values (#{id,jdbcType=INTEGER}, #{admin,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{result,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{admin,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+      #{type,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{result,jdbcType=VARCHAR},
+      #{comment,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Log">
@@ -160,4 +160,16 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+
+  <select id="queryLogs"  resultType="com.cskaoyan.mall.bean.Log">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_log
+    <if test="admin != null">
+      where   admin like  "%"#{admin}"%"
+    </if>
+  </select>
+
 </mapper>
