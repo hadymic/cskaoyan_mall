@@ -19,14 +19,18 @@ public class AddressServerImpl implements AddressServer {
     @Autowired
     AddressMapper addressMapper;
     @Override
-    public ListBean address(Page utipage) {
+        public ListBean getAddressList(Page utipage) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
         String userId = utipage.getUserId();
         String name = utipage.getName();
+        if (userId=="")userId=null;
+        if (name==null)name="";
+        name = "%" + name +"%";
         List<User> addresslist = addressMapper.selectByIdAndNameKey(userId, name);
         PageInfo<User> pageInfo = new PageInfo<User>(addresslist);
         long total = pageInfo.getTotal();
         ListBean listBean = new ListBean(addresslist,total);
         return listBean;
     }
+
 }

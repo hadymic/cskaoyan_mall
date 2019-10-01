@@ -15,11 +15,31 @@ public class Page {
     private String mobile;
     private String name;
     private String userId;
-    private int valueId;
+    private String valueId;
+    private String goodsId;
+    private String keyword;
 
-    public int getValueId() { return valueId; }
+    public String getKeyword() {
+        return keyword;
+    }
 
-    public Page setValueId(int valueId) { this.valueId = valueId;return this; }
+    public Page setKeyword(String keyword) {
+        this.keyword = keyword;
+        return this;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public Page setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+        return this;
+    }
+
+    public String getValueId() { return valueId; }
+
+    public Page setValueId(String valueId) { this.valueId = valueId;return this; }
 
     public String getUserId() { return userId; }
 

@@ -187,17 +187,11 @@
             is_default as  isDefault,
             add_time as  addTime,
             update_time as updateTime,
-            deleted from cskaoyan_mall_address
-   <if test="userId != null or name != null ">
-            where
-   </if>
-   <trim prefix="values (" suffix=")" prefixOverrides="and">
-            <if test="name != null">
-              and name like ('%'#{name}'%')
+            deleted
+            from cskaoyan_mall_address
+            where `name` like #{name}
+            <if test="userId != null">
+              and user_id = #{userId}
             </if>
-            <if test="userId!=null">
-              and userId = #{userId}
-            </if>
-   </trim>
   </select>
 </mapper>
