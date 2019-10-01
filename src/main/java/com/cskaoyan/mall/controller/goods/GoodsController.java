@@ -17,11 +17,12 @@ import java.util.Map;
 
 
 @RestController
+@RequestMapping("admin/goods")
 public class GoodsController {
     @Autowired
     GoodsService goodsService;
 
-    @RequestMapping("admin/goods/list")
+    @RequestMapping("list")
     public BaseRespVo GoodsList(Page page, Goods goods) {
         if (goods != null) {
             ListBean listBean = goodsService.selectGoodsByGoodsSnOrName(page, goods);
@@ -31,7 +32,7 @@ public class GoodsController {
         return BaseRespVo.success(listBean);
     }
 
-    @RequestMapping("admin/goods/catAndBrand")
+    @RequestMapping("catAndBrand")
     public BaseRespVo CatAndBrand() {
         List<BaseValueLabel> brandList = goodsService.selectBrandList();
         List<CategoryList> categoryList = goodsService.selectCategory();
@@ -41,13 +42,13 @@ public class GoodsController {
         return BaseRespVo.success(map);
     }
 
-    @RequestMapping("admin/goods/delete")
+    @RequestMapping("delete")
     public BaseRespVo deleteGoods(Goods goods) {
         goodsService.deleteGoods(goods);
         return BaseRespVo.success(null);
     }
 
-    @RequestMapping("admin/goods/detail")
+    @RequestMapping("detail")
     public BaseRespVo GoodsDetail(int id) {
         Goods goods = goodsService.selectGoodsDetail(id);
         return BaseRespVo.success(goods);

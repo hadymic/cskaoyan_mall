@@ -9,6 +9,9 @@ import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
 import java.util.List;
 
 
+/**
+ * @author stark_h
+ */
 public interface GoodsService {
     ListBean queryGoods(Page page);
     //根据goodsSn(精确查找) 或 name(模糊查找)

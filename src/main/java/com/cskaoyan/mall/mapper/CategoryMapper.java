@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -15,13 +17,19 @@ public interface CategoryMapper {
 
     Category selectByPrimaryKey(Integer id);
 
+    List<Category> selectAll();
+
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
+
     /**
      * categoryList
      * @param pid
      * @return
      */
     List<BaseValueLabel>  selectCategory(@Param("pid") int pid);
+
+    void updateDeletedById(Category record);
+
 }

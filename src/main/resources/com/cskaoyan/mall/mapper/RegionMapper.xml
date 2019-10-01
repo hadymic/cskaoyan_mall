@@ -7,24 +7,37 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="code" jdbcType="INTEGER" property="code" />
+    <collection property="children" column="id" select="com.cskaoyan.mall.mapper.RegionMapper.selectChildren"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, pid, name, type, code
+    id, pid, name, `type`, code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_region
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_region
+    where `type` = 1 and deleted = 0
+  </select>
+  <select id="selectChildren" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_region
+    where pid = #{id} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_region
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Region">
-    insert into cskaoyan_mall_region (id, pid, name, 
+    insert into cskaoyan_mall_region (id, pid, name,
       type, code)
-    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
       #{type,jdbcType=TINYINT}, #{code,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Region">

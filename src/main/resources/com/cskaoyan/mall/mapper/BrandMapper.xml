@@ -2,39 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.BrandMapper">
-
     <select id="selectBrandList"
             resultType="com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel">
   select id as value,name as label from cskaoyan_mall_brand
   </select>
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Brand">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="desc" jdbcType="VARCHAR" property="desc"/>
-        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
-        <result column="sort_order" jdbcType="TINYINT" property="sortOrder"/>
-        <result column="floor_price" jdbcType="DECIMAL" property="floorPrice"/>
-        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP"
-                property="updateTime"/>
-        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="desc" jdbcType="VARCHAR" property="desc" />
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="sort_order" jdbcType="TINYINT" property="sortOrder" />
+        <result column="floor_price" jdbcType="DECIMAL" property="floorPrice" />
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="deleted" jdbcType="BIT" property="deleted" />
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, desc, pic_url, sort_order, floor_price, add_time, update_time, deleted
+    id, name, `desc`, pic_url, sort_order, floor_price, add_time, update_time, deleted
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
-            resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from cskaoyan_mall_brand
         where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_brand
+        <where>
+            deleted = 0
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="name != '%null%'">
+                and name like #{name,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_brand
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="com.cskaoyan.mall.bean.Brand">
-    insert into cskaoyan_mall_brand (id, name, desc,
+    insert into cskaoyan_mall_brand (id, name, `desc`,
       pic_url, sort_order, floor_price,
       add_time, update_time, deleted
       )
@@ -53,7 +64,7 @@
                 name,
             </if>
             <if test="desc != null">
-                desc,
+                `desc`,
             </if>
             <if test="picUrl != null">
                 pic_url,
@@ -104,15 +115,14 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective"
-            parameterType="com.cskaoyan.mall.bean.Brand">
+    <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.Brand">
         update cskaoyan_mall_brand
         <set>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="desc != null">
-                desc = #{desc,jdbcType=VARCHAR},
+                `desc` = #{desc,jdbcType=VARCHAR},
             </if>
             <if test="picUrl != null">
                 pic_url = #{picUrl,jdbcType=VARCHAR},
@@ -127,7 +137,7 @@
                 add_time = #{addTime,jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
+                update_time = now(),
             </if>
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
@@ -135,11 +145,10 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey"
-            parameterType="com.cskaoyan.mall.bean.Brand">
+    <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Brand">
     update cskaoyan_mall_brand
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       pic_url = #{picUrl,jdbcType=VARCHAR},
       sort_order = #{sortOrder,jdbcType=TINYINT},
       floor_price = #{floorPrice,jdbcType=DECIMAL},
