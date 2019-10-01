@@ -13,7 +13,7 @@ git commit -m "author:名字 msg:此次提交的主要改动"
 git commit -m "author:hadymic msg:create project"
 ```
 
-## role
+## rule
 
 1. 在dev分支中进行开发，不允许提交至master
 
