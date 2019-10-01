@@ -9,8 +9,9 @@
         <include refid="Blob_Column_List"/>
         from cskaoyan_mall_goods
         <where>
+            deleted = 0
             <if test="goods.goodsSn != null">
-                goods_sn = #{goods.goodsSn}
+                and goods_sn = #{goods.goodsSn}
             </if>
             <if test="goods.name != null">
                 and name like concat('%',#{goods.name},'%')
@@ -22,7 +23,7 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from cskaoyan_mall_goods
+        from cskaoyan_mall_goods where deleted = 0
     </select>
     <update id="deleteGoods">
     update cskaoyan_mall_goods set  deleted = 1 where id = #{id}

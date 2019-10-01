@@ -17,7 +17,7 @@ public class UserManageServerImpl implements UserManageServer {
     @Autowired
     UserMapper userMapper;
     @Override
-    public ListBean dispaly(Page utipage) {
+    public ListBean getDispalyList(Page utipage) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
         String username = utipage.getUsername();
         String mobile = utipage.getMobile();

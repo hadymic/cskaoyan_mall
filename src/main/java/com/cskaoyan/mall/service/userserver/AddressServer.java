@@ -4,5 +4,5 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 
 public interface AddressServer {
-    ListBean address(Page utipage);
+    ListBean getAddressList(Page utipage);
 }

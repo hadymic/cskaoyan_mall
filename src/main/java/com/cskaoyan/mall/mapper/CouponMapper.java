@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.mapper;
 
+import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.bean.Coupon;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +20,5 @@ public interface CouponMapper {
     int updateByPrimaryKey(Coupon record);
 
     List<Coupon> queryAllCoupons();
+
 }

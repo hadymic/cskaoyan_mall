@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 商品管理下商品评论
+ * @author stark_h
+ */
 @RestController
 @RequestMapping("admin/comment")
 public class CommentController {
