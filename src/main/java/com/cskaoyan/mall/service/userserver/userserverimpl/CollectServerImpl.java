@@ -1,10 +1,8 @@
 package com.cskaoyan.mall.service.userserver.userserverimpl;
 
 import com.cskaoyan.mall.bean.Comment;
-import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.mapper.CollectMapper;
-import com.cskaoyan.mall.mapper.CommentMapper;
-import com.cskaoyan.mall.service.userserver.CollectServer;
+import com.cskaoyan.mall.service.userserver.CollectService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CollectServerImpl implements CollectServer {
+public class CollectServerImpl implements CollectService {
     @Autowired
     CollectMapper collectMapper;
     public ListBean getCollectList(Page utipage){

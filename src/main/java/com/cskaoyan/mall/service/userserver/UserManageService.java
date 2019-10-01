@@ -5,6 +5,6 @@ import com.cskaoyan.mall.util.Page;
 
 import java.util.List;
 
-public interface UserManageServer {
+public interface UserManageService {
     ListBean getDispalyList(Page page);
 }

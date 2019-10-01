@@ -1,21 +1,19 @@
 package com.cskaoyan.mall.service.userserver.userserverimpl;
 
-import com.cskaoyan.mall.bean.Address;
 import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.mapper.AddressMapper;
-import com.cskaoyan.mall.service.userserver.AddressServer;
+import com.cskaoyan.mall.service.userserver.AddressService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Component
-public class AddressServerImpl implements AddressServer {
+public class AddressServerImpl implements AddressService {
     @Autowired
     AddressMapper addressMapper;
     @Override

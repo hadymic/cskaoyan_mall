@@ -1,9 +1,8 @@
 package com.cskaoyan.mall.service.userserver.userserverimpl;
 
 import com.cskaoyan.mall.bean.SearchHistory;
-import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.mapper.SearchHistoryMapper;
-import com.cskaoyan.mall.service.userserver.SearchHistoryServer;
+import com.cskaoyan.mall.service.userserver.SearchHistoryService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SearchHistoryServerImpl implements SearchHistoryServer {
+public class SearchHistoryServiceImpl implements SearchHistoryService {
     @Autowired
     SearchHistoryMapper searchHistoryMapper;
     @Override

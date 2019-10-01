@@ -16,11 +16,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, username, mobile, feed_type, content, status, has_picture, pic_urls, 
+    id, user_id, username, mobile, feed_type, content, status, has_picture, pic_urls,
     add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_feedback
     where id = #{id,jdbcType=INTEGER}
@@ -30,14 +30,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Feedback">
-    insert into cskaoyan_mall_feedback (id, user_id, username, 
-      mobile, feed_type, content, 
-      status, has_picture, pic_urls, 
+    insert into cskaoyan_mall_feedback (id, user_id, username,
+      mobile, feed_type, content,
+      status, has_picture, pic_urls,
       add_time, update_time, deleted
       )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
-      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT}, #{picUrls,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT}, #{picUrls,jdbcType=VARCHAR},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
@@ -174,4 +174,30 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByUsernameAndId" resultType="com.cskaoyan.mall.bean.Feedback">
+    select id,
+    user_id	as userId,
+    username,
+    mobile,
+    feed_type as feedType,
+    content,
+    status,
+    has_picture as hasPicture,
+    pic_urls picUrls,
+    add_time as addTime,
+    update_time updateTime,
+    deleted
+    from cskaoyan_mall_feedback
+    <if test="username != null or id != null">
+      where
+    </if>
+    <trim prefixOverrides="and">
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="username != null">
+        and username = #{username}
+      </if>
+    </trim>
+  </select>
 </mapper>

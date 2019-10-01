@@ -2,7 +2,7 @@ package com.cskaoyan.mall.service.userserver.userserverimpl;
 
 import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.mapper.UserMapper;
-import com.cskaoyan.mall.service.userserver.UserManageServer;
+import com.cskaoyan.mall.service.userserver.UserManageService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
-public class UserManageServerImpl implements UserManageServer {
+public class UserManageServiceImpl implements UserManageService {
     @Autowired
     UserMapper userMapper;
     @Override

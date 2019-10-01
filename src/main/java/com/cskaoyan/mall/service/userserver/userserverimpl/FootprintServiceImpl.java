@@ -1,9 +1,8 @@
 package com.cskaoyan.mall.service.userserver.userserverimpl;
 
-import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.bean.Footprint;
 import com.cskaoyan.mall.mapper.FootprintMapper;
-import com.cskaoyan.mall.service.userserver.FootprintServer;
+import com.cskaoyan.mall.service.userserver.FootprintService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.github.pagehelper.PageHelper;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
-public class FootprintServerImpl implements FootprintServer {
+public class FootprintServiceImpl implements FootprintService {
     @Autowired
     FootprintMapper footprintMapper;
     @Override
