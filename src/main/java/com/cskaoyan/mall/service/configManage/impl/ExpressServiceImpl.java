@@ -3,13 +3,9 @@ package com.cskaoyan.mall.service.configManage.impl;
 import com.cskaoyan.mall.bean.System;
 import com.cskaoyan.mall.mapper.SystemMapper;
 import com.cskaoyan.mall.service.configManage.ExpressService;
-import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.sun.corba.se.spi.legacy.connection.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
