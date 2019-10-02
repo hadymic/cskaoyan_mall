@@ -65,6 +65,8 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public boolean deleteCoupon(Integer id) {
+        //删除优惠券同时删除优惠券关联的user表信息
+        couponUserMapper.deleteByCouponId(id);
         Coupon coupon = new Coupon();
         coupon.setId(id);
         coupon.setDeleted(true);
