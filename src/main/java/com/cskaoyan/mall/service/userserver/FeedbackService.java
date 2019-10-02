@@ -4,5 +4,5 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 
 public interface FeedbackService {
-    ListBean getFeedbackList(Page utipage);
+    ListBean getFeedbackList(Page utipage,String id,String username);
 }

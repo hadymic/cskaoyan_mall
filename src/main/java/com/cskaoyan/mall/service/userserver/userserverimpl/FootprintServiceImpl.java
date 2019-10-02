@@ -17,14 +17,11 @@ public class FootprintServiceImpl implements FootprintService {
     @Autowired
     FootprintMapper footprintMapper;
     @Override
-    public ListBean getFootprintList(Page utipage) {
+    public ListBean getFootprintList(Page utipage,String userId,String goodsId) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        String userId = utipage.getUserId();
-        String goodsId = utipage.getGoodsId();
         if (userId=="")userId=null;
         if (goodsId=="")goodsId=null;
         List<Footprint> footprints = footprintMapper.selectByUserIdAndGoodsId(userId, goodsId);
         return PageUtils.page(footprints);
-        //return null;
     }
 }
