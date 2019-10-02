@@ -31,6 +31,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Admin">
+    <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+    SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into cskaoyan_mall_admin (id, username, password,
       last_login_ip, last_login_time, avatar,
       add_time, update_time, deleted,
@@ -38,7 +41,7 @@
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR},
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
-      #{roleIds,jdbcType=VARCHAR})
+      #{roleIds,jdbcType=VARCHAR })
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Admin">
     insert into cskaoyan_mall_admin
@@ -159,7 +162,7 @@
   <!--后台管理系统显示&查找-->
   <select id="queryAdmin"  resultType="com.cskaoyan.mall.bean.Admin">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List"/>, role_ids as  roleIds
     from cskaoyan_mall_admin  where  deleted=0
     <if test="username != null">
      and username like  "%"#{username}"%"

@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Admin {
@@ -21,7 +23,7 @@ public class Admin {
 
     private Boolean deleted;
 
-    private String roleIds;
+    private Byte[] roleIds;
 
     public Integer getId() {
         return id;
@@ -95,11 +97,11 @@ public class Admin {
         this.deleted = deleted;
     }
 
-    public String getRoleIds() {
+    public Byte[] getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(String roleIds) {
-        this.roleIds = roleIds == null ? null : roleIds.trim();
+    public void setRoleIds(Byte[] roleIds) {
+        this.roleIds = roleIds;
     }
 }
