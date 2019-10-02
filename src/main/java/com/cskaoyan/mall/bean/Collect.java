@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Collect {
@@ -10,9 +12,9 @@ public class Collect {
     private Integer valueId;
 
     private Byte type;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date addTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date updateTime;
 
     private Boolean deleted;

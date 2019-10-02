@@ -18,18 +18,11 @@ public class SearchHistoryServiceImpl implements SearchHistoryService {
     @Autowired
     SearchHistoryMapper searchHistoryMapper;
     @Override
-    public ListBean getSearchHistoryList(Page utipage) {
+    public ListBean getSearchHistoryList(Page utipage,String userId,String keyword) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        String userId = utipage.getUserId();
-        String keyword = utipage.getKeyword();
         if (userId=="") userId = null;
         if (keyword=="") keyword = null;
         List<SearchHistory> searchHistories = searchHistoryMapper.selectByUserIdAndKeyword(userId,keyword);
-//        PageInfo<SearchHistory> pageInfo = new PageInfo<SearchHistory>(searchHistories);
-//        long total = pageInfo.getTotal();
-//        ListBean listBean = new ListBean(searchHistories,total);
-//        return listBean;
         return PageUtils.page(searchHistories);
-        //return null;
     }
 }

@@ -11,7 +11,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, value_id, type, add_time, update_time, deleted
+    id, user_id as userId, value_id as valueId, `type`, add_time as addTime, update_time as updateTime, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -115,24 +115,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByTwoId" resultType="com.cskaoyan.mall.bean.Collect">
-    select
-    id,
-    user_id,
-    value_id as valueId,
-    `type`,
-    add_time,
-    update_time as updateTime,
-    deleted from cskaoyan_mall_collect
-    <if test="valueId != null or userId != null">
-      where
-    </if>
-    <trim  prefixOverrides="and">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_collect
+      where deleted = 0
       <if test="userId != null">
         and userId = #{userId}
       </if>
       <if test="valueId != null">
         and valueId = #{valueId}
       </if>
-    </trim>
   </select>
 </mapper>

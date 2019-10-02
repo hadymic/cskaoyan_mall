@@ -19,4 +19,6 @@ public interface SystemMapper {
 
     int updateByKeyNema(@Param("keyValue")String keyValue,
                         @Param("keyName") String keyName);
+
+    String selectByKeyName(@Param("keyName") String keyName);
 }

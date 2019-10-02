@@ -10,7 +10,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, goods_id, add_time, update_time, deleted
+    id, user_id as userId, goods_id as goodsId, add_time as addTime, update_time as updateTime, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -104,24 +104,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByUserIdAndGoodsId" resultType="com.cskaoyan.mall.bean.Footprint">
-    SELECT
-    id,
-    user_id,
-    goods_id,
-    add_time,
-    update_time,
-    deleted
+    SELECT  <include refid="Base_Column_List"/>
     from cskaoyan_mall_footprint
-    <if test="userId != null or goodsId !=null">
-      where
-    </if>
-    <trim prefixOverrides="and">
+    where deleted = 0
      <if test="userId != null">
        and user_id = #{userId}
       </if>
       <if test="goodsId != null">
         and goods_id = #{goodsId}
       </if>
-    </trim>
   </select>
 </mapper>
