@@ -28,14 +28,17 @@ public class StorageServiceImpl implements StorageService {
     public ListBean<Storage> queryStorage(String key, String name, Page page) {
         PageUtils.startPage(page);
         List<Storage> storages = storageMapper.queryStorage(key, name);
+        for (Storage storage : storages) {
+            if (!storage.getUrl().startsWith("http")) {
+                storage.setUrl(myFileConfig.addPicUrl(storage.getUrl()));
+            }
+        }
         return PageUtils.page(storages);
     }
 
     @Override
     public void delete(Storage storage) {
         int i = storageMapper.deleteStorage(storage.getId());
-
-
     }
 
     @Override
