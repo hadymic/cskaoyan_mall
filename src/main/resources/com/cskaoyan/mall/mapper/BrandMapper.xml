@@ -32,7 +32,7 @@
         from cskaoyan_mall_brand
         <where>
             deleted = 0
-            <if test="id != null">
+            <if test="id != null &amp; id != ''">
                 and id = #{id,jdbcType=INTEGER}
             </if>
             <if test="name != '%null%'">
