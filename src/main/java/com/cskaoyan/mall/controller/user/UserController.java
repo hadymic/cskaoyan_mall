@@ -1,12 +1,11 @@
 package com.cskaoyan.mall.controller.user;
+import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.service.userserver.*;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin/")
 @RestController
@@ -14,67 +13,43 @@ public class UserController {
     @Autowired
     UserManageService userManageService;
     @RequestMapping("user/list")
-    public BaseRespVo userManage(Page utipage, Model model){
-        ListBean dispaly = userManageService.getDispalyList(utipage);
-      /*  BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-        objectBaseRespVo.setData(dispaly);
-        objectBaseRespVo.setErrmsg("成功");
-        objectBaseRespVo.setErrno(0);*/
+    public BaseRespVo userManage(Page utipage,String username, String mobile){
+        ListBean dispaly = userManageService.getDispalyList(utipage,username,mobile);
         return BaseRespVo.success(dispaly);
     }
     @Autowired
     AddressService addressService;
     @RequestMapping("address/list")
-    public BaseRespVo address(Page utipage, Model model){
-        ListBean dispaly = addressService.getAddressList(utipage);
-//        BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-//        objectBaseRespVo.setData(dispaly);
-//        objectBaseRespVo.setErrmsg("成功");
-//        objectBaseRespVo.setErrno(0);
+    public BaseRespVo address(Page utipage,String name,String userId){
+        ListBean dispaly = addressService.getAddressList(utipage,name,userId);
         return BaseRespVo.success(dispaly);
     }
     @Autowired
     CollectService collectService;
     @RequestMapping("collect/list")
-    public BaseRespVo collect(Page utipage,Model model){
-        ListBean dispaly = collectService.getCollectList(utipage);
-//        BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-//        objectBaseRespVo.setData(dispaly);
-//        objectBaseRespVo.setErrmsg("成功");
-//        objectBaseRespVo.setErrno(0);
+    public BaseRespVo collect(Page utipage,String userId,String valueId){
+        ListBean dispaly = collectService.getCollectList(utipage,userId,valueId);
         return BaseRespVo.success(dispaly);
     }
     @Autowired
     FootprintService footprintService;
     @RequestMapping("footprint/list")
-    public BaseRespVo footprint(Page utipage,Model model){
-        ListBean dispaly = footprintService.getFootprintList(utipage);
-//        BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-//        objectBaseRespVo.setData(dispaly);
-//        objectBaseRespVo.setErrmsg("成功");
-//        objectBaseRespVo.setErrno(0);
+    public BaseRespVo footprint(Page utipage,String userId,String goodsId){
+        ListBean dispaly = footprintService.getFootprintList(utipage,userId,goodsId);
         return  BaseRespVo.success(dispaly);
     }
     @Autowired
     SearchHistoryService searchHistoryService;
     @RequestMapping("history/list")
-    public BaseRespVo searchHistory(Page utipage,Model model){
-        ListBean dispaly = searchHistoryService.getSearchHistoryList(utipage);
-//        BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-//        objectBaseRespVo.setData(dispaly);
-//        objectBaseRespVo.setErrmsg("成功");
-//        objectBaseRespVo.setErrno(0);
+    public BaseRespVo searchHistory(Page utipage,String userId,String goodsId){
+        ListBean dispaly = searchHistoryService.getSearchHistoryList(utipage,userId,goodsId);
         return  BaseRespVo.success(dispaly);
     }
     @Autowired
     FeedbackService feedbackService;
     @RequestMapping(value = "feedback/list")
-    public BaseRespVo feedback(Page utipage,Model model){
-        ListBean dispaly = feedbackService.getFeedbackList(utipage);
-//        BaseRespVo<Object> objectBaseRespVo = new BaseRespVo<>();
-//        objectBaseRespVo.setData(dispaly);
-//        objectBaseRespVo.setErrmsg("成功");
-//        objectBaseRespVo.setErrno(0);
+    public BaseRespVo feedback(Page utipage,String id,String username){
+        ListBean dispaly = feedbackService.getFeedbackList(utipage,id,username);
         return  BaseRespVo.success(dispaly);
     }
 }

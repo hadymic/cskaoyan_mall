@@ -11,7 +11,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, keyword, from, add_time, update_time, deleted
+    id, user_id as userId, keyword, `from`, add_time as addTime, update_time as updateTime, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -114,25 +114,36 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--<select id="selectByUserIdAndKeyword" resultType="com.cskaoyan.mall.bean.SearchHistory">-->
+    <!--select id,-->
+    <!--user_id as userId,-->
+    <!--keyword,-->
+    <!--`from`,-->
+    <!--add_time as addTime,-->
+    <!--update_time as updateTime,-->
+    <!--deleted-->
+    <!--from cskaoyan_mall_search_history-->
+    <!--<if test="userId != null or keyword != null">-->
+      <!--where-->
+    <!--</if>-->
+    <!--<trim prefixOverrides="and">-->
+      <!--<if test="userId != null">-->
+        <!--and user_id = #{userId}-->
+      <!--</if>-->
+      <!--<if test="keyword != null">-->
+        <!--and keyword = #{keyword}-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</select>-->
   <select id="selectByUserIdAndKeyword" resultType="com.cskaoyan.mall.bean.SearchHistory">
-    select id,
-    user_id as userId,
-    keyword,
-    `from`,
-    add_time as addTime,
-    update_time as updateTime,
-    deleted
-    from cskaoyan_mall_search_history
-    <if test="userId != null or keyword != null">
-      where
+      select <include refid="Base_Column_List"/>
+      from cskaoyan_mall_search_history
+      where deleted = 0
+    <if test="userId != null">
+      and user_id = #{userId}
     </if>
-    <trim prefixOverrides="and">
-      <if test="userId != null">
-        and user_id = #{userId}
-      </if>
-      <if test="keyword != null">
-        and keyword = #{keyword}
-      </if>
-    </trim>
+    <if test="keyword != null">
+      and keyword = #{keyword}
+    </if>
   </select>
 </mapper>
