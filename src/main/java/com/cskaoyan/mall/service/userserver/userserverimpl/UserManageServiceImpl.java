@@ -5,6 +5,7 @@ import com.cskaoyan.mall.mapper.UserMapper;
 import com.cskaoyan.mall.service.userserver.UserManageService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.PageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -26,10 +27,11 @@ public class UserManageServiceImpl implements UserManageService {
         username = "%"+username+"%";
         mobile = "%"+mobile+"%";
         List<User> users = userMapper.selectByNameAndMobile(username, mobile);
-        PageInfo<User> pageInfo = new PageInfo<User>(users);
-        int total =  (int)pageInfo.getTotal();
-        ListBean listBean = new ListBean(users,total);
-        return listBean;
+//        PageInfo<User> pageInfo = new PageInfo<User>(users);
+//        int total =  (int)pageInfo.getTotal();
+//        ListBean listBean = new ListBean(users,total);
+        return PageUtils.page(users);
+       // return listBean;
     }
 
 }

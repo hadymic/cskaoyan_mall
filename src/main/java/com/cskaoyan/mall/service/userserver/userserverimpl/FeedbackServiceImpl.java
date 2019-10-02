@@ -5,6 +5,7 @@ import com.cskaoyan.mall.mapper.FeedbackMapper;
 import com.cskaoyan.mall.service.userserver.FeedbackService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.PageUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (id=="") id = null;
         if (username=="") username = null;
         List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id,username);
-        PageInfo<Feedback> pageInfo = new PageInfo<Feedback>(feedbackList);
-        long total = pageInfo.getTotal();
-        ListBean listBean = new ListBean(feedbackList,total);
-        return listBean;
+//        PageInfo<Feedback> pageInfo = new PageInfo<Feedback>(feedbackList);
+//        long total = pageInfo.getTotal();
+//        ListBean listBean = new ListBean(feedbackList,total);
+//        return listBean;
+        return PageUtils.page(feedbackList);
        // return null;
     }
 }
