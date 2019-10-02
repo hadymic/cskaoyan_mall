@@ -7,9 +7,9 @@ import com.cskaoyan.mall.util.Page;
 public interface TopicService {
     ListBean<Topic> queryTopics(Page page, String title, String subtitle);
 
-    String insertTopic(Topic topic);
+    Topic insertTopic(Topic topic);
 
-    String updateTopic(Topic topic);
+    Topic updateTopic(Topic topic);
 
     boolean deleteTopic(Integer id);
 }

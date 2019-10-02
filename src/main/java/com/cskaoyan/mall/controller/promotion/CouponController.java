@@ -67,8 +67,8 @@ public class CouponController {
      */
     @PostMapping("create")
     public BaseRespVo insertCoupon(@RequestBody Coupon coupon) {
-        String msg = couponService.insertCoupon(coupon);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        Coupon newCoupon = couponService.insertCoupon(coupon);
+        return newCoupon != null ? BaseRespVo.success(newCoupon) : BaseRespVo.fail("优惠券添加失败");
     }
 
     /**
@@ -79,8 +79,8 @@ public class CouponController {
      */
     @PostMapping("update")
     public BaseRespVo updateCoupon(@RequestBody Coupon coupon) {
-        String msg = couponService.updateCoupon(coupon);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        Coupon newCoupon = couponService.updateCoupon(coupon);
+        return newCoupon != null ? BaseRespVo.success(newCoupon) : BaseRespVo.fail("优惠券更新失败");
     }
 
     /**
