@@ -39,8 +39,8 @@ public class AdController {
      */
     @PostMapping("create")
     public BaseRespVo insertAd(@RequestBody Ad ad) {
-        boolean flag = adService.insertAd(ad);
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("广告添加失败");
+        Ad newAd = adService.insertAd(ad);
+        return newAd != null ? BaseRespVo.success(newAd) : BaseRespVo.fail("广告添加失败");
     }
 
     /**
@@ -51,8 +51,8 @@ public class AdController {
      */
     @PostMapping("update")
     public BaseRespVo updateAd(@RequestBody Ad ad) {
-        boolean flag = adService.updateAd(ad);
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("广告更新失败");
+        Ad newAd = adService.updateAd(ad);
+        return newAd != null ? BaseRespVo.success(newAd) : BaseRespVo.fail("广告更新失败");
     }
 
     /**

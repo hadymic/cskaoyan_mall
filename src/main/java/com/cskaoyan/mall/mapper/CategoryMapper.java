@@ -30,6 +30,12 @@ public interface CategoryMapper {
      */
     List<BaseValueLabel>  selectCategory(@Param("pid") int pid);
 
-    void updateDeletedById(Category record);
+    int updateDeletedById(Category record);
 
+    /**
+     * Zeng-jz: 增加商品
+     * @param category
+     * @return
+     */
+    int insertNewCategory(@Param("newCategory") Category category);
 }

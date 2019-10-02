@@ -46,23 +46,21 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public String insertCoupon(Coupon coupon) {
+    public Coupon insertCoupon(Coupon coupon) {
         //生成code
         //判断code是否重复
         //如果code重复则重新生成
 
         coupon.setAddTime(new Date());
         coupon.setDeleted(false);
-        couponMapper.insertSelective(coupon);
-        return null;
+        return couponMapper.insertSelectKey(coupon) == 1 ? coupon : null;
     }
 
     @Override
-    public String updateCoupon(Coupon coupon) {
+    public Coupon updateCoupon(Coupon coupon) {
         //判断优惠券有效期状态
         coupon.setUpdateTime(new Date());
-        couponMapper.updateByPrimaryKeySelective(coupon);
-        return null;
+        return couponMapper.updateByPrimaryKeySelective(coupon) == 1 ? coupon : null;
     }
 
     @Override

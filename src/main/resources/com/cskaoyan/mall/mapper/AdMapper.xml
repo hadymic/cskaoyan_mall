@@ -186,4 +186,19 @@
       and content like concat('%',#{content},'%')
     </if>
   </select>
+  <insert id="insertSelectKey" parameterType="com.cskaoyan.mall.bean.Ad">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_ad (name, link,
+      url, position, content,
+      start_time, end_time, enabled,
+      add_time, update_time, deleted
+      )
+    values (#{name,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{position,jdbcType=TINYINT}, #{content,jdbcType=VARCHAR},
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=BIT},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
 </mapper>

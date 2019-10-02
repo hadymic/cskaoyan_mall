@@ -37,9 +37,9 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public boolean updateAd(Ad ad) {
+    public Ad updateAd(Ad ad) {
         ad.setUpdateTime(new Date());
-        return adMapper.updateByPrimaryKeySelective(ad) == 1;
+        return adMapper.updateByPrimaryKeySelective(ad) == 1 ? ad : null;
     }
 
     @Override
@@ -52,9 +52,9 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public boolean insertAd(Ad ad) {
+    public Ad insertAd(Ad ad) {
         ad.setAddTime(new Date());
         ad.setDeleted(false);
-        return adMapper.insertSelective(ad) == 1;
+        return adMapper.insertSelectKey(ad) == 1 ? ad : null;
     }
 }

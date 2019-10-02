@@ -19,4 +19,6 @@ public interface GrouponRulesMapper {
     int updateByPrimaryKey(GrouponRules record);
 
     List<GrouponRules> queryGrouponRuless(@Param("goodsId") Integer goodsId);
+
+    int insertSelectKey(GrouponRules record);
 }

@@ -13,3 +13,7 @@ logging:
 spring:
   profiles:
     active: db5
+
+# typeHandler扫描器
+mybatis:
+  type-handlers-package: com.cskaoyan.mall.typehandler

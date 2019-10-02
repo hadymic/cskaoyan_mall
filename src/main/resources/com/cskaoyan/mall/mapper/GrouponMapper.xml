@@ -19,7 +19,7 @@
     share_url, payed, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}
@@ -161,10 +161,13 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="queryGroupons" resultMap="BaseResultMap">
+  <select id="queryGrouponsByRuleId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where deleted = 0
+    <if test="ruleId != null">
+      and rules_id = #{ruleId}
+    </if>
   </select>
 </mapper>

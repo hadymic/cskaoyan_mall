@@ -1,7 +1,7 @@
-package com.cskaoyan.mall.controller.mallmaneger;
+package com.cskaoyan.mall.controller.mallmanager;
 
 import com.cskaoyan.mall.bean.Brand;
-import com.cskaoyan.mall.service.mallmaneger.BrandService;
+import com.cskaoyan.mall.service.mallmanager.BrandService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
@@ -54,6 +54,21 @@ public class BrandController {
     @RequestMapping("update")
     public BaseRespVo update(@RequestBody Brand brand){
         Brand newBrand = brandService.update(brand);
+        if (newBrand != null) {
+            return BaseRespVo.success(newBrand);
+        }else {
+            return BaseRespVo.fail("参数不对");
+        }
+    }
+
+    /**
+     * 添加品牌制造商
+     * @param brand
+     * @return
+     */
+    @RequestMapping("create")
+    public BaseRespVo create(@RequestBody Brand brand){
+        Brand newBrand = brandService.create(brand);
         if (newBrand != null) {
             return BaseRespVo.success(newBrand);
         }else {

@@ -12,8 +12,15 @@ public class User {
     private String password;
 
     private Byte gender;
+<<<<<<< HEAD
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
+=======
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
+
+>>>>>>> 1ddf585abbd0efbacc1bc512058052c9e55821fb
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
@@ -30,9 +37,17 @@ public class User {
     private String weixinOpenid;
 
     private Byte status;
+<<<<<<< HEAD
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date addTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+=======
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date addTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+>>>>>>> 1ddf585abbd0efbacc1bc512058052c9e55821fb
     private Date updateTime;
 
     private Boolean deleted;

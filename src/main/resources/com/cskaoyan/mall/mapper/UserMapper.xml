@@ -28,7 +28,7 @@
     from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.StatUserVo">
+  <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.statisticalform.StatUserVo">
     select birthday as `day`,count(birthday) as users
     from cskaoyan_mall_user
     group by birthday;
