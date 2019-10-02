@@ -112,20 +112,35 @@ public class GoodsServiceImpl implements GoodsService {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        //去除gallery图片数组前缀
+        String[] gallery = goods.getGallery();
+        String[] newUrl = null;
+        for (String oldUrl : gallery) {
+            if (!oldUrl.startsWith("http")){
+                String addPicUrl = myFileConfig.addPicUrl(oldUrl);
+                newUrl = new String[gallery.length];
+                for (int i = 0; i < gallery.length; i++) {
+                    newUrl[i]= addPicUrl;
+                }
+                goods.setGallery(newUrl);
+            }
+        }
+
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
-        List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();
+        List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();//更新的specifications
         //查找数据库中的specification
         List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(goodsId);
         for (GoodsSpecification specification : specifications) {
+            if (specification.getId() == null) {//id不存在添加规格
+                specification.setGoodsId(goodsId);//设置goodsId
+                specification.setDeleted(false);//deleted置为0
+                specification.setAddTime(date);//设置添加时间
+                specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
+                goodsSpecificationMapper.insertSelective(specification);
+            }
             for (GoodsSpecification goodsSpecification : goodsSpecifications) {//更新规格信息
-                if (specification.getId() == null) {//id不存在添加规格
-                    specification.setGoodsId(goodsId);//设置goodsId
-                    specification.setDeleted(false);//deleted置为0
-                    specification.setAddTime(date);//设置添加时间
-                    specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
-                    goodsSpecificationMapper.insertSelective(specification);
-                } else if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
+                 if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
                     goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);//复用，goodsId未改变
                 } else {//删除规格设置为deleted=1
                     specification.setUpdateTime(date);//设置更新时间
