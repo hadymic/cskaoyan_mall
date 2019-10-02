@@ -113,18 +113,18 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = goodsEditVo.getGoods();
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
-        String[] gallery = goods.getGallery();
+     /*   String[] gallery = goods.getGallery();
         String[] newUrl = null;
         for (String oldUrl : gallery) {
             if (!oldUrl.startsWith("http")){
-                String addPicUrl = myFileConfig.addPicUrl(oldUrl);
+                String addPicUrl = myFileConfig.parsePicUrl(oldUrl);
                 newUrl = new String[gallery.length];
                 for (int i = 0; i < gallery.length; i++) {
                     newUrl[i]= addPicUrl;
                 }
                 goods.setGallery(newUrl);
             }
-        }
+        }*/
 
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
