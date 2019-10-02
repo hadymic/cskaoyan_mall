@@ -41,7 +41,6 @@ public class AdminServiceImpl implements AdminService {
     public Admin insertAdmin(Admin admin) {
         admin.setAddTime(new Date());
         admin.setUpdateTime(new Date());
-
         adminMapper.insert(admin);
         return  admin;
     }

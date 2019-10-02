@@ -7,6 +7,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.CategoryVo;
+import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,8 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public List<CategoryVo> roleOptions() {
-        List<CategoryVo> options= roleMapper.roleOptions();
+    public List<BaseValueLabel> roleOptions() {
+        List<BaseValueLabel> options= roleMapper.roleOptions();
         return options;
 
     }

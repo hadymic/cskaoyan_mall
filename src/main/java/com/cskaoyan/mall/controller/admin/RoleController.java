@@ -6,6 +6,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.CategoryVo;
+import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class RoleController {
      */
      @RequestMapping("admin/role/options")
     public  BaseRespVo roleOptions(){
-         List<CategoryVo> category = roleService.roleOptions();
+         List<BaseValueLabel> category = roleService.roleOptions();
          return  BaseRespVo.success(category);
      }
 

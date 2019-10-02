@@ -127,7 +127,7 @@
     </if>
   </select>
 
-  <select id="roleOptions" resultType="com.cskaoyan.mall.vo.CategoryVo">
+  <select id="roleOptions" resultType="com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel">
     select  id as  value,name as label from cskaoyan_mall_role
   </select>
 <update id="deleteRloe">
