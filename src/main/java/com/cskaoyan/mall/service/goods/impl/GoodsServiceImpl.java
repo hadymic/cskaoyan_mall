@@ -90,17 +90,19 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));//添加图片picUrl前缀
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         for (GoodsSpecification specification : specifications) {
-            specification.setPicUrl(myFileConfig.addPicUrl(specification.getPicUrl()));
+            specification.setPicUrl(myFileConfig.addPicUrl(specification.getPicUrl()));//添加图片picUrl前缀
         }
         List<GoodsProduct> goodsProducts = goodsProductMapper.selectProductsByGoodsId(id);
         for (GoodsProduct goodsProduct : goodsProducts) {
-            goodsProduct.setUrl(myFileConfig.addPicUrl(goodsProduct.getUrl()));
+            goodsProduct.setUrl(myFileConfig.addPicUrl(goodsProduct.getUrl()));//添加图片picUrl前缀
         }
         return new GoodsEditVo(categoryIds, goods, goodsAttributeMapper.selectAttributesByGoodsId(id),
                 specifications, goodsProducts);
     }
+
     /**
      * 商品编辑
+     *
      * @param goodsEditVo
      * @return
      */
@@ -113,18 +115,18 @@ public class GoodsServiceImpl implements GoodsService {
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
         List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();
-      //查找数据库中的specification
+        //查找数据库中的specification
         List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(goodsId);
-        for (GoodsSpecification goodsSpecification : goodsSpecifications) {
-            for (GoodsSpecification specification : specifications) {//更新规格信息
+        for (GoodsSpecification specification : specifications) {
+            for (GoodsSpecification goodsSpecification : goodsSpecifications) {//更新规格信息
                 if (specification.getId() == null) {//id不存在添加规格
                     specification.setGoodsId(goodsId);//设置goodsId
                     specification.setDeleted(false);//deleted置为0
                     specification.setAddTime(date);//设置添加时间
                     specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
                     goodsSpecificationMapper.insertSelective(specification);
-                }else if(specification.getId()!=(goodsSpecification.getId())){//返回数据中未存在的id代表删除
-                    goodsSpecificationMapper.updateSpecificationDeleted(goodsId,date);//复用，goodsId未改变
+                } else if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
+                    goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);//复用，goodsId未改变
                 } else {//删除规格设置为deleted=1
                     specification.setUpdateTime(date);//设置更新时间
                     goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
@@ -132,17 +134,17 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
-        //查找数据库中Attribute
-        List<GoodsAttribute> goodsAttributes = goodsAttributeMapper.selectAttributesByGoodsId(goodsId);
-        for (GoodsAttribute goodsAttribute : goodsAttributes) {
-            for (GoodsAttribute attribute : attributes) {
-                if (attribute.getGoodsId() == null) {//不存在添加attribute
-                    attribute.setGoodsId(goodsId);
-                    attribute.setDeleted(false);
-                    attribute.setAddTime(date);
-                    goodsAttributeMapper.insertSelective(attribute);
-                }else if (goodsAttribute.getId()!=attribute.getId()){//返回数据中未存在的id代表删除
-                    goodsAttributeMapper.updateAttributeDeleted(goodsId,date);
+        List<GoodsAttribute> goodsAttributes = goodsAttributeMapper.selectAttributesByGoodsId(goodsId); //查找数据库中Attribute
+        for (GoodsAttribute attribute : attributes) {
+            if (attribute.getGoodsId() == null) {//不存在添加attribute
+                attribute.setGoodsId(goodsId);
+                attribute.setDeleted(false);
+                attribute.setAddTime(date);
+                goodsAttributeMapper.insertSelective(attribute);
+            }
+            for (GoodsAttribute goodsAttribute : goodsAttributes) {
+                 if (goodsAttribute.getId() != attribute.getId()) {//返回数据中未存在的id代表删除
+                    goodsAttributeMapper.updateAttributeDeleted(goodsId, date);
                 } else {//已存在，更新attribute
                     attribute.setUpdateTime(date);
                     goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
@@ -163,6 +165,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 商品上架
+     *
      * @param goodsEditVo
      * @return
      */
@@ -171,7 +174,7 @@ public class GoodsServiceImpl implements GoodsService {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
         //判断goods_Sn是否已经存在,不存在返回false，
-        if (goods.getGoodsSn() != null ) {
+        if (goods.getGoodsSn() != null) {
             List<Goods> goodsList = goodsMapper.selectGoodsByGoodsSnOrName(goods);
             if (goodsList.size() > 0) {//根据goodsSn查询不为0，说明已存在
                 return false;
@@ -183,7 +186,7 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setDeleted(false);
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         goodsMapper.insertSelectKey(goods);
-       //添加attribute
+        //添加attribute
         int goodsId = goods.getId();//获取刚添加的商品goodsId
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();
         for (GoodsAttribute attribute : attributes) {
