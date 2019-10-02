@@ -1,9 +1,11 @@
-package com.cskaoyan.mall.service.mallmaneger.impl;
+package com.cskaoyan.mall.service.mallmanager.impl;
 
 import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.mapper.CategoryMapper;
-import com.cskaoyan.mall.service.mallmaneger.CategoryService;
+import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.CategoryVo;
+import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +39,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List l1() {
         List<Category> categories = categoryMapper.selectAll();
-        List<CategoryVo> categoryVos = new ArrayList<>();
+        List<BaseValueLabel> baseValueLabels = new ArrayList<>();
         for (Category category : categories) {
-            categoryVos.add(new CategoryVo(category.getId(), category.getName()));
+            baseValueLabels.add(new BaseValueLabel(category.getId(), category.getName()));
         }
-        return categoryVos;
+        return baseValueLabels;
     }
 
     /**
