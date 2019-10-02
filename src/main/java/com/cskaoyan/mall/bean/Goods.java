@@ -16,7 +16,7 @@ public class Goods {
 
     private String[] gallery;
 
-    private String keywords;
+    private String[] keywords;
 
     private String brief;
 
@@ -94,13 +94,10 @@ public class Goods {
         this.gallery = gallery;
     }
 
-    public String getKeywords() {
-        return keywords;
+    public void setKeywords(String[] keywords) {
+        this.keywords = keywords;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords == null ? null : keywords.trim();
-    }
 
     public String getBrief() {
         return brief;

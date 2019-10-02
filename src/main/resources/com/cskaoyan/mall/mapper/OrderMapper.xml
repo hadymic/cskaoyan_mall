@@ -41,10 +41,15 @@
     from cskaoyan_mall_order
     where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
-  <select id="selectOrderByDay" resultType="com.cskaoyan.mall.vo.StatOrderVo">
-    select birthday as `day`,count(birthday) as users
-    from cskaoyan_mall_order
-    group by birthday;
+  <select id="selectOrderByDay" resultType="com.cskaoyan.mall.vo.statisticalform.StatOrderVo">
+    SELECT
+    DATE_FORMAT( add_time, "%Y-%m-%d" ) AS `day`,
+    count(id) AS orders,
+    count(user_id) AS customers,
+    sum(actual_price) AS amount
+    FROM cskaoyan_mall_order
+    where deleted = 0
+    GROUP BY DATE_FORMAT( add_time, "%Y-%m-%d" )
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_order

@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.OrderGoods;
+import com.cskaoyan.mall.vo.statisticalform.StatOrderGoodsVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,10 @@ public interface OrderGoodsMapper {
      * @return
      */
     List<OrderGoods> queryOrderGoodsByOrderId(@Param("orderId") int orderId);
+
+    /**
+     * Zeng-jz:查询每日的下单商品信息
+     * @return
+     */
+    List<StatOrderGoodsVo> selectOrdersByDay();
 }

@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.GoodsAttribute;
 import com.cskaoyan.mall.bean.GoodsProduct;
 import com.cskaoyan.mall.bean.GoodsSpecification;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
@@ -38,6 +39,8 @@ public class GoodsServiceImpl implements GoodsService {
     GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
     GoodsProductMapper goodsProductMapper;
+    @Autowired
+    MyFileConfig myFileConfig;
 
     @Override
     public ListBean selectGoods(Page page, Goods goods) {
@@ -70,9 +73,9 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setUpdateTime(date);
         goods.setDeleted(true);
         goodsMapper.updateByPrimaryKeySelective(goods);
-        goodsAttributeMapper.updateAttributeDeleted(goodsId,date);
-        goodsSpecificationMapper.updateSpecificationDeleted(goodsId,date);
-        goodsProductMapper.updateProductDeleted(goodsId,date);
+        goodsAttributeMapper.updateAttributeDeleted(goodsId, date);
+        goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);
+        goodsProductMapper.updateProductDeleted(goodsId, date);
     }
 
     @Override
@@ -86,25 +89,31 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public boolean updateGoods(GoodsEditVo goodsEditVo) {
-        goodsMapper.updateByPrimaryKeySelective(goodsEditVo.getGoods());//更新商品信息
+        Date date = new Date();
+        Goods goods = goodsEditVo.getGoods();
+        goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
         List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();
         for (GoodsSpecification specification : specifications) {//更新规格信息
-            if (specification.getId() == null) {
+            if (specification.getId() == null) {//不存在添加规格
                 specification.setGoodsId(goodsId);//设置goodsId
                 specification.setDeleted(false);//deleted置为0
+                specification.setAddTime(date);//设置添加时间
                 goodsSpecificationMapper.insertSelective(specification);
             } else {//删除规格未返回，如何设置为deleted=1？
+                specification.setUpdateTime(date);//设置更新时间
                 goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
             }
         }
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
         for (GoodsAttribute attribute : attributes) {
-            if (attribute.getGoodsId() == null) {
+            if (attribute.getGoodsId() == null) {//不存在添加attribute
                 attribute.setGoodsId(goodsId);
                 attribute.setDeleted(false);
+                attribute.setAddTime(date);
                 goodsAttributeMapper.insertSelective(attribute);
-            } else {
+            } else {//已存在，更新attribute
                 goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
             }
         }

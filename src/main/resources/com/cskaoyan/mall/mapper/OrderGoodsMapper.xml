@@ -27,6 +27,16 @@
     from cskaoyan_mall_order_goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectOrdersByDay" resultType="com.cskaoyan.mall.vo.statisticalform.StatOrderGoodsVo">
+    select
+    DATE_FORMAT(add_time, "%Y-%m-%d") as `day`,
+    count(order_id) as orders,
+    sum(`number`) as products,
+    sum(price) as amount
+    from cskaoyan_mall_order_goods
+    where deleted = 0
+    group by DATE_FORMAT(add_time, "%Y-%m-%d")
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_order_goods
     where id = #{id,jdbcType=INTEGER}

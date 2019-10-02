@@ -1,7 +1,7 @@
-package com.cskaoyan.mall.controller.mallmaneger;
+package com.cskaoyan.mall.controller.mallmanager;
 
 import com.cskaoyan.mall.bean.Category;
-import com.cskaoyan.mall.service.mallmaneger.CategoryService;
+import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
