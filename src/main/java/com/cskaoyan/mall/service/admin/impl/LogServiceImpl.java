@@ -27,7 +27,9 @@ public class LogServiceImpl implements LogService {
     @Override
     public ListBean<Log> queryLogs(Page page, String admin) {
         PageUtils.startPage(page);
+
         List<Log> logs= logMapper.queryLogs(admin);
+
         return PageUtils.page( logs);
     }
 }
