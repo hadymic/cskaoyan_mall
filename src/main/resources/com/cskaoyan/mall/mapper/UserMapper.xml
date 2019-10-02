@@ -20,8 +20,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, gender, birthday, last_login_time, last_login_ip, user_level,
-    nickname, mobile, avatar, weixin_openid, status, add_time, update_time, deleted
+    id, username, password, gender, birthday, last_login_time as lastLoginTime, last_login_ip as lastLoginTime, user_level as userLevel,nickname, mobile, avatar, weixin_openid as weixinOpenid, status, add_time as addTime, update_time as uodateTime, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -235,7 +234,7 @@
   </select>
 
 
-  <select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
+  <!--<select id="selectByNameAndMobile" resultType="com.cskaoyan.mall.bean.User">
     select
           id,
           username,
@@ -255,6 +254,18 @@
           deleted
           from cskaoyan_mall_user
           where (username like #{username}) and (mobile like #{mobile})
+  </select>-->
+  <select id="selectByNameAndMobile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_user
+    where deleted = 0
+    <if test="username != null">
+      and username like #{username}
+    </if>
+    <if test="mobile != null">
+      and mobile like #{mobile}
+    </if>
   </select>
 
 </mapper>
