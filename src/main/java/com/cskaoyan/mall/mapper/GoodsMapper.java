@@ -25,4 +25,6 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsByGoodsSnOrName(@Param("goods") Goods goods);
+
+    int insertSelectKey(Goods record);
 }

@@ -27,9 +27,15 @@ public interface GoodsProductMapper {
     List<GoodsProduct> selectProductsByGoodsId(@Param("goodsId") int goodsId);
 
     /**
-     *跟新Product
+     *删除Product
      * @param goodsId
      * @param date
      */
     void updateProductDeleted(@Param("goodsId") int goodsId,@Param("date") Date date);
+
+    /**
+     * 根据spec和goodsId找到对应product更新
+     * @param product
+     */
+    void updateProductBySpecAndGoodsId(@Param("product") GoodsProduct product);
 }

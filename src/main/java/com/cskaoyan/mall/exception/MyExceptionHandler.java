@@ -27,7 +27,7 @@ public class MyExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public BaseRespVo handleException(HttpMessageNotReadableException e) {
         if (e.getMessage().contains("JSON parse error: ")) {
-            //logger.warn(e.getMessage());
+            logger.warn(e.getMessage());
             return BaseRespVo.fail("参数值不对");
         } else {
             logger.warn(e.getMessage());

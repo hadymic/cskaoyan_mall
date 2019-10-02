@@ -24,7 +24,6 @@ public interface GoodsSpecificationMapper {
 
     /**
      * 根据goodsId查找对应Specification
-     *
      * @param goodsId
      * @return
      */
