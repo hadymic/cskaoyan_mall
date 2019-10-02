@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Groupon;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface GrouponMapper {
 
     int updateByPrimaryKey(Groupon record);
 
-    List<Groupon> queryGroupons();
+    List<Groupon> queryGrouponsByRuleId(@Param("ruleId") Integer ruleId);
 }

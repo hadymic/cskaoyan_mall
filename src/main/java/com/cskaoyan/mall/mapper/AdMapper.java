@@ -19,4 +19,6 @@ public interface AdMapper {
     int updateByPrimaryKey(Ad record);
 
     List<Ad> queryAds(@Param("name") String name, @Param("content") String content);
+
+    int insertSelectKey(Ad record);
 }

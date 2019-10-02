@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.GrouponRules;
 import com.cskaoyan.mall.service.promotion.GrouponService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.StringUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.GrouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,16 @@ public class GrouponController {
      * @return
      */
     @GetMapping("list")
-    public BaseRespVo showGrouponRulesList(Page page, Integer goodsId) {
-        ListBean<GrouponRules> grouponRulesListBean = grouponService.queryGrouponRuless(page, goodsId);
+    public BaseRespVo showGrouponRulesList(Page page, String goodsId) {
+        Integer goodsid = null;
+        if (!StringUtils.isEmpty(goodsId)) {
+            try {
+                goodsid = Integer.parseInt(goodsId);
+            } catch (NumberFormatException e) {
+                return BaseRespVo.success(null);
+            }
+        }
+        ListBean<GrouponRules> grouponRulesListBean = grouponService.queryGrouponRuless(page, goodsid);
         return BaseRespVo.success(grouponRulesListBean);
     }
 
@@ -40,8 +49,8 @@ public class GrouponController {
      */
     @PostMapping("create")
     public BaseRespVo insertGrouponRules(@RequestBody GrouponRules grouponRules) {
-        String msg = grouponService.insertGrouponRules(grouponRules);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        GrouponRules newGrouponRules = grouponService.insertGrouponRules(grouponRules);
+        return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("添加团购规则失败");
     }
 
     /**
@@ -52,8 +61,8 @@ public class GrouponController {
      */
     @PostMapping("update")
     public BaseRespVo updateGrouponRules(@RequestBody GrouponRules grouponRules) {
-        String msg = grouponService.updateGrouponRules(grouponRules);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        GrouponRules newGrouponRules = grouponService.updateGrouponRules(grouponRules);
+        return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("更新团购规则失败");
     }
 
     /**
@@ -75,8 +84,16 @@ public class GrouponController {
      * @return
      */
     @GetMapping("listRecord")
-    public BaseRespVo showListRecord(Page page, Integer goodsId) {
-        ListBean<GrouponVo> grouponVoListBean = grouponService.queryGrouponVo(page, goodsId);
+    public BaseRespVo showListRecord(Page page, String goodsId) {
+        Integer goodsid = null;
+        if (!StringUtils.isEmpty(goodsId)) {
+            try {
+                goodsid = Integer.parseInt(goodsId);
+            } catch (NumberFormatException e) {
+                return BaseRespVo.success(null);
+            }
+        }
+        ListBean<GrouponVo> grouponVoListBean = grouponService.queryGrouponVo(page, goodsid);
         return BaseRespVo.success(grouponVoListBean);
     }
 }
