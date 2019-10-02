@@ -14,4 +14,6 @@ public interface StatService {
     Map user();
 
     Map<String, Object> order();
+
+    Map<String, Object> goods();
 }

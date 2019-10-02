@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.admin;
 
+import com.cskaoyan.mall.bean.Permission;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
@@ -44,7 +45,7 @@ public class RoleController {
      */
      @RequestMapping("admin/role/options")
     public  BaseRespVo roleOptions(){
-         List<BaseValueLabel> category = roleService.roleOptions();
+         List<BaseValueLabel>   category = roleService.roleOptions();
          return  BaseRespVo.success(category);
      }
 
@@ -88,6 +89,9 @@ public class RoleController {
          Role  roleMsg = roleService.insertRole(role);
          return  BaseRespVo.success(roleMsg);
      }
+
+
+
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface RoleService {
     ListBean<Role> queryRole(Page page, String name);
 
-    List<BaseValueLabel> roleOptions();
+    List<BaseValueLabel>  roleOptions();
 
     int update(Role role);
 

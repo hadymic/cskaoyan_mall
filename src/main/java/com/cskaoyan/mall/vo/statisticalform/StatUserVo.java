@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo;
+package com.cskaoyan.mall.vo.statisticalform;
 
 import java.util.Date;
 

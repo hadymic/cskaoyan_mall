@@ -10,7 +10,7 @@ import com.cskaoyan.mall.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.lang.String;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class StorageServiceImpl implements StorageService {
     private MyFileConfig myFileConfig;
     @Autowired
     private StorageMapper storageMapper;
-@Autowired
+
 
     @Override
     public ListBean<Storage> queryStorage(String key, String name, Page page) {
@@ -72,7 +72,7 @@ public class StorageServiceImpl implements StorageService {
         //数据库存储记录
         storageMapper.insertSelective(storage);
         //为了图片能够显示出来
-        storage.setUrl(myFileConfig.addPicUrl("http://192.168.2.100:8081:")+myFileConfig.getCompleteNetPath() + fileName);
+        storage.setUrl(myFileConfig.getCompleteNetPath() + fileName);
         return storage;
     }
 }

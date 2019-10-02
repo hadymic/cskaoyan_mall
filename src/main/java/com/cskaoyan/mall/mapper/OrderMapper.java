@@ -5,7 +5,7 @@ import com.cskaoyan.mall.bean.Order;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import com.cskaoyan.mall.vo.StatOrderVo;
+import com.cskaoyan.mall.vo.statisticalform.StatOrderVo;
 
 
 public interface OrderMapper {
@@ -36,5 +36,9 @@ public interface OrderMapper {
      */
     List<Order> queryOrderList(@Param("userId") Integer userId, @Param("orderSn") String orderSn, @Param("orderStatusArray") Integer[] orderStatusArray);
 
+    /**
+     * Zeng-jz:查询每日的订单信息
+     * @return
+     */
     List<StatOrderVo> selectOrderByDay();
 }

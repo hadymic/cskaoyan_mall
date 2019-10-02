@@ -20,7 +20,7 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
     List<Role> queryRole(String name);
 
-    List<BaseValueLabel> roleOptions();
+    List<Role>  roleOptions();
 
     int deleteRloe(Integer id);
 }

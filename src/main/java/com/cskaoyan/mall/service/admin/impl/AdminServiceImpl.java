@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.service.admin.impl;
 
+import ch.qos.logback.core.pattern.Converter;
 import com.cskaoyan.mall.bean.Admin;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.mapper.AdminMapper;
@@ -29,6 +30,24 @@ public class AdminServiceImpl implements AdminService {
     public ListBean<Admin> queryAdmin(Page page,String username) {
         PageUtils.startPage(page);
        List<Admin> admins=  adminMapper.queryAdmin(username);
+
+
+
+//        for (Admin admin : admins) {
+//            List   list= new ArrayList();
+//            list.add(admin.getId());
+//            list.add(admin.getUsername());
+//            list.add(admin.getAvatar());
+//
+//            String[] roleIds = admin.getRoleIds();
+//            int length = admin.getRoleIds().length;
+//            int[] tran=new int[length];
+//            for (int i = 0; i <length ; i++) {
+//                tran[i]=Integer.parseInt(roleIds[i]);
+//            }
+//            list.add(tran);
+//
+//        }
         return PageUtils.page( admins);
     }
 
@@ -40,6 +59,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin insertAdmin(Admin admin) {
         admin.setAddTime(new Date());
+        admin.setDeleted(false);
         admin.setUpdateTime(new Date());
         adminMapper.insert(admin);
         return  admin;

@@ -37,8 +37,14 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public List<BaseValueLabel> roleOptions() {
-        List<BaseValueLabel> options= roleMapper.roleOptions();
-        return options;
+
+        List<Role> roles = roleMapper.roleOptions();
+        List<BaseValueLabel> list= new ArrayList<>();
+        for (Role role:roles) {
+            list.add(new BaseValueLabel(role.getId(),role.getName()));
+        }
+
+        return  list;
 
     }
 
