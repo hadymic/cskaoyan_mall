@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.service.promotion.impl;
 
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.Groupon;
 import com.cskaoyan.mall.bean.GrouponRules;
 import com.cskaoyan.mall.mapper.GoodsMapper;
@@ -38,6 +39,12 @@ public class GrouponServiceImpl implements GrouponService {
 
     @Override
     public GrouponRules insertGrouponRules(GrouponRules grouponRules) {
+        Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
+        if (goods == null) {
+            return null;
+        }
+        grouponRules.setGoodsName(goods.getName());
+        grouponRules.setPicUrl(goods.getPicUrl());
         grouponRules.setAddTime(new Date());
         grouponRules.setDeleted(false);
         return grouponRulesMapper.insertSelectKey(grouponRules) == 1 ? grouponRules : null;

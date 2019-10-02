@@ -64,6 +64,9 @@ public class MyFileConfig {
      * @return
      */
     public String parsePicUrl(String url) {
+        if (url.contains("http://yanxuan.nosdn.127.net/")) {
+            return url;
+        }
         String path = netPath + picPath + "/";
         if (url.contains(path)) {
             url = url.replace(path, "");
