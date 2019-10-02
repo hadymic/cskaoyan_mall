@@ -10,6 +10,8 @@ import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.vo.ordermanagement.RefundVo;
+import com.cskaoyan.mall.vo.ordermanagement.ShipVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +48,25 @@ public class OrderServiceImpl implements OrderService {
         orderDetail.put("orderGoods",orderGoods);
         orderDetail.put("user", user);
         return orderDetail;
+    }
+
+    @Override
+    public Order updateShip(ShipVo shipVo) {
+        Order order = new Order();
+        order.setId(shipVo.getOrderId());
+        order.setShipChannel(shipVo.getShipChannel());
+        order.setShipSn(shipVo.getShipSn());
+        order.setOrderStatus((short)301);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return order;
+    }
+
+    @Override
+    public Order updateRefund(RefundVo refundVo) {
+        Order order = new Order();
+        order.setId(refundVo.getOrderId());
+        order.setOrderStatus((short)203);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return order;
     }
 }

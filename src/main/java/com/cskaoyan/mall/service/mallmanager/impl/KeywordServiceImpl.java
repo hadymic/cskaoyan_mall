@@ -30,6 +30,12 @@ public class KeywordServiceImpl implements KeywordService {
     public Keyword insertKeyword(Keyword keyword) {
         keyword.setAddTime(new Date());
         keyword.setUpdateTime(new Date());
+        if (keyword.getIsHot() == null){
+            keyword.setIsHot(false);
+        }
+        if (keyword.getIsDefault() == null){
+            keyword.setIsDefault(false);
+        }
         int i = keywordMapper.insertKeyWord(keyword);
         return keyword;
     }
