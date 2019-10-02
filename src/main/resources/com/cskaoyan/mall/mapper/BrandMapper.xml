@@ -40,6 +40,12 @@
             </if>
         </where>
     </select>
+    <select id="selectById" resultType="com.cskaoyan.mall.bean.Brand">
+        select
+        <include refid="Base_Column_List"/>
+        from cskaoyan_mall_brand
+        where id = #{id}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_brand
     where id = #{id,jdbcType=INTEGER}
@@ -115,6 +121,18 @@
             </if>
         </trim>
     </insert>
+  <insert id="insertNewBrand" parameterType="com.cskaoyan.mall.bean.Brand">
+    <selectKey resultType="int" keyProperty="newBrand.id" keyColumn="id" order="AFTER">
+        select last_insert_id() as id
+    </selectKey>
+    insert into cskaoyan_mall_brand (`name`, `desc`, pic_url, floor_price,
+      add_time, update_time, deleted
+      )
+    values (#{newBrand.name,jdbcType=VARCHAR}, #{newBrand.desc,jdbcType=VARCHAR},
+      #{newBrand.picUrl,jdbcType=VARCHAR}, #{newBrand.floorPrice,jdbcType=DECIMAL},
+      now(), now(), 0
+      )
+  </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.Brand">
         update cskaoyan_mall_brand
         <set>

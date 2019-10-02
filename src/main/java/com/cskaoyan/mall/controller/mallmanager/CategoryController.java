@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
+import com.cskaoyan.mall.bean.Brand;
 import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseRespVo;
@@ -62,5 +63,20 @@ public class CategoryController {
     public BaseRespVo delete(@RequestBody Category category){
         categoryService.delete(category);
         return BaseRespVo.success(null);
+    }
+
+    /**
+     * 增加商品
+     * @param category
+     * @return
+     */
+    @RequestMapping("create")
+    public BaseRespVo create(@RequestBody Category category){
+        Category newCategory = categoryService.create(category);
+        if (newCategory != null) {
+            return BaseRespVo.success(newCategory);
+        }else {
+            return BaseRespVo.fail("参数不对");
+        }
     }
 }
