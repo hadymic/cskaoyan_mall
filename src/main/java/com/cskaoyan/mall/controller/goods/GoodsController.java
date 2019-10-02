@@ -65,4 +65,9 @@ public class GoodsController {
         boolean b = goodsService.updateGoods(goodsEditVo);
         return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
     }
+    @RequestMapping("create")
+    public BaseRespVo createGoods(@RequestBody GoodsEditVo goodsEditVo){
+        boolean b = goodsService.createGoods(goodsEditVo);
+        return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
+    }
 }

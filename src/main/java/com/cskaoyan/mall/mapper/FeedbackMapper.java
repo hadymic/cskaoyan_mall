@@ -18,6 +18,5 @@ public interface FeedbackMapper {
 
     int updateByPrimaryKey(Feedback record);
 
-    List selectByUsernameAndId(@Param("id") String id,
-                               @Param("username") String username);
+    List selectByUsernameAndId(@Param("id") String id, @Param("username") String username);
 }

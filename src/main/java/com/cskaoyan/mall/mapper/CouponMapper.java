@@ -22,15 +22,23 @@ public interface CouponMapper {
 
     List<Coupon> queryCoupons(@Param("name") String name, @Param("type") Integer type, @Param("status") Integer status);
 
+<<<<<<< HEAD
 
 
     List<Coupon> queryAllCoupons();
 
 
+=======
+    List<Coupon> queryAllCoupons();
+
+>>>>>>> a302b6eccf01227b9e6c92bc684424f37f791d38
     int insertSelectKey(Coupon record);
 
 }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> a302b6eccf01227b9e6c92bc684424f37f791d38
