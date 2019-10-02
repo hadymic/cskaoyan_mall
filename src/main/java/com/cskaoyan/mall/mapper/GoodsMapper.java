@@ -25,6 +25,4 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsByGoodsSnOrName(@Param("goods") Goods goods);
-    //删除商品(实际将deleted 更新为1 )
-    void deleteGoods(@Param("id") int id);
 }

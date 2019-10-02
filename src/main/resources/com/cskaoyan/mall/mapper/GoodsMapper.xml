@@ -19,7 +19,7 @@
         </where>
     </select>
 
-    <update id="deleteGoods">
+    <update id="updateGoodsDeleted">
     update cskaoyan_mall_goods set  deleted = 1 where id = #{id}
 </update>
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Goods">

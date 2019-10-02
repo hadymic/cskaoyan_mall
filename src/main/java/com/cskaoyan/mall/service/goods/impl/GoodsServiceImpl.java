@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,28 +57,31 @@ public class GoodsServiceImpl implements GoodsService {
         List<BaseValueLabel> list = categoryMapper.selectCategory(0);
         List<CategoryList> categoryLists = new ArrayList<>(list.size());
         for (BaseValueLabel baseValueLabel : list) {
-            /*CategoryList categoryList = new CategoryList();
-            categoryList.setValue(baseValueLabel.getValue());
-            categoryList.setLabel(baseValueLabel.getLabel());
-            categoryList.setChildren(categoryMapper.selectCategory(baseValueLabel.getValue()));
-            categoryLists.add(categoryList);*/
-            categoryLists.add(new CategoryList(baseValueLabel.getValue(),baseValueLabel.getLabel(),categoryMapper.selectCategory(baseValueLabel.getValue())));
+            categoryLists.add(new CategoryList(baseValueLabel.getValue(), baseValueLabel.getLabel(), categoryMapper.selectCategory(baseValueLabel.getValue())));
         }
         return categoryLists;
     }
 
     @Override
     public void deleteGoods(Goods goods) {
-        goodsMapper.deleteGoods(goods.getId());
+        //删除商品设置goods，product，attribute，specification的deleted=1,update_time
+        int goodsId = goods.getId();
+        Date date = new Date();
+        goods.setUpdateTime(date);
+        goods.setDeleted(true);
+        goodsMapper.updateByPrimaryKeySelective(goods);
+        goodsAttributeMapper.updateAttributeDeleted(goodsId,date);
+        goodsSpecificationMapper.updateSpecificationDeleted(goodsId,date);
+        goodsProductMapper.updateProductDeleted(goodsId,date);
     }
 
     @Override
     public GoodsEditVo selectGoodsDetail(int id) {
         Integer categoryId = goodsMapper.selectByPrimaryKey(id).getCategoryId();
         Integer pid = categoryMapper.selectByPrimaryKey(categoryId).getPid();
-        int[] categoryIds ={pid,categoryId};
-        return new GoodsEditVo(categoryIds,goodsMapper.selectByPrimaryKey(id),goodsAttributeMapper.selectAttributesByGoodsId(id),
-                goodsSpecificationMapper.selectSpecificationsByGoodsId(id),goodsProductMapper.selectProductsByGoodsId(id));
+        int[] categoryIds = {pid, categoryId};
+        return new GoodsEditVo(categoryIds, goodsMapper.selectByPrimaryKey(id), goodsAttributeMapper.selectAttributesByGoodsId(id),
+                goodsSpecificationMapper.selectSpecificationsByGoodsId(id), goodsProductMapper.selectProductsByGoodsId(id));
     }
 
     @Override
@@ -86,21 +90,21 @@ public class GoodsServiceImpl implements GoodsService {
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
         List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();
         for (GoodsSpecification specification : specifications) {//更新规格信息
-            if (specification.getId()==null){
+            if (specification.getId() == null) {
                 specification.setGoodsId(goodsId);//设置goodsId
                 specification.setDeleted(false);//deleted置为0
                 goodsSpecificationMapper.insertSelective(specification);
-            }else {//删除规格未返回，如何设置为deleted=1？
+            } else {//删除规格未返回，如何设置为deleted=1？
                 goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
             }
         }
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
         for (GoodsAttribute attribute : attributes) {
-            if (attribute.getGoodsId()==null){
+            if (attribute.getGoodsId() == null) {
                 attribute.setGoodsId(goodsId);
                 attribute.setDeleted(false);
                 goodsAttributeMapper.insertSelective(attribute);
-            }else{
+            } else {
                 goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
             }
         }

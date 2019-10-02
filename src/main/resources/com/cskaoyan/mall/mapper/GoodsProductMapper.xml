@@ -18,6 +18,10 @@
     from cskaoyan_mall_goods_product
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </select>
+<update id="updateProductDeleted">
+  update cskaoyan_mall_goods_product set deleted = 1 ,update_time=#{date}
+  where goods_id = #{goodsId}
+</update>
   <sql id="Base_Column_List">
     id, goods_id, specifications, price, number, url, add_time, update_time, deleted
   </sql>
