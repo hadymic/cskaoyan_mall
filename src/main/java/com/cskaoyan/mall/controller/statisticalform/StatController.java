@@ -30,9 +30,19 @@ public class StatController {
         return BaseRespVo.success(returnMap);
     }
 
+    /**
+     * 订单统计
+     * @return
+     */
     @RequestMapping("order")
     public BaseRespVo order(){
         Map<String, Object> returnMap = statService.order();
+        return BaseRespVo.success(returnMap);
+    }
+
+    @RequestMapping("goods")
+    public BaseRespVo goods(){
+        Map<String, Object> returnMap = statService.goods();
         return BaseRespVo.success(returnMap);
     }
 }

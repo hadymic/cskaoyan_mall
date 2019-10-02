@@ -1,8 +1,7 @@
-package com.cskaoyan.mall.service.mallmaneger.impl;
+package com.cskaoyan.mall.service.mallmanager.impl;
 
 import com.cskaoyan.mall.mapper.RegionMapper;
-import com.cskaoyan.mall.service.mallmaneger.RegionService;
-import com.cskaoyan.mall.vo.BaseRespVo;
+import com.cskaoyan.mall.service.mallmanager.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

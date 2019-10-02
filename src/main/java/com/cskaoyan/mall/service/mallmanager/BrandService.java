@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service.mallmaneger;
+package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Brand;
 import com.cskaoyan.mall.util.ListBean;
@@ -20,4 +20,6 @@ public interface BrandService {
     void delete(Brand brand);
 
     Brand update(Brand brand);
+
+    Brand create(Brand brand);
 }

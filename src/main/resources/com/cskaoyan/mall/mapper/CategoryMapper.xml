@@ -59,6 +59,22 @@
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
+    <insert id="insertNewCategory" parameterType="com.cskaoyan.mall.bean.Category">
+    <selectKey resultType="int" keyProperty="newCategory.id" keyColumn="id" order="AFTER">
+        select last_insert_id() as id
+    </selectKey>
+    insert into cskaoyan_mall_category (`name`, keywords,
+      `desc`, pid, icon_url,
+      pic_url, `level`, sort_order,
+      add_time, update_time, deleted
+      )
+    values (#{newCategory.name,jdbcType=VARCHAR}, #{newCategory.keywords,jdbcType=VARCHAR},
+      #{newCategory.desc,jdbcType=VARCHAR}, #{newCategory.pid,jdbcType=INTEGER},
+      #{newCategory.iconUrl,jdbcType=VARCHAR},#{newCategory.picUrl,jdbcType=VARCHAR},
+      #{newCategory.level,jdbcType=VARCHAR}, #{newCategory.sortOrder,jdbcType=TINYINT},
+      now(), now(), 0
+      )
+  </insert>
     <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Category">
         insert into cskaoyan_mall_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -194,7 +210,7 @@
   </update>
     <update id="updateDeletedById" parameterType="com.cskaoyan.mall.bean.Category">
     update cskaoyan_mall_category
-    set deleted = #{deleted,jdbcType=BIT}
+    set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

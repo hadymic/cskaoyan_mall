@@ -3,7 +3,8 @@ package com.cskaoyan.mall.service.mallmanager;
 import com.cskaoyan.mall.bean.Order;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.vo.BaseRespVo;
+import com.cskaoyan.mall.vo.ordermanagement.RefundVo;
+import com.cskaoyan.mall.vo.ordermanagement.ShipVo;
 
 import java.util.Map;
 
@@ -28,4 +29,18 @@ public interface OrderService {
      * @return
      */
     Map<String, Object> queryOrderDetail(int id);
+
+    /**
+     * 修改订单发货状态
+     * @param shipVo
+     * @return
+     */
+    Order updateShip(ShipVo shipVo);
+
+    /**
+     * 修改订单退款
+     * @param refundVo
+     * @return
+     */
+    Order updateRefund(RefundVo refundVo);
 }
