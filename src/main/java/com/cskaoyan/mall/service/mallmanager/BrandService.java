@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service.mallmaneger;
+package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Brand;
 import com.cskaoyan.mall.util.ListBean;

@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.service.mallmaneger;
+package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Category;
 import org.springframework.stereotype.Service;
