@@ -32,18 +32,16 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public String insertTopic(Topic topic) {
+    public Topic insertTopic(Topic topic) {
         topic.setAddTime(new Date());
         topic.setDeleted(false);
-        topicMapper.insertSelective(topic);
-        return null;
+        return topicMapper.insertSelectKey(topic) == 1 ? topic : null;
     }
 
     @Override
-    public String updateTopic(Topic topic) {
+    public Topic updateTopic(Topic topic) {
         topic.setUpdateTime(new Date());
-        topicMapper.updateByPrimaryKeySelective(topic);
-        return null;
+        return topicMapper.updateByPrimaryKeySelective(topic) == 1 ? topic : null;
     }
 
     @Override

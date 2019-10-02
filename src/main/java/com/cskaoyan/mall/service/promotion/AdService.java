@@ -26,7 +26,7 @@ public interface AdService {
      * @param ad
      * @return
      */
-    boolean updateAd(Ad ad);
+    Ad updateAd(Ad ad);
 
     /**
      * 删除广告
@@ -42,5 +42,5 @@ public interface AdService {
      * @param ad
      * @return
      */
-    boolean insertAd(Ad ad);
+    Ad insertAd(Ad ad);
 }

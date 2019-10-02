@@ -159,4 +159,17 @@
       and goods_id = #{goodsId}
     </if>
   </select>
+  <insert id="insertSelectKey" parameterType="com.cskaoyan.mall.bean.GrouponRules">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_groupon_rules (goods_id, goods_name,
+      pic_url, discount, discount_member,
+      add_time, update_time, expire_time,
+      deleted)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR},
+      #{picUrl,jdbcType=VARCHAR}, #{discount,jdbcType=DECIMAL}, #{discountMember,jdbcType=INTEGER},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP},
+      #{deleted,jdbcType=BIT})
+  </insert>
 </mapper>

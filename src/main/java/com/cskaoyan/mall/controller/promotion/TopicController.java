@@ -39,8 +39,8 @@ public class TopicController {
      */
     @PostMapping("create")
     public BaseRespVo insertTopic(@RequestBody Topic topic) {
-        String msg = topicService.insertTopic(topic);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        Topic newTopic = topicService.insertTopic(topic);
+        return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("添加专题失败");
     }
 
     /**
@@ -51,8 +51,8 @@ public class TopicController {
      */
     @PostMapping("update")
     public BaseRespVo updateTopic(@RequestBody Topic topic) {
-        String msg = topicService.updateTopic(topic);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        Topic newTopic = topicService.updateTopic(topic);
+        return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("更新专题失败");
     }
 
     /**

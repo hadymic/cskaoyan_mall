@@ -1,10 +1,10 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
-import com.cskaoyan.mall.bean.Issue;
 import com.cskaoyan.mall.bean.Keyword;
 import com.cskaoyan.mall.service.mallmanager.KeywordService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.StringUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +41,9 @@ public class KeywordController {
      */
     @RequestMapping("create")
     public BaseRespVo createKeyword(@RequestBody Keyword keyword){
+        if (StringUtils.isEmpty(keyword.getUrl())) {
+            return BaseRespVo.fail("参数不对");
+        }
         return BaseRespVo.success(keywordService.insertKeyword(keyword));
     }
 
@@ -51,6 +54,9 @@ public class KeywordController {
      */
     @RequestMapping("update")
     public BaseRespVo updateKeyword(@RequestBody Keyword keyword){
+        if (StringUtils.isEmpty(keyword.getUrl())) {
+            return BaseRespVo.fail("参数不对");
+        }
         return BaseRespVo.success(keywordService.updateKeyword(keyword));
     }
 

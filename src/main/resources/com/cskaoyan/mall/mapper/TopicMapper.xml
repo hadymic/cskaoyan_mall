@@ -209,4 +209,19 @@
       and subtitle like concat('%',#{subtitle},'%')
     </if>
   </select>
+  <insert id="insertSelectKey" parameterType="com.cskaoyan.mall.bean.Topic">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_topic (title, subtitle,
+      price, read_count, pic_url,
+      sort_order, goods, add_time,
+      update_time, deleted, content
+      )
+    values (#{title,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{readCount,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR},
+      #{sortOrder,jdbcType=INTEGER}, #{goods,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
 </mapper>

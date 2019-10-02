@@ -8,9 +8,9 @@ import com.cskaoyan.mall.vo.GrouponVo;
 public interface GrouponService {
     ListBean<GrouponRules> queryGrouponRuless(Page page, Integer goodsId);
 
-    String insertGrouponRules(GrouponRules grouponRules);
+    GrouponRules insertGrouponRules(GrouponRules grouponRules);
 
-    String updateGrouponRules(GrouponRules grouponRules);
+    GrouponRules updateGrouponRules(GrouponRules grouponRules);
 
     boolean deleteGrouponRules(Integer id);
 

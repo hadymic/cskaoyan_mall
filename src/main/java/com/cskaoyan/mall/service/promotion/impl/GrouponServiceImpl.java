@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.service.promotion.impl;
 
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.Groupon;
 import com.cskaoyan.mall.bean.GrouponRules;
 import com.cskaoyan.mall.mapper.GoodsMapper;
@@ -10,9 +11,11 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.GrouponVo;
+import com.cskaoyan.mall.vo.SubGrouponsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,18 +38,22 @@ public class GrouponServiceImpl implements GrouponService {
     }
 
     @Override
-    public String insertGrouponRules(GrouponRules grouponRules) {
+    public GrouponRules insertGrouponRules(GrouponRules grouponRules) {
+        Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
+        if (goods == null) {
+            return null;
+        }
+        grouponRules.setGoodsName(goods.getName());
+        grouponRules.setPicUrl(goods.getPicUrl());
         grouponRules.setAddTime(new Date());
         grouponRules.setDeleted(false);
-        grouponRulesMapper.insertSelective(grouponRules);
-        return null;
+        return grouponRulesMapper.insertSelectKey(grouponRules) == 1 ? grouponRules : null;
     }
 
     @Override
-    public String updateGrouponRules(GrouponRules grouponRules) {
+    public GrouponRules updateGrouponRules(GrouponRules grouponRules) {
         grouponRules.setUpdateTime(new Date());
-        grouponRulesMapper.updateByPrimaryKeySelective(grouponRules);
-        return null;
+        return grouponRulesMapper.updateByPrimaryKeySelective(grouponRules) == 1 ? grouponRules : null;
     }
 
     @Override
@@ -60,13 +67,37 @@ public class GrouponServiceImpl implements GrouponService {
 
     @Override
     public ListBean<GrouponVo> queryGrouponVo(Page page, Integer goodsId) {
-        //查询全部父级团购活动
-//        List<Groupon> list = grouponMapper.queryGrouponsByGrouponId(0);
-//        for (Groupon groupon : list) {
-            //查询对应团购规则
-//            grouponRulesMapper.selectByPrimaryKey(groupon.getRulesId());
-            //查询商品
-//        }
-        return null;
+        PageUtils.startPage(page);
+        List<GrouponVo> grouponVos = new ArrayList<>();
+        //查询对应商品的团购规则
+        List<GrouponRules> grouponRules;
+        if (goodsId != null) {
+            grouponRules = grouponRulesMapper.queryGrouponRuless(goodsId);
+        } else {
+            //查询全部团购规则
+            grouponRules = grouponRulesMapper.queryGrouponRuless(null);
+        }
+
+        //循环查询每个规则对应的多条团购活动
+        for (GrouponRules grouponRule : grouponRules) {
+            GrouponVo vo = new GrouponVo();
+            vo.setRules(grouponRule);
+            List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(grouponRule.getId());
+
+            List<SubGrouponsVo> subGrouponsVos = new ArrayList<>();
+            for (Groupon groupon : groupons) {
+                //如果相同，说明是发起者，封装至groupon
+                if (groupon.getUserId().intValue() == groupon.getCreatorUserId().intValue()) {
+                    vo.setGroupon(groupon);
+                } else {
+                    //如果不同，说明是参与者，封装至sub
+                    subGrouponsVos.add(new SubGrouponsVo(groupon.getOrderId(), groupon.getUserId()));
+                }
+            }
+            vo.setSubGroupons(subGrouponsVos);
+            vo.setGoods(goodsMapper.selectByPrimaryKey(grouponRule.getGoodsId()));
+            grouponVos.add(vo);
+        }
+        return PageUtils.page(grouponVos);
     }
 }
