@@ -18,18 +18,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     FeedbackMapper feedbackMapper;
     @Override
-    public ListBean getFeedbackList(Page utipage) {
+    public ListBean getFeedbackList(Page utipage,String id,String username) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        String id = utipage.getId();
-        String username = utipage.getUsername();
         if (id=="") id = null;
         if (username=="") username = null;
         List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id,username);
-//        PageInfo<Feedback> pageInfo = new PageInfo<Feedback>(feedbackList);
-//        long total = pageInfo.getTotal();
-//        ListBean listBean = new ListBean(feedbackList,total);
-//        return listBean;
         return PageUtils.page(feedbackList);
-       // return null;
     }
 }

@@ -10,7 +10,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, key_name, key_value, add_time, update_time, deleted
+    id, key_name as keyName, key_value as keyValue, add_time as addTime, update_time as updateTime, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -103,9 +103,17 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--<select id="updateByKeyNema" resultType="com.cskaoyan.mall.bean.System">-->
+      <!--<-->
+  <!--</select>-->
   <update id="updateByKeyNema">
     update cskaoyan_mall_system
     set key_value = #{keyValue}
     where key_name = #{keyName}
   </update>
+  <select id="selectByKeyName" resultType="string">
+    select key_value
+    from cskaoyan_mall_system
+    where key_name = #{keyName}
+  </select>
 </mapper>

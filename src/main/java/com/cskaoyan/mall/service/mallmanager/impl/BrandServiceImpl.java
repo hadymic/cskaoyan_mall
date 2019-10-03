@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.mallmanager.impl;
 
 import com.cskaoyan.mall.bean.Brand;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.BrandMapper;
 import com.cskaoyan.mall.service.mallmanager.BrandService;
 import com.cskaoyan.mall.util.ListBean;
@@ -22,6 +23,8 @@ public class BrandServiceImpl implements BrandService {
 
     @Autowired
     BrandMapper brandMapper;
+    @Autowired
+    MyFileConfig myFileConfig;
 
     /**
      * 根据获取的数据对品牌商信息进行查询
@@ -34,6 +37,11 @@ public class BrandServiceImpl implements BrandService {
     public ListBean<Brand> list(Page page, String id, String name) {
         PageUtils.startPage(page);
         List<Brand> brands = brandMapper.selectAll(id, "%" + name + "%");
+        for (Brand brand : brands) {
+            if (!brand.getPicUrl().startsWith("http://")){
+                brand.setPicUrl(myFileConfig.addPicUrl(brand.getPicUrl()));
+            }
+        }
         return PageUtils.page(brands);
     }
 
@@ -56,10 +64,35 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public Brand update(Brand brand) {
         if (brand.getDesc() == null || brand.getName() == null || brand.getPicUrl() == null ||
-                brand.getFloorPrice().intValue() <= 0) {
+                brand.getFloorPrice() == null) {
             return null;
+        }
+        if (brand.getFloorPrice().intValue() <= 0){
+            System.out.println(brand.getFloorPrice().intValue());
+            return  null;
         }
         int i = brandMapper.updateByPrimaryKeySelective(brand);
         return brandMapper.selectByPrimaryKey(brand.getId());
+    }
+
+    /**
+     * 增加品牌商
+     * @param brand
+     * @return
+     */
+    @Override
+    public Brand create(Brand brand) {
+        if (brand.getDesc() == null || brand.getName() == null || brand.getPicUrl() == null ||
+                brand.getFloorPrice() == null) {
+            return null;
+        }
+        if (brand.getFloorPrice().intValue() <= 0){
+            System.out.println(brand.getFloorPrice().intValue());
+            return  null;
+        }
+        brand.setPicUrl(myFileConfig.parsePicUrl(brand.getPicUrl()));
+        int id = brandMapper.insertNewBrand(brand);
+        brand.setPicUrl(myFileConfig.addPicUrl(brand.getPicUrl()));
+        return brand;
     }
 }

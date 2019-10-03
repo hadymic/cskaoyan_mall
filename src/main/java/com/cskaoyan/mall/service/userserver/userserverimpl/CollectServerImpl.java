@@ -17,18 +17,12 @@ import java.util.List;
 public class CollectServerImpl implements CollectService {
     @Autowired
     CollectMapper collectMapper;
-    public ListBean getCollectList(Page utipage){
+    public ListBean getCollectList(Page utipage,String userId,String valueId){
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        String userId = utipage.getUserId();
-        String valueId = utipage.getValueId();
         if (userId=="")userId=null;
         if (valueId=="")valueId=null;
         List<Comment> comments = collectMapper.selectByTwoId(userId, valueId);
-//        PageInfo<Comment> pageInfo = new PageInfo(comments);
-//        long total = pageInfo.getTotal();
-//        ListBean<Comment> commentListBean = new ListBean<>(comments, total);
-//        return commentListBean;
         return PageUtils.page(comments);
-        //return listBean;
+
     }
 }

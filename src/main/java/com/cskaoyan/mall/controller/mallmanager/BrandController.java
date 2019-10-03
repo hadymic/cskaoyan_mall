@@ -60,4 +60,19 @@ public class BrandController {
             return BaseRespVo.fail("参数不对");
         }
     }
+
+    /**
+     * 添加品牌制造商
+     * @param brand
+     * @return
+     */
+    @RequestMapping("create")
+    public BaseRespVo create(@RequestBody Brand brand){
+        Brand newBrand = brandService.create(brand);
+        if (newBrand != null) {
+            return BaseRespVo.success(newBrand);
+        }else {
+            return BaseRespVo.fail("参数不对");
+        }
+    }
 }

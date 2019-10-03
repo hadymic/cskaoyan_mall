@@ -173,4 +173,9 @@
       and user_id = #{userId}
     </if>
   </select>
+  <update id="deleteByCouponId" parameterType="int">
+    update cskaoyan_mall_coupon_user
+    set deleted = 1
+    where coupon_id = #{couponId}
+  </update>
 </mapper>

@@ -70,9 +70,7 @@ public class AdminController {
     public  BaseRespVo create(@RequestBody Admin admin){
         Admin adminMsg = adminService.insertAdmin(admin);
         return  BaseRespVo.success(adminMsg);
-    }
-
-
+      }
     }
 
 

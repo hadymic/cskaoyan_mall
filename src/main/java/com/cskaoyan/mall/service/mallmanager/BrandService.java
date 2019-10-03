@@ -20,4 +20,6 @@ public interface BrandService {
     void delete(Brand brand);
 
     Brand update(Brand brand);
+
+    Brand create(Brand brand);
 }

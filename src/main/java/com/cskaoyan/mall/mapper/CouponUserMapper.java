@@ -19,4 +19,6 @@ public interface CouponUserMapper {
     int updateByPrimaryKey(CouponUser record);
 
     List<CouponUser> queryCouponUsers(@Param("couponId") int couponId, @Param("status") Integer status, @Param("userId") Integer userId);
+
+    void deleteByCouponId(Integer couponId);
 }

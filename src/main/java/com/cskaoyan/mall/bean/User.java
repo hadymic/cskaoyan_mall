@@ -33,7 +33,7 @@ public class User {
 
     private Byte status;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date addTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

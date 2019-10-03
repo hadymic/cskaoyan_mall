@@ -21,4 +21,6 @@ public interface TopicMapper {
     int updateByPrimaryKey(Topic record);
 
     List<Topic> queryTopics(@Param("title") String title, @Param("subtitle") String subtitle);
+
+    int insertSelectKey(Topic record);
 }

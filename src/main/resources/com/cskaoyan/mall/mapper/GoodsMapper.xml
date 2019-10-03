@@ -19,7 +19,7 @@
         </where>
     </select>
 
-    <update id="deleteGoods">
+    <update id="updateGoodsDeleted">
     update cskaoyan_mall_goods set  deleted = 1 where id = #{id}
 </update>
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Goods">
@@ -337,4 +337,23 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <insert id="insertSelectKey" parameterType="com.cskaoyan.mall.bean.Goods">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+        select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_goods (id,goods_sn, name,
+      category_id, brand_id, gallery,
+      keywords, brief, is_on_sale,
+      sort_order, pic_url, share_url,
+      is_new, is_hot, unit, counter_price,
+      retail_price, add_time, update_time,
+      deleted, detail)
+    values (#{id,jdbcType=INTEGER}, #{goodsSn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{categoryId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{gallery,jdbcType=VARCHAR},
+      #{keywords,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT},
+      #{sortOrder,jdbcType=SMALLINT}, #{picUrl,jdbcType=VARCHAR}, #{shareUrl,jdbcType=VARCHAR},
+      #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{unit,jdbcType=VARCHAR}, #{counterPrice,jdbcType=DECIMAL},
+      #{retailPrice,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR})
+  </insert>
 </mapper>

@@ -36,9 +36,9 @@ public interface CouponService {
      */
     ListBean<CouponUser> queryCouponUser(Page page, int couponId, Integer status, Integer userId);
 
-    String insertCoupon(Coupon coupon);
+    Coupon insertCoupon(Coupon coupon);
 
-    String updateCoupon(Coupon coupon);
+    Coupon updateCoupon(Coupon coupon);
 
     boolean deleteCoupon(Integer id);
 }

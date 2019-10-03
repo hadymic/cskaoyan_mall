@@ -33,7 +33,7 @@ public class StorageController {
      * @return
      */
     @RequestMapping("list")
-    public BaseRespVo storage(String key, String name, Page page) {
+    public BaseRespVo storage( String key, String name, Page page) {
         ListBean<Storage> storages = storageService.queryStorage(key, name, page);
         return BaseRespVo.success(storages);
     }
