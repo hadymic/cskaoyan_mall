@@ -67,6 +67,11 @@ public class AdServiceImpl implements AdService {
         ad.setUrl(url);
         ad.setAddTime(new Date());
         ad.setDeleted(false);
-        return adMapper.insertSelectKey(ad) == 1 ? ad : null;
+        if (adMapper.insertSelectKey(ad) == 1) {
+            ad.setUrl(myFileConfig.addPicUrl(ad.getUrl()));
+            return ad;
+        } else {
+            return null;
+        }
     }
 }

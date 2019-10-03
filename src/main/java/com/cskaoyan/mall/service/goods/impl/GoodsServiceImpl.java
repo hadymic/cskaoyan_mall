@@ -121,7 +121,7 @@ public class GoodsServiceImpl implements GoodsService {
         } else {
             return false;
         }
-        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit())){
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
             return false;
         }
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
@@ -201,7 +201,7 @@ public class GoodsServiceImpl implements GoodsService {
         } else {
             return false;
         }
-        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit())){
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
             return false;
         }
         goods.setAddTime(date);

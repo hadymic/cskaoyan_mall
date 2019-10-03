@@ -3,6 +3,7 @@ package com.cskaoyan.mall.service.goods;
 import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.vo.ordermanagement.ReplyVo;
 
 public interface CommentService {
 
@@ -10,4 +11,11 @@ public interface CommentService {
 
     //设置comment的deletd=1
     void deleteComment(Comment comment);
+
+    /**
+     * 订单回复
+     * @param replyVo
+     * @return
+     */
+    int updateCommentReply(ReplyVo replyVo);
 }

@@ -7,10 +7,12 @@ import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.vo.ordermanagement.ReplyVo;
 import com.cskaoyan.mall.util.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +40,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Comment comment) {
         commentMapper.updateCommentDeleted(comment.getId());
+    }
+
+    @Override
+    public int updateCommentReply(ReplyVo replyVo) {
+        /*Comment comment = new Comment();
+        comment.setUpdateTime(new Date());
+
+        commentMapper.updateByPrimaryKeySelective();*/
+        return 0;
     }
 
 }

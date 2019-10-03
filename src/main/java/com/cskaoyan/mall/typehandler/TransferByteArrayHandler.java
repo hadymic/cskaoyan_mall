@@ -11,14 +11,19 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+/**
+ * 数据库Byte数组互转
+ */
 @MappedTypes(Byte[].class)
 public class TransferByteArrayHandler implements TypeHandler<Byte[]> {
     private ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, Byte[] bytes, JdbcType jdbcType) throws SQLException {
         try {
             String jsonArray = objectMapper.writeValueAsString(bytes);
-            preparedStatement.setString(i,jsonArray);
+            preparedStatement.setString(i, jsonArray);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -42,7 +47,7 @@ public class TransferByteArrayHandler implements TypeHandler<Byte[]> {
             return bytes;
         }
         try {
-          bytes = objectMapper.readValue(value, Byte[].class);
+            bytes = objectMapper.readValue(value, Byte[].class);
         } catch (IOException e) {
             e.printStackTrace();
         }
