@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo.goodsMangement;
+package com.cskaoyan.mall.vo.goodsmanagement;
 
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.GoodsAttribute;

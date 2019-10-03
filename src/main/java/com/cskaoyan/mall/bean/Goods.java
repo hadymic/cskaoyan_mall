@@ -1,11 +1,13 @@
 package com.cskaoyan.mall.bean;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Goods {
     private Integer id;
-
+    @NotBlank(message = "商品编号不能为空")
     private String goodsSn;
 
     private String name;
@@ -31,7 +33,7 @@ public class Goods {
     private Boolean isNew;
 
     private Boolean isHot;
-
+    @NotBlank(message = "商品单位不能为空")
     private String unit;
 
     private BigDecimal counterPrice;

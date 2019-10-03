@@ -11,9 +11,9 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.util.UrlUtils;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
-import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
-import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
+import com.cskaoyan.mall.vo.goodsmanagement.BaseValueLabel;
+import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
+import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,17 +113,6 @@ public class GoodsServiceImpl implements GoodsService {
     public boolean updateGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
-        if (goods.getGoodsSn() != null) {
-            List<Goods> goodsList = goodsMapper.selectGoodsByGoodsSnOrName(goods);
-            if (goodsList.size() > 0) {//根据goodsSn查询不为0，说明已存在
-                return false;
-            }
-        } else {
-            return false;
-        }
-        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
-            return false;
-        }
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
         String[] gallery = goods.getGallery();

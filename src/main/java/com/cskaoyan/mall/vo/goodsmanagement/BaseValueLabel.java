@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo.goodsMangement;
+package com.cskaoyan.mall.vo.goodsmanagement;
 
 /**
  * category , brand 的返回参数

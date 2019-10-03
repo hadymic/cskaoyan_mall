@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo.goodsMangement;
+package com.cskaoyan.mall.vo.goodsmanagement;
 
 
 import java.util.List;
