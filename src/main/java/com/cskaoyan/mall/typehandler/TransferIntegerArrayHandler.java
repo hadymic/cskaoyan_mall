@@ -15,12 +15,12 @@ import java.sql.SQLException;
 /**
  * 数据库Byte数组互转
  */
-@MappedTypes(Byte[].class)
-public class TransferByteArrayHandler implements TypeHandler<Byte[]> {
+@MappedTypes(Integer[].class)
+public class TransferIntegerArrayHandler implements TypeHandler<Integer[]> {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void setParameter(PreparedStatement preparedStatement, int i, Byte[] bytes, JdbcType jdbcType) throws SQLException {
+    public void setParameter(PreparedStatement preparedStatement, int i, Integer[] bytes, JdbcType jdbcType) throws SQLException {
         try {
             String jsonArray = objectMapper.writeValueAsString(bytes);
             preparedStatement.setString(i, jsonArray);
@@ -30,34 +30,33 @@ public class TransferByteArrayHandler implements TypeHandler<Byte[]> {
     }
 
     @Override
-    public Byte[] getResult(ResultSet resultSet, String s) throws SQLException {
+    public Integer[] getResult(ResultSet resultSet, String s) throws SQLException {
         String value = resultSet.getString(s);
         return parseString2ByteArray(value);
     }
 
     @Override
-    public Byte[] getResult(ResultSet resultSet, int i) throws SQLException {
+    public Integer[] getResult(ResultSet resultSet, int i) throws SQLException {
         String value = resultSet.getString(i);
         return parseString2ByteArray(value);
     }
 
-    private Byte[] parseString2ByteArray(String value) {
-        Byte[] bytes = new Byte[0];
+    private Integer[] parseString2ByteArray(String value) {
+        Integer[] integers = new Integer[0];
         if (value == null) {
-            return bytes;
+            return integers;
         }
         try {
-            bytes = objectMapper.readValue(value, Byte[].class);
+            integers = objectMapper.readValue(value, Integer[].class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return bytes;
+        return integers;
     }
 
     @Override
-    public Byte[] getResult(CallableStatement callableStatement, int i) throws SQLException {
+    public Integer[] getResult(CallableStatement callableStatement, int i) throws SQLException {
         String value = callableStatement.getString(i);
-
         return parseString2ByteArray(value);
     }
 }

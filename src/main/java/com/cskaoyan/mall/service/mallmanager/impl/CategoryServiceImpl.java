@@ -4,7 +4,7 @@ import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CategoryMapper;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
-import com.cskaoyan.mall.vo.goodsmanagement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,9 +17,12 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
     List<Role> queryRole(String name);
 
-    List<Role>  roleOptions();
+    List<Role> roleOptions();
 
     int deleteRloe(Integer id);
+
+    List<String> queryRoleNameByRoleIds(@Param("ids") Integer[] ids);
 }

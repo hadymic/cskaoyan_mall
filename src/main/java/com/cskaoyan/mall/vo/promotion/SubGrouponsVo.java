@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo;
+package com.cskaoyan.mall.vo.promotion;
 
 /**
  * 团购活动SubGroupons

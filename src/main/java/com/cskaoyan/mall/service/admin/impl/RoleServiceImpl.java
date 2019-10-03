@@ -6,7 +6,7 @@ import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
-import com.cskaoyan.mall.vo.goodsmanagement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

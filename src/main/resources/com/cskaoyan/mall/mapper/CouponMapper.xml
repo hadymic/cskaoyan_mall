@@ -300,4 +300,10 @@
       #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
+  <select id="queryCodeCounts" resultType="_int">
+    select
+    count(code)
+    from cskaoyan_mall_coupon
+    where deleted = 0 and code = #{code}
+  </select>
 </mapper>

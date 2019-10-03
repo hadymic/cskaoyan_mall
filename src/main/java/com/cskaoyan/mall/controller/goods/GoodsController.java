@@ -5,7 +5,7 @@ import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.goodsmanagement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
 import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
-package com.cskaoyan.mall.vo.goodsmanagement;
+package com.cskaoyan.mall.vo;
 
 /**
- * category , brand 的返回参数
+ * value、label返回vo
  */
 public class BaseValueLabel {
     private int value;

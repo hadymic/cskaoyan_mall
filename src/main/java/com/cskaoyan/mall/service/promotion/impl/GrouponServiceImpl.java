@@ -11,8 +11,8 @@ import com.cskaoyan.mall.service.promotion.GrouponService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
-import com.cskaoyan.mall.vo.GrouponVo;
-import com.cskaoyan.mall.vo.SubGrouponsVo;
+import com.cskaoyan.mall.vo.promotion.GrouponVo;
+import com.cskaoyan.mall.vo.promotion.SubGrouponsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,8 +45,8 @@ public class GrouponServiceImpl implements GrouponService {
     public GrouponRules insertGrouponRules(GrouponRules grouponRules) {
         Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
         Date date = new Date();
-        if (goods == null && date.after(grouponRules.getExpireTime()) &&
-                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
+        if (goods == null || date.after(grouponRules.getExpireTime()) ||
+                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 ||
                 grouponRules.getDiscountMember() < 2) {
             return null;
         }
@@ -62,12 +62,14 @@ public class GrouponServiceImpl implements GrouponService {
     public GrouponRules updateGrouponRules(GrouponRules grouponRules) {
         Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
         Date date = new Date();
-        if (goods == null && date.after(grouponRules.getExpireTime()) &&
-                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
+        if (goods == null || date.after(grouponRules.getExpireTime()) ||
+                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 ||
                 grouponRules.getDiscountMember() < 2) {
             return null;
         }
 
+        grouponRules.setGoodsName(goods.getName());
+        grouponRules.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));
         grouponRules.setUpdateTime(date);
         return grouponRulesMapper.updateByPrimaryKeySelective(grouponRules) == 1 ? grouponRules : null;
     }

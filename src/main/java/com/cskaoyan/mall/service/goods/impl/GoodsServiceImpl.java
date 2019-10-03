@@ -11,7 +11,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.util.UrlUtils;
-import com.cskaoyan.mall.vo.goodsmanagement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
 import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +29,19 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
-    GoodsMapper goodsMapper;
+    private GoodsMapper goodsMapper;
     @Autowired
-    BrandMapper brandMapper;
+    private BrandMapper brandMapper;
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
-    GoodsAttributeMapper goodsAttributeMapper;
+    private GoodsAttributeMapper goodsAttributeMapper;
     @Autowired
-    GoodsSpecificationMapper goodsSpecificationMapper;
+    private GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
-    GoodsProductMapper goodsProductMapper;
+    private GoodsProductMapper goodsProductMapper;
     @Autowired
-    MyFileConfig myFileConfig;
+    private MyFileConfig myFileConfig;
 
     @Override
     public ListBean selectGoods(Page page, Goods goods) {
