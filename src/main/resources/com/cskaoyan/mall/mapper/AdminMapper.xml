@@ -173,4 +173,11 @@
   update  cskaoyan_mall_admin set deleted=1 where id=#{id}
 </update>
 
+  <update id="updatePassword">
+    update cskaoyan_mall_admin
+    set
+      password = #{newPassword},
+      update_time = now(),
+    where username = #{token} and password = #{oldPassword}
+  </update>
 </mapper>
