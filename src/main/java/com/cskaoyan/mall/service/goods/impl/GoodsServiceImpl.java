@@ -196,7 +196,9 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setAddTime(date);
         goods.setDeleted(false);
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),false));//去除gallery图片前缀
         goodsMapper.insertSelectKey(goods);
+
         //添加attribute
         int goodsId = goods.getId();//获取刚添加的商品goodsId
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();
