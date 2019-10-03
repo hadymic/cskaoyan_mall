@@ -9,8 +9,6 @@ import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
 import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +61,7 @@ public class GoodsController {
      * 更新商品信息，对输入参数进行判断
      */
     @RequestMapping("update")
-    public BaseRespVo updateGoods(@Valid @RequestBody GoodsEditVo goodsEditVo, BindingResult bindingResult) {
+    public BaseRespVo updateGoods(@Valid @RequestBody GoodsEditVo goodsEditVo) {
         boolean b = goodsService.updateGoods(goodsEditVo);
         return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
     }
