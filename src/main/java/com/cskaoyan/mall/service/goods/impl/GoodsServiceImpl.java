@@ -113,6 +113,17 @@ public class GoodsServiceImpl implements GoodsService {
     public boolean updateGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
+        if (goods.getGoodsSn() != null) {
+            List<Goods> goodsList = goodsMapper.selectGoodsByGoodsSnOrName(goods);
+            if (goodsList.size() > 0) {//根据goodsSn查询不为0，说明已存在
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit())){
+            return false;
+        }
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
         String[] gallery = goods.getGallery();
@@ -188,6 +199,9 @@ public class GoodsServiceImpl implements GoodsService {
                 return false;
             }
         } else {
+            return false;
+        }
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit())){
             return false;
         }
         goods.setAddTime(date);
