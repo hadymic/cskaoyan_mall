@@ -4,7 +4,6 @@ import com.cskaoyan.mall.service.auth.HomeService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.ChangePasswordVo;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +36,10 @@ public class HomeController {
     public BaseRespVo ship(@RequestBody ChangePasswordVo changePasswordVo){
         String token = (String) SecurityUtils.getSubject().getPrincipal();
         if (homeService.updatePassword(changePasswordVo,token)) {
-            return BaseRespVo.fail("输入的密码过短或者不包含字母");
+            BaseRespVo baseRespVo = new BaseRespVo<>();
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
         }
-        BaseRespVo baseRespVo = new BaseRespVo<>();
-        baseRespVo.setErrmsg("成功");
-        return baseRespVo;
+        return BaseRespVo.fail("新旧密码不能相同，输入的密码不能过短或者不包含字母");
     }
 }

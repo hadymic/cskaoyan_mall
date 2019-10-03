@@ -6,7 +6,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.StringUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.GrouponVo;
+import com.cskaoyan.mall.vo.promotion.GrouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

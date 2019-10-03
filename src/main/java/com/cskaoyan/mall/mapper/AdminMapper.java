@@ -21,10 +21,11 @@ public interface AdminMapper {
 
     int updateByPrimaryKey(Admin record);
 
-    List<Admin> queryAdmin(String username);
+    List<Admin> queryAdminsByLikeUsername(String username);
 
+    Integer[] queryRoleIds(String username);
 
-    List<Role> queryRole(String name);
+    String queryPasswordByUsername(@Param("username") String username);
 
     int deleteAdmin(Integer id);
 
@@ -37,4 +38,8 @@ public interface AdminMapper {
      * @return
      */
     int updatePassword(@Param("oldPassword") String oldPassword, @Param("newPassword")String newPassword, @Param("token")String token);
+
+    List<String> queryPermissionsByUsername(@Param("username") String username);
+
+    Admin queryAdminByUsername(String username);
 }

@@ -1,5 +1,7 @@
-package com.cskaoyan.mall.vo.goodsMangement;
+package com.cskaoyan.mall.vo.goodsmanagement;
 
+
+import com.cskaoyan.mall.vo.BaseValueLabel;
 
 import java.util.List;
 

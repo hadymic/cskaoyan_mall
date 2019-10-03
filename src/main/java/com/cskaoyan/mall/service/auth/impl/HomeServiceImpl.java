@@ -39,10 +39,11 @@ public class HomeServiceImpl implements HomeService {
         if (StringUtils.isEmpty(changePasswordVo.getNewPassword()) || StringUtils.isEmpty(changePasswordVo.getNewPassword2())){
             return false;
         }
-        if (!changePasswordVo.getNewPassword().equals(changePasswordVo.getNewPassword2())){
+        if (!changePasswordVo.getNewPassword().equals(changePasswordVo.getNewPassword2())
+            || changePasswordVo.getNewPassword().equals(changePasswordVo.getOldPassword())){
             return false;
         }
-        if (changePasswordVo.getNewPassword().length() < 10 || changePasswordVo.getNewPassword().matches(".*[a-zA-Z]+.*")){
+        if (changePasswordVo.getNewPassword().length() < 7 || !changePasswordVo.getNewPassword().matches(".*[a-zA-Z]+.*")){
             return false;
         }
         int i = adminMapper.updatePassword(changePasswordVo.getOldPassword(),changePasswordVo.getNewPassword(),token);

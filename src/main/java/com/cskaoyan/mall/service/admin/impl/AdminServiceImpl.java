@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ListBean<Admin> queryAdmin(Page page,String username) {
         PageUtils.startPage(page);
-       List<Admin> admins=  adminMapper.queryAdmin(username);
+       List<Admin> admins=  adminMapper.queryAdminsByLikeUsername(username);
 
 
 

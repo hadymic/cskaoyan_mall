@@ -11,9 +11,9 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.util.UrlUtils;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
-import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
-import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
+import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
+import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +29,19 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
-    GoodsMapper goodsMapper;
+    private GoodsMapper goodsMapper;
     @Autowired
-    BrandMapper brandMapper;
+    private BrandMapper brandMapper;
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
-    GoodsAttributeMapper goodsAttributeMapper;
+    private GoodsAttributeMapper goodsAttributeMapper;
     @Autowired
-    GoodsSpecificationMapper goodsSpecificationMapper;
+    private GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
-    GoodsProductMapper goodsProductMapper;
+    private GoodsProductMapper goodsProductMapper;
     @Autowired
-    MyFileConfig myFileConfig;
+    private MyFileConfig myFileConfig;
 
     @Override
     public ListBean selectGoods(Page page, Goods goods) {
@@ -116,7 +116,7 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
         String[] gallery = goods.getGallery();
-        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);//去除画廊图片前缀
+        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
         goods.setGallery(listUrls);
 
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
@@ -190,10 +190,15 @@ public class GoodsServiceImpl implements GoodsService {
         } else {
             return false;
         }
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
+            return false;
+        }
         goods.setAddTime(date);
         goods.setDeleted(false);
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),false));//去除gallery图片前缀
         goodsMapper.insertSelectKey(goods);
+
         //添加attribute
         int goodsId = goods.getId();//获取刚添加的商品goodsId
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();
