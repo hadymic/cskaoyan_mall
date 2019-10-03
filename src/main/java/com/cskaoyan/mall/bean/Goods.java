@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.bean;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,6 +12,7 @@ public class Goods {
     @NotBlank(message = "商品编号不能为空")
     private String goodsSn;
     @NotBlank(message = "商品名称不能为空")
+    @Size(min=4,max=20,message = "商品名称长度为4-20之间")
     private String name;
     @NotNull(message = "所属分类未选择")
     private Integer categoryId;
@@ -36,9 +39,9 @@ public class Goods {
     private Boolean isHot;
     @NotBlank(message = "商品单位不能为空")
     private String unit;
-
+    @Min(value = 0,message = "专柜价格必须不小于0")
     private BigDecimal counterPrice;
-
+    @Min(value = 0,message = "当前价格必须不小于0")
     private BigDecimal retailPrice;
 
     private Date addTime;

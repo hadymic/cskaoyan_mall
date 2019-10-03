@@ -43,7 +43,8 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public BaseRespVo constraintViolationExceptionHandler(HttpServletRequest request, ConstraintViolationException exception) {
         logger.info(exception.getMessage());
-        return BaseRespVo.fail(exception.getMessage());
+        //return BaseRespVo.fail(exception.getMessage());
+        return BaseRespVo.fail("参数值错误");
     }
 
 
@@ -53,6 +54,7 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public BaseRespVo exceptionHandler(HttpServletRequest request, Exception exception) {
         logger.error(exception.getMessage());
-        return BaseRespVo.fail(exception.getMessage());
+        //return BaseRespVo.fail(exception.getMessage());
+        return BaseRespVo.fail("参数值错误");
     }
 }
