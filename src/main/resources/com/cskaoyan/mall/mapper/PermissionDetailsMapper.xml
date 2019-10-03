@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.mall.mapper.PermissionDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.PermissionDetails">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="api" jdbcType="VARCHAR" property="api" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, label, parent_id, api, id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_permission_details
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_permission_details
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
+    insert into cskaoyan_mall_permission_details (pid, label, parent_id, 
+      api, id)
+    values (#{pid,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{api,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
+    insert into cskaoyan_mall_permission_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="api != null">
+        api,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="api != null">
+        #{api,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
+    update cskaoyan_mall_permission_details
+    <set>
+      <if test="label != null">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="api != null">
+        api = #{api,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
+    update cskaoyan_mall_permission_details
+    set label = #{label,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      api = #{api,jdbcType=VARCHAR},
+      id = #{id,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+</mapper>

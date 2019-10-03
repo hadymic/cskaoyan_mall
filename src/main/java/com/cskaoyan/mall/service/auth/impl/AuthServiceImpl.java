@@ -8,6 +8,7 @@ import com.cskaoyan.mall.vo.auth.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,14 +28,24 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserInfo getAdminInfo(String principal) {
         Admin admin = adminMapper.queryAdminByUsername(principal);
-        List<String> permissions = adminMapper.queryPermissionsByUsername(principal);
-
-        List<String> roleNames = roleMapper.queryRoleNameByRoleIds(admin.getRoleIds());
 
         UserInfo userInfo = new UserInfo();
         userInfo.setAvatar(admin.getAvatar());
         userInfo.setName(admin.getUsername());
-        userInfo.setPerms(permissions);
+
+        List<String> permissions = adminMapper.queryPermissionsByUsername(principal);
+        if (!(permissions.size() == 1 && "*".equals(permissions.get(0)))) {
+            List<String> truePermissions = new ArrayList<>();
+            for (String permission : permissions) {
+                truePermissions.add("/" + permission.replace(":", "/"));
+            }
+            userInfo.setPerms(truePermissions);
+        } else {
+            userInfo.setPerms(permissions);
+        }
+
+        List<String> roleNames = roleMapper.queryRoleNameByRoleIds(admin.getRoleIds());
+
         userInfo.setRoles(roleNames);
         return userInfo;
     }
