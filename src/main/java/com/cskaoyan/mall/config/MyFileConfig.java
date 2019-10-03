@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.config;
 
+import com.cskaoyan.mall.util.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +65,9 @@ public class MyFileConfig {
      * @return
      */
     public String parsePicUrl(String url) {
+        if (StringUtils.isEmpty(url)) {
+            return null;
+        }
         String path = netPath + picPath + "/";
         if (url.contains(path)) {
             url = url.replace(path, "");
@@ -78,6 +82,9 @@ public class MyFileConfig {
      * @return
      */
     public String addPicUrl(String url) {
+        if (StringUtils.isEmpty(url)) {
+            return null;
+        }
         if (url.contains("http://yanxuan.nosdn.127.net/")) {
             return url;
         }

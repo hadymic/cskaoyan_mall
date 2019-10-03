@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.exception;
 
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -27,11 +28,23 @@ public class MyExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public BaseRespVo handleException(HttpMessageNotReadableException e) {
         if (e.getMessage().contains("JSON parse error: ")) {
-            logger.warn(e.getMessage());
+            //logger.warn(e.getMessage());
             return BaseRespVo.fail("参数值不对");
         } else {
             logger.warn(e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * shiro异常处理
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    @ResponseBody
+    public String authorizationExceptionHandle(AuthorizationException e) {
+        return "perm refuse";
     }
 }

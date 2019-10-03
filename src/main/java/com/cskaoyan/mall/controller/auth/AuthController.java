@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.controller.auth;
 import com.cskaoyan.mall.service.auth.AuthService;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.LoginVo;
-import com.cskaoyan.mall.vo.UserInfo;
+import com.cskaoyan.mall.vo.auth.LoginVo;
+import com.cskaoyan.mall.vo.auth.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

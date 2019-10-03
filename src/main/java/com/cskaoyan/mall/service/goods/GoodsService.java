@@ -3,7 +3,7 @@ package com.cskaoyan.mall.service.goods;
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
 import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
 

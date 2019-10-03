@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.vo.goodsMangement;
 
 
+import com.cskaoyan.mall.vo.BaseValueLabel;
+
 import java.util.List;
 
 public class CategoryList {

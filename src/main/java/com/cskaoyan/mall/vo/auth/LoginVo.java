@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo;
+package com.cskaoyan.mall.vo.auth;
 
 /**
  * 后台登录vo

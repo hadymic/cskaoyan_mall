@@ -3,7 +3,7 @@ package com.cskaoyan.mall.service.promotion;
 import com.cskaoyan.mall.bean.GrouponRules;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.vo.GrouponVo;
+import com.cskaoyan.mall.vo.promotion.GrouponVo;
 
 public interface GrouponService {
     ListBean<GrouponRules> queryGrouponRuless(Page page, Integer goodsId);

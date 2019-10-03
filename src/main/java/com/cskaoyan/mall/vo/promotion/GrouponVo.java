@@ -1,4 +1,4 @@
-package com.cskaoyan.mall.vo;
+package com.cskaoyan.mall.vo.promotion;
 
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.Groupon;

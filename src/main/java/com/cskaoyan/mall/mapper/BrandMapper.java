@@ -1,7 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Brand;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import org.apache.ibatis.annotations.Param;
 
 

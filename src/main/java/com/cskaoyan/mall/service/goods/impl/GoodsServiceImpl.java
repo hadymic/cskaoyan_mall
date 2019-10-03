@@ -11,7 +11,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.util.UrlUtils;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
 import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
