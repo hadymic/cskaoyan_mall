@@ -15,7 +15,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time,
-    deleted, role_ids
+    deleted , role_ids
   </sql>
 
 
@@ -160,9 +160,9 @@
 
 
   <!--后台管理系统显示&查找-->
-  <select id="queryAdmin"  resultType="com.cskaoyan.mall.bean.Admin">
+  <select id="queryAdmin"  resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>, role_ids as  roleIds
+    <include refid="Base_Column_List"/>
     from cskaoyan_mall_admin  where  deleted=0
     <if test="username != null">
      and username like  "%"#{username}"%"
