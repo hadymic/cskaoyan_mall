@@ -268,4 +268,7 @@
     </if>
   </select>
 
+  <select id="queryUserNumber" resultType="java.lang.Integer">
+    select count(id) from cskaoyan_mall_user where deleted = 0
+  </select>
 </mapper>
