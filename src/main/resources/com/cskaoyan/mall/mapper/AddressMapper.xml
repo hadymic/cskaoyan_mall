@@ -22,8 +22,8 @@
   <sql id="Base_Comlumn_List_UserSite">
      a.id,
     a.name,
-    a.user_id userId,
-    a.province_id provinceId,
+    a.user_id as userId,
+    a.province_id as provinceId,
     a.city_id as cityId,
     a.area_id as areaId,
     a.address,

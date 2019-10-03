@@ -119,10 +119,10 @@
     from cskaoyan_mall_collect
       where deleted = 0
       <if test="userId != null">
-        and userId = #{userId}
+        and user_id = #{userId}
       </if>
       <if test="valueId != null">
-        and valueId = #{valueId}
+        and value_id = #{valueId}
       </if>
   </select>
 </mapper>
