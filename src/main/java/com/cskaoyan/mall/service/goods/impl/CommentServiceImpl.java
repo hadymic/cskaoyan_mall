@@ -7,6 +7,7 @@ import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.util.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,18 +29,9 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> commentList = commentMapper.selectCommentList(comment);
         for (Comment comment1 : commentList) {//数组图片显示
             String[] urlLists = comment1.getPicUrls();
-            String[] newUrls = null;
-            for (String picUrl : urlLists) {
-                if (!picUrl.startsWith("http")) {
-                    String addPicUrl = myFileConfig.addPicUrl(picUrl);
-                    newUrls = new String[urlLists.length];
-                    for (int i = 0; i < urlLists.length; i++) {
-                        newUrls[i] = addPicUrl;
-                    }
-                    comment1.setPicUrls(newUrls);
+            String[] listUrls = UrlUtils.CheckListUrls(urlLists, false);
+            comment1.setPicUrls(listUrls);
                 }
-            }
-        }
         return PageUtils.page(commentList);
     }
 
