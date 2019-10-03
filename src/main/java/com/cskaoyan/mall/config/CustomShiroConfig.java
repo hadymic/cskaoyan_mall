@@ -29,9 +29,7 @@ public class CustomShiroConfig {
         //perms权限
         HashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/admin/auth/login", "anon");
-//        filterChainDefinitionMap.put("/admin/auth/info","anon");
-        filterChainDefinitionMap.put("/fail", "anon");
-        filterChainDefinitionMap.put("/jpg/**", "anon");
+        filterChainDefinitionMap.put("/pic/**", "anon");
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         //filterChainDefinitionMap.put("/admin/logout","logout");
@@ -48,7 +46,6 @@ public class CustomShiroConfig {
         securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
-    /*自定义realm*/
 
     //声明式使用鉴权注解的开关
     @Bean
@@ -61,7 +58,6 @@ public class CustomShiroConfig {
     //自定义的sessionManager
     @Bean
     public DefaultWebSessionManager webSessionManager() {
-        MallSessionManager mallSessionManager = new MallSessionManager();
-        return mallSessionManager;
+        return new MallSessionManager();
     }
 }

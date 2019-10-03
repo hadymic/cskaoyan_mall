@@ -35,8 +35,7 @@ public class CustomRealm extends AuthorizingRealm {
         //subject执行login时传入的usernamePasswordToken中的username
         String principal = (String) token.getPrincipal();
         //根据principle也就是用户名去数据库查询用户名所对应的密码信息
-//        String passwordFromDb = adminMapper.queryPasswordByUsername(principal);
-        String passwordFromDb = "123456";
+        String passwordFromDb = adminMapper.queryPasswordByUsername(principal);
         //第一个参数在处理授权信息时可以获得
         //第二个参数 该用户正确的密码（来源于数据库的）
         return new SimpleAuthenticationInfo(principal, passwordFromDb, this.getName());
@@ -54,9 +53,8 @@ public class CustomRealm extends AuthorizingRealm {
         String primaryPrincipal = (String) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         //权限信息是根据认证时的用户信息去数据库中查询获得的
-//        List<String> permissions = adminMapper.queryPermissionsByUsername(primaryPrincipal);
-        List<String> permissions = new ArrayList<>();
-        permissions.add("user:query");
+        List<String> permissions = adminMapper.queryPermissionsByUsername(primaryPrincipal);
+
         authorizationInfo.addStringPermissions(permissions);
         authorizationInfo.addRole("utilMan");
         return authorizationInfo;

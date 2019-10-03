@@ -21,7 +21,7 @@ public class Admin {
 
     private Boolean deleted;
 
-    private Byte[] roleIds;
+    private Integer[] roleIds;
 
     public Integer getId() {
         return id;
@@ -95,11 +95,11 @@ public class Admin {
         this.deleted = deleted;
     }
 
-    public Byte[] getRoleIds() {
+    public Integer[] getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(Byte[] roleIds) {
+    public void setRoleIds(Integer[] roleIds) {
         this.roleIds = roleIds;
     }
 }

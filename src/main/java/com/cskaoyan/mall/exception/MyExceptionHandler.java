@@ -44,7 +44,8 @@ public class MyExceptionHandler {
      */
     @ExceptionHandler(AuthorizationException.class)
     @ResponseBody
-    public String authorizationExceptionHandle(AuthorizationException e) {
-        return "perm refuse";
+    public BaseRespVo authorizationExceptionHandle(AuthorizationException e) {
+        e.printStackTrace();
+        return BaseRespVo.fail("请登录");
     }
 }

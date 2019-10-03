@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LogController {
-@Autowired
-LogService logService;
+    @Autowired
+    private LogService logService;
 
     /**
-     *
      * 显示&查找
+     *
      * @param page
      * @param log
      * @return
      */
     @RequestMapping("admin/log/list")
-public BaseRespVo log(Page page, Log log){
-    ListBean<Log> logs=   logService.queryLogs(page,log.getAdmin());
-    return  BaseRespVo.success(logs);
-}
+    public BaseRespVo log(Page page, Log log) {
+        ListBean<Log> logs = logService.queryLogs(page, log.getAdmin());
+        return BaseRespVo.success(logs);
+    }
 
 }
