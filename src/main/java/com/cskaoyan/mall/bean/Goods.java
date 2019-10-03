@@ -9,17 +9,18 @@ public class Goods {
     private Integer id;
     @NotBlank(message = "商品编号不能为空")
     private String goodsSn;
-
+    @NotBlank(message = "商品名称不能为空")
     private String name;
-
+    @NotNull(message = "所属分类未选择")
     private Integer categoryId;
-
+    @NotNull(message = "所属品牌商未选择")
     private Integer brandId;
 
     private String[] gallery;
 
     private String keywords;
 
+    @NotBlank(message = "商品简介不能为空")
     private String brief;
 
     private Boolean isOnSale;

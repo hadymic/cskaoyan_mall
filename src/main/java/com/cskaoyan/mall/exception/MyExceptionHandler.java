@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MyExceptionHandler {
     private Logger logger = LoggerFactory.getLogger(MyExceptionHandler.class);
 
-    /**
+    /*
      * json解析异常处理
      *
      * @param e

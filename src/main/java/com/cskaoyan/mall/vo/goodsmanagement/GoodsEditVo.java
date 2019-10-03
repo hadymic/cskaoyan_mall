@@ -4,8 +4,6 @@ import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.GoodsAttribute;
 import com.cskaoyan.mall.bean.GoodsProduct;
 import com.cskaoyan.mall.bean.GoodsSpecification;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.Valid;
 import java.util.List;
 

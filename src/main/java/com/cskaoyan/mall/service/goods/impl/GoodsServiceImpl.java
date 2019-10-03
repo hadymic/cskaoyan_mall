@@ -116,7 +116,7 @@ public class GoodsServiceImpl implements GoodsService {
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
         String[] gallery = goods.getGallery();
-        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);//去除画廊图片前缀
+        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
         goods.setGallery(listUrls);
 
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
