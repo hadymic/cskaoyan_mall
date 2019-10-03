@@ -3,7 +3,7 @@ package com.cskaoyan.mall.controller.auth;
 import com.cskaoyan.mall.service.auth.HomeService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.ChangePasswordVo;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +32,14 @@ public class HomeController {
      * @param changePasswordVo
      * @return
      */
-//    @RequestMapping("profile/password")
-//    public BaseRespVo ship(@RequestBody ChangePasswordVo changePasswordVo){
-        //return BaseRespVo.success(homeService.updatePassword(changePasswordVo));
-//    }
+    @RequestMapping("profile/password")
+    public BaseRespVo ship(@RequestBody ChangePasswordVo changePasswordVo){
+        String token = (String) SecurityUtils.getSubject().getPrincipal();
+        if (homeService.updatePassword(changePasswordVo,token)) {
+            BaseRespVo baseRespVo = new BaseRespVo<>();
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
+        }
+        return BaseRespVo.fail("新旧密码不能相同，输入的密码不能过短或者不包含字母");
+    }
 }

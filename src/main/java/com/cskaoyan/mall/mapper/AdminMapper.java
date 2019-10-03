@@ -29,6 +29,16 @@ public interface AdminMapper {
 
     int deleteAdmin(Integer id);
 
+
+    /**
+     * 修改管理员密码
+     * @param oldPassword
+     * @param newPassword
+     * @param token
+     * @return
+     */
+    int updatePassword(@Param("oldPassword") String oldPassword, @Param("newPassword")String newPassword, @Param("token")String token);
+
     List<String> queryPermissionsByUsername(@Param("username") String username);
 
     Admin queryAdminByUsername(String username);
