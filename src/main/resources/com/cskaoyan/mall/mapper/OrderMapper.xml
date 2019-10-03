@@ -367,4 +367,7 @@
     </where>
   </select>
 
+  <select id="queryOrderNumber" resultType="java.lang.Integer">
+        select count(id) from cskaoyan_mall_order where deleted = 0
+  </select>
 </mapper>

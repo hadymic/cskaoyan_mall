@@ -41,4 +41,10 @@ public interface OrderMapper {
      * @return
      */
     List<StatOrderVo> selectOrderByDay();
+
+    /**
+     * 查询订单数量
+     * @return
+     */
+    Integer queryOrderNumber();
 }

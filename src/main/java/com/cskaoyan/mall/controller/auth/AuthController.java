@@ -15,6 +15,7 @@ import java.util.List;
  * @author hadymic
  */
 @RestController
+@RequestMapping("admin/auth")
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -25,7 +26,7 @@ public class AuthController {
      * @param vo
      * @return
      */
-    @RequestMapping("admin/auth/login")
+    @RequestMapping("login")
     public BaseRespVo login(LoginVo vo) {
         return BaseRespVo.success("9d1c67c7-c489-4729-bde0-2015db5cea02");
     }
@@ -36,7 +37,7 @@ public class AuthController {
      * @param token
      * @return
      */
-    @RequestMapping("admin/auth/info")
+    @RequestMapping("info")
     public BaseRespVo info(String token) {
         UserInfo userInfo = new UserInfo();
         userInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
