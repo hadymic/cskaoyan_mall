@@ -47,7 +47,7 @@ public class GrouponServiceImpl implements GrouponService {
         Date date = new Date();
         if (goods == null && date.after(grouponRules.getExpireTime()) &&
                 grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
-                grouponRules.getDiscountMember() >= 2) {
+                grouponRules.getDiscountMember() < 2) {
             return null;
         }
 
@@ -60,7 +60,15 @@ public class GrouponServiceImpl implements GrouponService {
 
     @Override
     public GrouponRules updateGrouponRules(GrouponRules grouponRules) {
-        grouponRules.setUpdateTime(new Date());
+        Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
+        Date date = new Date();
+        if (goods == null && date.after(grouponRules.getExpireTime()) &&
+                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
+                grouponRules.getDiscountMember() < 2) {
+            return null;
+        }
+
+        grouponRules.setUpdateTime(date);
         return grouponRulesMapper.updateByPrimaryKeySelective(grouponRules) == 1 ? grouponRules : null;
     }
 

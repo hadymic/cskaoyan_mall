@@ -9,7 +9,7 @@ public class StringUtils {
     }
 
     public static String addPercent(String str) {
-        if (!StringUtils.isEmpty(str)) {
+        if (!isEmpty(str)) {
             str = "%" + str.trim() + "%";
         } else {
             str = null;
