@@ -11,7 +11,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, `desc`, enabled, add_time, update_time, deleted
+    id, `name`, `desc`, enabled, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -127,8 +127,8 @@
     </if>
   </select>
 
-  <select id="roleOptions" resultType="com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel">
-    select  id as  value,name as label from cskaoyan_mall_role
+  <select id="roleOptions" resultType="com.cskaoyan.mall.bean.Role">
+    select  id  ,`name`from cskaoyan_mall_role
   </select>
 <update id="deleteRloe">
   update  cskaoyan_mall_role set deleted=1 where id=#{id}

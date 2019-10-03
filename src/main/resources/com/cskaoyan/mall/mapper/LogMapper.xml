@@ -15,7 +15,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, admin, ip, type, action, status, result, comment, add_time, update_time, deleted
+    id, admin, ip, type, action, status, result, comment, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -165,7 +165,7 @@
 
   <select id="queryLogs"  resultType="com.cskaoyan.mall.bean.Log">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List"/> , add_time  as addTime, update_time as updateTime
     from cskaoyan_mall_log
     <if test="admin != null">
       where   admin like  "%"#{admin}"%"

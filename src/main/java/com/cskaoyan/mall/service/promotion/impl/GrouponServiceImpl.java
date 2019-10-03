@@ -3,6 +3,7 @@ package com.cskaoyan.mall.service.promotion.impl;
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.Groupon;
 import com.cskaoyan.mall.bean.GrouponRules;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.GoodsMapper;
 import com.cskaoyan.mall.mapper.GrouponMapper;
 import com.cskaoyan.mall.mapper.GrouponRulesMapper;
@@ -22,6 +23,9 @@ import java.util.List;
 @Service
 public class GrouponServiceImpl implements GrouponService {
     @Autowired
+    private MyFileConfig myFileConfig;
+
+    @Autowired
     private GrouponRulesMapper grouponRulesMapper;
 
     @Autowired
@@ -40,19 +44,31 @@ public class GrouponServiceImpl implements GrouponService {
     @Override
     public GrouponRules insertGrouponRules(GrouponRules grouponRules) {
         Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
-        if (goods == null) {
+        Date date = new Date();
+        if (goods == null && date.after(grouponRules.getExpireTime()) &&
+                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
+                grouponRules.getDiscountMember() < 2) {
             return null;
         }
+
         grouponRules.setGoodsName(goods.getName());
-        grouponRules.setPicUrl(goods.getPicUrl());
-        grouponRules.setAddTime(new Date());
+        grouponRules.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));
+        grouponRules.setAddTime(date);
         grouponRules.setDeleted(false);
         return grouponRulesMapper.insertSelectKey(grouponRules) == 1 ? grouponRules : null;
     }
 
     @Override
     public GrouponRules updateGrouponRules(GrouponRules grouponRules) {
-        grouponRules.setUpdateTime(new Date());
+        Goods goods = goodsMapper.selectByPrimaryKey(grouponRules.getGoodsId());
+        Date date = new Date();
+        if (goods == null && date.after(grouponRules.getExpireTime()) &&
+                grouponRules.getDiscount().compareTo(goods.getRetailPrice()) > 0 &&
+                grouponRules.getDiscountMember() < 2) {
+            return null;
+        }
+
+        grouponRules.setUpdateTime(date);
         return grouponRulesMapper.updateByPrimaryKeySelective(grouponRules) == 1 ? grouponRules : null;
     }
 
@@ -84,6 +100,10 @@ public class GrouponServiceImpl implements GrouponService {
             vo.setRules(grouponRule);
             List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(grouponRule.getId());
 
+            //如果查不到团购活动则跳过
+            if (groupons.size() == 0) {
+                continue;
+            }
             List<SubGrouponsVo> subGrouponsVos = new ArrayList<>();
             for (Groupon groupon : groupons) {
                 //如果相同，说明是发起者，封装至groupon

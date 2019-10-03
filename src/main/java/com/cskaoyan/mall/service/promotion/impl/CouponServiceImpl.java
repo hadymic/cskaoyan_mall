@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -60,11 +61,13 @@ public class CouponServiceImpl implements CouponService {
     public Coupon updateCoupon(Coupon coupon) {
         //判断优惠券有效期状态
         coupon.setUpdateTime(new Date());
-        return couponMapper.updateByPrimaryKeySelective(coupon) == 1 ? coupon : null;
+        return couponMapper.updateByPrimaryKey(coupon) == 1 ? coupon : null;
     }
 
     @Override
     public boolean deleteCoupon(Integer id) {
+        //删除优惠券同时删除优惠券关联的user表信息
+        couponUserMapper.deleteByCouponId(id);
         Coupon coupon = new Coupon();
         coupon.setId(id);
         coupon.setDeleted(true);
