@@ -1,10 +1,12 @@
-package com.cskaoyan.mall.vo.goodsMangement;
+package com.cskaoyan.mall.vo.goodsmanagement;
 
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.bean.GoodsAttribute;
 import com.cskaoyan.mall.bean.GoodsProduct;
 import com.cskaoyan.mall.bean.GoodsSpecification;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -15,7 +17,9 @@ import java.util.List;
  */
 public class GoodsEditVo {
     int[] categoryIds;
+    @Valid
     Goods goods;
+
     List<GoodsAttribute> attributes;
     List<GoodsSpecification> specifications;
     List<GoodsProduct> products;

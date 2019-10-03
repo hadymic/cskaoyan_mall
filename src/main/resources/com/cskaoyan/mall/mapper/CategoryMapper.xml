@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.CategoryMapper">
-    <select id="selectCategory"
-            resultType="com.cskaoyan.mall.vo.BaseValueLabel">
+<select id="selectCategory" resultType="com.cskaoyan.mall.vo.BaseValueLabel">
   select id as value,name as label from cskaoyan_mall_category where pid = #{pid}
 </select>
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Category">

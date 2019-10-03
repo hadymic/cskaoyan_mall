@@ -17,9 +17,10 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
     List<Role> queryRole(String name);
 
-    List<Role>  roleOptions();
+    List<Role> roleOptions();
 
     int deleteRloe(Integer id);
 
