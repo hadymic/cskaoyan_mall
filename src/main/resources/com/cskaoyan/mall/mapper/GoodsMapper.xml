@@ -356,4 +356,8 @@
       #{retailPrice,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT}, #{detail,jdbcType=LONGVARCHAR})
   </insert>
+
+    <select id="queryGoodsNumber" resultType="java.lang.Integer">
+        select count(id) from cskaoyan_mall_goods where deleted = 0
+    </select>
 </mapper>

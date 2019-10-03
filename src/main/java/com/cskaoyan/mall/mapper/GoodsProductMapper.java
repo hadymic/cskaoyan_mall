@@ -38,4 +38,10 @@ public interface GoodsProductMapper {
      * @param product
      */
     void updateProductBySpecAndGoodsId(@Param("product") GoodsProduct product);
+
+    /**
+     * 查询货品数量
+     * @return
+     */
+    Integer queryGoodsProductNumber();
 }

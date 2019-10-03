@@ -38,4 +38,9 @@ public interface UserMapper {
     List<User> selectByNameAndMobile(@Param("username") String username,
                                  @Param("mobile") String mobile);
 
+    /**
+     * 返回用户数量
+     * @return
+     */
+    Integer queryUserNumber();
 }

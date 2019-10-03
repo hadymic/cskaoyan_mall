@@ -20,7 +20,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, gender, birthday, last_login_time as lastLoginTime, last_login_ip as lastLoginTime, user_level as userLevel,nickname, mobile, avatar, weixin_openid as weixinOpenid, status, add_time as addTime, update_time as uodateTime, deleted
+    id, username, password, gender, birthday, last_login_time, last_login_ip, user_level,nickname, mobile, avatar, weixin_openid, status, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -268,4 +268,7 @@
     </if>
   </select>
 
+  <select id="queryUserNumber" resultType="java.lang.Integer">
+    select count(id) from cskaoyan_mall_user where deleted = 0
+  </select>
 </mapper>
