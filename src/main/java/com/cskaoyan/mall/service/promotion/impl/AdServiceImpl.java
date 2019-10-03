@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.promotion.impl;
 
 import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.AdMapper;
 import com.cskaoyan.mall.service.promotion.AdService;
 import com.cskaoyan.mall.util.ListBean;
@@ -21,6 +22,9 @@ import java.util.List;
 @Service
 public class AdServiceImpl implements AdService {
     @Autowired
+    private MyFileConfig myFileConfig;
+
+    @Autowired
     private AdMapper adMapper;
 
     @Override
@@ -33,11 +37,17 @@ public class AdServiceImpl implements AdService {
             content = content.trim();
         }
         List<Ad> ads = adMapper.queryAds(name, content);
+        for (Ad ad : ads) {
+            String url = myFileConfig.addPicUrl(ad.getUrl());
+            ad.setUrl(url);
+        }
         return PageUtils.page(ads);
     }
 
     @Override
     public Ad updateAd(Ad ad) {
+        String url = myFileConfig.parsePicUrl(ad.getUrl());
+        ad.setUrl(url);
         ad.setUpdateTime(new Date());
         return adMapper.updateByPrimaryKeySelective(ad) == 1 ? ad : null;
     }
@@ -53,6 +63,8 @@ public class AdServiceImpl implements AdService {
 
     @Override
     public Ad insertAd(Ad ad) {
+        String url = myFileConfig.parsePicUrl(ad.getUrl());
+        ad.setUrl(url);
         ad.setAddTime(new Date());
         ad.setDeleted(false);
         return adMapper.insertSelectKey(ad) == 1 ? ad : null;

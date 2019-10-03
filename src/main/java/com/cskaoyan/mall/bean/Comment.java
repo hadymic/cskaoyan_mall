@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Comment {
@@ -15,12 +17,12 @@ public class Comment {
 
     private Boolean hasPicture;
 
-    private String picUrls;
+    private String[] picUrls;
 
     private Short star;
-
+    @JsonFormat(pattern = "yy-MM-dd HH:mm:ss")
     private Date addTime;
-
+    @JsonFormat(pattern = "yy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private Boolean deleted;
@@ -73,12 +75,12 @@ public class Comment {
         this.hasPicture = hasPicture;
     }
 
-    public String getPicUrls() {
+    public String[] getPicUrls() {
         return picUrls;
     }
 
-    public void setPicUrls(String picUrls) {
-        this.picUrls = picUrls == null ? null : picUrls.trim();
+    public void setPicUrls(String[] picUrls) {
+        this.picUrls = picUrls;
     }
 
     public Short getStar() {
