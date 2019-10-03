@@ -23,8 +23,6 @@ public interface CouponMapper {
     List<Coupon> queryAllCoupons();
 
     int insertSelectKey(Coupon record);
-
 }
-
 
 
