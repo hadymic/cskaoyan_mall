@@ -85,7 +85,7 @@ public class MyFileConfig {
         if (StringUtils.isEmpty(url)) {
             return null;
         }
-        if (url.contains("http://yanxuan.nosdn.127.net/")) {
+        if (url.contains("yanxuan.nosdn.127.net/")) {
             return url;
         }
         String path = netPath + picPath + "/";
