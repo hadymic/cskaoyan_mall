@@ -16,8 +16,22 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, user_id, province_id, city_id, area_id, address, mobile, is_default, add_time,
+    id, `name`, user_id, province_id, city_id, area_id, address, mobile, is_default, add_time,
     update_time, deleted
+  </sql>
+  <sql id="Base_Comlumn_List_UserSite">
+     a.id,
+    a.name,
+    a.user_id userId,
+    a.province_id provinceId,
+    a.city_id as cityId,
+    a.area_id as areaId,
+    a.address,
+    a.mobile,
+    a.is_default as isDefault,
+    a.add_time as addTime,
+    a.update_time as updateTime,
+    a.deleted,
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -175,23 +189,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByIdAndNameKey" resultType="com.cskaoyan.mall.bean.Address">
-    select
-            id,
-            `name`,
-            user_id as userId,
-            province_id as provinceId,
-            city_id as cityId,
-            area_id as areaId,
-            address,
-            mobile,
-            is_default as  isDefault,
-            add_time as  addTime,
-            update_time as updateTime,
-            deleted
-            from cskaoyan_mall_address
-            where `name` like #{name}
+    SELECT <include refid="Base_Comlumn_List_UserSite"/>
+    c1.name AS province,c2.name AS city,c3.name AS `area`
+    FROM `cskaoyan_mall_address` a
+    LEFT JOIN `cskaoyan_mall_region` c1
+    ON province_id = c1.code
+    LEFT JOIN `cskaoyan_mall_region` c2
+    ON city_id = c2.code
+    LEFT JOIN `cskaoyan_mall_region` c3
+    ON area_id = c3.code
+            where a.name like #{name}
             <if test="userId != null">
-              and user_id = #{userId}
+              and a.user_id = #{userId}
             </if>
   </select>
 </mapper>

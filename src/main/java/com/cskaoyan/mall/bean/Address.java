@@ -27,6 +27,39 @@ public class Address {
 
     private Boolean deleted;
 
+    private String province;
+
+    private String city;
+
+    private String area;
+
+    public String getArea() {
+        return area;
+    }
+
+    public Address setArea(String area) {
+        this.area = area;
+        return this;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public Address setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public Address setProvince(String province) {
+        this.province = province;
+        return this;
+    }
+
     public Integer getId() {
         return id;
     }
