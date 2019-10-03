@@ -157,14 +157,14 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_storage   where deleted=0
-    <where>
+
       <if test="key != null">
-       key= #{key}
+           and    `key`= #{key}
       </if>
-      <if test="name != null">
-        and name like "%"#{name}"%"
+      <if test="name!= null">
+        and `name` like "%"#{name}"%"
       </if>
-    </where>
+
   </select>
 
 </mapper>
