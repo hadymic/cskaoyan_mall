@@ -173,4 +173,7 @@
   update  cskaoyan_mall_admin set deleted=1 where id=#{id}
 </update>
 
+  <select id="queryIsExist" resultType="_int">
+    select count(id)  from cskaoyan_mall_admin  where username=#{username}  and password=#{password}
+  </select>
 </mapper>

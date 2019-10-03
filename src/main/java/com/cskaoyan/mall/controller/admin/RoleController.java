@@ -8,6 +8,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.CategoryVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.permission.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,7 @@ public class RoleController {
      */
      @RequestMapping("admin/role/delete")
     public  BaseRespVo delete(@RequestBody  Role role){
+
          roleService.delete(role);
          return  BaseRespVo.success(null);
      }
@@ -88,6 +90,14 @@ public class RoleController {
     public  BaseRespVo create(@RequestBody Role role){
          Role  roleMsg = roleService.insertRole(role);
          return  BaseRespVo.success(roleMsg);
+     }
+
+
+
+     @RequestMapping("admin/role/permissions")
+    public BaseRespVo rolePermission(@RequestBody  int roleId,List<Permission> permissions){
+          PermissionVo permissionVo= roleService.rolePermission(roleId,permissions);
+          return  BaseRespVo.success(permissionVo);
      }
 
 

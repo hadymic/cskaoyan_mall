@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.service.admin.impl;
 
+import com.cskaoyan.mall.bean.Permission;
 import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.mapper.PermissionMapper;
 import com.cskaoyan.mall.mapper.RoleMapper;
 import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
@@ -8,6 +10,8 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.CategoryVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.permission.AssignedPermission;
+import com.cskaoyan.mall.vo.permission.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,8 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    PermissionMapper permissionMapper;
     @Override
     public ListBean<Role> queryRole(Page page, String name) {
         PageUtils.startPage(page);
@@ -57,7 +63,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void delete(Role role) {
-        int i = roleMapper.deleteRloe(role.getId());
+
+        roleMapper.deleteRloe(role.getId());
     }
 
     @Override
@@ -67,6 +74,13 @@ public class RoleServiceImpl implements RoleService {
         role.setDeleted(false);
         roleMapper.insert(role);
         return  role;
+    }
+
+    @Override
+    public PermissionVo rolePermission(int roleId, List<Permission> permissions) {
+       List resultList = new ArrayList();
+        AssignedPermission assignedPermission= roleMapper.queryAll();
+        return null;
     }
 
 

@@ -3,6 +3,7 @@ package com.cskaoyan.mall.mapper;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.vo.CategoryVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.permission.AssignedPermission;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface RoleMapper {
     List<Role>  roleOptions();
 
     int deleteRloe(Integer id);
+
+    AssignedPermission queryAll();
 }

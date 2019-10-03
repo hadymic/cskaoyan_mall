@@ -86,6 +86,12 @@ public class AdminServiceImpl implements AdminService {
         int i = adminMapper.deleteAdmin(admin.getId());
     }
 
+    @Override
+    public int queryIsExist(String username,String passeord) {
+        int flag = adminMapper.queryIsExist(username,passeord);
+        return flag;
+    }
+
 
 }
 

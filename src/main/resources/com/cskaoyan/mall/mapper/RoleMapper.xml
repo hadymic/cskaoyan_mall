@@ -133,4 +133,8 @@
 <update id="deleteRloe">
   update  cskaoyan_mall_role set deleted=1 where id=#{id}
 </update>
+
+
+
+
 </mapper>

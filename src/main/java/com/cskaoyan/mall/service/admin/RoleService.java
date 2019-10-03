@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.service.admin;
 
+import com.cskaoyan.mall.bean.Permission;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.CategoryVo;
 import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
+import com.cskaoyan.mall.vo.permission.PermissionVo;
 
 import java.util.List;
 
@@ -18,4 +20,6 @@ public interface RoleService {
     void delete(Role role);
 
     Role insertRole(Role role);
+
+    PermissionVo rolePermission(int roleId, List<Permission> permissions);
 }
