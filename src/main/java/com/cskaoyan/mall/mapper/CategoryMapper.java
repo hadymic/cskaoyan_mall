@@ -45,7 +45,7 @@ public interface CategoryMapper {
      */
     List<Category> selectChannel();
 
-    List<Goods> selectFloorGoodsList(@Param("limit") int floorGoodsListSize, @Param("id") int id);
+    List<Goods> selectFloorGoodsList(@Param("limit") int floorGoodsListSize, @Param("pid") int id);
 
     List<FloorGoodsVo> selectFloorList(@Param("limit") int floorListSize);
 }

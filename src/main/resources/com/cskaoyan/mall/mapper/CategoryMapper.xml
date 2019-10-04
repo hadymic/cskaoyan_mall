@@ -58,7 +58,7 @@
         mg.is_new as isNew,mg.`name`,mg.pic_url as picUrl,mg.retail_price as retailPrice
         FROM cskaoyan_mall_category mc
         LEFT JOIN cskaoyan_mall_goods mg on mg.category_id = mc.id
-        where mc.id = #{id}
+        where mc.pid = #{pid}
         limit #{limit} OFFSET 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

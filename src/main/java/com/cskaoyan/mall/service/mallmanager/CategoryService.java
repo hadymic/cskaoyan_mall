@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
