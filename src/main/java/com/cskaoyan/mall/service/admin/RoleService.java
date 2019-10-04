@@ -18,7 +18,7 @@ public interface RoleService {
 
     List<BaseValueLabel>  roleOptions();
 
-    int update(Role role);
+    boolean update(Role role);
 
     void delete(Role role);
 

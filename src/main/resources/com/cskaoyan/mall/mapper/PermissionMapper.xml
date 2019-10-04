@@ -109,4 +109,10 @@
     from cskaoyan_mall_permission
     where deleted = 0 and role_id = #{roleId}
   </select>
+
+  <update id="deleteByPermissionAndRoleId">
+    update cskaoyan_mall_permission
+    set deleted = 1
+    where deleted = 0 and role_id = #{roleId} and permission = #{permission}
+  </update>
 </mapper>
