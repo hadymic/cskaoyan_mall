@@ -54,7 +54,7 @@
         limit #{limit} offset 1
     </select>
     <select id="selectFloorGoodsList" resultType="com.cskaoyan.mall.bean.Goods">
-        select mg.brief,mg.counter_price as counterPrice,mg.id,mg.is_hot as isHot,
+        select DISTINCT mg.brief,mg.counter_price as counterPrice,mg.id,mg.is_hot as isHot,
         mg.is_new as isNew,mg.`name`,mg.pic_url as picUrl,mg.retail_price as retailPrice
         FROM cskaoyan_mall_category mc
         LEFT JOIN cskaoyan_mall_goods mg on mg.category_id = mc.id
