@@ -12,7 +12,7 @@
     pid, label, parent_id, api, id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_permission_details
     where pid = #{pid,jdbcType=INTEGER}
@@ -22,9 +22,9 @@
     where pid = #{pid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
-    insert into cskaoyan_mall_permission_details (pid, label, parent_id, 
+    insert into cskaoyan_mall_permission_details (pid, label, parent_id,
       api, id)
-    values (#{pid,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+    values (#{pid,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER},
       #{api,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.PermissionDetails">
@@ -90,4 +90,9 @@
       id = #{id,jdbcType=VARCHAR}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
+
+
+    <select id="queryByParentId"  resultType="com.cskaoyan.mall.vo.permission.Api">
+        select pid, id, label,api from cskaoyan_mall_permission_details  where parent_id=#{id}
+    </select>
 </mapper>

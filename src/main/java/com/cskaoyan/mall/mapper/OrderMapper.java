@@ -2,6 +2,7 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Order;
 
+import com.cskaoyan.mall.vo.user.UserIndexVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -47,4 +48,13 @@ public interface OrderMapper {
      * @return
      */
     Integer queryOrderNumber();
+
+
+    /**
+     * 用户订单状态
+     * @param id
+     * @param status
+     * @return
+     */
+    Integer queryUserOrders(@Param("id")Integer id,@Param("status") Short status);
 }

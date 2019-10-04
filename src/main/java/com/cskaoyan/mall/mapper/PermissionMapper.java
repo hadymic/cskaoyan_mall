@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Permission;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PermissionMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,8 @@ public interface PermissionMapper {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+
+    List<String> queryPermissionsByRoleId(Integer roleId);
+
+    int deleteByPermissionAndRoleId(@Param("permission") String permission, @Param("roleId") Integer roleId);
 }

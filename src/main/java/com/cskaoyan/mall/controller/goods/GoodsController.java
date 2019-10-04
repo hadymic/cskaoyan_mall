@@ -38,7 +38,6 @@ public class GoodsController {
     }
 
     @RequestMapping("catAndBrand")
-    @RequiresPermissions(value = "admin:goods:catAndBrand")
     public BaseRespVo CatAndBrand() {
         List<BaseValueLabel> brandList = goodsService.selectBrandList();
         List<CategoryList> categoryList = goodsService.selectCategory();
@@ -56,7 +55,6 @@ public class GoodsController {
     }
 
     @RequestMapping("detail")
-    @RequiresPermissions(value = "admin:goods:detail")
     public BaseRespVo GoodsDetail(int id) {
         GoodsEditVo goodsEditVo = goodsService.selectGoodsDetail(id);
         return BaseRespVo.success(goodsEditVo);

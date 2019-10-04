@@ -30,6 +30,9 @@ public interface AdminMapper {
     int deleteAdmin(Integer id);
 
 
+    int  queryIsExist(String username,String password);
+
+
     /**
      * 修改管理员密码
      * @param oldPassword
@@ -44,4 +47,5 @@ public interface AdminMapper {
     List<String> queryApisByUsername(@Param("username") String username);
 
     Admin queryAdminByUsername(String username);
+
 }
