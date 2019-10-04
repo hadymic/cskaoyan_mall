@@ -7,6 +7,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.StringUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.promotion.GrouponVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class GrouponController {
      * @return
      */
     @GetMapping("list")
+    @RequiresPermissions("admin:groupon:list")
     public BaseRespVo showGrouponRulesList(Page page, String goodsId) {
         Integer goodsid = null;
         if (!StringUtils.isEmpty(goodsId)) {
@@ -48,6 +50,7 @@ public class GrouponController {
      * @return
      */
     @PostMapping("create")
+    @RequiresPermissions("admin:groupon:create")
     public BaseRespVo insertGrouponRules(@RequestBody GrouponRules grouponRules) {
         GrouponRules newGrouponRules = grouponService.insertGrouponRules(grouponRules);
         return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("添加团购规则失败");
@@ -60,6 +63,7 @@ public class GrouponController {
      * @return
      */
     @PostMapping("update")
+    @RequiresPermissions("admin:groupon:update")
     public BaseRespVo updateGrouponRules(@RequestBody GrouponRules grouponRules) {
         GrouponRules newGrouponRules = grouponService.updateGrouponRules(grouponRules);
         return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("更新团购规则失败");
@@ -72,6 +76,7 @@ public class GrouponController {
      * @return
      */
     @PostMapping("delete")
+    @RequiresPermissions("admin:groupon:delete")
     public BaseRespVo deleteGrouponRules(@RequestBody GrouponRules grouponRules) {
         boolean flag = grouponService.deleteGrouponRules(grouponRules.getId());
         return flag ? BaseRespVo.success(null) : BaseRespVo.fail("团购规则删除失败");
@@ -84,6 +89,7 @@ public class GrouponController {
      * @return
      */
     @GetMapping("listRecord")
+    @RequiresPermissions("admin:groupon:read")
     public BaseRespVo showListRecord(Page page, String goodsId) {
         Integer goodsid = null;
         if (!StringUtils.isEmpty(goodsId)) {
