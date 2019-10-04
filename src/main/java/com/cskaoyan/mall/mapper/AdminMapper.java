@@ -2,11 +2,9 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Admin;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface AdminMapper {
     int deleteByPrimaryKey(Integer id);
 
