@@ -27,7 +27,7 @@ public interface GoodsService {
 
     GoodsEditVo selectGoodsDetail(int id);
 //商品编辑，更新goods，goodsAttribute，goodsProduct，goodsSpecification,category
-    boolean updateGoods(GoodsEditVo goodsEditVo);
+    String updateGoods(GoodsEditVo goodsEditVo);
 //添加商品
-    boolean createGoods(GoodsEditVo goodsEditVo);
+    String createGoods(GoodsEditVo goodsEditVo);
 }

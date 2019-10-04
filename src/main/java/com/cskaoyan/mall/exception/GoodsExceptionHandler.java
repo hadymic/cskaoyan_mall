@@ -8,10 +8,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+
 
 /**
  * 商品上架，编辑校验
@@ -29,12 +29,19 @@ public class GoodsExceptionHandler {
     public BaseRespVo exception(HttpServletRequest request, MethodArgumentNotValidException exception) {
         BindingResult result = exception.getBindingResult();
         final List<FieldError> fieldErrors = result.getFieldErrors();
-        StringBuilder builder = new StringBuilder();
-
-        for (FieldError error : fieldErrors) {
+       /*  StringBuilder builder = new StringBuilder();
+       for (FieldError error : fieldErrors) {
             builder.append(error.getDefaultMessage() + "\n");
         }
-        return BaseRespVo.fail(builder.toString());
+        //优化，不应该返回全部错误信息，只返回一条
+        return BaseRespVo.fail(builder.toString());*/
+
+        List<FieldError> fieldErrors1 = fieldErrors.subList(0, 1);
+        FieldError fieldError = fieldErrors1.get(0);
+       // FieldError fieldError = fieldErrors.stream().findFirst().orElse(null);
+        String message = fieldError.getDefaultMessage();
+
+        return BaseRespVo.fail(message);
     }
 
     /**

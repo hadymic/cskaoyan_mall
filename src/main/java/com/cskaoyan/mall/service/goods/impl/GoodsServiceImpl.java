@@ -89,7 +89,7 @@ public class GoodsServiceImpl implements GoodsService {
         int[] categoryIds = {pid, categoryId};
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         goods.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));//添加图片picUrl前缀
-        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),true));//添加画廊图片前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(), true));//添加画廊图片前缀
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         for (GoodsSpecification specification : specifications) {
             specification.setPicUrl(myFileConfig.addPicUrl(specification.getPicUrl()));//添加图片picUrl前缀
@@ -110,9 +110,16 @@ public class GoodsServiceImpl implements GoodsService {
      */
     //删除的未返回，需要去数据库查找出未删除的数据，设置deleted = 1
     @Override
-    public boolean updateGoods(GoodsEditVo goodsEditVo) {
+    public String updateGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
+        if (goodsMapper.selectGoodsByGoodsSn(goods) > 0) {//根据goodsSn查询不为0，说明已存在
+            return "商品编号已存在,更新失败";
+        }
+
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
+            return "商品单位更新错误";
+        }
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
         String[] gallery = goods.getGallery();
@@ -168,7 +175,7 @@ public class GoodsServiceImpl implements GoodsService {
             goodsProductMapper.updateProductBySpecAndGoodsId(product);
         }
         //逻辑判断
-        return true;
+        return "success";
     }
 
     /**
@@ -178,25 +185,21 @@ public class GoodsServiceImpl implements GoodsService {
      * @return
      */
     @Override
-    public boolean createGoods(GoodsEditVo goodsEditVo) {
+    public String createGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
         //判断goods_Sn是否已经存在,不存在返回false，
-        if (goods.getGoodsSn() != null) {
-            List<Goods> goodsList = goodsMapper.selectGoodsByGoodsSnOrName(goods);
-            if (goodsList.size() > 0) {//根据goodsSn查询不为0，说明已存在
-                return false;
-            }
-        } else {
-            return false;
+        if (goodsMapper.selectGoodsByGoodsSn(goods) > 0) {//根据goodsSn查询不为0，说明已存在
+            return "商品编号已存在";
         }
-        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
-            return false;
+
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
+            return "商品单位错误";
         }
         goods.setAddTime(date);
         goods.setDeleted(false);
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
-        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),false));//去除gallery图片前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(), false));//去除gallery图片前缀
         goodsMapper.insertSelectKey(goods);
 
         //添加attribute
@@ -224,6 +227,6 @@ public class GoodsServiceImpl implements GoodsService {
             specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
             goodsSpecificationMapper.insertSelective(specification);
         }
-        return true;
+        return "success";
     }
 }

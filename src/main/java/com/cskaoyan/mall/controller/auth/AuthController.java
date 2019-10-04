@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.auth;
 
 import com.cskaoyan.mall.service.auth.AuthService;
+import com.cskaoyan.mall.util.IpUtil;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.auth.UserInfo;
@@ -8,12 +9,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
@@ -34,7 +37,8 @@ public class AuthController {
      * @return
      */
     @RequestMapping("login")
-    public BaseRespVo login(@RequestBody LoginVo vo) {
+    public BaseRespVo login(@RequestBody LoginVo vo, HttpServletRequest request) {
+
         UsernamePasswordToken token = new UsernamePasswordToken(vo.getUsername(), vo.getPassword());
         /*认证的逻辑*/
         Subject subject = SecurityUtils.getSubject();
@@ -43,7 +47,9 @@ public class AuthController {
         } catch (AuthenticationException e) {
             return BaseRespVo.fail("登录失败");
         }
-        Serializable id = subject.getSession().getId();
+        Session session = subject.getSession();
+        session.setAttribute("ip", IpUtil.getIpAddr(request));
+        Serializable id = session.getId();
         return BaseRespVo.success(id);
     }
 
@@ -61,6 +67,7 @@ public class AuthController {
             throw new AuthorizationException("sessionId错误");
 //            return BaseRespVo.fail("管理员信息获取失败");
         }
+        String ip = (String) subject.getSession().getAttribute("ip");
 
         String principal = (String) subject.getPrincipal();
         UserInfo userInfo = authService.getAdminInfo(principal);
