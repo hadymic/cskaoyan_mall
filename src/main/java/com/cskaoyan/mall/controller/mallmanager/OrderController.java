@@ -8,6 +8,7 @@ import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.ordermanagement.RefundVo;
 import com.cskaoyan.mall.vo.ordermanagement.ReplyVo;
 import com.cskaoyan.mall.vo.ordermanagement.ShipVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("list")
+    @RequiresPermissions(value = "admin:order:list")
     public BaseRespVo orderList(Page page, Integer userId, String orderSn, Integer[] orderStatusArray){
         return BaseRespVo.success(orderService.queryOrderList(page,userId,orderSn,orderStatusArray));
     }
@@ -42,6 +44,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("detail")
+    @RequiresPermissions(value = "admin:order:read")
     public BaseRespVo detail(int id){
         Map<String, Object> orderDetail = orderService.queryOrderDetail(id);
         if (orderDetail != null) {
@@ -56,6 +59,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("ship")
+    @RequiresPermissions(value = "admin:order:ship")
     public BaseRespVo ship(@RequestBody ShipVo shipVo){
         return BaseRespVo.success(orderService.updateShip(shipVo));
     }
@@ -66,6 +70,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("refund")
+    @RequiresPermissions(value = "admin:order:refund")
     public BaseRespVo refund(@RequestBody RefundVo refundVo){
         return BaseRespVo.success(orderService.updateRefund(refundVo));
     }
@@ -76,6 +81,7 @@ public class OrderController {
      * @return
      */
     @RequestMapping("reply")
+    @RequiresPermissions(value = "admin:order:reply")
     public BaseRespVo reply(@RequestBody ReplyVo replyVo){
         if (StringUtils.isEmpty(replyVo.getContent())) {
             return BaseRespVo.fail("请填写回复内容");

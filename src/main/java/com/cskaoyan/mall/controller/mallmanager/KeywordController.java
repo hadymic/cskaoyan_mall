@@ -6,6 +6,7 @@ import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.StringUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ public class KeywordController {
      * @return
      */
     @RequestMapping("list")
+    @RequiresPermissions(value = "admin:keyword:list")
     public BaseRespVo issueList(Page page, String keyword, String url){
         ListBean<Keyword> data = keywordService.queryKeywordList(page,keyword,url);
         return BaseRespVo.success(data);
@@ -40,6 +42,7 @@ public class KeywordController {
      * @return
      */
     @RequestMapping("create")
+    @RequiresPermissions(value = "admin:keyword:create")
     public BaseRespVo createKeyword(@RequestBody Keyword keyword){
         if (StringUtils.isEmpty(keyword.getUrl())) {
             return BaseRespVo.fail("参数不对");
@@ -53,6 +56,7 @@ public class KeywordController {
      * @return
      */
     @RequestMapping("update")
+    @RequiresPermissions(value = "admin:keyword:update")
     public BaseRespVo updateKeyword(@RequestBody Keyword keyword){
         if (StringUtils.isEmpty(keyword.getUrl())) {
             return BaseRespVo.fail("参数不对");
@@ -66,6 +70,7 @@ public class KeywordController {
      * @return
      */
     @RequestMapping("delete")
+    @RequiresPermissions(value = "admin:keyword:delete")
     public BaseRespVo deleteKeyword(@RequestBody Keyword keyword){
         keywordService.deleteKeyword(keyword.getId());
         BaseRespVo baseRespVo = new BaseRespVo<>();

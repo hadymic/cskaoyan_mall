@@ -19,7 +19,9 @@ public class GoodsEditVo {
     Goods goods;
 
     List<GoodsAttribute> attributes;
+
     List<GoodsSpecification> specifications;
+    @Valid
     List<GoodsProduct> products;
 
     public GoodsEditVo() {
