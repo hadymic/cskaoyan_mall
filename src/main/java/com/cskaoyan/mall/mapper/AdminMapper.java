@@ -41,5 +41,7 @@ public interface AdminMapper {
 
     List<String> queryPermissionsByUsername(@Param("username") String username);
 
+    List<String> queryApisByUsername(@Param("username") String username);
+
     Admin queryAdminByUsername(String username);
 }

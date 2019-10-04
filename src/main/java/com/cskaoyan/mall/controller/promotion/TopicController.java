@@ -5,6 +5,7 @@ import com.cskaoyan.mall.service.promotion.TopicService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class TopicController {
      * @return
      */
     @GetMapping("list")
+    @RequiresPermissions("admin:topic:list")
     public BaseRespVo showTopicList(Page page, String title, String subtitle) {
         ListBean<Topic> topicListBean = topicService.queryTopics(page, title, subtitle);
         return BaseRespVo.success(topicListBean);
@@ -38,6 +40,7 @@ public class TopicController {
      * @return
      */
     @PostMapping("create")
+    @RequiresPermissions("admin:topic:create")
     public BaseRespVo insertTopic(@RequestBody Topic topic) {
         Topic newTopic = topicService.insertTopic(topic);
         return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("添加专题失败");
@@ -50,6 +53,7 @@ public class TopicController {
      * @return
      */
     @PostMapping("update")
+    @RequiresPermissions("admin:topic:update")
     public BaseRespVo updateTopic(@RequestBody Topic topic) {
         Topic newTopic = topicService.updateTopic(topic);
         return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("更新专题失败");
@@ -62,6 +66,7 @@ public class TopicController {
      * @return
      */
     @PostMapping("delete")
+    @RequiresPermissions("admin:topic:delete")
     public BaseRespVo deleteTopic(@RequestBody Topic topic) {
         boolean flag = topicService.deleteTopic(topic.getId());
         return flag ? BaseRespVo.success(null) : BaseRespVo.fail("专题删除失败");

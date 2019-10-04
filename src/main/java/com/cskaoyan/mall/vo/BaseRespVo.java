@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.vo;
 
+import com.cskaoyan.mall.util.LogUtils;
+
 /**
  * 结果json
  *
@@ -36,6 +38,7 @@ public class BaseRespVo<T> {
     }
 
     public static <T> BaseRespVo success(T data) {
+//        LogUtils.log(type, action, true);
         BaseRespVo<T> baseRespVo = new BaseRespVo<>();
         baseRespVo.setErrmsg("成功");
         baseRespVo.setData(data);
@@ -43,6 +46,7 @@ public class BaseRespVo<T> {
     }
 
     public static BaseRespVo fail(String errmsg) {
+//        LogUtils.log(type, action, false);
         BaseRespVo baseRespVo = new BaseRespVo<>();
         baseRespVo.setErrmsg(errmsg);
         baseRespVo.setErrno(500);

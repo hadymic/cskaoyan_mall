@@ -162,7 +162,17 @@
     where deleted = 0 and username = #{username}
   </select>
 
-  <select id="queryPermissionsByUsername"  resultType="string">
+  <select id="queryApisByUsername"  resultType="java.lang.String">
+    select pd.api from cskaoyan_mall_permission_details pd
+    right join
+    (select DISTINCT permission
+    from cskaoyan_mall_permission
+    where deleted = 0 and role_id in
+    (select REPLACE(REPLACE((select role_ids from cskaoyan_mall_admin where username = #{username}),"[",""),"]",""))) p
+    on pd.id = p.permission
+  </select>
+
+  <select id="queryPermissionsByUsername"  resultType="java.lang.String">
     select DISTINCT permission
     from cskaoyan_mall_permission
     where deleted = 0 and role_id in
