@@ -24,7 +24,7 @@ public class HomeController {
      * @return
      */
     @RequestMapping("dashboard")
-    public BaseRespVo orderList(){
+    public BaseRespVo homeInfo(){
         return BaseRespVo.success(homeService.queryHomeInfo());
     }
 
@@ -34,7 +34,7 @@ public class HomeController {
      * @return
      */
     @RequestMapping("profile/password")
-    public BaseRespVo ship(@RequestBody ChangePasswordVo changePasswordVo){
+    public BaseRespVo updatePassword(@RequestBody ChangePasswordVo changePasswordVo){
         String token = (String) SecurityUtils.getSubject().getPrincipal();
         if (homeService.updatePassword(changePasswordVo,token)) {
             BaseRespVo baseRespVo = new BaseRespVo<>();

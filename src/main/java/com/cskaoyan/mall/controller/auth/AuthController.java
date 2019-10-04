@@ -1,7 +1,7 @@
 package com.cskaoyan.mall.controller.auth;
 
 import com.cskaoyan.mall.service.auth.AuthService;
-import com.cskaoyan.mall.util.IpUtil;
+import com.cskaoyan.mall.util.IPUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.auth.UserInfo;
@@ -48,7 +48,7 @@ public class AuthController {
             return BaseRespVo.fail("登录失败");
         }
         Session session = subject.getSession();
-        session.setAttribute("ip", IpUtil.getIpAddr(request));
+        session.setAttribute("ip", IPUtils.getIpAddr(request));
         Serializable id = session.getId();
         return BaseRespVo.success(id);
     }

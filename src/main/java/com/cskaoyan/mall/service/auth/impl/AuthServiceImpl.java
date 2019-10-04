@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
         userInfo.setAvatar(admin.getAvatar());
         userInfo.setName(admin.getUsername());
 
-        List<String> permissions = adminMapper.queryPermissionsByUsername(principal);
+        List<String> permissions = adminMapper.queryApisByUsername(principal);
         if (permissions.size() == 1 && permissions.get(0) == null) {
             List<String> truePermissions = new ArrayList<>();
             truePermissions.add("*");
@@ -42,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
             userInfo.setPerms(permissions);
         }
 
+        System.out.println(userInfo.getPerms());
         List<String> roleNames = roleMapper.queryRoleNameByRoleIds(admin.getRoleIds());
 
         userInfo.setRoles(roleNames);

@@ -370,4 +370,8 @@
   <select id="queryOrderNumber" resultType="java.lang.Integer">
         select count(id) from cskaoyan_mall_order where deleted = 0
   </select>
+
+  <select id="queryUserOrders" resultType="java.lang.Integer">
+        select count(id) from cskaoyan_mall_order where user_id = #{id} and order_status = #{status}
+  </select>
 </mapper>

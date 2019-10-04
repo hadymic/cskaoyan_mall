@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
  * IP工具类
  * 获取真实的ip
  */
-public class IpUtil {
+public class IPUtils {
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = null;
         try {

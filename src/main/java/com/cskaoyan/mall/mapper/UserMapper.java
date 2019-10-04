@@ -43,4 +43,11 @@ public interface UserMapper {
      * @return
      */
     Integer queryUserNumber();
+
+    /**
+     * 返回根据token获得user的id
+     * @param token
+     * @return
+     */
+    Integer queryUserIdByToken(@Param("token")String token);
 }
