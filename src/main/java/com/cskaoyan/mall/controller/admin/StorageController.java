@@ -5,6 +5,7 @@ import com.cskaoyan.mall.service.admin.StorageService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("admin/storage")
+
 public class StorageController {
     @Autowired
     private StorageService storageService;
@@ -33,6 +35,7 @@ public class StorageController {
      * @return
      */
     @RequestMapping("list")
+    @RequiresPermissions(value = "admin:storage:list")
     public BaseRespVo storage(String key, String name, Page page) {
         ListBean<Storage> storages = storageService.queryStorage(key, name, page);
         return BaseRespVo.success(storages);
@@ -46,6 +49,7 @@ public class StorageController {
      * @return
      */
     @RequestMapping("delete")
+    @RequiresPermissions(value = "admin:storage:delete")
     public BaseRespVo delete(@RequestBody Storage storage) {
         storageService.delete(storage);
         return BaseRespVo.success(null);
@@ -58,6 +62,7 @@ public class StorageController {
      * @return
      */
     @RequestMapping("update")
+    @RequiresPermissions(value = "admin:storage:update")
     public BaseRespVo update(@RequestBody Storage storage) {
         storage.setAddTime(new Date());
         storage.setUpdateTime(new Date());
@@ -74,6 +79,7 @@ public class StorageController {
      * @throws IOException
      */
     @PostMapping("create")
+    @RequiresPermissions(value = "admin:storage:create")
     public BaseRespVo createPic(MultipartFile file) throws IOException {
         Storage storage = storageService.createPic(file);
         return BaseRespVo.success(storage);
