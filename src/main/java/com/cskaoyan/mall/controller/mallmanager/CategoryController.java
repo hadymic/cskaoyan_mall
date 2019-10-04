@@ -4,6 +4,7 @@ package com.cskaoyan.mall.controller.mallmanager;
 import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class CategoryController {
      * @author Zeng-jz
      */
     @RequestMapping("list")
+    @RequiresPermissions(value = "admin:category:list")
     public BaseRespVo list(){
         List list = categoryService.list();
         return BaseRespVo.success(list);
@@ -35,6 +37,7 @@ public class CategoryController {
      * @author Zeng-jz
      */
     @RequestMapping("l1")
+    @RequiresPermissions(value = "admin:category:list")
     public BaseRespVo l1(){
         List list = categoryService.l1();
         return BaseRespVo.success(list);
@@ -46,6 +49,7 @@ public class CategoryController {
      * @return
      */
     @RequestMapping("update")
+    @RequiresPermissions(value = "admin:category:update")
     public BaseRespVo update(@RequestBody Category category){
         if (categoryService.update(category) != 0) {
             return BaseRespVo.success(null);
@@ -60,6 +64,7 @@ public class CategoryController {
      * @return
      */
     @RequestMapping("delete")
+    @RequiresPermissions(value = "admin:category:delete")
     public BaseRespVo delete(@RequestBody Category category){
         categoryService.delete(category);
         return BaseRespVo.success(null);
@@ -71,6 +76,7 @@ public class CategoryController {
      * @return
      */
     @RequestMapping("create")
+    @RequiresPermissions(value = "admin:category:create")
     public BaseRespVo create(@RequestBody Category category){
         Category newCategory = categoryService.create(category);
         if (newCategory != null) {

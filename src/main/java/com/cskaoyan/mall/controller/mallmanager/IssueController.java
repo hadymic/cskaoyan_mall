@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.Issue;
 import com.cskaoyan.mall.service.mallmanager.IssueService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class IssueController {
      * @return
      */
     @RequestMapping("list")
+    @RequiresPermissions(value = "admin:issue:list")
     public BaseRespVo issueList(Page page, String question){
         return BaseRespVo.success(issueService.queryIssueList(page,question));
     }
@@ -34,6 +36,7 @@ public class IssueController {
      * @return
      */
     @RequestMapping("create")
+    @RequiresPermissions(value = "admin:issue:create")
     public BaseRespVo createIssue(@RequestBody Issue issue){
         return BaseRespVo.success(issueService.insertIssue(issue));
     }
@@ -44,6 +47,7 @@ public class IssueController {
      * @return
      */
     @RequestMapping("update")
+    @RequiresPermissions(value = "admin:issue:update")
     public BaseRespVo updateIssue(@RequestBody Issue issue){
         return BaseRespVo.success(issueService.updateIssue(issue));
     }
@@ -54,6 +58,7 @@ public class IssueController {
      * @return
      */
     @RequestMapping("delete")
+    @RequiresPermissions(value = "admin:issue:delete")
     public BaseRespVo deleteIssue(@RequestBody Issue issue){
         issueService.deleteIssue(issue.getId());
         BaseRespVo baseRespVo = new BaseRespVo<>();
