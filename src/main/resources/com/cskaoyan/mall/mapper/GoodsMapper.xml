@@ -18,6 +18,9 @@
             </if>
         </where>
     </select>
+    <select id="selectGoodsByGoodsSn" resultType="int">
+        select count(id) from cskaoyan_mall_goods where deleted = 0 and goods_sn = #{goods.goodsSn}
+    </select>
 
     <update id="updateGoodsDeleted">
     update cskaoyan_mall_goods set  deleted = 1 where id = #{id}
