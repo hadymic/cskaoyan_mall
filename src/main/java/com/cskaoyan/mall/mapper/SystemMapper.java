@@ -21,4 +21,11 @@ public interface SystemMapper {
                         @Param("keyName") String keyName);
 
     String selectByKeyName(@Param("keyName") String keyName);
+
+    /**
+     * Zeng-jz: 根据id查询小程序配置
+     * @param i
+     * @return
+     */
+    int selectAppletsConfigById(@Param("id") int i);
 }

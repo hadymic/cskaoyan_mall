@@ -5,6 +5,7 @@ import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CategoryMapper;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,5 +106,20 @@ public class CategoryServiceImpl implements CategoryService {
 
         int i = categoryMapper.insertNewCategory(category);
         return checkUrl(category);
+    }
+
+    @Override
+    public List<Category> queryChannel() {
+        List<Category> categories = categoryMapper.selectChannel();
+        return categories;
+    }
+
+    @Override
+    public List<FloorGoodsVo> selectFloorGoodsList(int floorListSize, int floorGoodsListSize) {
+        List<FloorGoodsVo> floorGoodsList = categoryMapper.selectFloorList(floorListSize);
+        for (FloorGoodsVo floorGoods : floorGoodsList) {
+            floorGoods.setGoodsList(categoryMapper.selectFloorGoodsList(floorGoodsListSize, floorGoods.getId()));
+        }
+        return floorGoodsList;
     }
 }
