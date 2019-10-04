@@ -19,7 +19,7 @@ public class CustomShiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //如果访问url没有通过认证，会重定向到loginUrl
-        shiroFilterFactoryBean.setLoginUrl("/admin/auth/login");
+        shiroFilterFactoryBean.setLoginUrl("/");
         //安全控制器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //拦截器配置

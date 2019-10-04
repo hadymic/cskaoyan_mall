@@ -163,10 +163,13 @@
   </select>
 
   <select id="queryPermissionsByUsername"  resultType="string">
-    select DISTINCT permission
+    select pd.api from cskaoyan_mall_permission_details pd
+    right join
+    (select DISTINCT permission
     from cskaoyan_mall_permission
     where deleted = 0 and role_id in
-    (select REPLACE(REPLACE((select role_ids from cskaoyan_mall_admin where username = #{username}),"[",""),"]",""))
+    (select REPLACE(REPLACE((select role_ids from cskaoyan_mall_admin where username = #{username}),"[",""),"]",""))) p
+    on pd.id = p.permission
   </select>
 
 
