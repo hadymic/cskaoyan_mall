@@ -10,9 +10,10 @@ import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
-import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
-import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
+import com.cskaoyan.mall.util.UrlUtils;
+import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
+import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,19 +29,19 @@ import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
-    GoodsMapper goodsMapper;
+    private GoodsMapper goodsMapper;
     @Autowired
-    BrandMapper brandMapper;
+    private BrandMapper brandMapper;
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
     @Autowired
-    GoodsAttributeMapper goodsAttributeMapper;
+    private GoodsAttributeMapper goodsAttributeMapper;
     @Autowired
-    GoodsSpecificationMapper goodsSpecificationMapper;
+    private GoodsSpecificationMapper goodsSpecificationMapper;
     @Autowired
-    GoodsProductMapper goodsProductMapper;
+    private GoodsProductMapper goodsProductMapper;
     @Autowired
-    MyFileConfig myFileConfig;
+    private MyFileConfig myFileConfig;
 
     @Override
     public ListBean selectGoods(Page page, Goods goods) {
@@ -88,6 +89,7 @@ public class GoodsServiceImpl implements GoodsService {
         int[] categoryIds = {pid, categoryId};
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         goods.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));//添加图片picUrl前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),true));//添加画廊图片前缀
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         for (GoodsSpecification specification : specifications) {
             specification.setPicUrl(myFileConfig.addPicUrl(specification.getPicUrl()));//添加图片picUrl前缀
@@ -113,18 +115,9 @@ public class GoodsServiceImpl implements GoodsService {
         Goods goods = goodsEditVo.getGoods();
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
-     /*   String[] gallery = goods.getGallery();
-        String[] newUrl = null;
-        for (String oldUrl : gallery) {
-            if (!oldUrl.startsWith("http")){
-                String addPicUrl = myFileConfig.parsePicUrl(oldUrl);
-                newUrl = new String[gallery.length];
-                for (int i = 0; i < gallery.length; i++) {
-                    newUrl[i]= addPicUrl;
-                }
-                goods.setGallery(newUrl);
-            }
-        }*/
+        String[] gallery = goods.getGallery();
+        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
+        goods.setGallery(listUrls);
 
         goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
         int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
@@ -140,7 +133,7 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsSpecificationMapper.insertSelective(specification);
             }
             for (GoodsSpecification goodsSpecification : goodsSpecifications) {//更新规格信息
-                 if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
+                if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
                     goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);//复用，goodsId未改变
                 } else {//删除规格设置为deleted=1
                     specification.setUpdateTime(date);//设置更新时间
@@ -158,7 +151,7 @@ public class GoodsServiceImpl implements GoodsService {
                 goodsAttributeMapper.insertSelective(attribute);
             }
             for (GoodsAttribute goodsAttribute : goodsAttributes) {
-                 if (goodsAttribute.getId() != attribute.getId()) {//返回数据中未存在的id代表删除
+                if (goodsAttribute.getId() != attribute.getId()) {//返回数据中未存在的id代表删除
                     goodsAttributeMapper.updateAttributeDeleted(goodsId, date);
                 } else {//已存在，更新attribute
                     attribute.setUpdateTime(date);
@@ -197,10 +190,15 @@ public class GoodsServiceImpl implements GoodsService {
         } else {
             return false;
         }
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit())||"盒".equals(goods.getUnit()))){
+            return false;
+        }
         goods.setAddTime(date);
         goods.setDeleted(false);
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        goods.setGallery(UrlUtils.CheckListUrls(goods.getGallery(),false));//去除gallery图片前缀
         goodsMapper.insertSelectKey(goods);
+
         //添加attribute
         int goodsId = goods.getId();//获取刚添加的商品goodsId
         List<GoodsAttribute> attributes = goodsEditVo.getAttributes();

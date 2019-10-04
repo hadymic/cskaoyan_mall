@@ -5,14 +5,14 @@ import com.cskaoyan.mall.service.goods.GoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.goodsMangement.BaseValueLabel;
-import com.cskaoyan.mall.vo.goodsMangement.CategoryList;
-import com.cskaoyan.mall.vo.goodsMangement.GoodsEditVo;
+import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.goodsmanagement.CategoryList;
+import com.cskaoyan.mall.vo.goodsmanagement.GoodsEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +61,13 @@ public class GoodsController {
      * 更新商品信息，对输入参数进行判断
      */
     @RequestMapping("update")
-    public BaseRespVo updateGoods(@RequestBody GoodsEditVo goodsEditVo) {
+    public BaseRespVo updateGoods(@Valid @RequestBody GoodsEditVo goodsEditVo) {
         boolean b = goodsService.updateGoods(goodsEditVo);
-        return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
+        return b ? BaseRespVo.success(null) : BaseRespVo.fail("参数值错误");
     }
     @RequestMapping("create")
-    public BaseRespVo createGoods(@RequestBody GoodsEditVo goodsEditVo){
+    public BaseRespVo createGoods(@Valid @RequestBody GoodsEditVo goodsEditVo){
         boolean b = goodsService.createGoods(goodsEditVo);
-        return b ? BaseRespVo.success(null) : BaseRespVo.fail("业务错误：参数值不对");
+        return b ? BaseRespVo.success(null) : BaseRespVo.fail("参数值错误");
     }
 }

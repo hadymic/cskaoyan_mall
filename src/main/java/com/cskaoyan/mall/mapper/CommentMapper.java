@@ -2,9 +2,9 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Comment;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);

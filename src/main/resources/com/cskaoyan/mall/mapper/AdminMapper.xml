@@ -18,8 +18,6 @@
     deleted , role_ids
   </sql>
 
-
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -157,23 +155,59 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <select id="queryPasswordByUsername"  resultType="string">
+    select
+    password
+    from cskaoyan_mall_admin
+    where deleted = 0 and username = #{username}
+  </select>
+
+  <select id="queryPermissionsByUsername"  resultType="string">
+    select DISTINCT permission
+    from cskaoyan_mall_permission
+    where deleted = 0 and role_id in
+    (select REPLACE(REPLACE((select role_ids from cskaoyan_mall_admin where username = #{username}),"[",""),"]",""))
+  </select>
+
 
 
   <!--后台管理系统显示&查找-->
-  <select id="queryAdmin"  resultMap="BaseResultMap">
+
+
+
+  <select id="queryAdminsByLikeUsername" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
-    from cskaoyan_mall_admin  where  deleted=0
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_admin
+    where deleted = 0
+
     <if test="username != null">
-     and username like  "%"#{username}"%"
+      and username like concat('%',#{username},'%')
     </if>
+  </select>
+
+  <select id="queryAdminByUsername" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_admin
+    where deleted = 0 and username = #{username}
   </select>
 
 <update id="deleteAdmin">
   update  cskaoyan_mall_admin set deleted=1 where id=#{id}
 </update>
 
+
   <select id="queryIsExist" resultType="_int">
     select count(id)  from cskaoyan_mall_admin  where username=#{username}  and password=#{password}
   </select>
+
+  <update id="updatePassword">
+    update cskaoyan_mall_admin
+    set
+      password = #{newPassword},
+      update_time = now()
+    where username = #{token} and password = #{oldPassword} and deleted = 0
+  </update>
+
 </mapper>

@@ -9,7 +9,6 @@ import com.cskaoyan.mall.vo.config.OrderVo;
 import com.cskaoyan.mall.vo.config.WxVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;

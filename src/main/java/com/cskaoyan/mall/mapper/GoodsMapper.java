@@ -27,4 +27,10 @@ public interface GoodsMapper {
     List<Goods> selectGoodsByGoodsSnOrName(@Param("goods") Goods goods);
 
     int insertSelectKey(Goods record);
+
+    /**
+     * 查询goods的数量
+     * @return
+     */
+    Integer queryGoodsNumber();
 }

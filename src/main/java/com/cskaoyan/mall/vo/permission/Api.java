@@ -1,9 +1,22 @@
 package com.cskaoyan.mall.vo.permission;
 
 public class Api {
+    Integer pid;
     String  api;
     String id;
     String label;
+
+    public Api() {
+    }
+
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
     public String getApi() {
         return api;

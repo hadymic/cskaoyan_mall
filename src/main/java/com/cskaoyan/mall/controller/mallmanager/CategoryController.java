@@ -1,6 +1,6 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
-import com.cskaoyan.mall.bean.Brand;
+
 import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseRespVo;

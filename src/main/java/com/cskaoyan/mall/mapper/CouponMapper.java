@@ -26,13 +26,19 @@ public interface CouponMapper {
 
     int insertSelectKey(Coupon record);
 
+
+
+
+
+
+
+
+
+
+
+
+    int queryCodeCounts(String code);
 }
-
-
-
-
-
-
 
 
 

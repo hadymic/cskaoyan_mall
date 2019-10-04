@@ -5,15 +5,13 @@ import com.cskaoyan.mall.bean.CouponUser;
 import com.cskaoyan.mall.mapper.CouponMapper;
 import com.cskaoyan.mall.mapper.CouponUserMapper;
 import com.cskaoyan.mall.service.promotion.CouponService;
-import com.cskaoyan.mall.util.ListBean;
-import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.util.PageUtils;
-import com.cskaoyan.mall.util.StringUtils;
+import com.cskaoyan.mall.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CouponServiceImpl implements CouponService {
@@ -45,22 +43,60 @@ public class CouponServiceImpl implements CouponService {
         return PageUtils.page(list);
     }
 
+    private boolean validate(Coupon coupon, Date date) {
+        //有效期开始时间大于结束时间，或结束时间小于当前时间
+        if (coupon.getStartTime() != null && coupon.getEndTime() != null) {
+            if (coupon.getStartTime().after(coupon.getEndTime()) || date.after(coupon.getEndTime())) {
+                return false;
+            }
+        }
+        //不能为负数
+        if (BigDecimalUtils.isNegative(coupon.getMin()) ||
+                BigDecimalUtils.isNegative(coupon.getDiscount()) ||
+                coupon.getLimit() < 0 ||
+                coupon.getTotal() < 0 ||
+                coupon.getDays() < 0) {
+            return false;
+        }
+        //满减金额大于最低消费
+        if (coupon.getDiscount().compareTo(coupon.getMin()) > 0) {
+            return false;
+        }
+        //限领数大于总数量
+        if (coupon.getTotal() > 0 && coupon.getLimit() > 0 &&
+                coupon.getLimit() > coupon.getTotal()) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public Coupon insertCoupon(Coupon coupon) {
+        Date date = new Date();
+        if (!validate(coupon, date)) {
+            return null;
+        }
         //生成code
-        //判断code是否重复
-        //如果code重复则重新生成
+        String code;
+        do {
+            code = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+            //判断code是否重复，如果code重复则重新生成
+        } while (couponMapper.queryCodeCounts(code) == 1);
+        coupon.setCode(code);
 
-        coupon.setAddTime(new Date());
+        coupon.setAddTime(date);
         coupon.setDeleted(false);
         return couponMapper.insertSelectKey(coupon) == 1 ? coupon : null;
     }
 
     @Override
     public Coupon updateCoupon(Coupon coupon) {
-        //判断优惠券有效期状态
-        coupon.setUpdateTime(new Date());
-        return couponMapper.updateByPrimaryKeySelective(coupon) == 1 ? coupon : null;
+        Date date = new Date();
+        if (!validate(coupon, date)) {
+            return null;
+        }
+        coupon.setUpdateTime(date);
+        return couponMapper.updateByPrimaryKey(coupon) == 1 ? coupon : null;
     }
 
     @Override

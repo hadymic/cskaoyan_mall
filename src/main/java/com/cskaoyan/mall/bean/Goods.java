@@ -1,23 +1,29 @@
 package com.cskaoyan.mall.bean;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Goods {
     private Integer id;
-
+    @NotBlank(message = "商品编号不能为空")
     private String goodsSn;
-
+    @NotBlank(message = "商品名称不能为空")
+    @Size(min=4,max=20,message = "商品名称长度为4-20之间")
     private String name;
-
+    @NotNull(message = "所属分类未选择")
     private Integer categoryId;
-
+    @NotNull(message = "所属品牌商未选择")
     private Integer brandId;
 
     private String[] gallery;
 
     private String keywords;
 
+    @NotBlank(message = "商品简介不能为空")
     private String brief;
 
     private Boolean isOnSale;
@@ -31,11 +37,11 @@ public class Goods {
     private Boolean isNew;
 
     private Boolean isHot;
-
+    @NotBlank(message = "商品单位不能为空")
     private String unit;
-
+    @Min(value = 0,message = "专柜价格必须不小于0")
     private BigDecimal counterPrice;
-
+    @Min(value = 0,message = "当前价格必须不小于0")
     private BigDecimal retailPrice;
 
     private Date addTime;

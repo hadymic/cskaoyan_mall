@@ -23,50 +23,53 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
     /**
      * 系统管理分页&查找管理员
-     *
      */
-      @RequestMapping("admin/admin/list")
-       public  BaseRespVo admin(Page page,Admin admin){
-            ListBean<Admin> adminList= adminService.queryAdmin(page,admin.getUsername());
-            return  BaseRespVo.success(adminList);
-      }
+    @RequestMapping("admin/admin/list")
+    public BaseRespVo admin(Page page, Admin admin) {
+        ListBean<Admin> adminList = adminService.queryAdmin(page, admin.getUsername());
+        return BaseRespVo.success(adminList);
+    }
 
     /**
      * 修改管理员信息
+     *
      * @param admin
      * @return
      */
     @RequestMapping("admin/admin/update")
-    public  BaseRespVo update(@RequestBody  Admin admin){
+    public BaseRespVo update(@RequestBody Admin admin) {
 
-      int flag= adminService.update(admin);
-      if(flag==1){
-          return  BaseRespVo.success(admin);
-      }
-           else  return  BaseRespVo.fail("更新失败");
+        int flag = adminService.update(admin);
+        if (flag == 1) {
+            return BaseRespVo.success(admin);
+        } else return BaseRespVo.fail("更新失败");
     }
 
 
     /**
      * 删除管理员
+     *
      * @param admin
      * @return
      */
     @RequestMapping("admin/admin/delete")
-    public  BaseRespVo delete(@RequestBody Admin admin){
+    public BaseRespVo delete(@RequestBody Admin admin) {
         adminService.delete(admin);
-        return  BaseRespVo.success(null);
+        return BaseRespVo.success(null);
     }
 
 
     /**
      * 新增管理员
+     *
      * @param admin
      * @return
      */
     @RequestMapping("admin/admin/create")
+
     public  BaseRespVo create(@RequestBody Admin admin){
         //新增的管理员在数据库中是否存在
        int flag= adminService.queryIsExist(admin.getUsername(),admin.getPassword());
@@ -76,7 +79,9 @@ public class AdminController {
        }else return  BaseRespVo.fail("数据库中已存在该管理员");
 
       }
-    }
+
+
+}
 
 
 
