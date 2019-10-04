@@ -8,6 +8,7 @@ package com.cskaoyan.mall.util;
 public class Page {
     private int page;
     private int limit;
+    private int size;
     private String sort;
     private String order;
 
@@ -25,6 +26,14 @@ public class Page {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public String getSort() {

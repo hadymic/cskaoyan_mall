@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -63,15 +64,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int update(Role role) {
-
+    public boolean update(Role role) {
         int i = roleMapper.updateByPrimaryKey(role);
-        return 1;
+        return i == 1;
     }
 
     @Override
     public void delete(Role role) {
-
         roleMapper.deleteRloe(role.getId());
     }
 
@@ -119,12 +118,31 @@ public class RoleServiceImpl implements RoleService {
     public boolean updateRolePermission(PermissionsVo vo) {
         List<String> permissions = vo.getPermissions();
         List<String> permissionsFromDb = permissionMapper.queryPermissionsByRoleId(vo.getRoleId());
-        for (String permission : permissions) {
-            if (permissionsFromDb.contains(permission)) {
-
+        Iterator<String> iterator = permissions.iterator();
+        //去重
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if (permissionsFromDb.contains(next)) {
+                iterator.remove();
+                permissionsFromDb.remove(next);
             }
         }
-        return false;
+        //permissionsFromDb剩余要删除的
+        for (String permission : permissionsFromDb) {
+            permissionMapper.deleteByPermissionAndRoleId(permission, vo.getRoleId());
+        }
+        //permissions剩余要增加的
+        Date date = new Date();
+        for (String permission : permissions) {
+            Permission perm = new Permission();
+            perm.setPermission(permission);
+            perm.setRoleId(vo.getRoleId());
+            perm.setAddTime(date);
+            perm.setUpdateTime(date);
+            perm.setDeleted(false);
+            permissionMapper.insertSelective(perm);
+        }
+        return true;
     }
 
 
