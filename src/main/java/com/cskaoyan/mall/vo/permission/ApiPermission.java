@@ -1,9 +1,19 @@
 package com.cskaoyan.mall.vo.permission;
 
-public class PermissionLabel {
-    int pid;
+import java.util.List;
+
+public class ApiPermission {
+    List<Api> children;
     String id;
     String label;
+
+    public List<Api> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Api> children) {
+        this.children = children;
+    }
 
     public String getId() {
         return id;
@@ -19,13 +29,5 @@ public class PermissionLabel {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public int getPid() {
-        return pid;
-    }
-
-    public void setPid(int pid) {
-        this.pid = pid;
     }
 }

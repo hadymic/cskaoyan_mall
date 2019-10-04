@@ -8,6 +8,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.permission.PermissionVo;
 
 import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.permission.PermissionsVo;
 
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface RoleService {
     Role insertRole(Role role);
 
     PermissionVo rolePermission(int roleId);
+
+    boolean updateRolePermission(PermissionsVo vo);
 }

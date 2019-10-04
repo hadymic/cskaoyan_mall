@@ -93,6 +93,6 @@
 
 
     <select id="queryByParentId"  resultType="com.cskaoyan.mall.vo.permission.Api">
-        select id, label,api from cskaoyan_mall_permission_details  where parent_id=#{id}
+        select pid, id, label,api from cskaoyan_mall_permission_details  where parent_id=#{id}
     </select>
 </mapper>

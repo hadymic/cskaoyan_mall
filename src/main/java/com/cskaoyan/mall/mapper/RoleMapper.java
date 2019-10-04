@@ -3,8 +3,6 @@ package com.cskaoyan.mall.mapper;
 import com.cskaoyan.mall.bean.Role;
 
 
-import com.cskaoyan.mall.vo.permission.AssignedPermission;
-
 import org.apache.ibatis.annotations.Param;
 
 
@@ -28,9 +26,6 @@ public interface RoleMapper {
     List<Role> roleOptions();
 
     int deleteRloe(Integer id);
-
-
-    AssignedPermission queryAll();
 
     List<String> queryRoleNameByRoleIds(@Param("ids") Integer[] ids);
 

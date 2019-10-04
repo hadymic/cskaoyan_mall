@@ -3,21 +3,22 @@ package com.cskaoyan.mall.vo.permission;
 import java.util.List;
 
 public class PermissionVo {
-    List<AssignedPermission> assignedPermissions;
-   List<SystemPermission>managers;
-    public List<AssignedPermission> getAssignedPermissions() {
+    List<String> assignedPermissions;
+    List<SystemPermission> systemPermissions;
+
+    public List<String> getAssignedPermissions() {
         return assignedPermissions;
     }
 
-    public void setAssignedPermissions(List<AssignedPermission> assignedPermissions) {
+    public void setAssignedPermissions(List<String> assignedPermissions) {
         this.assignedPermissions = assignedPermissions;
     }
 
-    public List<SystemPermission> getManagers() {
-        return managers;
+    public List<SystemPermission> getSystemPermissions() {
+        return systemPermissions;
     }
 
-    public void setManagers(List<SystemPermission> managers) {
-        this.managers = managers;
+    public void setSystemPermissions(List<SystemPermission> systemPermissions) {
+        this.systemPermissions = systemPermissions;
     }
 }

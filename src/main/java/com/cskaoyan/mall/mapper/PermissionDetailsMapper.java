@@ -2,7 +2,6 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.PermissionDetails;
 import com.cskaoyan.mall.vo.permission.Api;
-import com.cskaoyan.mall.vo.permission.PermissionLabel;
 
 import java.util.List;
 

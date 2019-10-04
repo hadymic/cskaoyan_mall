@@ -1,22 +1,15 @@
 package com.cskaoyan.mall.controller.admin;
 
-import com.cskaoyan.mall.bean.Permission;
 import com.cskaoyan.mall.bean.Role;
 import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
-
-
-import com.cskaoyan.mall.vo.permission.PermissionVo;
-
 import com.cskaoyan.mall.vo.BaseValueLabel;
-
+import com.cskaoyan.mall.vo.permission.PermissionVo;
+import com.cskaoyan.mall.vo.permission.PermissionsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -80,14 +73,12 @@ public class RoleController {
      * @return
      */
 
-     @RequestMapping("admin/role/delete")
-    public  BaseRespVo delete(@RequestBody  Role role){
+    @RequestMapping("admin/role/delete")
+    public BaseRespVo delete(@RequestBody Role role) {
 
-         roleService.delete(role);
-         return  BaseRespVo.success(null);
-     }
-
-
+        roleService.delete(role);
+        return BaseRespVo.success(null);
+    }
 
 
     /**
@@ -96,27 +87,23 @@ public class RoleController {
      * @param role
      * @return
      */
-     @RequestMapping("admin/role/create")
-    public  BaseRespVo create(@RequestBody Role role){
-         Role  roleMsg = roleService.insertRole(role);
-         return  BaseRespVo.success(roleMsg);
-     }
+    @RequestMapping("admin/role/create")
+    public BaseRespVo create(@RequestBody Role role) {
+        Role roleMsg = roleService.insertRole(role);
+        return BaseRespVo.success(roleMsg);
+    }
 
+    @GetMapping("admin/role/permissions")
+    public BaseRespVo rolePermission(int roleId) {
+        PermissionVo permissionVo = roleService.rolePermission(roleId);
+        return BaseRespVo.success(permissionVo);
+    }
 
-
-     @GetMapping("admin/role/permissions")
-    public BaseRespVo rolePermission( int roleId){
-          PermissionVo permissionVo= roleService.rolePermission(roleId);
-          return  BaseRespVo.success(permissionVo);
-     }
-
-
-
-
-
-
-
-
+    @PostMapping("admin/role/permissions")
+    public BaseRespVo updateRolePermission(PermissionsVo vo) {
+        boolean flag = roleService.updateRolePermission(vo);
+        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("授权失败");
+    }
 }
 
 

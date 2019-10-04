@@ -3,15 +3,15 @@ package com.cskaoyan.mall.vo.permission;
 import java.util.List;
 
 public class SystemPermission {
-    List<ApiMessage> children;
+    List<ApiPermission> children;
     String id;
     String label;
 
-    public List<ApiMessage> getChildren() {
+    public List<ApiPermission> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ApiMessage> children) {
+    public void setChildren(List<ApiPermission> children) {
         this.children = children;
     }
 

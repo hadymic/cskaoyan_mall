@@ -86,33 +86,45 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public PermissionVo rolePermission(int roleId) {
-        List<SystemPermission> systemPermissionList = new ArrayList<>();
         PermissionVo permissionVo = new PermissionVo();
-        List<Api> apisList1 = permissionDetailsMapper.queryByParentId(0);//根据0查询第一层
-        List<ApiMessage> apiMessageList;
-        SystemPermission  systemPermission;
-        for (Api api1 : apisList1) {
-            systemPermission = new SystemPermission();
+
+        List<Api> apiList1 = permissionDetailsMapper.queryByParentId(0);//根据0查询第一层
+        List<SystemPermission> systemPermissions = new ArrayList<>();
+        for (Api api1 : apiList1) {
             List<Api> apiList2 = permissionDetailsMapper.queryByParentId(api1.getPid());//第二层
-            apiMessageList = new ArrayList<>();
-            List<Api> apis3 ;
-            ApiMessage apiMessage = new ApiMessage();
+            List<ApiPermission> apiPermissions = new ArrayList<>();
             for (Api api2 : apiList2) {
-                apis3 = permissionDetailsMapper.queryByParentId(api2.getPid());//第三层
-                apiMessage.setChildren(apis3);
+                List<Api> apiList3 = permissionDetailsMapper.queryByParentId(api2.getPid());//第三层
+                ApiPermission apiPermission = new ApiPermission();
+                apiPermission.setChildren(apiList3);
+                apiPermission.setId(api2.getId());
+                apiPermission.setLabel(api2.getLabel());
+                apiPermissions.add(apiPermission);
             }
-            apiMessage.setId(api1.getId());
-            apiMessage.setLabel(api1.getLabel());
-            apiMessageList.add(apiMessage);
-
-            systemPermission.setChildren(apiMessageList);
-            systemPermission.setLabel(api1.getLabel());
+            SystemPermission systemPermission = new SystemPermission();
+            systemPermission.setChildren(apiPermissions);
             systemPermission.setId(api1.getId());
+            systemPermission.setLabel(api1.getLabel());
 
-            systemPermissionList.add(systemPermission);
+            systemPermissions.add(systemPermission);
         }
-        permissionVo.setManagers(systemPermissionList);
+        permissionVo.setSystemPermissions(systemPermissions);
+
+        List<String> strings = permissionMapper.queryPermissionsByRoleId(roleId);
+        permissionVo.setAssignedPermissions(strings);
         return permissionVo;
+    }
+
+    @Override
+    public boolean updateRolePermission(PermissionsVo vo) {
+        List<String> permissions = vo.getPermissions();
+        List<String> permissionsFromDb = permissionMapper.queryPermissionsByRoleId(vo.getRoleId());
+        for (String permission : permissions) {
+            if (permissionsFromDb.contains(permission)) {
+
+            }
+        }
+        return false;
     }
 
 
