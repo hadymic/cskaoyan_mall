@@ -271,4 +271,9 @@
   <select id="queryUserNumber" resultType="java.lang.Integer">
     select count(id) from cskaoyan_mall_user where deleted = 0
   </select>
+
+  <select id="queryUserIdByToken" resultType="java.lang.Integer">
+    select id from cskaoyan_mall_user
+    where deleted = 0 and username = #{token}
+  </select>
 </mapper>
