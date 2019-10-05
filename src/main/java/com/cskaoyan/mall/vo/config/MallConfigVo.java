@@ -1,9 +1,16 @@
 package com.cskaoyan.mall.vo.config;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class MallConfigVo {
+    @NotEmpty
     private String cskaoyan_mall_mall_address;
+    @NotEmpty
     private String cskaoyan_mall_mall_name;
+    @NotEmpty
     private String cskaoyan_mall_mall_phone;
+    @NotEmpty
     private String cskaoyan_mall_mall_qq;
 
     public String getCskaoyan_mall_mall_address() {
@@ -40,5 +47,14 @@ public class MallConfigVo {
     public MallConfigVo setCskaoyan_mall_mall_qq(String cskaoyan_mall_mall_qq) {
         this.cskaoyan_mall_mall_qq = cskaoyan_mall_mall_qq;
         return this;
+    }
+    public  boolean nonVoid(){
+        if (cskaoyan_mall_mall_address.equals("")||
+                cskaoyan_mall_mall_name.equals("")||
+                cskaoyan_mall_mall_phone.equals("")||
+                cskaoyan_mall_mall_qq.equals(""))
+            return false;
+        return true;
+
     }
 }
