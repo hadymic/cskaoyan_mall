@@ -203,4 +203,17 @@
               and a.user_id = #{userId}
             </if>
   </select>
+  <select id="selectAddress" resultType="com.cskaoyan.mall.bean.Address">
+    SELECT a.name,a.is_default as isDefault,a.mobile,a.id, a.address,
+    c1.name AS province,c2.name AS city,c3.name AS `area`
+    FROM cskaoyan_mall_user u
+    LEFT JOIN `cskaoyan_mall_address` a
+    ON u.id = a.user_id
+    LEFT JOIN `cskaoyan_mall_region` c1
+    ON province_id = c1.code
+    LEFT JOIN `cskaoyan_mall_region` c2
+    ON city_id = c2.code
+    LEFT JOIN `cskaoyan_mall_region` c3
+    ON area_id = c3.code
+  </select>
 </mapper>

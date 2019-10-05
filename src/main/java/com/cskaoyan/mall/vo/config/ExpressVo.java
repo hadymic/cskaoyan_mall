@@ -1,7 +1,12 @@
 package com.cskaoyan.mall.vo.config;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ExpressVo {
+    @NotEmpty
     String cskaoyan_mall_express_freight_min;
+    @NotEmpty
     String cskaoyan_mall_express_freight_value;
 
     public String getCskaoyan_mall_express_freight_min() {
@@ -20,5 +25,11 @@ public class ExpressVo {
     public ExpressVo setCskaoyan_mall_express_freight_value(String cskaoyan_mall_express_freight_value) {
         this.cskaoyan_mall_express_freight_value = cskaoyan_mall_express_freight_value;
         return this;
+    }
+    public  boolean nonVoid(){
+        if (cskaoyan_mall_express_freight_min.equals("")||
+                cskaoyan_mall_express_freight_value.equals(""))
+            return false;
+        return true;
     }
 }
