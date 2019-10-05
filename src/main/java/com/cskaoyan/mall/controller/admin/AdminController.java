@@ -69,10 +69,18 @@ public class AdminController {
      * @return
      */
     @RequestMapping("admin/admin/create")
-    public BaseRespVo create(@RequestBody Admin admin) {
-        Admin adminMsg = adminService.insertAdmin(admin);
-        return BaseRespVo.success(adminMsg);
-    }
+
+    public  BaseRespVo create(@RequestBody Admin admin){
+        //新增的管理员在数据库中是否存在
+       int flag= adminService.queryIsExist(admin.getUsername(),admin.getPassword());
+       if (flag==0) {
+           Admin adminMsg = adminService.insertAdmin(admin);
+           return BaseRespVo.success(adminMsg);
+       }else return  BaseRespVo.fail("数据库中已存在该管理员");
+
+      }
+
+
 }
 
 

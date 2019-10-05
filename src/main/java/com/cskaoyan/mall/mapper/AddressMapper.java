@@ -21,4 +21,6 @@ public interface AddressMapper {
 
     List<User> selectByIdAndNameKey(@Param("userId") String userid,
                                     @Param("name") String name);
+
+    List<Address> selectAddress(@Param("username")String username);
 }

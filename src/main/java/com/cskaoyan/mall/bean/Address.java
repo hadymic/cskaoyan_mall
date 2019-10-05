@@ -33,6 +33,17 @@ public class Address {
 
     private String area;
 
+    private String detailedAddress;
+
+    public String getDetailedAddress() {
+        return province+city+area+address;
+    }
+
+    public Address setDetailedAddress(String detailedAddress) {
+        this.detailedAddress = detailedAddress;
+        return this;
+    }
+
     public String getArea() {
         return area;
     }

@@ -1,9 +1,6 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Admin;
-import com.cskaoyan.mall.bean.Role;
-import com.cskaoyan.mall.util.ListBean;
-import com.cskaoyan.mall.util.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,11 +20,14 @@ public interface AdminMapper {
 
     List<Admin> queryAdminsByLikeUsername(String username);
 
-    Integer[] queryRoleIds(String username);
+    List<String> queryAllRoleIds();
 
     String queryPasswordByUsername(@Param("username") String username);
 
     int deleteAdmin(Integer id);
+
+
+    int  queryIsExist(String username,String password);
 
 
     /**
@@ -44,4 +44,5 @@ public interface AdminMapper {
     List<String> queryApisByUsername(@Param("username") String username);
 
     Admin queryAdminByUsername(String username);
+
 }

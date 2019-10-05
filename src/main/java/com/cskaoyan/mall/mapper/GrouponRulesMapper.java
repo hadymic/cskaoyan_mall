@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.GrouponRules;
+import com.cskaoyan.mall.vo.wx.home.GrouponVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,10 @@ public interface GrouponRulesMapper {
     List<GrouponRules> queryGrouponRuless(@Param("goodsId") Integer goodsId);
 
     int insertSelectKey(GrouponRules record);
+
+    /**
+     * Zeng_jz: 查询时间倒序前五的优惠规则
+     * @return
+     */
+    List<GrouponVo> selectTopFiveByTime();
 }
