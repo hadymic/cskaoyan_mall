@@ -81,6 +81,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
             wxMyGroupVo.setOrderStatusText(wxMyGroupVo.getHandleOption().getStatusText());
             wxMyGroupVo.setGoodsList(orderGoodsMapper.queryOrderGoodsByOrderId(wxMyGroupVo.getOrderId()));
             wxMyGroupVo.setIsCreator(isCreator);
+            wxMyGroupVo.setJoinerCount(grouponMapper.selectJoinerCountByGid(wxMyGroupVo.getId()));
         }
         return wxMyGroupVos;
     }

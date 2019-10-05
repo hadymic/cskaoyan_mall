@@ -30,6 +30,11 @@
     from cskaoyan_mall_groupon
     where groupon_id = #{gid} and user_id = #{uid} and deleted = 0
   </select>
+  <select id="selectJoinerCountByGid" resultType="java.lang.Integer">
+    select count(id)
+    from cskaoyan_mall_groupon
+    where groupon_id = #{gid} and deleted = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}

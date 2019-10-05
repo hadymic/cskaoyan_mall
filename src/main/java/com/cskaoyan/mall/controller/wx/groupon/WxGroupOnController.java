@@ -31,9 +31,20 @@ public class WxGroupOnController {
         return BaseRespVo.success(wxListBean);
     }
 
+    /**
+     * 团购API-我的团购
+     * @param showType
+     * @return
+     */
     @RequestMapping("my")
     public BaseRespVo my(int showType){
         WxListBean wxListBean = wxGroupOnService.selectMyGroupOn(showType);
         return BaseRespVo.success(wxListBean);
+    }
+
+    @RequestMapping("detail")
+    public BaseRespVo detail(int grouponId){
+        //wxGroupOnService.selectGrouponById();
+        return BaseRespVo.success(null);
     }
 }
