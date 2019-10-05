@@ -24,11 +24,8 @@ public class PageUtils {
         return new ListBean<>(pageInfo.getList(), pageInfo.getTotal());
     }
 
-    public static <T> ListBean<T> pageCount(List<T> list) {
+    public static <T> WxListBean<T> wxPage(List<T> list) {
         PageInfo<T> pageInfo = new PageInfo<>(list);
-        ListBean<T> listBean = new ListBean<>();
-        listBean.setItems(pageInfo.getList());
-        listBean.setCount(pageInfo.getTotal());
-        return listBean;
+        return new WxListBean<>(pageInfo.getList(), pageInfo.getTotal());
     }
 }
