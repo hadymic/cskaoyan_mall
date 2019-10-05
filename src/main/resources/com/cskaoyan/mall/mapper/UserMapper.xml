@@ -33,6 +33,24 @@
     from cskaoyan_mall_user
     group by birthday;
   </select>
+  <select id="selectWxGroupVoById" resultType="com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo">
+    select mg.groupon_id as id,mu.nickname as creator,mg.user_id as userId,
+    mg.rules_id as rulesId,mg.order_id as orderId,
+    mo.order_status as statusCode, mo.order_sn as orderSn
+    from cskaoyan_mall_user mu
+    right JOIN cskaoyan_mall_groupon mg on mg.creator_user_id = mu.id
+    right JOIN cskaoyan_mall_order mo on mo.id = mg.order_id
+    where mg.user_id = #{id} and mg.user_id = mg.creator_user_id
+  </select>
+  <select id="selectWxGroupVoJoinById" resultType="com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo">
+    select mg.groupon_id as id,mu.nickname as creator,mg.user_id as userId,
+    mg.rules_id as rulesId,mg.order_id as orderId,
+    mo.order_status as statusCode, mo.order_sn as orderSn
+    from cskaoyan_mall_user mu
+    right JOIN cskaoyan_mall_groupon mg on mg.creator_user_id = mu.id
+    right JOIN cskaoyan_mall_order mo on mo.id = mg.order_id
+    where mg.user_id = #{id} and mg.user_id != mg.creator_user_id
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}

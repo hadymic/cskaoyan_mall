@@ -53,4 +53,10 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsListByCategoryId(@Param("categoryId") int categoryId);
+
+    /**
+     * Zeng-jz
+     * @param orderId
+     * @return
+     */
 }
