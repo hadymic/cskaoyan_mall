@@ -16,4 +16,8 @@ public class TransformUtils {
         if (b) return 1;
         else return 0;
     }
+    public static boolean transformBoolean(int i){
+        if (i!=0) return true;
+        else return false;
+    }
 }

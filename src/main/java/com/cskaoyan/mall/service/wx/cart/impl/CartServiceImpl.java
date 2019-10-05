@@ -1,24 +1,16 @@
 package com.cskaoyan.mall.service.wx.cart.impl;
 
-import com.cskaoyan.mall.bean.Cart;
-import com.cskaoyan.mall.bean.Goods;
-import com.cskaoyan.mall.bean.GoodsProduct;
-import com.cskaoyan.mall.mapper.CartMapper;
-import com.cskaoyan.mall.mapper.GoodsMapper;
-import com.cskaoyan.mall.mapper.GoodsProductMapper;
+import com.cskaoyan.mall.bean.*;
+import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.wx.cart.CartService;
-import com.cskaoyan.mall.vo.wx.cart.CartAddVo;
-import com.cskaoyan.mall.vo.wx.cart.CartCheckedVo;
-import com.cskaoyan.mall.vo.wx.cart.CartListVo;
-import com.cskaoyan.mall.vo.wx.cart.CartTotal;
+import com.cskaoyan.mall.vo.wx.cart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -31,10 +23,19 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private GoodsProductMapper goodsProductMapper;
 
+    @Autowired
+    private AddressMapper addressMapper;
+
+    @Autowired
+    private GrouponRulesMapper grouponRulesMapper;
+
+    @Autowired
+    private CouponMapper couponMapper;
+
     @Override
     public CartListVo cartList(int id) {
         CartListVo vo = new CartListVo();
-        List<Cart> carts = cartMapper.queryByUserId(id);
+        List<Cart> carts = cartMapper.queryByUserId(id, false);
         vo.setCartList(carts);
         BigDecimal checkedGoodsAmount = BigDecimal.ZERO;
         BigDecimal checkedGoodsCount = BigDecimal.ZERO;
@@ -72,6 +73,7 @@ public class CartServiceImpl implements CartService {
                     true, goods.getPicUrl(), date, date, false);
             cartMapper.insert(cart);
         } else {
+            // 数量相加
             cartFromDb.setNumber((short) (cartFromDb.getNumber() + vo.getNumber()));
             cartMapper.updateByPrimaryKey(cartFromDb);
         }
@@ -96,12 +98,73 @@ public class CartServiceImpl implements CartService {
     @Override
     public BigDecimal goodsCount(int userId) {
         //从数据库查询商品总数
-        List<Cart> carts = cartMapper.queryByUserId(userId);
+        List<Cart> carts = cartMapper.queryByUserId(userId, false);
         BigDecimal goodsCount = BigDecimal.ZERO;
         for (Cart cart1 : carts) {
             BigDecimal num = new BigDecimal(cart1.getNumber());
             goodsCount = goodsCount.add(num);
         }
         return goodsCount;
+    }
+
+    @Override
+    public int fastAdd(CartAddVo vo, int userId) {
+        // 判断商品是否还有库存
+        GoodsProduct product = goodsProductMapper.selectByPrimaryKey(vo.getProductId());
+        if (product.getNumber() <= 0) {
+            return -1;
+        }
+        //判断数据库中是否已有该商品
+        Cart cartFromDb = cartMapper.queryByProductId(userId, vo.getProductId());
+        if (cartFromDb == null) {
+            //插入数据库
+            Goods goods = goodsMapper.selectByPrimaryKey(vo.getGoodsId());
+            Date date = new Date();
+            Cart cart = new Cart(null, userId, vo.getGoodsId(), goods.getGoodsSn(), goods.getName(),
+                    vo.getProductId(), product.getPrice(), vo.getNumber(), product.getSpecifications(),
+                    true, goods.getPicUrl(), date, date, false);
+            cartMapper.insert(cart);
+            return cart.getId();
+        } else {
+            //数量直接赋值
+            cartFromDb.setNumber(vo.getNumber());
+            cartMapper.updateByPrimaryKey(cartFromDb);
+            return cartFromDb.getId();
+        }
+    }
+
+    @Override
+    public CartCheckoutReturnVo checkout(CartCheckoutVo vo) {
+        int userId = 1;
+        CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
+
+        if (vo.getCartId() == 0) {
+            Cart cart = cartMapper.selectByPrimaryKey(vo.getCartId());
+            List<Cart> carts = new ArrayList<>();
+            carts.add(cart);
+            returnVo.setCheckedGoodsList(carts);
+        } else {
+            List<Cart> carts = cartMapper.queryByUserId(userId, true);
+            returnVo.setCheckedGoodsList(carts);
+        }
+
+        Address address;
+        if (vo.getAddressId() != 0) {
+            address = addressMapper.selectByPrimaryKey(vo.getAddressId());
+        } else {
+            address = addressMapper.selectDefaultAddressByUserId(userId);
+        }
+        returnVo.setCheckedAddress(address);
+
+        if (vo.getGrouponRulesId() != 0) {
+            GrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(vo.getGrouponRulesId());
+        }
+        if (vo.getCouponId() == -1) {
+
+        }
+        if (vo.getCouponId() != 0) {
+            Coupon coupon = couponMapper.selectByPrimaryKey(vo.getCouponId());
+        }
+        return returnVo;
     }
 }

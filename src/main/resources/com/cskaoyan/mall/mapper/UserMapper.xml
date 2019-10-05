@@ -294,4 +294,8 @@
     select id from cskaoyan_mall_user
     where deleted = 0 and username = #{token}
   </select>
+  <select id="selectByNameGetId" resultType="Integer">
+    select id from cskaoyan_mall_user
+    where username = #{username}
+  </select>
 </mapper>

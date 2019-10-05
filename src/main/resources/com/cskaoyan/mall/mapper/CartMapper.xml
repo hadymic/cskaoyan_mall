@@ -25,19 +25,22 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Cart">
-    insert into cskaoyan_mall_cart (id, user_id, goods_id, 
+    <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
+    insert into cskaoyan_mall_cart (user_id, goods_id,
       goods_sn, goods_name, product_id, 
       price, number, specifications, 
       checked, pic_url, add_time, 
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
       #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
       #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR}, 
       #{checked,jdbcType=BIT}, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
@@ -202,6 +205,9 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
     where deleted = 0 and user_id = #{userId,jdbcType=INTEGER}
+    <if test="checked">
+      and checked = 1
+    </if>
   </select>
 
   <select id="queryByProductId" resultMap="BaseResultMap">

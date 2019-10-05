@@ -55,8 +55,9 @@ public interface GoodsMapper {
     List<Goods> selectGoodsListByCategoryId(@Param("categoryId") int categoryId);
 
     /**
-     * Zeng-jz
-     * @param orderId
+     * @author hjl 根据brandId查找goods
+     * @param brandId
      * @return
      */
+    List<Goods> selectGoodsListByBrandId(@Param("brandId") int brandId);
 }

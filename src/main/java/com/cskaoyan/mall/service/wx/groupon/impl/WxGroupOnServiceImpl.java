@@ -58,12 +58,12 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
             isCreator = true;
             List<WxMyGroupVo> wxMyGroupVos = userMapper.selectWxGroupVoById(userId);
             wxMyGroupVos = completeWxMyGroupVos(wxMyGroupVos, userId, isCreator);
-            WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size());
+            WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size(), null);
             return wxListBean;
         }else {
             List<WxMyGroupVo> wxMyGroupVos = userMapper.selectWxGroupVoJoinById(userId);
             wxMyGroupVos = completeWxMyGroupVos(wxMyGroupVos, userId, isCreator);
-            WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size());
+            WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size(), null);
             return wxListBean;
         }
     }
