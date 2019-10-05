@@ -1,8 +1,11 @@
 package com.cskaoyan.mall.vo.wx.footprint;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class FootPrintVo {
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date addTime;
     String brief;
     int goodsId;

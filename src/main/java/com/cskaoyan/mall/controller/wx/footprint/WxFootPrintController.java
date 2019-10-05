@@ -27,4 +27,5 @@ public class WxFootPrintController {
         WxFootPrintListBean<FootPrintVo> footPrints= wxFootPrintService.showList(page);
         return  BaseRespVo.success(footPrints);
     }
+
 }
