@@ -23,7 +23,7 @@ cskaoyan商城项目
 ### 前端
 
 // 曾金泽
-- [ ] ```IndexUrl: WxApiRoot + 'home/index', //首页数据接口```
+- [x] ```IndexUrl: WxApiRoot + 'home/index', //首页数据接口```
 - [ ] ```CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口```
 - [ ] ```CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口```
 
@@ -115,7 +115,7 @@ cskaoyan商城项目
 - [ ] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
 
 // 穆杨
-- [ ] ```UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息```
+- [x] ```UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息```
 
 ## 早会记录
 
