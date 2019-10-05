@@ -28,6 +28,13 @@ public interface AddressMapper {
 
     Integer concealAddress(@Param("id") int id);
 
-    Address selectAddressById(@Param("id")int id);
+    Address selectAddressById(@Param("id") int id);
 
+    /**
+     * 通过用户id获取用户的默认地址
+     *
+     * @param userId
+     * @return
+     */
+    Address selectDefaultAddressByUserId(@Param("userId") int userId);
 }

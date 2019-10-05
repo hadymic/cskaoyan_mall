@@ -37,7 +37,7 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_address
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_address
@@ -253,6 +253,13 @@
     ON area_id = c3.code
     WHERE a.deleted = 0
     AND a.id = #{id}
+  </select>
+  
+  <select id="selectDefaultAddressByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_address
+    where deleted = 0 and userId = #{userId,jdbcType=INTEGER} and is_default = 1
   </select>
 
 </mapper>

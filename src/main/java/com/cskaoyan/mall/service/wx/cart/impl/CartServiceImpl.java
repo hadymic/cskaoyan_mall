@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -134,22 +135,36 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartCheckoutReturnVo checkout(CartCheckoutVo vo) {
+        int userId = 1;
+        CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
+
         if (vo.getCartId() == 0) {
             Cart cart = cartMapper.selectByPrimaryKey(vo.getCartId());
+            List<Cart> carts = new ArrayList<>();
+            carts.add(cart);
+            returnVo.setCheckedGoodsList(carts);
+        } else {
+            List<Cart> carts = cartMapper.queryByUserId(userId, true);
+            returnVo.setCheckedGoodsList(carts);
         }
-        if (vo.getAddressId() == 0) {
-            Address address = addressMapper.selectByPrimaryKey(vo.getAddressId());
+
+        Address address;
+        if (vo.getAddressId() != 0) {
+            address = addressMapper.selectByPrimaryKey(vo.getAddressId());
+        } else {
+            address = addressMapper.selectDefaultAddressByUserId(userId);
         }
+        returnVo.setCheckedAddress(address);
+
         if (vo.getGrouponRulesId() != 0) {
             GrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(vo.getGrouponRulesId());
+        }
+        if (vo.getCouponId() == -1) {
+
         }
         if (vo.getCouponId() != 0) {
             Coupon coupon = couponMapper.selectByPrimaryKey(vo.getCouponId());
         }
-        int userId = 1;
-        List<Cart> carts = cartMapper.queryByUserId(userId, true);
-        CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
-        returnVo.setCheckedGoodsList(carts);
         return returnVo;
     }
 }
