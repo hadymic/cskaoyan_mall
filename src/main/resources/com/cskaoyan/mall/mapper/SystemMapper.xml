@@ -23,6 +23,22 @@
     from cskaoyan_mall_system
     where id = #{id}
   </select>
+  <select id="selectAppletsConfigs" resultType="com.cskaoyan.mall.vo.wx.home.AppletsConfigVo">
+    SELECT
+    ms1.key_value as newGoodsListSize,
+    ms2.key_value as hotGoodsListSize,
+    ms3.key_value as floorGoodsListSize,
+    ms4.key_value as floorListSize,
+    ms5.key_value as brandListSize,
+    ms6.key_value as topicListSize
+    from cskaoyan_mall_system ms1
+    LEFT JOIN cskaoyan_mall_system ms2 on ms2.key_name = 'cskaoyan_mall_wx_index_hot'
+    LEFT JOIN cskaoyan_mall_system ms3 on ms3.key_name = 'cskaoyan_mall_wx_catlog_goods'
+    LEFT JOIN cskaoyan_mall_system ms4 on ms4.key_name = 'cskaoyan_mall_wx_catlog_list'
+    LEFT JOIN cskaoyan_mall_system ms5 on ms5.key_name = 'cskaoyan_mall_wx_index_brand'
+    LEFT JOIN cskaoyan_mall_system ms6 on ms6.key_name = 'cskaoyan_mall_wx_index_topic'
+    where ms1.key_name = 'cskaoyan_mall_wx_index_new'
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_system
     where id = #{id,jdbcType=INTEGER}

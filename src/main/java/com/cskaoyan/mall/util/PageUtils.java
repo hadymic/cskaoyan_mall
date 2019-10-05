@@ -23,4 +23,16 @@ public class PageUtils {
         PageInfo<T> pageInfo = new PageInfo<>(list);
         return new ListBean<>(pageInfo.getList(), pageInfo.getTotal());
     }
+
+    public static <T> WxListBean<T> wxPage(List<T> list) {
+        PageInfo<T> pageInfo = new PageInfo<>(list);
+        return new WxListBean<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPages());
+    }
+
+
+    public static <T> WxFootPrintListBean<T> wxFootPrintPage(List<T> list) {
+        PageInfo<T> pageInfo = new PageInfo<>(list);
+        return new WxFootPrintListBean<>(pageInfo.getList(), pageInfo.getTotal());
+    }
+
 }

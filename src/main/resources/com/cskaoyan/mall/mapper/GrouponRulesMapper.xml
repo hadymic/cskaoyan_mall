@@ -17,18 +17,28 @@
     id, goods_id, goods_name, pic_url, discount, discount_member, add_time, update_time,
     expire_time, deleted
   </sql>
+  <sql id="Wx_Groupon_List">
+    goods_id,discount as groupon_price, discount_member as groupon_member
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon_rules
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectAll" resultType="com.cskaoyan.mall.vo.wx.home.GrouponVo">
+    select
+    <include refid="Wx_Groupon_List"/>
+    from cskaoyan_mall_groupon_rules
+    order by update_time desc
+  </select>
   <select id="selectTopFiveByTime" resultType="com.cskaoyan.mall.vo.wx.home.GrouponVo">
-    select goods_id,discount as groupon_price, discount_member as groupon_member
+    select
+    <include refid="Wx_Groupon_List"/>
     from cskaoyan_mall_groupon_rules
     where deleted = 0
     order by update_time desc
-    limit 5 offset 1
+    limit 5 offset 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_groupon_rules
