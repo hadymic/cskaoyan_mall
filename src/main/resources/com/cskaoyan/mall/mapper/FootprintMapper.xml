@@ -114,4 +114,11 @@
         and goods_id = #{goodsId}
       </if>
   </select>
+
+
+  <select id="queryFootPrint"  resultType="com.cskaoyan.mall.vo.wx.footprint.FootPrintVo">
+   select  f.add_time as  addTime , g.brief , f.goods_id as goodsId , f.id, g.name, g.pic_url as picUrl  ,g.retail_price as retailPrice from  cskaoyan_mall_goods g
+left join cskaoyan_mall_footprint f
+on f.goods_id=g.id
+  </select>
 </mapper>

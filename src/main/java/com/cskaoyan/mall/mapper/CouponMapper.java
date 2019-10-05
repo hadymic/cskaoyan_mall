@@ -28,16 +28,17 @@ public interface CouponMapper {
 
 
 
-
-
-
-
-
-
-
-
-
     int queryCodeCounts(String code);
+
+    List<Coupon> queryCouponsByStatus(Short status);
+
+    int queryAll();
+
+    int receiveCoupon(Integer couponId);
+
+    Coupon queryCodeExchange(String code);
+
+    int isExistCoupon(String code);
 }
 
 

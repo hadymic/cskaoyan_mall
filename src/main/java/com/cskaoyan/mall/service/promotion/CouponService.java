@@ -41,4 +41,5 @@ public interface CouponService {
     Coupon updateCoupon(Coupon coupon);
 
     boolean deleteCoupon(Integer id);
+
 }
