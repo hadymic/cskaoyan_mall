@@ -27,6 +27,7 @@ cskaoyan商城项目
 - [ ] ```CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口```
 - [ ] ```CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口```
 
+// 
 - [ ] ```AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录```
 - [ ] ```AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录```
 - [ ] ```AuthLogout: WxApiRoot + 'auth/logout', //账号登出```
@@ -42,6 +43,7 @@ cskaoyan商城项目
 - [ ] ```GoodsDetail: WxApiRoot + 'goods/detail', //获得商品的详情```
 - [ ] ```GoodsRelated: WxApiRoot + 'goods/related', //商品详情页的关联商品（大家都在看）```
 
+// 
 - [ ] ```BrandList: WxApiRoot + 'brand/list', //品牌列表```
 - [ ] ```BrandDetail: WxApiRoot + 'brand/detail', //品牌详情```
 
@@ -55,17 +57,21 @@ cskaoyan商城项目
 - [ ] ```CartGoodsCount: WxApiRoot + 'cart/goodscount', // 获取购物车商品件数```
 - [ ] ```CartCheckout: WxApiRoot + 'cart/checkout', // 下单前信息确认```
 
+//
 - [ ] ```CollectList: WxApiRoot + 'collect/list', //收藏列表```
 - [ ] ```CollectAddOrDelete: WxApiRoot + 'collect/addordelete', //添加或取消收藏```
 
+//
 - [ ] ```CommentList: WxApiRoot + 'comment/list', //评论列表```
 - [ ] ```CommentCount: WxApiRoot + 'comment/count', //评论总数```
 - [ ] ```CommentPost: WxApiRoot + 'comment/post', //发表评论```
 
+//
 - [ ] ```TopicList: WxApiRoot + 'topic/list', //专题列表```
 - [ ] ```TopicDetail: WxApiRoot + 'topic/detail', //专题详情```
 - [ ] ```TopicRelated: WxApiRoot + 'topic/related', //相关专题```
 
+//
 - [ ] ```SearchIndex: WxApiRoot + 'search/index', //搜索关键字```
 - [ ] ```SearchResult: WxApiRoot + 'search/result', //搜索结果```
 - [ ] ```SearchHelper: WxApiRoot + 'search/helper', //搜索帮助```
@@ -77,8 +83,10 @@ cskaoyan商城项目
 - [ ] ```AddressSave: WxApiRoot + 'address/save', //保存收货地址```
 - [ ] ```AddressDelete: WxApiRoot + 'address/delete', //保存收货地址```
 
+//
 - [ ] ```ExpressQuery: WxApiRoot + 'express/query', //物流查询```
 
+//
 - [ ] ```RegionList: WxApiRoot + 'region/list', //获取区域列表```
 
 // 穆杨
@@ -93,12 +101,15 @@ cskaoyan商城项目
 - [ ] ```OrderGoods: WxApiRoot + 'order/goods', // 代评价商品信息```
 - [ ] ```OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息```
 
+//
 - [ ] ```FeedbackAdd: WxApiRoot + 'feedback/submit', //添加反馈```
 - [ ] ```FootprintList: WxApiRoot + 'footprint/list', //足迹列表```
 - [ ] ```FootprintDelete: WxApiRoot + 'footprint/delete', //删除足迹```
 
+//
 - [ ] ```UserFormIdCreate: WxApiRoot + 'formid/create', //用户FromId，用于发送模版消息```
 
+//
 - [ ] ```GroupOnList: WxApiRoot + 'groupon/list', //团购列表```
 - [ ] ```GroupOn: WxApiRoot + 'groupon/query', //团购API-查询```
 - [ ] ```GroupOnMy: WxApiRoot + 'groupon/my', //团购API-我的团购```
@@ -112,6 +123,7 @@ cskaoyan商城项目
 - [ ] ```CouponReceive: WxApiRoot + 'coupon/receive', //优惠券领取```
 - [ ] ```CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换```
 
+//
 - [ ] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
 
 // 穆杨
