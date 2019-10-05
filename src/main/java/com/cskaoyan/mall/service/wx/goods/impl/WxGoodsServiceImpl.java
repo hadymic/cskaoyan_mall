@@ -46,15 +46,15 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         Map<String, Object> map = new HashMap<>();
         Category parentCategory = categoryMapper.selectByPrimaryKey(id);
         parentCategory.setChildren(null);
-        Category currentCategory = null;
-        List<Category> brotherCategory = null;
+        Category currentCategory;
+        List<Category> brotherCategory ;
         if (parentCategory.getPid() == 0) {//如果传的是父类categoryId,点击父类进入子类显示第一个子类
             brotherCategory = categoryMapper.selectCategoryListByPid(id);
             currentCategory = brotherCategory.get(0);
         } else {//如果传的是子类categoryId
-            currentCategory = categoryMapper.selectByPrimaryKey(id);
-            parentCategory =  categoryMapper.selectByPrimaryKey(currentCategory.getPid());
-            brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());
+            currentCategory = categoryMapper.selectByPrimaryKey(id);//找到子类
+            parentCategory =  categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
+            brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());//找到兄弟
 
 
         }
