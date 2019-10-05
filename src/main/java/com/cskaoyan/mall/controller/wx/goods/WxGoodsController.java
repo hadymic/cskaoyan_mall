@@ -27,8 +27,13 @@ public class WxGoodsController {
     }
 
     @RequestMapping("list")
-    public BaseRespVo goodsList(Page page, int categoryId) {//商品分页
-        GoodsByCategory goodsByCategory = wxGoodsService.PageGoodsByCategory(page, categoryId);
+    public BaseRespVo goodsList(Page page, Integer categoryId, Integer brandId) {//商品分页
+        GoodsByCategory goodsByCategory;
+        if (brandId ==null) {
+            goodsByCategory = wxGoodsService.PageGoodsByCategory(page, categoryId);
+        } else {
+            goodsByCategory = wxGoodsService.PageGoodsByBrand(page, brandId);
+        }
         return BaseRespVo.success(goodsByCategory);
     }
 
@@ -41,9 +46,9 @@ public class WxGoodsController {
     @RequestMapping("related")
     public BaseRespVo relatedGoods(int id) {
         List<Goods> goodsList = wxGoodsService.showRelatedGoods(id);
-        Map<String,Object> map = new HashMap<>();
-        map.put("goodsList",goodsList);
-        return  BaseRespVo.success(map);
+        Map<String, Object> map = new HashMap<>();
+        map.put("goodsList", goodsList);
+        return BaseRespVo.success(map);
     }
 
     @RequestMapping("count")

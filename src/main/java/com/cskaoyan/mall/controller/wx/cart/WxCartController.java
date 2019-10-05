@@ -6,10 +6,7 @@ import com.cskaoyan.mall.vo.wx.cart.CartAddVo;
 import com.cskaoyan.mall.vo.wx.cart.CartCheckedVo;
 import com.cskaoyan.mall.vo.wx.cart.CartListVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -73,7 +70,7 @@ public class WxCartController {
      *
      * @return
      */
-    @PostMapping("goodscount")
+    @GetMapping("goodscount")
     public BaseRespVo goodsCount() {
         int userId = 1;
         BigDecimal data = cartService.goodsCount(userId);
