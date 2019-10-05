@@ -26,7 +26,7 @@ public class PageUtils {
 
     public static <T> WxListBean<T> wxPage(List<T> list) {
         PageInfo<T> pageInfo = new PageInfo<>(list);
-        return new WxListBean<>(pageInfo.getList(), pageInfo.getTotal());
+        return new WxListBean<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPages());
     }
 
 

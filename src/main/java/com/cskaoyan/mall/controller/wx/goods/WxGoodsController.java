@@ -41,7 +41,9 @@ public class WxGoodsController {
     @RequestMapping("related")
     public BaseRespVo relatedGoods(int id) {
         List<Goods> goodsList = wxGoodsService.showRelatedGoods(id);
-        return  BaseRespVo.success(goodsList);
+        Map<String,Object> map = new HashMap<>();
+        map.put("goodsList",goodsList);
+        return  BaseRespVo.success(map);
     }
 
     @RequestMapping("count")
