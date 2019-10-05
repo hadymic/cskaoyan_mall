@@ -72,6 +72,7 @@ public class CartServiceImpl implements CartService {
                     true, goods.getPicUrl(), date, date, false);
             cartMapper.insert(cart);
         } else {
+            // 数量相加
             cartFromDb.setNumber((short) (cartFromDb.getNumber() + vo.getNumber()));
             cartMapper.updateByPrimaryKey(cartFromDb);
         }
@@ -85,7 +86,7 @@ public class CartServiceImpl implements CartService {
         for (Integer productId : productIds) {
             Cart cart = new Cart();
             cart.setUserId(userId);
-            cart.setChecked(vo.isChecked());
+            cart.setChecked(vo.getIsChecked());
             cart.setProductId(productId);
             cart.setUpdateTime(date);
             cartMapper.updateByProductIdSelective(cart);
@@ -103,5 +104,31 @@ public class CartServiceImpl implements CartService {
             goodsCount = goodsCount.add(num);
         }
         return goodsCount;
+    }
+
+    @Override
+    public int fastAdd(CartAddVo vo, int userId) {
+        // 判断商品是否还有库存
+        GoodsProduct product = goodsProductMapper.selectByPrimaryKey(vo.getProductId());
+        if (product.getNumber() <= 0) {
+            return -1;
+        }
+        //判断数据库中是否已有该商品
+        Cart cartFromDb = cartMapper.queryByProductId(userId, vo.getProductId());
+        if (cartFromDb == null) {
+            //插入数据库
+            Goods goods = goodsMapper.selectByPrimaryKey(vo.getGoodsId());
+            Date date = new Date();
+            Cart cart = new Cart(null, userId, vo.getGoodsId(), goods.getGoodsSn(), goods.getName(),
+                    vo.getProductId(), product.getPrice(), vo.getNumber(), product.getSpecifications(),
+                    true, goods.getPicUrl(), date, date, false);
+            cartMapper.insert(cart);
+            return cart.getId();
+        } else {
+            //数量直接赋值
+            cartFromDb.setNumber(vo.getNumber());
+            cartMapper.updateByPrimaryKey(cartFromDb);
+            return cartFromDb.getId();
+        }
     }
 }
