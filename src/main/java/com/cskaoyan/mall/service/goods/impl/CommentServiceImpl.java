@@ -42,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int updateCommentReply(ReplyVo replyVo) {
-        /*Comment comment = new Comment();
+        /*CommentVo comment = new CommentVo();
         comment.setUpdateTime(new Date());
 
         commentMapper.updateByPrimaryKeySelective();*/

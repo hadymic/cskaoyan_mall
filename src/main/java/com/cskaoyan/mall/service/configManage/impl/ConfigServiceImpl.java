@@ -2,6 +2,8 @@ package com.cskaoyan.mall.service.configManage.impl;
 
 import com.cskaoyan.mall.mapper.SystemMapper;
 import com.cskaoyan.mall.service.configManage.ConfigService;
+import com.cskaoyan.mall.util.StringUtils;
+import com.cskaoyan.mall.util.TransformUtils;
 import com.cskaoyan.mall.vo.config.ExpressVo;
 import com.cskaoyan.mall.vo.config.MallConfigVo;
 import com.cskaoyan.mall.vo.config.OrderVo;
@@ -20,7 +22,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Autowired
     SystemMapper systemMapper;
     @Override
-    public boolean experess(ExpressVo expressVo) { ;
+    public boolean experess(ExpressVo expressVo) {
         int updatevalue = systemMapper.updateByKeyNema(expressVo.getCskaoyan_mall_express_freight_value(), "cskaoyan_mall_express_freight_value");
         int updatemin = systemMapper.updateByKeyNema(expressVo.getCskaoyan_mall_express_freight_min(), "cskaoyan_mall_express_freight_min");
         if (updatevalue*updatemin!=0) return true;
@@ -85,7 +87,7 @@ public class ConfigServiceImpl implements ConfigService {
         wxVo.setCskaoyan_mall_wx_index_hot(systemMapper.selectByKeyName("cskaoyan_mall_wx_index_hot"));
         wxVo.setCskaoyan_mall_wx_index_new(systemMapper.selectByKeyName("cskaoyan_mall_wx_index_new"));
         wxVo.setCskaoyan_mall_wx_index_topic(systemMapper.selectByKeyName("cskaoyan_mall_wx_index_topic"));
-        wxVo.setCskaoyan_mall_wx_share(systemMapper.selectByKeyName("cskaoyan_mall_wx_index_share"));
+        wxVo.setCskaoyan_mall_wx_share(TransformUtils.transformBoolean(systemMapper.selectByKeyName("cskaoyan_mall_wx_share")));
         return wxVo;
     }
 
@@ -99,7 +101,7 @@ public class ConfigServiceImpl implements ConfigService {
         int hot = systemMapper.updateByKeyNema(wxVo.getCskaoyan_mall_wx_index_hot(), "cskaoyan_mall_wx_index_hot");
         int wxnew = systemMapper.updateByKeyNema(wxVo.getCskaoyan_mall_wx_index_new(), "cskaoyan_mall_wx_index_new");
         int topic = systemMapper.updateByKeyNema(wxVo.getCskaoyan_mall_wx_index_topic(), "cskaoyan_mall_wx_index_topic");
-        int share = systemMapper.updateByKeyNema(wxVo.getCskaoyan_mall_wx_index_topic(), "cskaoyan_mall_wx_share");
+        int share = systemMapper.updateByKeyNema(TransformUtils.transformString(wxVo.isCskaoyan_mall_wx_share()), "cskaoyan_mall_wx_share");
         if (goods*list*brand*hot*wxnew*topic*share!=0) return true;
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         return false;
