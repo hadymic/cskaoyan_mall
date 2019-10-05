@@ -16,7 +16,6 @@ git commit -m "author:hadymic msg:create project"
 ## rule
 
 1. 在dev分支中进行开发，不允许提交至master
-
 2. 自己写的类应注明自己的作者信息及类的用途
 例：
 ```java

@@ -1,11 +1,13 @@
 package com.cskaoyan.mall.service.wx.goods;
 
 
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,4 +25,6 @@ public interface WxGoodsService {
      * @return
      */
     GoodsByCategory PageGoodsByCategory(Page page, int categoryId);
+
+    List<Goods> showRelatedGoods(int id);
 }

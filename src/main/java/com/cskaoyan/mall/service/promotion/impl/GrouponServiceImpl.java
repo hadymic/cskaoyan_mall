@@ -109,7 +109,7 @@ public class GrouponServiceImpl implements GrouponService {
             List<SubGrouponsVo> subGrouponsVos = new ArrayList<>();
             for (Groupon groupon : groupons) {
                 //如果相同，说明是发起者，封装至groupon
-                if (groupon.getUserId().intValue() == groupon.getCreatorUserId().intValue()) {
+                if (groupon.getId().equals(groupon.getGrouponId())) {
                     vo.setGroupon(groupon);
                 } else {
                     //如果不同，说明是参与者，封装至sub
