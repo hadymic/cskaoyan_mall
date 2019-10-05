@@ -28,10 +28,12 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("list")
-    public BaseRespVo orderList(Integer showType, Integer page, Integer size){
-        String token = (String) SecurityUtils.getSubject().getPrincipal();
-        Page pageBean = new Page(page,size,"add_time","desc");
-        return BaseRespVo.success(orderService.queryUserOrders(token,pageBean,showType));
+    public BaseRespVo orderList(Page page, Integer showType){
+        /*String token = (String) SecurityUtils.getSubject().getPrincipal();*/
+        Integer id = 1;
+        page.setSort("add_time");
+        page.setOrder("desc");
+        return BaseRespVo.success(orderService.queryUserOrders(id,page,showType));
     }
 
     /**

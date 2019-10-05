@@ -5,25 +5,26 @@ package com.cskaoyan.mall.vo.ordermanagement;
  */
 public enum HandleOption {
     // 未付款
-    UNPAID(101, true, false, false, false, true, false, false),
+    UNPAID(101, "未付款", true, false, false, false, true, false, false),
     // 用户取消
-    CANCELED(102,false,false,false,true,false,false,false),
+    CANCELED(102, "已取消", false, false, false, true, false, false, false),
     // 系统取消
-    CANCELLATION(103, false, false, false, true, false, false, false),
+    CANCELLATION(103, "已取消（系统）", false, false, false, true, false, false, false),
     // 已付款
-    PAID(201, false, false, false, false, false, false, true),
+    PAID(201, "已付款", false, false, false, false, false, false, true),
     // 申请退款
-    REFUND(202, false, false, false, false, false, false, false),
+    REFUND(202, "申请退款", false, false, false, false, false, false, false),
     // 已退款
-    REFUNDED(203, false, false, false, true, false, false, false),
+    REFUNDED(203, "已退款", false, false, false, true, false, false, false),
     // 已发货
-    SHIP(301, false, false, true, false, false, false, false),
+    SHIP(301, "已发货", false, false, true, false, false, false, false),
     // 用户收货
-    RECEIVE(401, false, true, false, true, false, true, false),
+    RECEIVE(401, "已收货", false, true, false, true, false, true, false),
     // 系统收货
-    RECEIPT(402, false, true, false, true, false, true, false);
+    RECEIPT(402, "已收货（系统）", false, true, false, true, false, true, false);
 
     private int code;
+    private String statusText;
     private boolean cancel;
     private boolean comment;
     private boolean confirm;
@@ -32,8 +33,9 @@ public enum HandleOption {
     private boolean rebuy;
     private boolean refund;
 
-    HandleOption(int code, boolean cancel, boolean comment, boolean confirm, boolean delete, boolean pay, boolean rebuy, boolean refund) {
+    HandleOption(int code, String statusText, boolean cancel, boolean comment, boolean confirm, boolean delete, boolean pay, boolean rebuy, boolean refund) {
         this.code = code;
+        this.statusText = statusText;
         this.cancel = cancel;
         this.comment = comment;
         this.confirm = confirm;
@@ -49,7 +51,7 @@ public enum HandleOption {
             handleOption = UNPAID;
         } else if (code == CANCELED.getCode()) {
             handleOption = CANCELED;
-        }  else if (code == PAID.getCode()) {
+        } else if (code == PAID.getCode()) {
             handleOption = PAID;
         } else if (code == REFUND.getCode()) {
             handleOption = REFUND;
@@ -67,6 +69,10 @@ public enum HandleOption {
             handleOption = CANCELLATION;
         }
         return handleOption;
+    }
+
+    public String getStatusText() {
+        return statusText;
     }
 
     public int getCode() {

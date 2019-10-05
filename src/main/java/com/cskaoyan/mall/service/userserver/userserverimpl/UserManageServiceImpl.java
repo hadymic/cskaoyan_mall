@@ -36,10 +36,10 @@ public class UserManageServiceImpl implements UserManageService {
     public UserIndexVo queryUserOrders(String token) {
         UserIndexVo userIndexVo = new UserIndexVo();
         Integer id = userMapper.queryUserIdByToken(token);
-        userIndexVo.setUncomment(orderMapper.queryUserOrders(id,(short)401));
-        userIndexVo.setUnpaid(orderMapper.queryUserOrders(id,(short)101));
-        userIndexVo.setUnrecv(orderMapper.queryUserOrders(id,(short)301));
-        userIndexVo.setUnship(orderMapper.queryUserOrders(id,(short)201));
+        userIndexVo.setUncomment(orderMapper.queryUserOrdersNumber(id,(short)401));
+        userIndexVo.setUnpaid(orderMapper.queryUserOrdersNumber(id,(short)101));
+        userIndexVo.setUnrecv(orderMapper.queryUserOrdersNumber(id,(short)301));
+        userIndexVo.setUnship(orderMapper.queryUserOrdersNumber(id,(short)201));
         return userIndexVo;
     }
 

@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.OrderGoods;
+import com.cskaoyan.mall.vo.ordermanagement.UserOrderGoods;
 import com.cskaoyan.mall.vo.statisticalform.StatOrderGoodsVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,11 @@ public interface OrderGoodsMapper {
      * @return
      */
     List<StatOrderGoodsVo> selectOrdersByDay();
+
+    /**
+     * 根据orderId查询orderGoods简要信息
+     * @param orderId
+     * @return
+     */
+    List<UserOrderGoods> queryOrderGoodsList(@Param("orderId") Integer orderId);
 }

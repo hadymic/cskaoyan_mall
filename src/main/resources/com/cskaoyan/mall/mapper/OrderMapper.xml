@@ -371,7 +371,25 @@
         select count(id) from cskaoyan_mall_order where deleted = 0
   </select>
 
-  <select id="queryUserOrders" resultType="java.lang.Integer">
+  <select id="queryUserOrdersNumber" resultType="java.lang.Integer">
         select count(id) from cskaoyan_mall_order where user_id = #{id} and order_status = #{status}
+  </select>
+
+  <resultMap id="UserOrderMap" type="com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo">
+    <id column="id" property="id" />
+    <result column="order_sn" property="orderSn" />
+    <result column="order_status" property="orderStatus" />
+    <result column="actual_price" property="actualPrice"/>
+    <association property="groupon" javaType="com.cskaoyan.mall.bean.Groupon">
+      <result column="grouponId" property="id"/>
+    </association>
+  </resultMap>
+  <select id="queryUserOrders" resultMap="UserOrderMap">
+    select o.id, o.order_sn, o.order_status, o.actual_price, g.id as grouponId from cskaoyan_mall_order o
+    left join cskaoyan_mall_groupon g on o.id = g.order_id
+    where o.deleted = 0 and g.deleted = 0 and o.user_id = #{userId}
+    <if test="showType != 0">
+        and order_status = #{showType}
+    </if>
   </select>
 </mapper>

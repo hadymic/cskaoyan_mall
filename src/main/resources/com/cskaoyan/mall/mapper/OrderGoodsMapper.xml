@@ -213,4 +213,10 @@
     from cskaoyan_mall_order_goods
     where order_id = #{orderId} and deleted = 0
   </select>
+
+  <select id="queryOrderGoodsList" resultMap="BaseResultMap">
+    select id, goods_name,`number`,pic_url,comment
+    from cskaoyan_mall_order_goods
+    where order_id = #{orderId} and deleted = 0
+  </select>
 </mapper>

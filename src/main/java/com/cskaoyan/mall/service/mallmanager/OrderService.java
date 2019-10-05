@@ -3,8 +3,10 @@ package com.cskaoyan.mall.service.mallmanager;
 import com.cskaoyan.mall.bean.Order;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.vo.ordermanagement.ListBeanForOrder;
 import com.cskaoyan.mall.vo.ordermanagement.RefundVo;
 import com.cskaoyan.mall.vo.ordermanagement.ShipVo;
+import com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo;
 
 import java.util.Map;
 
@@ -47,10 +49,10 @@ public interface OrderService {
 
     /**
      * 查询用户的订单
-     * @param token
-     * @param pageBean
+     * @param userId
+     * @param page
      * @param showType
      * @return
      */
-    ListBean<Order> queryUserOrders(String token, Page pageBean, Integer showType);
+    ListBeanForOrder<UserOrdersVo> queryUserOrders(Integer userId, Page page, Integer showType);
 }
