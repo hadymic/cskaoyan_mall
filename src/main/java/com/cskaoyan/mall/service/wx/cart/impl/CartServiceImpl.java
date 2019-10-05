@@ -85,7 +85,7 @@ public class CartServiceImpl implements CartService {
         for (Integer productId : productIds) {
             Cart cart = new Cart();
             cart.setUserId(userId);
-            cart.setChecked(vo.isChecked());
+            cart.setChecked(!vo.isChecked());
             cart.setProductId(productId);
             cart.setUpdateTime(date);
             cartMapper.updateByProductIdSelective(cart);
