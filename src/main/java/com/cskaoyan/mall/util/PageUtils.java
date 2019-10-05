@@ -12,7 +12,11 @@ import java.util.List;
  */
 public class PageUtils {
     public static void startPage(Page page) {
-        PageHelper.startPage(page.getPage(), page.getLimit(), page.getSort() + " " + page.getOrder());
+        if (page.getSort() == null && page.getOrder() == null) {
+            PageHelper.startPage(page.getPage(), page.getSize());
+        } else {
+            PageHelper.startPage(page.getPage(), page.getLimit(), page.getSort() + " " + page.getOrder());
+        }
     }
 
     public static <T> ListBean<T> page(List<T> list) {

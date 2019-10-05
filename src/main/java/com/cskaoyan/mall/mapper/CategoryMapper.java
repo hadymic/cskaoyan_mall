@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.vo.BaseValueLabel;
+import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -37,11 +39,20 @@ public interface CategoryMapper {
      */
     int insertNewCategory(@Param("newCategory") Category category);
 
-
     /**
-     * 根据pid返回categoryList
+     * @author hjl 根据pid返回categoryList
      * @param pid
      * @return
      */
     List<Category> selectCategoryListByPid(@Param("pid") int pid);
+    /**
+     * Zeng-jz: 查询L1级别的id name iconUrl
+     * @return
+     */
+    List<Category> selectChannel();
+
+    List<Goods> selectFloorGoodsList(@Param("limit") int floorGoodsListSize, @Param("pid") int id);
+
+    List<FloorGoodsVo> selectFloorList(@Param("limit") int floorListSize);
+
 }

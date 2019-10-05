@@ -15,7 +15,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time,
-    deleted, role_ids
+    deleted , role_ids
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -182,11 +182,15 @@
 
 
   <!--后台管理系统显示&查找-->
+
+
+
   <select id="queryAdminsByLikeUsername" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_admin
     where deleted = 0
+
     <if test="username != null">
       and username like concat('%',#{username},'%')
     </if>
@@ -203,6 +207,11 @@
   update  cskaoyan_mall_admin set deleted=1 where id=#{id}
 </update>
 
+
+  <select id="queryIsExist" resultType="_int">
+    select count(id)  from cskaoyan_mall_admin  where username=#{username}  and password=#{password}
+  </select>
+
   <update id="updatePassword">
     update cskaoyan_mall_admin
     set
@@ -210,4 +219,9 @@
       update_time = now()
     where username = #{token} and password = #{oldPassword} and deleted = 0
   </update>
+
+  <select id="queryAllRoleIds" resultType="string">
+    select role_ids from cskaoyan_mall_admin where deleted = 0
+  </select>
+
 </mapper>

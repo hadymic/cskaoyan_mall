@@ -25,4 +25,6 @@ public interface AdminService {
     int update(Admin admin);
 
     void delete(Admin admin);
+
+    int queryIsExist(String username,String password);
 }

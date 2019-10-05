@@ -35,4 +35,22 @@ public interface GoodsMapper {
      * @return
      */
     Integer queryGoodsNumber();
+
+    /**
+     * Zeng-jz: 根据id查询goods
+     * @param goods_id
+     * @return
+     */
+    Goods selectById(@Param("id") int goods_id);
+
+    List<Goods> selectTopByHot(@Param("limit") int hotGoodsListSize);
+
+    List<Goods> selectTopByNew(@Param("limit") int newGoodsListSize);
+
+    /**
+     * @author hjl 根据categoryId查找goods
+     * @param categoryId
+     * @return
+     */
+    List<Goods> selectGoodsListByCategoryId(@Param("categoryId") int categoryId);
 }

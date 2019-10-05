@@ -17,7 +17,7 @@ public class WxGoodsDetailVo {
     private Map<String, Object> specificationList;
     private List<Groupon> groupons;
 
-    private List<Issue> Issues;
+    private List<Issue> Issue;
 
     private List<GoodsAttribute> attributes;
 
@@ -28,14 +28,14 @@ public class WxGoodsDetailVo {
     public WxGoodsDetailVo() {
     }
 
-    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, Map<String, Object> specificationList, List<Groupon> groupons, List<Issue> issues, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
+    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, Map<String, Object> specificationList, List<Groupon> groupons, List<com.cskaoyan.mall.bean.Issue> issue, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
         this.userHasCollect = userHasCollect;
         this.shareImage = shareImage;
         this.comment = comment;
         this.brand = brand;
         this.specificationList = specificationList;
         this.groupons = groupons;
-        Issues = issues;
+        Issue = issue;
         this.attributes = attributes;
         this.productList = productList;
         this.info = info;
@@ -89,12 +89,12 @@ public class WxGoodsDetailVo {
         this.groupons = groupons;
     }
 
-    public List<Issue> getIssues() {
-        return Issues;
+    public List<com.cskaoyan.mall.bean.Issue> getIssue() {
+        return Issue;
     }
 
-    public void setIssues(List<Issue> issues) {
-        Issues = issues;
+    public void setIssue(List<com.cskaoyan.mall.bean.Issue> issue) {
+        Issue = issue;
     }
 
     public List<GoodsAttribute> getAttributes() {

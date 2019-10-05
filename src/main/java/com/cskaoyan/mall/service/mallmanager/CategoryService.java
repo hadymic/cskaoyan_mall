@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.bean.Goods;
+import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,4 +24,8 @@ public interface CategoryService {
     void delete(Category category);
 
     Category create(Category category);
+
+    List<Category> queryChannel();
+
+    List<FloorGoodsVo> selectFloorGoodsList(int floorListSize, int floorGoodsListSize);
 }

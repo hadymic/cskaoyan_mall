@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.PermissionDetails;
+import com.cskaoyan.mall.vo.permission.Api;
+
+import java.util.List;
 
 public interface PermissionDetailsMapper {
     int deleteByPrimaryKey(Integer pid);
@@ -14,4 +17,8 @@ public interface PermissionDetailsMapper {
     int updateByPrimaryKeySelective(PermissionDetails record);
 
     int updateByPrimaryKey(PermissionDetails record);
+
+    List<Api> queryByParentId(int i);
+
+    List<String> queryAllPermissions();
 }
