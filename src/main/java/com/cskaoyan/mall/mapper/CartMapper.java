@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Cart;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CartMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,29 @@ public interface CartMapper {
     int updateByPrimaryKeySelective(Cart record);
 
     int updateByPrimaryKey(Cart record);
+
+    /**
+     * 根据用户id查询购物车列表
+     *
+     * @param userId
+     * @return
+     */
+    List<Cart> queryByUserId(int userId);
+
+    /**
+     * 根据商品id更新
+     *
+     * @param cart
+     * @return
+     */
+    int updateByProductIdSelective(Cart cart);
+
+    /**
+     * 根据productId查询购物车
+     *
+     * @param userId
+     * @param productId
+     * @return
+     */
+    Cart queryByProductId(@Param("userId") int userId, @Param("productId") int productId);
 }

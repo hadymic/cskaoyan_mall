@@ -1,20 +1,19 @@
-package com.cskaoyan.mall.vo.ordermanagement;
+package com.cskaoyan.mall.util;
 
 import java.util.List;
 
-
 /**
- * @author jszza
+ * 前台分页列表封装类
+ *
+ * @author hadymic
  */
-public class ListBeanForOrder<T> {
+public class WxListBean<T> {
     private List<T> data;
     private long count;
-    private int totalPages;
 
-    public ListBeanForOrder(List<T> data, long count, int totalPages) {
+    public WxListBean(List<T> data, long count) {
         this.data = data;
         this.count = count;
-        this.totalPages = totalPages;
     }
 
     public List<T> getData() {
@@ -31,13 +30,5 @@ public class ListBeanForOrder<T> {
 
     public void setCount(long count) {
         this.count = count;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
     }
 }

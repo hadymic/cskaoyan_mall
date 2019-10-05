@@ -214,7 +214,14 @@
     where order_id = #{orderId} and deleted = 0
   </select>
 
-  <select id="queryOrderGoodsList" resultMap="BaseResultMap">
+  <resultMap id="OrderGoodsMap" type="com.cskaoyan.mall.vo.ordermanagement.UserOrderGoods">
+    <result column="id" property="id" />
+    <result column="goods_name" property="goodsName" />
+    <result column="number" property="number" />
+    <result column="pic_url" property="picUrl" />
+    <result column="comment" property="comment" />
+  </resultMap>
+  <select id="queryOrderGoodsList" resultMap="OrderGoodsMap">
     select id, goods_name,`number`,pic_url,comment
     from cskaoyan_mall_order_goods
     where order_id = #{orderId} and deleted = 0

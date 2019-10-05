@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.GrouponRules;
+import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.wx.home.GrouponVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,6 @@ public interface GrouponRulesMapper {
      * @return
      */
     List<GrouponVo> selectTopFiveByTime();
+
+    List<GrouponVo> selectAll();
 }

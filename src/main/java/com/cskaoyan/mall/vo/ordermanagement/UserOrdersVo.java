@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.vo.ordermanagement;
 
 import com.cskaoyan.mall.bean.Groupon;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.util.List;

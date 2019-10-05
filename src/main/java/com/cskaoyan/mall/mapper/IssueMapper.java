@@ -41,4 +41,10 @@ public interface IssueMapper {
      * @return
      */
     int insertIssue(@Param("issue")Issue issue);
+
+    /**
+     * hjl：查找所有Issues
+     * @return
+     */
+    List<Issue> selectAllIssues();
 }

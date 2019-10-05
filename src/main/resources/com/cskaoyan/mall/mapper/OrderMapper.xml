@@ -386,8 +386,8 @@
   </resultMap>
   <select id="queryUserOrders" resultMap="UserOrderMap">
     select o.id, o.order_sn, o.order_status, o.actual_price, g.id as grouponId from cskaoyan_mall_order o
-    left join cskaoyan_mall_groupon g on o.id = g.order_id
-    where o.deleted = 0 and g.deleted = 0 and o.user_id = #{userId}
+    left join (select id,order_id from cskaoyan_mall_groupon where deleted = 0) g on o.id = g.order_id
+    where o.deleted = 0 and o.user_id = #{userId}
     <if test="showType != 0">
         and order_status = #{showType}
     </if>

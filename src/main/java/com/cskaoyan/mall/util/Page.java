@@ -7,10 +7,20 @@ package com.cskaoyan.mall.util;
  */
 public class Page {
     private int page;
-    private Integer limit;
+    private int limit;
     private int size;
     private String sort;
     private String order;
+
+    public Page() {
+    }
+
+    public Page(int page, int limit, String sort, String order) {
+        this.page = page;
+        this.limit = limit;
+        this.sort = sort;
+        this.order = order;
+    }
 
     public int getPage() {
         return page;

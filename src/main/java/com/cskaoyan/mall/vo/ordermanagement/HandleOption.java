@@ -1,8 +1,11 @@
 package com.cskaoyan.mall.vo.ordermanagement;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author jszza
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum HandleOption {
     // 未付款
     UNPAID(101, "未付款", true, false, false, false, true, false, false),
@@ -71,10 +74,6 @@ public enum HandleOption {
         return handleOption;
     }
 
-    public String getStatusText() {
-        return statusText;
-    }
-
     public int getCode() {
         return code;
     }
@@ -83,11 +82,67 @@ public enum HandleOption {
         this.code = code;
     }
 
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
+    }
+
+    public boolean isCancel() {
+        return cancel;
+    }
+
+    public void setCancel(boolean cancel) {
+        this.cancel = cancel;
+    }
+
     public boolean isComment() {
         return comment;
     }
 
     public void setComment(boolean comment) {
         this.comment = comment;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isPay() {
+        return pay;
+    }
+
+    public void setPay(boolean pay) {
+        this.pay = pay;
+    }
+
+    public boolean isRebuy() {
+        return rebuy;
+    }
+
+    public void setRebuy(boolean rebuy) {
+        this.rebuy = rebuy;
+    }
+
+    public boolean isRefund() {
+        return refund;
+    }
+
+    public void setRefund(boolean refund) {
+        this.refund = refund;
     }
 }

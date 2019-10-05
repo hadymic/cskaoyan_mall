@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.service.mallmanager.impl;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.cskaoyan.mall.bean.Order;
 import com.cskaoyan.mall.bean.OrderGoods;
 import com.cskaoyan.mall.bean.User;
@@ -74,14 +75,16 @@ public class OrderServiceImpl implements OrderService {
     public ListBeanForOrder<UserOrdersVo> queryUserOrders(Integer userId, Page page, Integer showType) {
         PageUtils.startPage(page);
         List<UserOrdersVo> orderList = orderMapper.queryUserOrders(userId, showType);
-        PageInfo<UserOrdersVo> pageInfo = new PageInfo<>(orderList);
         for (UserOrdersVo userOrdersVo : orderList) {
             List<UserOrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsList(userOrdersVo.getId());
             userOrdersVo.setGoodsList(goodsList);
             HandleOption handleOption = HandleOption.get(userOrdersVo.getOrderStatus(), goodsList.get(0).getComment() == 0);
+            userOrdersVo.setHandleOption(handleOption);
             userOrdersVo.setOrderStatusText(handleOption.getStatusText());
             userOrdersVo.setIsGroupin(userOrdersVo.getGroupon() != null);
+            userOrdersVo.setGroupon(null);
         }
-        return new ListBeanForOrder<>(orderList, pageInfo.getTotal(), pageInfo.getPageNum());
+        PageInfo<UserOrdersVo> pageInfo = new PageInfo<>(orderList);
+        return new ListBeanForOrder<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageNum());
     }
 }
