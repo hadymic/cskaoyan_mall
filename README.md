@@ -44,8 +44,8 @@ cskaoyan商城项目
 - [x] ```GoodsRelated: WxApiRoot + 'goods/related', //商品详情页的关联商品（大家都在看）```
 
 // 黄俊龙
-- [×] ```BrandList: WxApiRoot + 'brand/list', //品牌列表```
-- [×] ```BrandDetail: WxApiRoot + 'brand/detail', //品牌详情```
+- [x] ```BrandList: WxApiRoot + 'brand/list', //品牌列表```
+- [x] ```BrandDetail: WxApiRoot + 'brand/detail', //品牌详情```
 
 // 刘鑫
 - [ ] ```CartList: WxApiRoot + 'cart/index', //获取购物车的数据```
