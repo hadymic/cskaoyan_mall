@@ -5,12 +5,10 @@ import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
 public interface WxGoodsService {
     Map<String, Object> showGoodsByCategory(int id);
 
@@ -27,4 +25,12 @@ public interface WxGoodsService {
     GoodsByCategory PageGoodsByCategory(Page page, int categoryId);
 
     List<Goods> showRelatedGoods(int id);
+
+    /**
+     * @author hjl 商品按商标显示
+     * @param page
+     * @param brandId
+     * @return
+     */
+    GoodsByCategory PageGoodsByBrand(Page page, int brandId);
 }

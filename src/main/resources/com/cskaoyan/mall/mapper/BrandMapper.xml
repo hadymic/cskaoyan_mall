@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.BrandMapper">
+    <select id="selectAllBrand" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cskaoyan_mall_brand where deleted = 0
+    </select>
+
 <select id="selectBrandList" resultType="com.cskaoyan.mall.vo.BaseValueLabel">
   select id as value,name as label from cskaoyan_mall_brand
 </select>
