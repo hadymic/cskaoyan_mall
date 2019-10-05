@@ -10,10 +10,22 @@ import java.util.List;
 public class ListBean<T> {
     private List<T> items;
     private long total;
+    private long count;
+
+    public ListBean() {
+    }
 
     public ListBean(List<T> items, long total) {
         this.items = items;
         this.total = total;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 
     public List<T> getItems() {

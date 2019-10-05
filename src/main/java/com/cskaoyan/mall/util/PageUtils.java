@@ -23,4 +23,12 @@ public class PageUtils {
         PageInfo<T> pageInfo = new PageInfo<>(list);
         return new ListBean<>(pageInfo.getList(), pageInfo.getTotal());
     }
+
+    public static <T> ListBean<T> pageCount(List<T> list) {
+        PageInfo<T> pageInfo = new PageInfo<>(list);
+        ListBean<T> listBean = new ListBean<>();
+        listBean.setItems(pageInfo.getList());
+        listBean.setCount(pageInfo.getTotal());
+        return listBean;
+    }
 }
