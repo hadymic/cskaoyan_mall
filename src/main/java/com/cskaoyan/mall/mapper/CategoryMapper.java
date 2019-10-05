@@ -55,4 +55,6 @@ public interface CategoryMapper {
 
     List<FloorGoodsVo> selectFloorList(@Param("limit") int floorListSize);
 
+    List<Category> selectChildren(@Param("id") Integer id);
+
 }

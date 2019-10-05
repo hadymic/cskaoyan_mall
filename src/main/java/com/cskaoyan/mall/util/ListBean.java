@@ -3,7 +3,7 @@ package com.cskaoyan.mall.util;
 import java.util.List;
 
 /**
- * 分页列表封装类
+ * 后台分页列表封装类
  *
  * @author hadymic
  */
@@ -28,8 +28,6 @@ public class ListBean<T> {
     public long getTotal() {
         return total;
     }
-
-
 
     public void setTotal(long total) {
         this.total = total;

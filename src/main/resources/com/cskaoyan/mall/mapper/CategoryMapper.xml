@@ -16,28 +16,39 @@
     </select>
 
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Category">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
-        <result column="desc" jdbcType="VARCHAR" property="desc"/>
-        <result column="pid" jdbcType="INTEGER" property="pid"/>
-        <result column="icon_url" jdbcType="VARCHAR" property="iconUrl"/>
-        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
-        <result column="level" jdbcType="VARCHAR" property="level"/>
-        <result column="sort_order" jdbcType="TINYINT" property="sortOrder"/>
-        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP"
-                property="updateTime"/>
-        <result column="deleted" jdbcType="BIT" property="deleted"/>
-        <collection property="children" column="id"
-                    select="com.cskaoyan.mall.mapper.CategoryMapper.selectChildren"/>
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="sort_order" jdbcType="TINYINT" property="sortOrder" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+    <collection property="children" column="id" select="com.cskaoyan.mall.mapper.CategoryMapper.selectChildren"/>
+</resultMap>
+    <resultMap id="SimpleResultMap" type="com.cskaoyan.mall.bean.Category">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+        <result column="desc" jdbcType="VARCHAR" property="desc" />
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+        <result column="level" jdbcType="VARCHAR" property="level" />
+        <result column="sort_order" jdbcType="TINYINT" property="sortOrder" />
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="deleted" jdbcType="BIT" property="deleted" />
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, keywords, `desc`, pid, icon_url, pic_url, `level`, sort_order, add_time, update_time,
+    id, `name`, keywords, `desc`, pid, icon_url, pic_url, `level`, sort_order, add_time, update_time,
     deleted
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
-            resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="SimpleResultMap">
         select
         <include refid="Base_Column_List"/>
         from cskaoyan_mall_category
@@ -55,8 +66,9 @@
         from cskaoyan_mall_category
         where pid = #{id} and deleted = 0
     </select>
-    <select id="selectChannel" resultType="com.cskaoyan.mall.bean.Category">
-        select id, `name`, icon_url as iconUrl
+    <select id="selectChannel" resultMap="SimpleResultMap">
+        select
+        <include refid="Base_Column_List"/>
         from cskaoyan_mall_category
         where `level` = 'l1' and deleted = 0
     </select>
