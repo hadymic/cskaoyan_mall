@@ -16,9 +16,7 @@ import com.cskaoyan.mall.vo.promotion.SubGrouponsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GrouponServiceImpl implements GrouponService {
@@ -98,27 +96,30 @@ public class GrouponServiceImpl implements GrouponService {
 
         //循环查询每个规则对应的多条团购活动
         for (GrouponRules grouponRule : grouponRules) {
-            GrouponVo vo = new GrouponVo();
-            vo.setRules(grouponRule);
+            Map<Integer, GrouponVo> map = new HashMap<>();
+
             List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(grouponRule.getId());
 
             //如果查不到团购活动则跳过
             if (groupons.size() == 0) {
                 continue;
             }
-            List<SubGrouponsVo> subGrouponsVos = new ArrayList<>();
             for (Groupon groupon : groupons) {
                 //如果相同，说明是发起者，封装至groupon
                 if (groupon.getId().equals(groupon.getGrouponId())) {
+                    GrouponVo vo = new GrouponVo();
+                    vo.setRules(grouponRule);
                     vo.setGroupon(groupon);
+                    vo.setGoods(goodsMapper.selectByPrimaryKey(grouponRule.getGoodsId()));
+                    vo.setSubGroupons(new ArrayList<>());
+                    map.put(groupon.getId(), vo);
                 } else {
                     //如果不同，说明是参与者，封装至sub
+                    List<SubGrouponsVo> subGrouponsVos = map.get(groupon.getGrouponId()).getSubGroupons();
                     subGrouponsVos.add(new SubGrouponsVo(groupon.getOrderId(), groupon.getUserId()));
                 }
             }
-            vo.setSubGroupons(subGrouponsVos);
-            vo.setGoods(goodsMapper.selectByPrimaryKey(grouponRule.getGoodsId()));
-            grouponVos.add(vo);
+            grouponVos.addAll(map.values());
         }
         return PageUtils.page(grouponVos);
     }

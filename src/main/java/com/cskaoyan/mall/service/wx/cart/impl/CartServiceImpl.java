@@ -55,13 +55,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Map<String, Object> addCart(CartAddVo vo, int userId) {
-        Map<String, Object> result = new HashMap<>(1);
+    public String addCart(CartAddVo vo, int userId) {
         // 判断商品是否还有库存
         GoodsProduct product = goodsProductMapper.selectByPrimaryKey(vo.getProductId());
         if (product.getNumber() <= 0) {
-            result.put("errmsg", "");
-            return result;
+            return "商品太抢手啦，库存已空哦！";
         }
         //判断数据库中是否已有该商品
         Cart cartFromDb = cartMapper.queryByProductId(userId, vo.getProductId());
@@ -77,15 +75,7 @@ public class CartServiceImpl implements CartService {
             cartFromDb.setNumber((short) (cartFromDb.getNumber() + vo.getNumber()));
             cartMapper.updateByPrimaryKey(cartFromDb);
         }
-        //从数据库查询商品总数
-        List<Cart> carts = cartMapper.queryByUserId(userId);
-        BigDecimal goodsCount = BigDecimal.ZERO;
-        for (Cart cart1 : carts) {
-            BigDecimal num = new BigDecimal(cart1.getNumber());
-            goodsCount = goodsCount.add(num);
-        }
-        result.put("goodsCount", goodsCount);
-        return result;
+        return null;
     }
 
     @Override
@@ -101,5 +91,17 @@ public class CartServiceImpl implements CartService {
             cartMapper.updateByProductIdSelective(cart);
         }
         return true;
+    }
+
+    @Override
+    public BigDecimal goodsCount(int userId) {
+        //从数据库查询商品总数
+        List<Cart> carts = cartMapper.queryByUserId(userId);
+        BigDecimal goodsCount = BigDecimal.ZERO;
+        for (Cart cart1 : carts) {
+            BigDecimal num = new BigDecimal(cart1.getNumber());
+            goodsCount = goodsCount.add(num);
+        }
+        return goodsCount;
     }
 }

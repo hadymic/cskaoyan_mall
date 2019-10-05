@@ -46,8 +46,12 @@ public class WxCartController {
     @PostMapping("add")
     public BaseRespVo addCart(CartAddVo vo) {
         int userId = 1;
-        Map<String, Object> data = cartService.addCart(vo, userId);
-        return BaseRespVo.success(data);
+        String data = cartService.addCart(vo, userId);
+        if (data == null) {
+            BigDecimal count = cartService.goodsCount(userId);
+            return BaseRespVo.success(count);
+        }
+        return BaseRespVo.fail(data);
     }
 
     /**
@@ -62,5 +66,17 @@ public class WxCartController {
         cartService.checkedCart(userId, vo);
         CartListVo cartListVo = cartService.cartList(userId);
         return BaseRespVo.success(cartListVo);
+    }
+
+    /**
+     * 添加购物车
+     *
+     * @return
+     */
+    @PostMapping("goodscount")
+    public BaseRespVo goodsCount() {
+        int userId = 1;
+        BigDecimal data = cartService.goodsCount(userId);
+        return BaseRespVo.success(data);
     }
 }
