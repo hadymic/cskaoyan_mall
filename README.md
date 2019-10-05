@@ -24,8 +24,8 @@ cskaoyan商城项目
 
 // 曾金泽
 - [x] ```IndexUrl: WxApiRoot + 'home/index', //首页数据接口```
-- [ ] ```CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口```
-- [ ] ```CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口```
+- [x] ```CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口```
+- [x] ```CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口```
 
 // 
 - [ ] ```AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录```
