@@ -23,6 +23,7 @@ cskaoyan商城项目
 ### 前端
 
 ```yml
+// 曾金泽
 IndexUrl: WxApiRoot + 'home/index', //首页数据接口
 CatalogList: WxApiRoot + 'catalog/index', //分类目录全部分类数据接口
 CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口
@@ -35,6 +36,7 @@ AuthReset: WxApiRoot + 'auth/reset', //账号密码重置
 AuthRegisterCaptcha: WxApiRoot + 'auth/regCaptcha', //验证码
 AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号
 
+// 黄俊龙
 GoodsCount: WxApiRoot + 'goods/count', //统计商品总数
 GoodsList: WxApiRoot + 'goods/list', //获得商品列表
 GoodsCategory: WxApiRoot + 'goods/category', //获得分类数据
@@ -44,6 +46,7 @@ GoodsRelated: WxApiRoot + 'goods/related', //商品详情页的关联商品（�
 BrandList: WxApiRoot + 'brand/list', //品牌列表
 BrandDetail: WxApiRoot + 'brand/detail', //品牌详情
 
+// 刘鑫
 CartList: WxApiRoot + 'cart/index', //获取购物车的数据
 CartAdd: WxApiRoot + 'cart/add', // 添加商品到购物车
 CartFastAdd: WxApiRoot + 'cart/fastadd', // 立即购买商品
@@ -69,6 +72,7 @@ SearchResult: WxApiRoot + 'search/result', //搜索结果
 SearchHelper: WxApiRoot + 'search/helper', //搜索帮助
 SearchClearHistory: WxApiRoot + 'search/clearhistory', //搜索历史清楚
 
+// 周建达
 AddressList: WxApiRoot + 'address/list', //收货地址列表
 AddressDetail: WxApiRoot + 'address/detail', //收货地址详情
 AddressSave: WxApiRoot + 'address/save', //保存收货地址
@@ -78,6 +82,7 @@ ExpressQuery: WxApiRoot + 'express/query', //物流查询
 
 RegionList: WxApiRoot + 'region/list', //获取区域列表
 
+// 穆杨
 OrderSubmit: WxApiRoot + 'order/submit', // 提交订单
 OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话
 OrderList: WxApiRoot + 'order/list', //订单列表
@@ -101,6 +106,7 @@ GroupOnMy: WxApiRoot + 'groupon/my', //团购API-我的团购
 GroupOnDetail: WxApiRoot + 'groupon/detail', //团购API-详情
 GroupOnJoin: WxApiRoot + 'groupon/join', //团购API-详情
 
+// 张涛
 CouponList: WxApiRoot + 'coupon/list', //优惠券列表
 CouponMyList: WxApiRoot + 'coupon/mylist', //我的优惠券列表
 CouponSelectList: WxApiRoot + 'coupon/selectlist', //当前订单可用优惠券列表
@@ -109,6 +115,7 @@ CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换
 
 StorageUpload: WxApiRoot + 'storage/upload', //图片上传,
 
+// 穆杨
 UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息
 ```
 
