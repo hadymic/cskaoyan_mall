@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.mapper;
 
+import com.cskaoyan.mall.bean.Address;
 import com.cskaoyan.mall.bean.Region;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +20,7 @@ public interface RegionMapper {
     int updateByPrimaryKeySelective(Region record);
 
     int updateByPrimaryKey(Region record);
+
+    List selectById(@Param("pid")int pid);
+
 }

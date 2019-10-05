@@ -22,5 +22,12 @@ public interface AddressMapper {
     List<User> selectByIdAndNameKey(@Param("userId") String userid,
                                     @Param("name") String name);
 
-    List<Address> selectAddress(@Param("username")String username);
+    List<Address> selectAddress(@Param("username") String username);
+
+    Integer addProfile(@Param("address") Address address);
+
+    Integer concealAddress(@Param("id") int id);
+
+    Address selectAddressById(@Param("id")int id);
+
 }

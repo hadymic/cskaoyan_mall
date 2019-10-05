@@ -29,9 +29,42 @@ public class Address {
 
     private String province;
 
+    private String provinceName;
+
     private String city;
 
+    private String cityName;
+
     private String area;
+
+    private String areaName;
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public Address setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+        return this;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public Address setCityName(String cityName) {
+        this.cityName = cityName;
+        return this;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public Address setAreaName(String areaName) {
+        this.areaName = areaName;
+        return this;
+    }
 
     private String detailedAddress;
 
@@ -137,6 +170,15 @@ public class Address {
 
     public Boolean getIsDefault() {
         return isDefault;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public Address setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+        return this;
     }
 
     public void setIsDefault(Boolean isDefault) {

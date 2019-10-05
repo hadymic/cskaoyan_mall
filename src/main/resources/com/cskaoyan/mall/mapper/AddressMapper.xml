@@ -204,8 +204,8 @@
             </if>
   </select>
   <select id="selectAddress" resultType="com.cskaoyan.mall.bean.Address">
-    SELECT a.name,a.is_default as isDefault,a.mobile,a.id, a.address,
-    c1.name AS province,c2.name AS city,c3.name AS `area`
+    SELECT  a.name,a.is_default as isDefault,a.mobile,a.id, a.address,a.deleted,
+    c1.name AS province,c2.name AS city,c3.name AS `area`,u.username
     FROM cskaoyan_mall_user u
     LEFT JOIN `cskaoyan_mall_address` a
     ON u.id = a.user_id
@@ -215,5 +215,44 @@
     ON city_id = c2.code
     LEFT JOIN `cskaoyan_mall_region` c3
     ON area_id = c3.code
+    WHERE a.deleted = 0
+    and u.username = #{username}
   </select>
+  <insert id="addProfile">
+    insert into cskaoyan_mall_address
+    (user_id,address,area_id,city_id,is_default,mobile,`name`,province_id,add_time,update_time)
+    values (#{address.userId},#{address.address},#{address.areaId},#{address.cityId},#{address.isDefault},#{address.mobile},#{address.name},#{address.provinceId},#{address.addTime},#{address.updateTime})
+  </insert>
+  <!-- 打算判断数据库是否存在某id，存在则更新，不存在则插入-->
+  <!--<insert id="addProfile">-->
+  <!--INSERT INTO cskaoyan_mall_address-->
+  <!--(user_id,address,area_id,city_id,is_default,mobile,`name`,province_id,add_time,update_time)-->
+  <!--SELECT id,NOW()-->
+  <!--FROM DUAL WHERE NOT EXISTS (-->
+  <!--SELECT 1 FROM cskaoyan_mall_address WHERE templateName='自定义' LIMIT 1-->
+  <!--);-->
+  <!--</insert>-->
+  <update id="concealAddress">
+    update cskaoyan_mall_address
+    set deleted = 1
+    where id = #{id}
+  </update>
+  <!--根据Id查询具体的省份城市地区-->
+  <select id="selectAddressById" resultType="com.cskaoyan.mall.bean.Address">
+    SELECT  a.name,a.is_default as isDefault,a.mobile,a.id, a.address,a.deleted,
+    a.area_id as areaId,city_id AS cityId,province_id AS provinceId,
+    c1.name AS provinceName,c2.name AS cityName,c3.name AS areaName
+    FROM cskaoyan_mall_user u
+    LEFT JOIN `cskaoyan_mall_address` a
+    ON u.id = a.user_id
+    LEFT JOIN `cskaoyan_mall_region` c1
+    ON province_id = c1.code
+    LEFT JOIN `cskaoyan_mall_region` c2
+    ON city_id = c2.code
+    LEFT JOIN `cskaoyan_mall_region` c3
+    ON area_id = c3.code
+    WHERE a.deleted = 0
+    AND a.id = #{id}
+  </select>
+
 </mapper>
