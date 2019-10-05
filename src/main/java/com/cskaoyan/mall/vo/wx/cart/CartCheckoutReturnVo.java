@@ -3,6 +3,7 @@ package com.cskaoyan.mall.vo.wx.cart;
 import com.cskaoyan.mall.bean.Cart;
 import com.cskaoyan.mall.bean.Address;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -14,17 +15,17 @@ public class CartCheckoutReturnVo {
     //可用的优惠券数量
     private int availableCouponLength;
     //实际需要支付的总价
-    private int actualPrice;
+    private BigDecimal actualPrice;
     //优惠券的价格
-    private int couponPrice;
+    private BigDecimal couponPrice;
     //团购优惠价格
-    private int grouponPrice;
+    private BigDecimal grouponPrice;
     //快递费
-    private int freightPrice;
+    private BigDecimal freightPrice;
     //商品总价
-    private int goodsTotalPrice;
+    private BigDecimal goodsTotalPrice;
     //订单总价
-    private int orderTotalPrice;
+    private BigDecimal orderTotalPrice;
     private int addressId;
     private int couponId;
     private int grouponRulesId;
@@ -53,51 +54,51 @@ public class CartCheckoutReturnVo {
         this.availableCouponLength = availableCouponLength;
     }
 
-    public int getActualPrice() {
+    public BigDecimal getActualPrice() {
         return actualPrice;
     }
 
-    public void setActualPrice(int actualPrice) {
+    public void setActualPrice(BigDecimal actualPrice) {
         this.actualPrice = actualPrice;
     }
 
-    public int getCouponPrice() {
+    public BigDecimal getCouponPrice() {
         return couponPrice;
     }
 
-    public void setCouponPrice(int couponPrice) {
+    public void setCouponPrice(BigDecimal couponPrice) {
         this.couponPrice = couponPrice;
     }
 
-    public int getGrouponPrice() {
+    public BigDecimal getGrouponPrice() {
         return grouponPrice;
     }
 
-    public void setGrouponPrice(int grouponPrice) {
+    public void setGrouponPrice(BigDecimal grouponPrice) {
         this.grouponPrice = grouponPrice;
     }
 
-    public int getFreightPrice() {
+    public BigDecimal getFreightPrice() {
         return freightPrice;
     }
 
-    public void setFreightPrice(int freightPrice) {
+    public void setFreightPrice(BigDecimal freightPrice) {
         this.freightPrice = freightPrice;
     }
 
-    public int getGoodsTotalPrice() {
+    public BigDecimal getGoodsTotalPrice() {
         return goodsTotalPrice;
     }
 
-    public void setGoodsTotalPrice(int goodsTotalPrice) {
+    public void setGoodsTotalPrice(BigDecimal goodsTotalPrice) {
         this.goodsTotalPrice = goodsTotalPrice;
     }
 
-    public int getOrderTotalPrice() {
+    public BigDecimal getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(int orderTotalPrice) {
+    public void setOrderTotalPrice(BigDecimal orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 

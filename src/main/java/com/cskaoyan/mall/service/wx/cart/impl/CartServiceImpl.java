@@ -138,15 +138,21 @@ public class CartServiceImpl implements CartService {
         int userId = 1;
         CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
 
-        if (vo.getCartId() == 0) {
+        BigDecimal goodsTotalPrice = BigDecimal.ZERO;
+        if (vo.getCartId() != 0) {
             Cart cart = cartMapper.selectByPrimaryKey(vo.getCartId());
             List<Cart> carts = new ArrayList<>();
             carts.add(cart);
             returnVo.setCheckedGoodsList(carts);
+            goodsTotalPrice = cart.getPrice().multiply(new BigDecimal(cart.getNumber()));
         } else {
             List<Cart> carts = cartMapper.queryByUserId(userId, true);
             returnVo.setCheckedGoodsList(carts);
+            for (Cart cart : carts) {
+                goodsTotalPrice = goodsTotalPrice.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
+            }
         }
+        returnVo.setGoodsTotalPrice(goodsTotalPrice);
 
         Address address;
         if (vo.getAddressId() != 0) {
@@ -155,16 +161,27 @@ public class CartServiceImpl implements CartService {
             address = addressMapper.selectDefaultAddressByUserId(userId);
         }
         returnVo.setCheckedAddress(address);
+        returnVo.setAddressId(address.getId());
 
+        BigDecimal grouponPrice = BigDecimal.ZERO;
         if (vo.getGrouponRulesId() != 0) {
             GrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(vo.getGrouponRulesId());
+            returnVo.setGrouponRulesId(grouponRules.getId());
+            grouponPrice = grouponRules.getDiscount();
         }
-        if (vo.getCouponId() == -1) {
+        returnVo.setGrouponPrice(grouponPrice);
 
-        }
-        if (vo.getCouponId() != 0) {
+        BigDecimal couponPrice = BigDecimal.ZERO;
+        if (vo.getCouponId() != 0 && vo.getCouponId() != -1) {
             Coupon coupon = couponMapper.selectByPrimaryKey(vo.getCouponId());
+            returnVo.setCouponId(coupon.getId());
+            couponPrice = coupon.getDiscount();
         }
+        returnVo.setCouponPrice(couponPrice);
+
+        BigDecimal freightPrice = new BigDecimal(10);
+        returnVo.setFreightPrice(freightPrice);
+        returnVo.setActualPrice(goodsTotalPrice.add(freightPrice).subtract(couponPrice));
         return returnVo;
     }
 }
