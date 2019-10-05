@@ -11,11 +11,11 @@ public class CartCheckedVo {
     private boolean isChecked;
     private List<Integer> productIds;
 
-    public boolean isChecked() {
+    public boolean getIsChecked() {
         return isChecked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setIsChecked(boolean checked) {
         isChecked = checked;
     }
 
