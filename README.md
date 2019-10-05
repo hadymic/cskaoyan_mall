@@ -109,7 +109,7 @@ cskaoyan商城项目
 //
 - [ ] ```UserFormIdCreate: WxApiRoot + 'formid/create', //用户FromId，用于发送模版消息```
 
-//
+// 曾金泽
 - [ ] ```GroupOnList: WxApiRoot + 'groupon/list', //团购列表```
 - [ ] ```GroupOn: WxApiRoot + 'groupon/query', //团购API-查询```
 - [ ] ```GroupOnMy: WxApiRoot + 'groupon/my', //团购API-我的团购```
