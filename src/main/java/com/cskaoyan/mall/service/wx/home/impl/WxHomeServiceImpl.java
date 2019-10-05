@@ -45,13 +45,7 @@ public class WxHomeServiceImpl implements WxHomeService {
 
     @Override
     public Map index() {
-        AppletsConfigVo appletsConfigVo = new AppletsConfigVo();
-        appletsConfigVo.setBrandListSize(systemMapper.selectAppletsConfigById(15));
-        appletsConfigVo.setFloorGoodsListSize(systemMapper.selectAppletsConfigById(11));
-        appletsConfigVo.setFloorListSize(systemMapper.selectAppletsConfigById(13));
-        appletsConfigVo.setTopicListSize(systemMapper.selectAppletsConfigById(16));
-        appletsConfigVo.setNewGoodsListSize(systemMapper.selectAppletsConfigById(2));
-        appletsConfigVo.setHotGoodsListSize(systemMapper.selectAppletsConfigById(9));
+        AppletsConfigVo appletsConfigVo = systemMapper.selectAppletsConfigs();
         Map<String, Object> returnMap = new HashMap<>();
 
         List<Ad> ads = adService.queryAds(new Page(1, 100, "add_time", "asc"), null, null).getItems();

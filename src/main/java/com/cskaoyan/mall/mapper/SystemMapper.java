@@ -2,6 +2,7 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.System;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.vo.wx.home.AppletsConfigVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface SystemMapper {
@@ -28,4 +29,10 @@ public interface SystemMapper {
      * @return
      */
     int selectAppletsConfigById(@Param("id") int i);
+
+    /**
+     * Zeng-jz: 查询最新的小程序配置
+     * @return
+     */
+    AppletsConfigVo selectAppletsConfigs();
 }
