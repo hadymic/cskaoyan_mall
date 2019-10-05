@@ -36,6 +36,9 @@ public interface CouponMapper {
 
     int receiveCoupon(Integer couponId);
 
+    Coupon queryCodeExchange(String code);
+
+    int isExistCoupon(String code);
 }
 
 

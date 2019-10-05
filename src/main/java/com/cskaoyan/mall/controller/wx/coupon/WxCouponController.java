@@ -5,6 +5,7 @@ import com.cskaoyan.mall.bean.CouponUser;
 import com.cskaoyan.mall.service.wx.coupon.WxCouponService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.WxListBean;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.wx.coupon.CouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class WxCouponController {
      */
     @RequestMapping("mylist")
     public BaseRespVo showMyList(Page page, Coupon coupon) {
-        CouponVo couponVo = wxCouponService.showMyList(page, coupon);
-        return BaseRespVo.success(couponVo);
+        WxListBean<Coupon> coupons= wxCouponService.showMyList(page, coupon);
+        return BaseRespVo.success(coupons);
     }
 
 
@@ -46,8 +47,8 @@ public class WxCouponController {
      */
     @RequestMapping("list")
     public BaseRespVo showList(Page page) {
-        CouponVo couponVo = wxCouponService.showList(page);
-        return BaseRespVo.success(couponVo);
+        WxListBean<Coupon> coupons = wxCouponService.showList(page);
+        return BaseRespVo.success(coupons);
     }
 
 
@@ -65,6 +66,23 @@ public class WxCouponController {
             return BaseRespVo.success(null);
         } else return BaseRespVo.fail("优惠券已领取完");
     }
+
+
+
+    @PostMapping("exchange")
+    public BaseRespVo exchangeCode(@RequestBody Coupon coupon){
+       int flag= wxCouponService.isExistCoupon(coupon.getCode());
+       if(flag==1) {
+           Coupon couponCanUse = wxCouponService.exchangeCode(coupon.getCode());
+           return BaseRespVo.success(couponCanUse);
+       }
+       else return  BaseRespVo.fail("优惠券不正确");
+    }
+
+
+
+
+
 
 
 

@@ -3,14 +3,16 @@ package com.cskaoyan.mall.service.wx.coupon;
 import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.vo.wx.coupon.CouponVo;
-
-import java.util.List;
+import com.cskaoyan.mall.util.WxListBean;
 
 public interface WxCouponService {
-CouponVo showMyList(Page page, Coupon coupon);
+    WxListBean<Coupon> showMyList(Page page, Coupon coupon);
 
-CouponVo showList(Page page);
+    WxListBean<Coupon> showList(Page page);
 
     int receiveCoupon(Integer couponId);
+
+    Coupon exchangeCode(String code);
+
+    int isExistCoupon(String code);
 }

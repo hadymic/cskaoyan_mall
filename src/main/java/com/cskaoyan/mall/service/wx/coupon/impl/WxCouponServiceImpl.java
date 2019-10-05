@@ -3,15 +3,11 @@ package com.cskaoyan.mall.service.wx.coupon.impl;
 import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.mapper.CouponMapper;
 import com.cskaoyan.mall.service.wx.coupon.WxCouponService;
-import com.cskaoyan.mall.util.ListBean;
-import com.cskaoyan.mall.util.Page;
-import com.cskaoyan.mall.util.PageUtils;
-import com.cskaoyan.mall.util.StringUtils;
+import com.cskaoyan.mall.util.*;
 import com.cskaoyan.mall.vo.wx.coupon.CouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,15 +23,10 @@ public class WxCouponServiceImpl implements WxCouponService {
      * @return
      */
     @Override
-    public CouponVo showMyList(Page page, Coupon coupon) {
+    public WxListBean<Coupon> showMyList(Page page, Coupon coupon) {
         PageUtils.startPage(page);
-        CouponVo couponVo = new CouponVo();
-        List<Coupon> list = couponMapper.queryCouponsByStatus(coupon.getStatus());
-        int count=  couponMapper.queryAll();
-       couponVo.setCount(count);
-       couponVo.setData(list);
-
-        return couponVo;
+        List<Coupon> coupons= couponMapper.queryCouponsByStatus(coupon.getStatus());
+        return PageUtils.wxPage(coupons);
     }
 
     /**
@@ -45,20 +36,27 @@ public class WxCouponServiceImpl implements WxCouponService {
      * @return
      */
     @Override
-    public CouponVo showList(Page page) {
+    public WxListBean<Coupon> showList(Page page) {
         PageUtils.startPage(page);
-        CouponVo couponVo = new CouponVo();
         List<Coupon> list = couponMapper.queryAllCoupons();
-        int count=  couponMapper.queryAll();
-        couponVo.setCount(count);
-        couponVo.setData(list);
-
-        return couponVo;
+        return PageUtils.wxPage(list);
     }
 
     @Override
     public int receiveCoupon(Integer couponId) {
         int flag=couponMapper.receiveCoupon(couponId);
+        return flag;
+    }
+
+    @Override
+    public Coupon exchangeCode(String code) {
+Coupon coupon = couponMapper.queryCodeExchange(code);
+        return coupon;
+    }
+
+    @Override
+    public int isExistCoupon(String code) {
+        int flag= couponMapper.isExistCoupon(code);
         return flag;
     }
 }

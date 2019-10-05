@@ -328,13 +328,20 @@
 
 
 <update id="receiveCoupon">
-
   update cskaoyan_mall_coupon
-    <if test="total gt  0">
       set total=total-1
-    </if>
-
-
-    where id=#{couponId}
+    where id=#{couponId}   and total>0
 </update>
+
+
+
+  <select id="queryCodeExchange" resultType="com.cskaoyan.mall.bean.Coupon">
+    select
+    <include refid="Base_Column_List"/>
+      from  cskaoyan_mall_coupon where code=#{code}
+  </select>
+
+  <select id="isExistCoupon"  resultType="_int">
+    select count(id)   from cskaoyan_mall_coupon  where code=#{code}
+  </select>
 </mapper>
