@@ -66,7 +66,7 @@ public class WxCartController {
     }
 
     /**
-     * 添加购物车
+     * 查询购物车商品数
      *
      * @return
      */
@@ -75,5 +75,18 @@ public class WxCartController {
         int userId = 1;
         BigDecimal data = cartService.goodsCount(userId);
         return BaseRespVo.success(data);
+    }
+
+    /**
+     * 快速添加购物车
+     *
+     * @param vo
+     * @return
+     */
+    @PostMapping("fastadd")
+    public BaseRespVo fastAdd(@RequestBody CartAddVo vo) {
+        int userId = 1;
+        int cartId = cartService.fastAdd(vo, userId);
+        return BaseRespVo.success(cartId);
     }
 }

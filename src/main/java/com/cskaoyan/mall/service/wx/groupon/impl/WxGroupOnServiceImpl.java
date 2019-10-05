@@ -29,7 +29,6 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
             Goods goods = goodsMapper.selectById(grouponVo.getGoods_id());
             grouponVo.setGoods(goods);
         }
-        WxListBean<GrouponVo> grouponVoWxListBean = PageUtils.wxPage(grouponVoList);
-        return grouponVoWxListBean;
+        return PageUtils.wxPage(grouponVoList);
     }
 }
