@@ -2,9 +2,7 @@ package com.cskaoyan.mall.controller.wx.cart;
 
 import com.cskaoyan.mall.service.wx.cart.CartService;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.wx.cart.CartAddVo;
-import com.cskaoyan.mall.vo.wx.cart.CartCheckedVo;
-import com.cskaoyan.mall.vo.wx.cart.CartListVo;
+import com.cskaoyan.mall.vo.wx.cart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,5 +86,17 @@ public class WxCartController {
         int userId = 1;
         int cartId = cartService.fastAdd(vo, userId);
         return BaseRespVo.success(cartId);
+    }
+
+    /**
+     * checkout
+     *
+     * @param vo
+     * @return
+     */
+    @GetMapping("checkout")
+    public BaseRespVo checkout(CartCheckoutVo vo) {
+        CartCheckoutReturnVo returnVo = cartService.checkout(vo);
+        return BaseRespVo.success(returnVo);
     }
 }
