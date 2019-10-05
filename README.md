@@ -101,7 +101,7 @@ cskaoyan商城项目
 - [ ] ```OrderGoods: WxApiRoot + 'order/goods', // 代评价商品信息```
 - [ ] ```OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息```
 
-//
+// 张涛
 - [ ] ```FeedbackAdd: WxApiRoot + 'feedback/submit', //添加反馈```
 - [ ] ```FootprintList: WxApiRoot + 'footprint/list', //足迹列表```
 - [ ] ```FootprintDelete: WxApiRoot + 'footprint/delete', //删除足迹```
@@ -117,11 +117,11 @@ cskaoyan商城项目
 - [ ] ```GroupOnJoin: WxApiRoot + 'groupon/join', //团购API-详情```
 
 // 张涛
-- [ ] ```CouponList: WxApiRoot + 'coupon/list', //优惠券列表```
-- [ ] ```CouponMyList: WxApiRoot + 'coupon/mylist', //我的优惠券列表```
+- [x] ```CouponList: WxApiRoot + 'coupon/list', //优惠券列表```
+- [x] ```CouponMyList: WxApiRoot + 'coupon/mylist', //我的优惠券列表```
 - [ ] ```CouponSelectList: WxApiRoot + 'coupon/selectlist', //当前订单可用优惠券列表```
-- [ ] ```CouponReceive: WxApiRoot + 'coupon/receive', //优惠券领取```
-- [ ] ```CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换```
+- [x] ```CouponReceive: WxApiRoot + 'coupon/receive', //优惠券领取```
+- [x] ```CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换```
 
 //
 - [ ] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
