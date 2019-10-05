@@ -5,6 +5,7 @@ import com.cskaoyan.mall.service.admin.AdminService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class AdminController {
      * 系统管理分页&查找管理员
      */
     @RequestMapping("admin/admin/list")
+    @RequiresPermissions(value = "admin:admin:list")
     public BaseRespVo admin(Page page, Admin admin) {
         ListBean<Admin> adminList = adminService.queryAdmin(page, admin.getUsername());
         return BaseRespVo.success(adminList);
@@ -40,6 +42,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("admin/admin/update")
+    @RequiresPermissions(value = "admin:admin:update")
     public BaseRespVo update(@RequestBody Admin admin) {
 
         int flag = adminService.update(admin);
@@ -56,6 +59,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("admin/admin/delete")
+    @RequiresPermissions(value = "admin:admin:delete")
     public BaseRespVo delete(@RequestBody Admin admin) {
         adminService.delete(admin);
         return BaseRespVo.success(null);
@@ -69,7 +73,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("admin/admin/create")
-
+    @RequiresPermissions(value = "admin:admin:create")
     public  BaseRespVo create(@RequestBody Admin admin){
         //新增的管理员在数据库中是否存在
        int flag= adminService.queryIsExist(admin.getUsername(),admin.getPassword());
