@@ -40,6 +40,12 @@ public interface CategoryMapper {
     int insertNewCategory(@Param("newCategory") Category category);
 
     /**
+     * @author hjl 根据pid返回categoryList
+     * @param pid
+     * @return
+     */
+    List<Category> selectCategoryListByPid(@Param("pid") int pid);
+    /**
      * Zeng-jz: 查询L1级别的id name iconUrl
      * @return
      */
@@ -50,4 +56,5 @@ public interface CategoryMapper {
     List<FloorGoodsVo> selectFloorList(@Param("limit") int floorListSize);
 
     List<Category> selectChildren(@Param("id") Integer id);
+
 }

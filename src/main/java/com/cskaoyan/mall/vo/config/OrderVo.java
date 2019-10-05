@@ -31,5 +31,12 @@ public class OrderVo {
         this.cskaoyan_mall_order_unpaid = cskaoyan_mall_order_unpaid;
         return this;
     }
+    public  boolean nonVoid(){
+        if (cskaoyan_mall_order_unconfirm.equals("")||
+                cskaoyan_mall_order_unpaid.equals("")||
+                cskaoyan_mall_order_comment.equals(""))
+            return false;
+        return true;
+    }
 
 }

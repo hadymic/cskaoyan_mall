@@ -46,4 +46,11 @@ public interface GoodsMapper {
     List<Goods> selectTopByHot(@Param("limit") int hotGoodsListSize);
 
     List<Goods> selectTopByNew(@Param("limit") int newGoodsListSize);
+
+    /**
+     * @author hjl 根据categoryId查找goods
+     * @param categoryId
+     * @return
+     */
+    List<Goods> selectGoodsListByCategoryId(@Param("categoryId") int categoryId);
 }
