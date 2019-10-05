@@ -37,13 +37,13 @@ cskaoyan商城项目
 - [ ] ```AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号```
 
 // 黄俊龙
-- [ ] ```GoodsCount: WxApiRoot + 'goods/count', //统计商品总数```
-- [ ] ```GoodsList: WxApiRoot + 'goods/list', //获得商品列表```
-- [ ] ```GoodsCategory: WxApiRoot + 'goods/category', //获得分类数据```
-- [ ] ```GoodsDetail: WxApiRoot + 'goods/detail', //获得商品的详情```
+- [x] ```GoodsCount: WxApiRoot + 'goods/count', //统计商品总数```
+- [x] ```GoodsList: WxApiRoot + 'goods/list', //获得商品列表```
+- [x] ```GoodsCategory: WxApiRoot + 'goods/category', //获得分类数据```
+- [x] ```GoodsDetail: WxApiRoot + 'goods/detail', //获得商品的详情```
 - [ ] ```GoodsRelated: WxApiRoot + 'goods/related', //商品详情页的关联商品（大家都在看）```
 
-// 
+// 黄俊龙
 - [ ] ```BrandList: WxApiRoot + 'brand/list', //品牌列表```
 - [ ] ```BrandDetail: WxApiRoot + 'brand/detail', //品牌详情```
 
