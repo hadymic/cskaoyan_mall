@@ -2,31 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.CategoryMapper">
-<select id="selectCategory" resultType="com.cskaoyan.mall.vo.BaseValueLabel">
-  select id as value,name as label from cskaoyan_mall_category where pid = #{pid}
+    <select id="selectCategory"
+            resultType="com.cskaoyan.mall.vo.BaseValueLabel">
+  select id as value,name as label from cskaoyan_mall_category
+   where deleted = 0 and pid = #{pid}
 </select>
+
+    <select id="selectCategoryListByPid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cskaoyan_mall_category
+        where  deleted = 0 and pid = #{pid,jdbcType=INTEGER}
+    </select>
+
     <resultMap id="BaseResultMap" type="com.cskaoyan.mall.bean.Category">
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="keywords" jdbcType="VARCHAR" property="keywords" />
-        <result column="desc" jdbcType="VARCHAR" property="desc" />
-        <result column="pid" jdbcType="INTEGER" property="pid" />
-        <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
-        <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
-        <result column="level" jdbcType="VARCHAR" property="level" />
-        <result column="sort_order" jdbcType="TINYINT" property="sortOrder" />
-        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="deleted" jdbcType="BIT" property="deleted" />
-        <collection property="children" column="id" select="com.cskaoyan.mall.mapper.CategoryMapper.selectChildren"/>
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="keywords" jdbcType="VARCHAR" property="keywords"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="icon_url" jdbcType="VARCHAR" property="iconUrl"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="sort_order" jdbcType="TINYINT" property="sortOrder"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP"
+                property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+        <collection property="children" column="id"
+                    select="com.cskaoyan.mall.mapper.CategoryMapper.selectChildren"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, name, keywords, `desc`, pid, icon_url, pic_url, `level`, sort_order, add_time, update_time,
     deleted
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+            resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from cskaoyan_mall_category
         where id = #{id,jdbcType=INTEGER}
     </select>
@@ -58,23 +71,29 @@
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
-    <insert id="insertNewCategory" parameterType="com.cskaoyan.mall.bean.Category">
-    <selectKey resultType="int" keyProperty="newCategory.id" keyColumn="id" order="AFTER">
-        select last_insert_id() as id
-    </selectKey>
-    insert into cskaoyan_mall_category (`name`, keywords,
-      `desc`, pid, icon_url,
-      pic_url, `level`, sort_order,
-      add_time, update_time, deleted
-      )
-    values (#{newCategory.name,jdbcType=VARCHAR}, #{newCategory.keywords,jdbcType=VARCHAR},
-      #{newCategory.desc,jdbcType=VARCHAR}, #{newCategory.pid,jdbcType=INTEGER},
-      #{newCategory.iconUrl,jdbcType=VARCHAR},#{newCategory.picUrl,jdbcType=VARCHAR},
-      #{newCategory.level,jdbcType=VARCHAR}, #{newCategory.sortOrder,jdbcType=TINYINT},
-      now(), now(), 0
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Category">
+    <insert id="insertNewCategory"
+            parameterType="com.cskaoyan.mall.bean.Category">
+        <selectKey resultType="int" keyProperty="newCategory.id" keyColumn="id"
+                   order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+        insert into cskaoyan_mall_category (`name`, keywords,
+        `desc`, pid, icon_url,
+        pic_url, `level`, sort_order,
+        add_time, update_time, deleted
+        )
+        values (#{newCategory.name,jdbcType=VARCHAR},
+        #{newCategory.keywords,jdbcType=VARCHAR},
+        #{newCategory.desc,jdbcType=VARCHAR},
+        #{newCategory.pid,jdbcType=INTEGER},
+        #{newCategory.iconUrl,jdbcType=VARCHAR},#{newCategory.picUrl,jdbcType=VARCHAR},
+        #{newCategory.level,jdbcType=VARCHAR},
+        #{newCategory.sortOrder,jdbcType=TINYINT},
+        now(), now(), 0
+        )
+    </insert>
+    <insert id="insertSelective"
+            parameterType="com.cskaoyan.mall.bean.Category">
         insert into cskaoyan_mall_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -153,7 +172,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.mall.bean.Category">
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.cskaoyan.mall.bean.Category">
         update cskaoyan_mall_category
         <set>
             <if test="name != null">
@@ -192,7 +212,8 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Category">
+    <update id="updateByPrimaryKey"
+            parameterType="com.cskaoyan.mall.bean.Category">
     update cskaoyan_mall_category
     set `name` = #{name,jdbcType=VARCHAR},
       keywords = #{keywords,jdbcType=VARCHAR},
@@ -207,7 +228,8 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <update id="updateDeletedById" parameterType="com.cskaoyan.mall.bean.Category">
+    <update id="updateDeletedById"
+            parameterType="com.cskaoyan.mall.bean.Category">
     update cskaoyan_mall_category
     set deleted = 1
     where id = #{id,jdbcType=INTEGER}

@@ -36,4 +36,12 @@ public interface CategoryMapper {
      * @return
      */
     int insertNewCategory(@Param("newCategory") Category category);
+
+
+    /**
+     * 根据pid返回categoryList
+     * @param pid
+     * @return
+     */
+    List<Category> selectCategoryListByPid(@Param("pid") int pid);
 }
