@@ -5,7 +5,7 @@
     <select id="selectAllBrand" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from cskaoyan_mall_brand
+        from cskaoyan_mall_brand where deleted = 0
     </select>
 
 <select id="selectBrandList" resultType="com.cskaoyan.mall.vo.BaseValueLabel">

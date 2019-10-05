@@ -130,7 +130,6 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     /**
      * 显示相关商品
-     *
      * @param id
      * @return
      */

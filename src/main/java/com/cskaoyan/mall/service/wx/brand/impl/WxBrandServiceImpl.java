@@ -30,7 +30,6 @@ public class WxBrandServiceImpl implements WxBrandService {
 
     @Override
     public Map<String,Object> queryAllBrand(Page page) {
-        //分页
         PageUtils.startPage(page);
         List<Brand> brandList = brandMapper.selectAllBrand();
         PageInfo<Brand> pageInfo = new PageInfo<>(brandList);
