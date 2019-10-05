@@ -10,7 +10,7 @@
     <collection property="children" column="id" select="com.cskaoyan.mall.mapper.RegionMapper.selectChildren"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, pid, name, `type`, code
+    id, pid, `name`, `type`, code
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -50,10 +50,10 @@
         pid,
       </if>
       <if test="name != null">
-        name,
+        `name`,
       </if>
       <if test="type != null">
-        type,
+        `type`,
       </if>
       <if test="code != null">
         code,
@@ -87,7 +87,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
+        `type` = #{type,jdbcType=TINYINT},
       </if>
       <if test="code != null">
         code = #{code,jdbcType=INTEGER},
@@ -98,9 +98,14 @@
   <update id="updateByPrimaryKey" parameterType="com.cskaoyan.mall.bean.Region">
     update cskaoyan_mall_region
     set pid = #{pid,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
+      `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=TINYINT},
       code = #{code,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectById" resultType="com.cskaoyan.mall.bean.Region">
+    select  <include refid="Base_Column_List"/>
+    from cskaoyan_mall_region
+    where pid = #{pid}
+  </select>
 </mapper>

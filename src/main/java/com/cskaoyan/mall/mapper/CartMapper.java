@@ -24,7 +24,7 @@ public interface CartMapper {
      * @param userId
      * @return
      */
-    List<Cart> queryByUserId(int userId);
+    List<Cart> queryByUserId(@Param("userId") int userId, @Param("checked") boolean checked);
 
     /**
      * 根据商品id更新

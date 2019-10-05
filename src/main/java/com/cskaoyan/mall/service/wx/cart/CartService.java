@@ -1,8 +1,6 @@
 package com.cskaoyan.mall.service.wx.cart;
 
-import com.cskaoyan.mall.vo.wx.cart.CartAddVo;
-import com.cskaoyan.mall.vo.wx.cart.CartCheckedVo;
-import com.cskaoyan.mall.vo.wx.cart.CartListVo;
+import com.cskaoyan.mall.vo.wx.cart.*;
 
 import java.math.BigDecimal;
 
@@ -16,4 +14,6 @@ public interface CartService {
     BigDecimal goodsCount(int userId);
 
     int fastAdd(CartAddVo vo, int userId);
+
+    CartCheckoutReturnVo checkout(CartCheckoutVo vo);
 }
