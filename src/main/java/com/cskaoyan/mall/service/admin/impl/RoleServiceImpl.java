@@ -1,8 +1,8 @@
 package com.cskaoyan.mall.service.admin.impl;
 
 import com.cskaoyan.mall.bean.Permission;
-import com.cskaoyan.mall.bean.PermissionDetails;
 import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.mapper.AdminMapper;
 import com.cskaoyan.mall.mapper.PermissionDetailsMapper;
 import com.cskaoyan.mall.mapper.PermissionMapper;
 import com.cskaoyan.mall.mapper.RoleMapper;
@@ -10,12 +10,8 @@ import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
-
-
-import com.cskaoyan.mall.vo.permission.*;
-
 import com.cskaoyan.mall.vo.BaseValueLabel;
-
+import com.cskaoyan.mall.vo.permission.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class RoleServiceImpl implements RoleService {
+    @Autowired
+    private AdminMapper adminMapper;
     @Autowired
     RoleMapper roleMapper;
     @Autowired
@@ -64,14 +62,26 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean update(Role role) {
+    public String update(Role role) {
+        if (role.getId() == 1) {
+            return "无法修改超级管理员";
+        }
         int i = roleMapper.updateByPrimaryKey(role);
-        return i == 1;
+        return i == 1 ? null : "修改失败";
     }
 
     @Override
-    public void delete(Role role) {
-        roleMapper.deleteRloe(role.getId());
+    public String delete(Role role) {
+        if (role.getId() == 1) {
+            return "无法删除超级管理员";
+        }
+        List<String> strings = adminMapper.queryAllRoleIds();
+        for (String string : strings) {
+            if (string.contains("" + role.getId())) {
+                return "当前角色存在管理员，不能删除";
+            }
+        }
+        return roleMapper.deleteRloe(role.getId()) == 1 ? null : "删除失败";
     }
 
     @Override
@@ -109,13 +119,22 @@ public class RoleServiceImpl implements RoleService {
         }
         permissionVo.setSystemPermissions(systemPermissions);
 
-        List<String> strings = permissionMapper.queryPermissionsByRoleId(roleId);
+        List<String> strings;
+        if (roleId == 1) {
+            strings = permissionDetailsMapper.queryAllPermissions();
+        } else {
+            strings = permissionMapper.queryPermissionsByRoleId(roleId);
+        }
+
         permissionVo.setAssignedPermissions(strings);
         return permissionVo;
     }
 
     @Override
-    public boolean updateRolePermission(PermissionsVo vo) {
+    public String updateRolePermission(PermissionsVo vo) {
+        if (vo.getRoleId() == 1) {
+            return "无法更改超级管理员授权";
+        }
         List<String> permissions = vo.getPermissions();
         List<String> permissionsFromDb = permissionMapper.queryPermissionsByRoleId(vo.getRoleId());
         Iterator<String> iterator = permissions.iterator();
@@ -142,7 +161,7 @@ public class RoleServiceImpl implements RoleService {
             perm.setDeleted(false);
             permissionMapper.insertSelective(perm);
         }
-        return true;
+        return null;
     }
 
 

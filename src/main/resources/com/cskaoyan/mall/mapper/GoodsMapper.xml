@@ -80,6 +80,7 @@
         pic_url as picUrl, retail_price as retailPrice, is_hot as isHot, is_new as isNew
         from cskaoyan_mall_goods
         where deleted = 0 and is_hot = 0
+        order by update_time desc
         limit #{limit} offset 1
     </select>
     <select id="selectTopByNew" resultType="com.cskaoyan.mall.bean.Goods">
@@ -87,6 +88,7 @@
         pic_url as picUrl, retail_price as retailPrice, is_hot as isHot, is_new as isNew
         from cskaoyan_mall_goods
         where deleted = 0 and is_new = 0
+        order by update_time desc
         limit #{limit} offset 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

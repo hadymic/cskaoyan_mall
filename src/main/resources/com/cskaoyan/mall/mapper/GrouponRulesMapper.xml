@@ -27,7 +27,7 @@
     select goods_id,discount as groupon_price, discount_member as groupon_member
     from cskaoyan_mall_groupon_rules
     where deleted = 0
-    group by update_time desc
+    order by update_time desc
     limit 5 offset 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

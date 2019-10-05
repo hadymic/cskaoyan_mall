@@ -19,4 +19,6 @@ public interface PermissionDetailsMapper {
     int updateByPrimaryKey(PermissionDetails record);
 
     List<Api> queryByParentId(int i);
+
+    List<String> queryAllPermissions();
 }
