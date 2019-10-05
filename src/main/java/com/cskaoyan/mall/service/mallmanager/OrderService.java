@@ -43,4 +43,14 @@ public interface OrderService {
      * @return
      */
     Order updateRefund(RefundVo refundVo);
+
+
+    /**
+     * 查询用户的订单
+     * @param token
+     * @param pageBean
+     * @param showType
+     * @return
+     */
+    ListBean<Order> queryUserOrders(String token, Page pageBean, Integer showType);
 }

@@ -10,6 +10,7 @@ import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.vo.ordermanagement.HandleOption;
 import com.cskaoyan.mall.vo.ordermanagement.RefundVo;
 import com.cskaoyan.mall.vo.ordermanagement.ShipVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,14 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus((short)203);
         orderMapper.updateByPrimaryKeySelective(order);
         return order;
+    }
+
+    @Override
+    public ListBean<Order> queryUserOrders(String token, Page pageBean, Integer showType) {
+        Integer id = userMapper.queryUserIdByToken(token);
+        HandleOption handleOption = HandleOption.get(101, false);
+
+        queryOrderList(pageBean,id,null, new Integer[]{showType});
+        return null;
     }
 }
