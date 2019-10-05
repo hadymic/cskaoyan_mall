@@ -59,10 +59,8 @@ public class RoleController {
     public BaseRespVo update(@RequestBody Role role) {
         role.setUpdateTime(new Date());
         role.setAddTime(new Date());
-        int flag = roleService.update(role);
-        if (flag == 1) {
-            return BaseRespVo.success(null);
-        } else return BaseRespVo.fail("更新失败");
+        String msg = roleService.update(role);
+        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
     }
 
 
@@ -75,9 +73,8 @@ public class RoleController {
 
     @RequestMapping("admin/role/delete")
     public BaseRespVo delete(@RequestBody Role role) {
-
-        roleService.delete(role);
-        return BaseRespVo.success(null);
+        String delete = roleService.delete(role);
+        return delete == null ? BaseRespVo.success(null) : BaseRespVo.fail(delete);
     }
 
 
@@ -100,9 +97,9 @@ public class RoleController {
     }
 
     @PostMapping("admin/role/permissions")
-    public BaseRespVo updateRolePermission(PermissionsVo vo) {
-        boolean flag = roleService.updateRolePermission(vo);
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("授权失败");
+    public BaseRespVo updateRolePermission(@RequestBody PermissionsVo vo) {
+        String msg = roleService.updateRolePermission(vo);
+        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
     }
 }
 

@@ -220,4 +220,8 @@
     where username = #{token} and password = #{oldPassword} and deleted = 0
   </update>
 
+  <select id="queryAllRoleIds" resultType="string">
+    select role_ids from cskaoyan_mall_admin where deleted = 0
+  </select>
+
 </mapper>

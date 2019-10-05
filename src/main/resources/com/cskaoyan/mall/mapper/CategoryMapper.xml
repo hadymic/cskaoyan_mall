@@ -42,6 +42,25 @@
         from cskaoyan_mall_category
         where pid = #{id} and deleted = 0
     </select>
+    <select id="selectChannel" resultType="com.cskaoyan.mall.bean.Category">
+        select id, `name`, icon_url as iconUrl
+        from cskaoyan_mall_category
+        where `level` = 'l1' and deleted = 0
+    </select>
+    <select id="selectFloorList" resultType="com.cskaoyan.mall.vo.wx.home.FloorGoodsVo">
+        select id, `name`
+        from cskaoyan_mall_category
+        where `level` = 'l1' and deleted = 0
+        limit #{limit} offset 1
+    </select>
+    <select id="selectFloorGoodsList" resultType="com.cskaoyan.mall.bean.Goods">
+        select DISTINCT mg.brief,mg.counter_price as counterPrice,mg.id,mg.is_hot as isHot,
+        mg.is_new as isNew,mg.`name`,mg.pic_url as picUrl,mg.retail_price as retailPrice
+        FROM cskaoyan_mall_category mc
+        LEFT JOIN cskaoyan_mall_goods mg on mg.category_id = mc.id
+        where mc.pid = #{pid}
+        limit #{limit} OFFSET 1
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_category
     where id = #{id,jdbcType=INTEGER}
