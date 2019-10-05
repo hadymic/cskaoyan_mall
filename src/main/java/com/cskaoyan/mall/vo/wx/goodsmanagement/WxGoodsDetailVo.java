@@ -1,9 +1,7 @@
 package com.cskaoyan.mall.vo.wx.goodsmanagement;
 
 import com.cskaoyan.mall.bean.*;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * wx商品详情
@@ -14,7 +12,7 @@ public class WxGoodsDetailVo {
     private String shareImage;
     private CommentVo comment;
     private Brand brand;
-    private Map<String, Object> specificationList;
+    private List<SpecificationList> specificationList;
     private List<Groupon> groupons;
 
     private List<Issue> Issue;
@@ -28,7 +26,8 @@ public class WxGoodsDetailVo {
     public WxGoodsDetailVo() {
     }
 
-    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, Map<String, Object> specificationList, List<Groupon> groupons, List<com.cskaoyan.mall.bean.Issue> issue, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
+
+    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, List<SpecificationList> specificationList, List<Groupon> groupons, List<com.cskaoyan.mall.bean.Issue> issue, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
         this.userHasCollect = userHasCollect;
         this.shareImage = shareImage;
         this.comment = comment;
@@ -39,6 +38,14 @@ public class WxGoodsDetailVo {
         this.attributes = attributes;
         this.productList = productList;
         this.info = info;
+    }
+
+    public List<SpecificationList> getSpecificationList() {
+        return specificationList;
+    }
+
+    public void setSpecificationList(List<SpecificationList> specificationList) {
+        this.specificationList = specificationList;
     }
 
     public boolean isUserHasCollect() {
@@ -71,14 +78,6 @@ public class WxGoodsDetailVo {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public Map<String, Object> getSpecificationList() {
-        return specificationList;
-    }
-
-    public void setSpecificationList(Map<String, Object> specificationList) {
-        this.specificationList = specificationList;
     }
 
     public List<Groupon> getGroupons() {
