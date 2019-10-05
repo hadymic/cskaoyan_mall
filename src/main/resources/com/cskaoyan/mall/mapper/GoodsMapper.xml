@@ -10,6 +10,15 @@
         from cskaoyan_mall_goods
         where category_id = #{categoryId,jdbcType=INTEGER} and deleted = 0
     </select>
+    <select id="selectGoodsListByBrandId" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cskaoyan_mall_goods
+        where brand_id = #{brandId,jdbcType=INTEGER} and deleted = 0
+
+    </select>
 
     <select id="selectGoodsByGoodsSnOrName" resultMap="ResultMapWithBLOBs">
         select

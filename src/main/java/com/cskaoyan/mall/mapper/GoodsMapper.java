@@ -53,4 +53,11 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsListByCategoryId(@Param("categoryId") int categoryId);
+
+    /**
+     * @author hjl 根据brandId查找goods
+     * @param brandId
+     * @return
+     */
+    List<Goods> selectGoodsListByBrandId(@Param("brandId") int brandId);
 }

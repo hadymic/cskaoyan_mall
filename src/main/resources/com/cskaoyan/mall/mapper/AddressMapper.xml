@@ -254,7 +254,7 @@
     WHERE a.deleted = 0
     AND a.id = #{id}
   </select>
-  
+
   <select id="selectDefaultAddressByUserId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

@@ -8,6 +8,7 @@ import com.cskaoyan.mall.vo.statisticalform.StatUserVo;
 import java.util.List;
 
 
+import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -52,4 +53,13 @@ public interface UserMapper {
      * @return
      */
     Integer queryUserIdByToken(@Param("token")String token);
+
+    /**
+     * author: Zeng-jz
+     * @param userId
+     * @return
+     */
+    List<WxMyGroupVo> selectWxGroupVoById(int userId);
+
+    List<WxMyGroupVo> selectWxGroupVoJoinById(int userId);
 }
