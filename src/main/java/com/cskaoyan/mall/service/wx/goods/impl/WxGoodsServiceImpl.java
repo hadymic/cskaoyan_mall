@@ -8,6 +8,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.CommentVo;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
+import com.cskaoyan.mall.vo.wx.goodsmanagement.SpecificationList;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,13 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         Category parentCategory = categoryMapper.selectByPrimaryKey(id);
         parentCategory.setChildren(null);
         Category currentCategory;
-        List<Category> brotherCategory ;
+        List<Category> brotherCategory;
         if (parentCategory.getPid() == 0) {//如果传的是父类categoryId,点击父类进入子类显示第一个子类
             brotherCategory = categoryMapper.selectCategoryListByPid(id);
             currentCategory = brotherCategory.get(0);
         } else {//如果传的是子类categoryId
             currentCategory = categoryMapper.selectByPrimaryKey(id);//找到子类
-            parentCategory =  categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
+            parentCategory = categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
             brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());//找到兄弟
 
 
@@ -70,20 +71,24 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     @Override
     public WxGoodsDetailVo selectWxGoodsDatail(int id) {
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
-        Map<String, Object> map = new HashMap<>();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
+        Set<String> set = new TreeSet<>();
         for (GoodsSpecification specification : specifications) {
-            List<GoodsSpecification> Existingspecifications = (List<GoodsSpecification>) map.get(specification.getSpecification());//商品详情之规格自由组合
-            if (Existingspecifications == null) {
-                List<GoodsSpecification> son = new ArrayList<>();
-                son.add(specification);
-                map.put(specification.getSpecification(), son);
-            } else {
-                Existingspecifications.add(specification);
-                map.put(specification.getSpecification(), Existingspecifications);
-            }
+            set.add(specification.getSpecification());
         }
-        wxGoodsDetailVo.setSpecificationList(map);
+        List<SpecificationList> specificationLists = new ArrayList<>();
+        Iterator iterator =set.iterator();
+        while (iterator.hasNext()){
+            String name = (String) iterator.next();
+            List<GoodsSpecification> newSpec = new ArrayList<>();
+            for (GoodsSpecification specification : specifications) {
+                if (name.equals(specification.getSpecification())){
+                    newSpec.add(specification);
+                }
+            }
+            specificationLists.add(new SpecificationList(name,newSpec));
+        }
+        wxGoodsDetailVo.setSpecificationList(specificationLists);
 
         List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(id);//位置，不知道要啥
         wxGoodsDetailVo.setGroupons(groupons);
@@ -126,6 +131,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     /**
      * 显示相关商品
+     *
      * @param id
      * @return
      */
@@ -134,9 +140,9 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         Goods goods1 = goodsMapper.selectByPrimaryKey(id);//找到本商品
         List<Goods> goodsList = goodsMapper.selectGoodsListByCategoryId(goods1.getCategoryId());//根据本商品的categoryId找到所有此类商品
         Iterator iterator = goodsList.iterator();
-        while(iterator.hasNext()){//去除本商品，就是相关商品
+        while (iterator.hasNext()) {//去除本商品，就是相关商品
             Goods goods = (Goods) iterator.next();
-            if (goods.getId()==id){
+            if (goods.getId() == id) {
                 iterator.remove();
             }
         }
