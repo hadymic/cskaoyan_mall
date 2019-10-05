@@ -12,10 +12,8 @@ import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.System;
+import java.util.*;
 
 @Service
 public class WxGoodsServiceImpl implements WxGoodsService {
@@ -84,7 +82,6 @@ public class WxGoodsServiceImpl implements WxGoodsService {
                 Existingspecifications.add(specification);
                 map.put(specification.getSpecification(), Existingspecifications);
             }
-
         }
         wxGoodsDetailVo.setSpecificationList(map);
 
@@ -124,7 +121,25 @@ public class WxGoodsServiceImpl implements WxGoodsService {
             }
             filterCategoryList.add(category);
         }
-
         return new GoodsByCategory(goodsList, count, filterCategoryList);
+    }
+
+    /**
+     * 显示相关商品
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Goods> showRelatedGoods(int id) {
+        Goods goods1 = goodsMapper.selectByPrimaryKey(id);//找到本商品
+        List<Goods> goodsList = goodsMapper.selectGoodsListByCategoryId(goods1.getCategoryId());//根据本商品的categoryId找到所有此类商品
+        Iterator iterator = goodsList.iterator();
+        while(iterator.hasNext()){//去除本商品，就是相关商品
+            Goods goods = (Goods) iterator.next();
+            if (goods.getId()==id){
+                iterator.remove();
+            }
+        }
+        return goodsList;
     }
 }
