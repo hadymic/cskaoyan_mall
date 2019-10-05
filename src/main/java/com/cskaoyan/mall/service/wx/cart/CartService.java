@@ -14,4 +14,6 @@ public interface CartService {
     boolean checkedCart(int userId, CartCheckedVo vo);
 
     BigDecimal goodsCount(int userId);
+
+    int fastAdd(CartAddVo vo, int userId);
 }

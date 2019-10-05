@@ -10,10 +10,20 @@ import java.util.List;
 public class WxListBean<T> {
     private List<T> data;
     private long count;
+    private Integer totalPages;
 
-    public WxListBean(List<T> data, long count) {
+    public WxListBean(List<T> data, long count, Integer totalPages) {
         this.data = data;
         this.count = count;
+        this.totalPages = totalPages;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
     public List<T> getData() {
