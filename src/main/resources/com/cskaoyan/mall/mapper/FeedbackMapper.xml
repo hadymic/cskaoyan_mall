@@ -200,4 +200,17 @@
       </if>
     </trim>
   </select>
+
+
+  <insert id="submit" parameterType="com.cskaoyan.mall.vo.wx.FeedbackVo">
+    insert into cskaoyan_mall_feedback (id,
+      mobile, feed_type, content,
+     has_picture, pic_urls
+
+      )
+    values (#{id,jdbcType=INTEGER},
+      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+      #{hasPicture,jdbcType=BIT}, #{picUrls,jdbcType=VARCHAR}
+      )
+  </insert>
 </mapper>
