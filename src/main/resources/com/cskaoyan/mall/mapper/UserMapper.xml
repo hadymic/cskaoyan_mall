@@ -298,4 +298,18 @@
     select id from cskaoyan_mall_user
     where username = #{username}
   </select>
+
+  <select id="queryByUserNameAndPassword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_user
+    where deleted = 0 and username = #{username} and password = #{password}
+  </select>
+
+  <select id="queryPasswordByUsername" resultType="string">
+    select
+    password
+    from cskaoyan_mall_user
+    where deleted = 0 and username = #{username}
+  </select>
 </mapper>

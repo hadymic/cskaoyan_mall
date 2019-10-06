@@ -1,14 +1,19 @@
 package com.cskaoyan.mall.config;
 
-import com.cskaoyan.mall.shiro.CustomRealm;
+import com.cskaoyan.mall.shiro.AdminRealm;
+import com.cskaoyan.mall.shiro.CustomRealmAuthenticator;
+import com.cskaoyan.mall.shiro.WxRealm;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -40,11 +45,29 @@ public class CustomShiroConfig {
 
     //securityManager
     @Bean
-    public DefaultWebSecurityManager securityManager(CustomRealm realm, DefaultWebSessionManager sessionManager) {
+    public DefaultWebSecurityManager securityManager(@Qualifier("adminRealm") AdminRealm adminRealm,
+                                                     @Qualifier("wxRealm") WxRealm wxRealm,
+                                                     CustomRealmAuthenticator customRealmAuthenticator,
+                                                     DefaultWebSessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm);
+        ArrayList<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm);
+        realms.add(wxRealm);
+        securityManager.setRealms(realms);
+        securityManager.setAuthenticator(customRealmAuthenticator);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
+    }
+
+    @Bean
+    public CustomRealmAuthenticator customRealmAuthenticator(@Qualifier("adminRealm") AdminRealm adminRealm,
+                                                             @Qualifier("wxRealm") WxRealm wxRealm){
+        CustomRealmAuthenticator customRealmAuthenticator = new CustomRealmAuthenticator();
+        ArrayList<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm);
+        realms.add(wxRealm);
+        customRealmAuthenticator.setRealms(realms);
+        return customRealmAuthenticator;
     }
 
     //声明式使用鉴权注解的开关

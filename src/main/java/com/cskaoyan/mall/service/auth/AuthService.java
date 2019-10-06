@@ -1,6 +1,9 @@
 package com.cskaoyan.mall.service.auth;
 
-import com.cskaoyan.mall.vo.auth.UserInfo;
+import com.cskaoyan.mall.vo.auth.AdminInfo;
+import com.cskaoyan.mall.vo.auth.LoginVo;
+import com.cskaoyan.mall.vo.wx.auth.UserLoginVo;
+import com.cskaoyan.mall.vo.wx.auth.UserRegisterVo;
 
 /**
  * 登录service
@@ -8,5 +11,11 @@ import com.cskaoyan.mall.vo.auth.UserInfo;
  * @author hadymic
  */
 public interface AuthService {
-    UserInfo getAdminInfo(String principal);
+    AdminInfo getAdminInfo(String principal);
+
+    boolean sendMessage(String mobile, String code);
+
+    UserLoginVo wxLogin(LoginVo vo, String ip);
+
+    UserLoginVo wxRegister(UserRegisterVo vo, String ip);
 }

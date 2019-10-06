@@ -17,8 +17,12 @@ public class WxUserController {
     private UserManageService userManageService;
 
     @RequestMapping("index")
-    public BaseRespVo userIndex(){
+    public BaseRespVo userIndex() {
         String token = (String) SecurityUtils.getSubject().getPrincipal();
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        if (userId == null) {
+            return BaseRespVo.fail("请重新登录");
+        }
         return BaseRespVo.success(userManageService.queryUserOrders(token));
     }
 

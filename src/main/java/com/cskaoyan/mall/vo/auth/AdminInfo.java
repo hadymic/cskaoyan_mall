@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author hadymic
  */
-public class UserInfo {
+public class AdminInfo {
     private String avatar;
     private String name;
     private List<String> perms;

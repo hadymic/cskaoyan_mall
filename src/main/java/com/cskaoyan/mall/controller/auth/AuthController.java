@@ -1,13 +1,13 @@
 package com.cskaoyan.mall.controller.auth;
 
 import com.cskaoyan.mall.service.auth.AuthService;
+import com.cskaoyan.mall.shiro.CustomToken;
 import com.cskaoyan.mall.util.IPUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
-import com.cskaoyan.mall.vo.auth.UserInfo;
+import com.cskaoyan.mall.vo.auth.AdminInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -38,8 +38,7 @@ public class AuthController {
      */
     @RequestMapping("login")
     public BaseRespVo login(@RequestBody LoginVo vo, HttpServletRequest request) {
-
-        UsernamePasswordToken token = new UsernamePasswordToken(vo.getUsername(), vo.getPassword());
+        CustomToken token = new CustomToken(vo.getUsername(), vo.getPassword(), "admin");
         /*认证的逻辑*/
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -70,8 +69,8 @@ public class AuthController {
         String ip = (String) subject.getSession().getAttribute("ip");
 
         String principal = (String) subject.getPrincipal();
-        UserInfo userInfo = authService.getAdminInfo(principal);
-        return BaseRespVo.success(userInfo);
+        AdminInfo adminInfo = authService.getAdminInfo(principal);
+        return BaseRespVo.success(adminInfo);
     }
 
     /**

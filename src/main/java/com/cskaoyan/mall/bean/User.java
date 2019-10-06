@@ -41,6 +41,28 @@ public class User {
 
     private Boolean deleted;
 
+    public User() {
+    }
+
+    public User(Integer id, String username, String password, Byte gender, Date birthday, Date lastLoginTime, String lastLoginIp, Byte userLevel, String nickname, String mobile, String avatar, String weixinOpenid, Byte status, Date addTime, Date updateTime, Boolean deleted) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.lastLoginTime = lastLoginTime;
+        this.lastLoginIp = lastLoginIp;
+        this.userLevel = userLevel;
+        this.nickname = nickname;
+        this.mobile = mobile;
+        this.avatar = avatar;
+        this.weixinOpenid = weixinOpenid;
+        this.status = status;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.deleted = deleted;
+    }
+
     public Integer getId() {
         return id;
     }
