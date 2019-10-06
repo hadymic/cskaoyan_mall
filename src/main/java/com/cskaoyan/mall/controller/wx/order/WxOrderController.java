@@ -4,7 +4,9 @@ import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import com.cskaoyan.mall.vo.ordermanagement.SubmitVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +30,6 @@ public class WxOrderController {
     public BaseRespVo orderList(Page page, Integer showType){
         /*String token = (String) SecurityUtils.getSubject().getPrincipal();*/
         Integer id = 1;
-        page.setSort("add_time");
-        page.setOrder("desc");
         return BaseRespVo.success(orderService.queryUserOrders(id,page,showType));
     }
 
@@ -38,8 +38,9 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("submit")
-    public BaseRespVo submit(){
-        return BaseRespVo.success(null);
+    public BaseRespVo submit(@RequestBody SubmitVo submitVo){
+        int id = 1;
+        return BaseRespVo.success(orderService.insertOrder(id,submitVo));
     }
 
     /**
@@ -47,8 +48,9 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("prepay")
-    public BaseRespVo prepay(){
-        return BaseRespVo.success(null);
+    public BaseRespVo prepay(@RequestBody Integer orderId){
+        int i = orderService.updatePrepay(orderId);
+        return BaseRespVo.success("成功");
     }
 
     /**
@@ -56,8 +58,8 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("detail")
-    public BaseRespVo detail(){
-        return BaseRespVo.success(null);
+    public BaseRespVo detail(Integer orderId){
+        return BaseRespVo.success(orderService.queryUserOrderInfo(orderId));
     }
 
     /**

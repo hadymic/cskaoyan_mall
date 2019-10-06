@@ -11,6 +11,7 @@ import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.util.WxListBean;
 import com.cskaoyan.mall.vo.ordermanagement.*;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,10 +73,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ListBeanForOrder<UserOrdersVo> queryUserOrders(Integer userId, Page page, Integer showType) {
+    public WxListBean<UserOrdersVo> queryUserOrders(Integer userId, Page page, Integer showType) {
         PageUtils.startPage(page);
         List<UserOrdersVo> orderList = orderMapper.queryUserOrders(userId, showType);
-        for (UserOrdersVo userOrdersVo : orderList) {
+        PageInfo<UserOrdersVo> pageInfo = new PageInfo<>(orderList);
+        for (UserOrdersVo userOrdersVo : pageInfo.getList()) {
             List<UserOrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsList(userOrdersVo.getId());
             userOrdersVo.setGoodsList(goodsList);
             HandleOption handleOption = HandleOption.get(userOrdersVo.getOrderStatus(), goodsList.get(0).getComment() == 0);
@@ -84,7 +86,31 @@ public class OrderServiceImpl implements OrderService {
             userOrdersVo.setIsGroupin(userOrdersVo.getGroupon() != null);
             userOrdersVo.setGroupon(null);
         }
-        PageInfo<UserOrdersVo> pageInfo = new PageInfo<>(orderList);
-        return new ListBeanForOrder<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageNum());
+        return new WxListBean<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPages());
+    }
+
+    @Override
+    public Map queryUserOrderInfo(Integer orderId) {
+        Map<String,Object> map = new HashMap<>(2);
+        List<OrderGoods> orderGoods = orderGoodsMapper.queryOrderGoodsByOrderId(orderId);
+        OrderInfo orderInfo = orderMapper.queryOrderInfo(orderId);
+        HandleOption handleOption = HandleOption.get(orderInfo.getOrderStatus(), orderGoods.get(0).getComment() == 0);
+        orderInfo.setHandleOption(handleOption);
+        orderInfo.setOrderStatusText(handleOption.getStatusText());
+        map.put("orderGoods",orderGoods);
+        map.put("orderInfo",orderInfo);
+        return map;
+    }
+
+    @Override
+    public int insertOrder(int id, SubmitVo submitVo) {
+
+        return 0;
+    }
+
+    @Override
+    public int updatePrepay(Integer orderId) {
+
+        return 1;
     }
 }
