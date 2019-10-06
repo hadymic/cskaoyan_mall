@@ -76,6 +76,9 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Order">
+      <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+          select last_insert_id() as id
+      </selectKey>
     insert into cskaoyan_mall_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -414,9 +417,10 @@
     <result column="coupon_price" jdbcType="DECIMAL" property="couponPrice" />
     <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
   </resultMap>
   <select id="queryOrderInfo" resultMap="OrderInfoMap">
-    select id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_price, actual_price, add_time
+    select id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_price, actual_price, add_time, end_time
     from cskaoyan_mall_order
     where id = #{id} and deleted = 0
   </select>

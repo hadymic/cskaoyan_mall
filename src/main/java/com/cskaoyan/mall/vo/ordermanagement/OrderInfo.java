@@ -34,6 +34,9 @@ public class OrderInfo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
+
     private HandleOption handleOption;
 
     public Integer getId() {
@@ -138,5 +141,13 @@ public class OrderInfo {
 
     public void setHandleOption(HandleOption handleOption) {
         this.handleOption = handleOption;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }

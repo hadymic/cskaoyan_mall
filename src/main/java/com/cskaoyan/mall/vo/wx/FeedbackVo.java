@@ -1,33 +1,33 @@
-package com.cskaoyan.mall.bean;
+package com.cskaoyan.mall.vo.wx;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class Comment {
+public class FeedbackVo {
     private Integer id;
-
-    private Integer valueId;
-
-    private Byte type;
-
-    private String content;
 
     private Integer userId;
 
+    private String username;
+
+    private String mobile;
+
+    private String feedType;
+
+    private String content;
+
+    private Integer status;
+
     private Boolean hasPicture;
 
-    private String[] picUrls;
-
-    private Short star;
-    @JsonFormat(pattern = "yy-MM-dd HH:mm:ss")
+    private String[]  picUrls;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
-    @JsonFormat(pattern = "yy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private Boolean deleted;
-
-    private Integer orderGoodsId;
 
     public Integer getId() {
         return id;
@@ -37,20 +37,36 @@ public class Comment {
         this.id = id;
     }
 
-    public Integer getValueId() {
-        return valueId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setValueId(Integer valueId) {
-        this.valueId = valueId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Byte getType() {
-        return type;
+    public String getUsername() {
+        return username;
     }
 
-    public void setType(Byte type) {
-        this.type = type;
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
+
+    public String getFeedType() {
+        return feedType;
+    }
+
+    public void setFeedType(String feedType) {
+        this.feedType = feedType == null ? null : feedType.trim();
     }
 
     public String getContent() {
@@ -61,12 +77,12 @@ public class Comment {
         this.content = content == null ? null : content.trim();
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Boolean getHasPicture() {
@@ -85,14 +101,7 @@ public class Comment {
         this.picUrls = picUrls;
     }
 
-    public Short getStar() {
-        return star;
-    }
-
-    public void setStar(Short star) {
-        this.star = star;
-    }
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getAddTime() {
         return addTime;
     }
@@ -100,7 +109,7 @@ public class Comment {
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getUpdateTime() {
         return updateTime;
     }
@@ -115,13 +124,5 @@ public class Comment {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public Integer getOrderGoodsId() {
-        return orderGoodsId;
-    }
-
-    public void setOrderGoodsId(Integer orderGoodsId) {
-        this.orderGoodsId = orderGoodsId;
     }
 }

@@ -21,6 +21,28 @@
     from cskaoyan_mall_keyword
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectHotKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_keyword
+    where is_hot = 1 and deleted = 0
+    order by update_time desc
+  </select>
+  <select id="selectDefaultKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_keyword
+    where is_default = 1 and deleted = 0
+    order by update_time desc
+    limit 10 offset 0
+  </select>
+  <select id="selectHotByKeyword" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_keyword
+    where is_default = 1 and deleted = 0 and keyword like #{key}
+    order by update_time desc
+  </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     update cskaoyan_mall_keyword
     set deleted = 1

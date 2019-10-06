@@ -18,4 +18,12 @@ public interface CommentService {
      * @return
      */
     int updateCommentReply(ReplyVo replyVo);
+
+    /**
+     * 添加评论
+     * @param comment
+     * @param userId
+     * @return
+     */
+    int insertComment(Comment comment, int userId);
 }

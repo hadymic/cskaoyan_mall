@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.wx.order;
 
+import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.Page;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author jszza
@@ -48,8 +51,9 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("prepay")
-    public BaseRespVo prepay(@RequestBody Integer orderId){
-        int i = orderService.updatePrepay(orderId);
+    public BaseRespVo prepay(@RequestBody Map map){
+        Integer orderId = Integer.valueOf((String) map.get("orderId"));
+        int i = orderService.updateOrderPrepay(orderId);
         return BaseRespVo.success("成功");
     }
 
@@ -67,8 +71,10 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("cancel")
-    public BaseRespVo cancel(){
-        return BaseRespVo.success(null);
+    public BaseRespVo cancel(@RequestBody Map map){
+        Integer orderId = (Integer) map.get("orderId");
+        int i = orderService.updateOrderCancel(orderId);
+        return BaseRespVo.success("成功");
     }
 
     /**
@@ -76,7 +82,9 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("refund")
-    public BaseRespVo refund(){
+    public BaseRespVo refund(@RequestBody Map map){
+        Integer orderId = (Integer) map.get("orderId");
+        int i = orderService.updateOrderRefund(orderId);
         return BaseRespVo.success(null);
     }
 
@@ -85,8 +93,10 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("delete")
-    public BaseRespVo delete(){
-        return BaseRespVo.success(null);
+    public BaseRespVo delete(@RequestBody Map map){
+        Integer orderId = (Integer) map.get("orderId");
+        int i = orderService.deleteOrder(orderId);
+        return BaseRespVo.success("成功");
     }
 
     /**
@@ -94,7 +104,9 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("confirm")
-    public BaseRespVo confirm(){
+    public BaseRespVo confirm(@RequestBody Map map){
+        Integer orderId = (Integer) map.get("orderId");
+        int i = orderService.updateOrderConfirm(orderId);
         return BaseRespVo.success(null);
     }
 
@@ -103,8 +115,8 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("goods")
-    public BaseRespVo goods(){
-        return BaseRespVo.success(null);
+    public BaseRespVo goods(Integer orderId, Integer goodsId){
+        return BaseRespVo.success(orderService.queryOrderGoods(orderId, goodsId));
     }
 
     /**
@@ -112,7 +124,8 @@ public class WxOrderController {
      * @return
      */
     @RequestMapping("comment")
-    public BaseRespVo comment(){
-        return BaseRespVo.success(null);
+    public BaseRespVo comment(@RequestBody Comment comment){
+        int id = 1;
+        return BaseRespVo.success(commentService.insertComment(comment, id));
     }
 }

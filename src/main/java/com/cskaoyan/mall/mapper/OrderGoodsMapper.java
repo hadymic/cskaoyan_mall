@@ -39,4 +39,19 @@ public interface OrderGoodsMapper {
      * @return
      */
     List<UserOrderGoods> queryOrderGoodsList(@Param("orderId") Integer orderId);
+
+    /**
+     * 查询订单的货品id和数量
+     * @param orderId
+     * @return
+     */
+    List<OrderGoods> queryOrderGoodsForPay(Integer orderId);
+
+    /**
+     * 查询orderGoods信息
+     * @param orderId
+     * @param goodsId
+     * @return
+     */
+    OrderGoods queryOrderGoods(@Param("orderId") Integer orderId,@Param("goodsId") Integer goodsId);
 }

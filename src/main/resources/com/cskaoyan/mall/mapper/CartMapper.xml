@@ -18,7 +18,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications, 
+    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications,
     checked, pic_url, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -36,14 +36,14 @@
       select last_insert_id()
     </selectKey>
     insert into cskaoyan_mall_cart (user_id, goods_id,
-      goods_sn, goods_name, product_id, 
-      price, number, specifications, 
-      checked, pic_url, add_time, 
+      goods_sn, goods_name, product_id,
+      price, number, specifications,
+      checked, pic_url, add_time,
       update_time, deleted)
     values (#{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
-      #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR}, 
-      #{checked,jdbcType=BIT}, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{goodsSn,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},
+      #{price,jdbcType=DECIMAL}, #{number,jdbcType=SMALLINT}, #{specifications,jdbcType=VARCHAR},
+      #{checked,jdbcType=BIT}, #{picUrl,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Cart">
@@ -262,4 +262,11 @@
     set deleted = 1
     where deleted = 0 and product_id = #{productId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=INTEGER}
   </update>
+
+  <update id="deleteByUserId">
+    update cskaoyan_mall_cart
+    set deleted = 1
+    where deleted = 0 and user_id = #{userId,jdbcType=INTEGER} and checked = #{checked}
+  </update>
+
 </mapper>
