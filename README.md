@@ -102,8 +102,8 @@ cskaoyan商城项目
 - [x] ```OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息```
 
 // 张涛
-- [ ] ```FeedbackAdd: WxApiRoot + 'feedback/submit', //添加反馈```
-- [ ] ```FootprintList: WxApiRoot + 'footprint/list', //足迹列表```
+- [x] ```FeedbackAdd: WxApiRoot + 'feedback/submit', //添加反馈```
+- [x] ```FootprintList: WxApiRoot + 'footprint/list', //足迹列表```
 - [ ] ```FootprintDelete: WxApiRoot + 'footprint/delete', //删除足迹```
 
 //
