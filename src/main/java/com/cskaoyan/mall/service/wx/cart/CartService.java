@@ -5,7 +5,7 @@ import com.cskaoyan.mall.vo.wx.cart.*;
 import java.math.BigDecimal;
 
 public interface CartService {
-    CartListVo cartList(int id);
+    CartListVo cartList(int userId);
 
     String addCart(CartAddVo vo, int userId);
 
@@ -16,4 +16,8 @@ public interface CartService {
     int fastAdd(CartAddVo vo, int userId);
 
     CartCheckoutReturnVo checkout(CartCheckoutVo vo);
+
+    boolean updateCart(CartUpdateVo vo);
+
+    boolean deleteCart(CartDeleteVo vo, int userId);
 }

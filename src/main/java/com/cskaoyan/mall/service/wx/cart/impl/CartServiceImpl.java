@@ -138,6 +138,7 @@ public class CartServiceImpl implements CartService {
         int userId = 1;
         CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
 
+        //商品总价
         BigDecimal goodsTotalPrice = BigDecimal.ZERO;
         if (vo.getCartId() != 0) {
             Cart cart = cartMapper.selectByPrimaryKey(vo.getCartId());
@@ -154,6 +155,7 @@ public class CartServiceImpl implements CartService {
         }
         returnVo.setGoodsTotalPrice(goodsTotalPrice);
 
+        //地址
         Address address;
         if (vo.getAddressId() != 0) {
             address = addressMapper.selectByPrimaryKey(vo.getAddressId());
@@ -163,6 +165,7 @@ public class CartServiceImpl implements CartService {
         returnVo.setCheckedAddress(address);
         returnVo.setAddressId(address.getId());
 
+        //团购优惠价格
         BigDecimal grouponPrice = BigDecimal.ZERO;
         if (vo.getGrouponRulesId() != 0) {
             GrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(vo.getGrouponRulesId());
@@ -171,6 +174,7 @@ public class CartServiceImpl implements CartService {
         }
         returnVo.setGrouponPrice(grouponPrice);
 
+        //优惠券的价格
         BigDecimal couponPrice = BigDecimal.ZERO;
         if (vo.getCouponId() != 0 && vo.getCouponId() != -1) {
             Coupon coupon = couponMapper.selectByPrimaryKey(vo.getCouponId());
@@ -179,9 +183,35 @@ public class CartServiceImpl implements CartService {
         }
         returnVo.setCouponPrice(couponPrice);
 
+        //订单总价
+        BigDecimal orderTotalPrice = BigDecimal.ZERO;
+        returnVo.setOrderTotalPrice(orderTotalPrice);
+
+        //快递费
         BigDecimal freightPrice = new BigDecimal(10);
         returnVo.setFreightPrice(freightPrice);
+        //实际需要支付的总价
         returnVo.setActualPrice(goodsTotalPrice.add(freightPrice).subtract(couponPrice));
         return returnVo;
+    }
+
+    @Override
+    public boolean updateCart(CartUpdateVo vo) {
+        Cart cart = new Cart();
+        cart.setId(vo.getId());
+        cart.setNumber(vo.getNumber());
+        cart.setUpdateTime(new Date());
+        cart.setGoodsId(vo.getGoodsId());
+        cart.setProductId(vo.getProductId());
+        return cartMapper.updateByPrimaryKeySelective(cart) == 1;
+    }
+
+    @Override
+    public boolean deleteCart(CartDeleteVo vo, int userId) {
+        boolean flag = true;
+        for (Integer productId : vo.getProductIds()) {
+            flag &= (cartMapper.deleteByProductIdAndUserId(productId, userId) == 1);
+        }
+        return flag;
     }
 }

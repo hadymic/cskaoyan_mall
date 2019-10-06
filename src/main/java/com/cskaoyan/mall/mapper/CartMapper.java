@@ -42,4 +42,6 @@ public interface CartMapper {
      * @return
      */
     Cart queryByProductId(@Param("userId") int userId, @Param("productId") int productId);
+
+    int deleteByProductIdAndUserId(Integer productId, Integer userId);
 }

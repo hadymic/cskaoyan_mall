@@ -85,6 +85,9 @@ public class WxCartController {
     public BaseRespVo fastAdd(@RequestBody CartAddVo vo) {
         int userId = 1;
         int cartId = cartService.fastAdd(vo, userId);
+        if (cartId == -1) {
+            return BaseRespVo.fail("商品太抢手啦，库存已空哦！");
+        }
         return BaseRespVo.success(cartId);
     }
 
@@ -98,5 +101,35 @@ public class WxCartController {
     public BaseRespVo checkout(CartCheckoutVo vo) {
         CartCheckoutReturnVo returnVo = cartService.checkout(vo);
         return BaseRespVo.success(returnVo);
+    }
+
+    /**
+     * 编辑购物车
+     *
+     * @param vo
+     * @return
+     */
+    @PostMapping("update")
+    public BaseRespVo updateCart(@RequestBody CartUpdateVo vo) {
+        boolean flag = cartService.updateCart(vo);
+        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("编辑出错啦，请稍后重试！");
+    }
+
+    /**
+     * 删除购物车
+     *
+     * @param vo
+     * @return
+     */
+    @PostMapping("delete")
+    public BaseRespVo deleteCart(@RequestBody CartDeleteVo vo) {
+        int userId = 1;
+        boolean flag = cartService.deleteCart(vo, userId);
+        if (flag) {
+            CartListVo cartListVo = cartService.cartList(userId);
+            return BaseRespVo.success(cartListVo);
+        } else {
+            return BaseRespVo.fail("删除出错啦，请稍后重试！");
+        }
     }
 }
