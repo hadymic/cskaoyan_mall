@@ -4,6 +4,7 @@ import com.cskaoyan.mall.service.wx.groupon.WxGroupOnService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.WxListBean;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import com.cskaoyan.mall.vo.wx.groupon.WxGrouponDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,7 +45,7 @@ public class WxGroupOnController {
 
     @RequestMapping("detail")
     public BaseRespVo detail(int grouponId){
-        //wxGroupOnService.selectGrouponById();
-        return BaseRespVo.success(null);
+        WxGrouponDetailVo wxGrouponDetailVo = wxGroupOnService.selectGrouponById(grouponId);
+        return BaseRespVo.success(wxGrouponDetailVo);
     }
 }

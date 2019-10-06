@@ -2,6 +2,9 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Order;
 
+import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.vo.ordermanagement.OrderInfo;
+import com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo;
 import com.cskaoyan.mall.vo.user.UserIndexVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -56,5 +59,21 @@ public interface OrderMapper {
      * @param status
      * @return
      */
-    Integer queryUserOrders(@Param("id")Integer id,@Param("status") Short status);
+    Integer queryUserOrdersNumber(@Param("id")Integer id,@Param("status") Short status);
+
+    /**
+     * 查询用户订单
+     * @param userId
+     * @param showType
+     * @return
+     */
+    List<UserOrdersVo> queryUserOrders(@Param("userId") Integer userId, @Param("showType") Integer showType);
+
+    /**
+     * 查询user的order详情
+     * @param id 订单id
+     * @return
+     */
+    OrderInfo queryOrderInfo(Integer id);
+
 }

@@ -35,6 +35,12 @@
     from cskaoyan_mall_groupon
     where groupon_id = #{gid} and deleted = 0
   </select>
+  <select id="selectGrouponByGrouponId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon
+    where groupon_id = #{gid} and deleted = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}

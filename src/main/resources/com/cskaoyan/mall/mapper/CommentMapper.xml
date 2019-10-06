@@ -55,6 +55,9 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Comment">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id() as id
+    </selectKey>
     insert into cskaoyan_mall_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

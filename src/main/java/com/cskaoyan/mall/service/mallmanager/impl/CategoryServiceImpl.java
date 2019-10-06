@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.mallmanager.impl;
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CategoryMapper;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
@@ -118,7 +119,13 @@ public class CategoryServiceImpl implements CategoryService {
     public List<FloorGoodsVo> selectFloorGoodsList(int floorListSize, int floorGoodsListSize) {
         List<FloorGoodsVo> floorGoodsList = categoryMapper.selectFloorList(floorListSize);
         for (FloorGoodsVo floorGoods : floorGoodsList) {
-            floorGoods.setGoodsList(categoryMapper.selectFloorGoodsList(floorGoodsListSize, floorGoods.getId()));
+            List<Goods> goodsList = categoryMapper.selectFloorGoodsList(floorGoodsListSize, floorGoods.getId());
+            for (Goods goods : goodsList) {
+                if (!goods.getPicUrl().startsWith("http")){
+                    goods.setPicUrl(new MyFileConfig().addPicUrl(goods.getPicUrl()));
+                }
+            }
+            floorGoods.setGoodsList(goodsList);
         }
         return floorGoodsList;
     }

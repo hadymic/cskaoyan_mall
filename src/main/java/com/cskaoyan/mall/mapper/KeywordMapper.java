@@ -43,4 +43,24 @@ public interface KeywordMapper {
      * @return
      */
     int insertKeyWord(@Param("record") Keyword record);
+
+    /**
+     * Zeng-jz
+     * @return
+     */
+    List<Keyword> selectHotKeyword();
+
+    /**
+     * Zeng-jz
+     * 搜索默认keyword
+     * @return
+     */
+    List<Keyword> selectDefaultKeyword();
+
+    /**
+     * Zeng-jz
+     * @param key
+     * @return
+     */
+    List<Keyword> selectHotByKeyword(@Param("key") String key);
 }

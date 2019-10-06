@@ -1,15 +1,12 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.User;
-
-
 import com.cskaoyan.mall.vo.statisticalform.StatUserVo;
+import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
+import com.cskaoyan.mall.vo.wx.groupon.WxUserVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-
-import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
-import org.apache.ibatis.annotations.Param;
 
 
 public interface UserMapper {
@@ -85,4 +82,12 @@ public interface UserMapper {
      * @return
      */
     String queryPasswordByUsername(String principal);
+
+    /**
+     * Zeng-jz
+     *
+     * @param userId
+     * @return
+     */
+    WxUserVo selectWxUserVoById(@Param("id") Integer userId);
 }

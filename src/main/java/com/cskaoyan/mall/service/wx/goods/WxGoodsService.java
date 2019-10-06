@@ -17,12 +17,12 @@ public interface WxGoodsService {
     int count();
 
     /**
-     * @author hjl 商品按种类显示
+     * @author hjl 商品按种类显示//还要处理热卖，新品，关键字搜索..........
      * @param page
      * @param categoryId
      * @return
      */
-    GoodsByCategory PageGoodsByCategory(Page page, int categoryId);
+    GoodsByCategory PageGoodsByCategory(Page page,Goods goods);
 
     List<Goods> showRelatedGoods(int id);
 

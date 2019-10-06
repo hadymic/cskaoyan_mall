@@ -19,10 +19,22 @@
     from cskaoyan_mall_search_history
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectHistoryKeywordList" resultType="com.cskaoyan.mall.bean.SearchHistory">
+    select keyword
+    from cskaoyan_mall_search_history
+    where user_id = #{uid} and deleted = 0
+    order by update_time desc
+    limit 20 offset 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_search_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <update id="deleteByUserId" parameterType="int">
+    update cskaoyan_mall_search_history
+    set deleted = 1
+    where user_id = #{uid}
+  </update>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.SearchHistory">
     insert into cskaoyan_mall_search_history (id, user_id, keyword,
       from, add_time, update_time,

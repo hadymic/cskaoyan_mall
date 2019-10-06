@@ -76,6 +76,9 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Order">
+      <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+          select last_insert_id() as id
+      </selectKey>
     insert into cskaoyan_mall_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -371,7 +374,54 @@
         select count(id) from cskaoyan_mall_order where deleted = 0
   </select>
 
-  <select id="queryUserOrders" resultType="java.lang.Integer">
+  <select id="queryUserOrdersNumber" resultType="java.lang.Integer">
         select count(id) from cskaoyan_mall_order where user_id = #{id} and order_status = #{status}
+  </select>
+
+  <resultMap id="UserOrderMap" type="com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo">
+    <id column="id" property="id" />
+    <result column="order_sn" property="orderSn" />
+    <result column="order_status" property="orderStatus" />
+    <result column="actual_price" property="actualPrice"/>
+    <association property="groupon" javaType="com.cskaoyan.mall.bean.Groupon">
+      <result column="grouponId" property="id"/>
+    </association>
+  </resultMap>
+  <select id="queryUserOrders" resultMap="UserOrderMap">
+    select o.id, o.order_sn, o.order_status, o.actual_price, g.id as grouponId from cskaoyan_mall_order o
+    left join (select id,order_id from cskaoyan_mall_groupon where deleted = 0) g on o.id = g.order_id
+    where o.deleted = 0 and o.user_id = #{userId}
+    <if test="showType == 1">
+        and order_status = 101
+    </if>
+    <if test="showType == 2">
+        and order_status = 201
+    </if>
+    <if test="showType == 3">
+        and order_status = 301
+    </if>
+    <if test="showType == 4">
+        and order_status = 401 or order_status = 402
+    </if>
+  </select>
+
+  <resultMap id="OrderInfoMap" type="com.cskaoyan.mall.vo.ordermanagement.OrderInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+    <result column="order_status" jdbcType="SMALLINT" property="orderStatus" />
+    <result column="consignee" jdbcType="VARCHAR" property="consignee" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="freight_price" jdbcType="DECIMAL" property="freightPrice" />
+    <result column="coupon_price" jdbcType="DECIMAL" property="couponPrice" />
+    <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+  </resultMap>
+  <select id="queryOrderInfo" resultMap="OrderInfoMap">
+    select id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_price, actual_price, add_time, end_time
+    from cskaoyan_mall_order
+    where id = #{id} and deleted = 0
   </select>
 </mapper>

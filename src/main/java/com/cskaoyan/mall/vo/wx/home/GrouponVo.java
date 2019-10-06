@@ -7,7 +7,7 @@ import java.util.List;
 public class GrouponVo {
 
     private int goods_id;
-    private int groupon_menber;
+    private int groupon_member;
     private double groupon_price;
     private Goods goods;
 
@@ -19,12 +19,12 @@ public class GrouponVo {
         this.goods_id = goods_id;
     }
 
-    public int getGroupon_menber() {
-        return groupon_menber;
+    public int getGroupon_member() {
+        return groupon_member;
     }
 
-    public void setGroupon_menber(int groupon_menber) {
-        this.groupon_menber = groupon_menber;
+    public void setGroupon_member(int groupon_member) {
+        this.groupon_member = groupon_member;
     }
 
     public double getGroupon_price() {
