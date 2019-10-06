@@ -48,14 +48,14 @@ cskaoyan商城项目
 - [x] ```BrandDetail: WxApiRoot + 'brand/detail', //品牌详情```
 
 // 刘鑫
-- [ ] ```CartList: WxApiRoot + 'cart/index', //获取购物车的数据```
-- [ ] ```CartAdd: WxApiRoot + 'cart/add', // 添加商品到购物车```
-- [ ] ```CartFastAdd: WxApiRoot + 'cart/fastadd', // 立即购买商品```
-- [ ] ```CartUpdate: WxApiRoot + 'cart/update', // 更新购物车的商品```
-- [ ] ```CartDelete: WxApiRoot + 'cart/delete', // 删除购物车的商品```
-- [ ] ```CartChecked: WxApiRoot + 'cart/checked', // 选择或取消选择商品```
-- [ ] ```CartGoodsCount: WxApiRoot + 'cart/goodscount', // 获取购物车商品件数```
-- [ ] ```CartCheckout: WxApiRoot + 'cart/checkout', // 下单前信息确认```
+- [x] ```CartList: WxApiRoot + 'cart/index', //获取购物车的数据```
+- [x] ```CartAdd: WxApiRoot + 'cart/add', // 添加商品到购物车```
+- [x] ```CartFastAdd: WxApiRoot + 'cart/fastadd', // 立即购买商品```
+- [x] ```CartUpdate: WxApiRoot + 'cart/update', // 更新购物车的商品```
+- [x] ```CartDelete: WxApiRoot + 'cart/delete', // 删除购物车的商品```
+- [x] ```CartChecked: WxApiRoot + 'cart/checked', // 选择或取消选择商品```
+- [x] ```CartGoodsCount: WxApiRoot + 'cart/goodscount', // 获取购物车商品件数```
+- [x] ```CartCheckout: WxApiRoot + 'cart/checkout', // 下单前信息确认```
 
 //
 - [ ] ```CollectList: WxApiRoot + 'collect/list', //收藏列表```
