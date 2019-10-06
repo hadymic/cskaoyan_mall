@@ -23,4 +23,6 @@ public interface GrouponMapper {
     Groupon selectByUidAndGid(@Param("gid") int id, @Param("uid") int userId);
 
     int selectJoinerCountByGid(@Param("gid") int id);
+
+    List<Groupon> selectGrouponByGrouponId(@Param("gid") int grouponId);
 }

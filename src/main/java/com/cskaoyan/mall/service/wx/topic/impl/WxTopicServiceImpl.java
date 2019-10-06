@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +39,18 @@ public class WxTopicServiceImpl implements WxTopicService {
         map.put("topic",topic);
         map.put("goods",topic.getGoods());
         return map;
+    }
+
+    @Override
+    public List<Topic> queryRelatedTopic(int id) {
+        List<Topic> topicList = topicMapper.selectAllTopic();
+        Iterator iterator = topicList.iterator();
+        while (iterator.hasNext()){
+            Topic topic = (Topic) iterator.next();
+            if (id==topic.getId()){
+                iterator.remove();
+            }
+        }
+        return topicList;
     }
 }

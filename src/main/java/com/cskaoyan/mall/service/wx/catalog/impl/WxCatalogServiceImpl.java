@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.wx.catalog.impl;
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CategoryMapper;
 import com.cskaoyan.mall.service.wx.catalog.WxCatalogService;
 import com.cskaoyan.mall.vo.wx.catalog.WxCurrentCategoryVo;
@@ -29,12 +30,31 @@ public class WxCatalogServiceImpl implements WxCatalogService {
     public WxCurrentCategoryVo selectCategoryList(int id) {
         if (id == -1){
             List<Category> categoryList = categoryMapper.selectChannel();
+            categoryList = addUrl(categoryList);
             Category currentCategory = categoryList.get(0);
             List<Category> currentSubCategory = categoryMapper.selectChildren(currentCategory.getId());
+            currentSubCategory = addUrl(currentSubCategory);
             return new WxCurrentCategoryVo(categoryList, currentCategory, currentSubCategory);
         }
         Category currentCategory = categoryMapper.selectByPrimaryKey(id);
         List<Category> currentSubCategory = categoryMapper.selectChildren(id);
         return new WxCurrentCategoryVo(null, currentCategory, currentSubCategory);
+    }
+
+    /**
+     * 添加图片头
+     * @param categoryList
+     * @return
+     */
+    private List<Category> addUrl(List<Category> categoryList){
+        for (Category category : categoryList) {
+            if (!category.getPicUrl().startsWith("http")){
+                category.setPicUrl(new MyFileConfig().addPicUrl(category.getPicUrl()));
+            }
+            if (!category.getIconUrl().startsWith("http")){
+                category.setIconUrl(new MyFileConfig().addPicUrl(category.getIconUrl()));
+            }
+        }
+        return categoryList;
     }
 }

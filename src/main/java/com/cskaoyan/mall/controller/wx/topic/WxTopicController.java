@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.wx.topic;
 
+import com.cskaoyan.mall.bean.Topic;
 import com.cskaoyan.mall.service.wx.topic.WxTopicService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,6 +30,8 @@ public class WxTopicController {
 
     @RequestMapping("related")
     public BaseRespVo topicRelated(int id){
-        return BaseRespVo.success(null);//未写
+        //example的related每次都是同样四条数据,不合常理(搞个随机四条?)
+        List<Topic> topicList = wxTopicService.queryRelatedTopic(id);
+        return BaseRespVo.success(topicList);//未写
     }
 }
