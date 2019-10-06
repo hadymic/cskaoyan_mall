@@ -71,11 +71,11 @@ cskaoyan商城项目
 - [x] ```TopicDetail: WxApiRoot + 'topic/detail', //专题详情```
 - [x] ```TopicRelated: WxApiRoot + 'topic/related', //相关专题```
 
-//
-- [ ] ```SearchIndex: WxApiRoot + 'search/index', //搜索关键字```
+// 曾金泽
+- [x] ```SearchIndex: WxApiRoot + 'search/index', //搜索关键字```
 - [ ] ```SearchResult: WxApiRoot + 'search/result', //搜索结果```
-- [ ] ```SearchHelper: WxApiRoot + 'search/helper', //搜索帮助```
-- [ ] ```SearchClearHistory: WxApiRoot + 'search/clearhistory', //搜索历史清楚```
+- [x] ```SearchHelper: WxApiRoot + 'search/helper', //搜索帮助```
+- [x] ```SearchClearHistory: WxApiRoot + 'search/clearhistory', //搜索历史清楚```
 
 // 周建达
 - [ ] ```AddressList: WxApiRoot + 'address/list', //收货地址列表```
@@ -110,10 +110,10 @@ cskaoyan商城项目
 - [ ] ```UserFormIdCreate: WxApiRoot + 'formid/create', //用户FromId，用于发送模版消息```
 
 // 曾金泽
-- [ ] ```GroupOnList: WxApiRoot + 'groupon/list', //团购列表```
+- [x] ```GroupOnList: WxApiRoot + 'groupon/list', //团购列表```
 - [ ] ```GroupOn: WxApiRoot + 'groupon/query', //团购API-查询```
-- [ ] ```GroupOnMy: WxApiRoot + 'groupon/my', //团购API-我的团购```
-- [ ] ```GroupOnDetail: WxApiRoot + 'groupon/detail', //团购API-详情```
+- [x] ```GroupOnMy: WxApiRoot + 'groupon/my', //团购API-我的团购```
+- [x] ```GroupOnDetail: WxApiRoot + 'groupon/detail', //团购API-详情```
 - [ ] ```GroupOnJoin: WxApiRoot + 'groupon/join', //团购API-详情```
 
 // 张涛
