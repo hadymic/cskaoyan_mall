@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.mallmanager;
 
 import com.cskaoyan.mall.bean.Order;
+import com.cskaoyan.mall.bean.OrderGoods;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.WxListBean;
@@ -66,16 +67,52 @@ public interface OrderService {
 
     /**
      * 添加订单，取消在购物车的相关物品
-     * @param id
+     * @param userId
      * @param submitVo
      * @return
      */
-    int insertOrder(int id, SubmitVo submitVo);
+    Map insertOrder(int userId, SubmitVo submitVo);
 
     /**
      * 支付订单
      * @param orderId
      * @return
      */
-    int updatePrepay(Integer orderId);
+    int updateOrderPrepay(Integer orderId);
+
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    int updateOrderCancel(Integer orderId);
+
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    int updateOrderRefund(Integer orderId);
+
+    /**
+     * 删除订单
+     * @param orderId
+     * @return
+     */
+    int deleteOrder(Integer orderId);
+
+    /**
+     * 确认收货
+     * @param orderId
+     * @return
+     */
+    int updateOrderConfirm(Integer orderId);
+
+    /**
+     * 查询要评价的商品
+     * @param orderId
+     * @param goodsId
+     * @return
+     */
+    OrderGoods queryOrderGoods(Integer orderId, Integer goodsId);
 }

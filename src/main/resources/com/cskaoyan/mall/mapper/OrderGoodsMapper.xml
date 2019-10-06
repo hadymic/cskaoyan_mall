@@ -226,4 +226,17 @@
     from cskaoyan_mall_order_goods
     where order_id = #{orderId} and deleted = 0
   </select>
+
+  <select id="queryOrderGoodsForPay" resultMap="BaseResultMap">
+    select product_id, `number`
+    from cskaoyan_mall_order_goods
+    where order_id = #{orderId} and deleted = 0
+  </select>
+
+  <select id="queryOrderGoods" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_order_goods
+    where order_id = #{orderId} and goods_id = #{goodsId} and deleted = 0
+  </select>
 </mapper>

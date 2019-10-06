@@ -27,6 +27,8 @@ public class Comment {
 
     private Boolean deleted;
 
+    private Integer orderGoodsId;
+
     public Integer getId() {
         return id;
     }
@@ -113,5 +115,13 @@ public class Comment {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Integer getOrderGoodsId() {
+        return orderGoodsId;
+    }
+
+    public void setOrderGoodsId(Integer orderGoodsId) {
+        this.orderGoodsId = orderGoodsId;
     }
 }
