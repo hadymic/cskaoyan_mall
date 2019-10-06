@@ -90,16 +90,16 @@ cskaoyan商城项目
 - [ ] ```RegionList: WxApiRoot + 'region/list', //获取区域列表```
 
 // 穆杨
-- [ ] ```OrderSubmit: WxApiRoot + 'order/submit', // 提交订单```
-- [ ] ```OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话```
-- [ ] ```OrderList: WxApiRoot + 'order/list', //订单列表```
-- [ ] ```OrderDetail: WxApiRoot + 'order/detail', //订单详情```
-- [ ] ```OrderCancel: WxApiRoot + 'order/cancel', //取消订单```
-- [ ] ```OrderRefund: WxApiRoot + 'order/refund', //退款取消订单```
-- [ ] ```OrderDelete: WxApiRoot + 'order/delete', //删除订单```
-- [ ] ```OrderConfirm: WxApiRoot + 'order/confirm', //确认收货```
-- [ ] ```OrderGoods: WxApiRoot + 'order/goods', // 代评价商品信息```
-- [ ] ```OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息```
+- [x] ```OrderSubmit: WxApiRoot + 'order/submit', // 提交订单```
+- [x] ```OrderPrepay: WxApiRoot + 'order/prepay', // 订单的预支付会话```
+- [x] ```OrderList: WxApiRoot + 'order/list', //订单列表```
+- [x] ```OrderDetail: WxApiRoot + 'order/detail', //订单详情```
+- [x] ```OrderCancel: WxApiRoot + 'order/cancel', //取消订单```
+- [x] ```OrderRefund: WxApiRoot + 'order/refund', //退款取消订单```
+- [x] ```OrderDelete: WxApiRoot + 'order/delete', //删除订单```
+- [x] ```OrderConfirm: WxApiRoot + 'order/confirm', //确认收货```
+- [x] ```OrderGoods: WxApiRoot + 'order/goods', // 代评价商品信息```
+- [x] ```OrderComment: WxApiRoot + 'order/comment', // 评价订单商品信息```
 
 // 张涛
 - [ ] ```FeedbackAdd: WxApiRoot + 'feedback/submit', //添加反馈```
