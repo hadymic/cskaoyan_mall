@@ -51,6 +51,11 @@
     right JOIN cskaoyan_mall_order mo on mo.id = mg.order_id
     where mg.user_id = #{id} and mg.user_id != mg.creator_user_id
   </select>
+  <select id="selectWxUserVoById" resultType="com.cskaoyan.mall.vo.wx.groupon.WxUserVo">
+    select id, avatar, nickname
+    from cskaoyan_mall_user
+    where id = #{id} and deleted = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_user
     where id = #{id,jdbcType=INTEGER}

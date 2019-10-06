@@ -9,6 +9,7 @@ import java.util.List;
 
 
 import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
+import com.cskaoyan.mall.vo.wx.groupon.WxUserVo;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -62,4 +63,11 @@ public interface UserMapper {
     List<WxMyGroupVo> selectWxGroupVoById(int userId);
 
     List<WxMyGroupVo> selectWxGroupVoJoinById(int userId);
+
+    /**
+     * Zeng-jz
+     * @param userId
+     * @return
+     */
+    WxUserVo selectWxUserVoById(@Param("id") Integer userId);
 }
