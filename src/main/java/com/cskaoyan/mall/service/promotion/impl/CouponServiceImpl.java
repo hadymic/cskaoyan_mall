@@ -109,4 +109,6 @@ public class CouponServiceImpl implements CouponService {
         coupon.setUpdateTime(new Date());
         return couponMapper.updateByPrimaryKeySelective(coupon) == 1;
     }
+
+
 }

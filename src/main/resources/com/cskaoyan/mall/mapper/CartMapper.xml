@@ -25,7 +25,7 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_cart
@@ -205,6 +205,9 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
     where deleted = 0 and user_id = #{userId,jdbcType=INTEGER}
+    <if test="checked">
+      and checked = 1
+    </if>
   </select>
 
   <select id="queryByProductId" resultMap="BaseResultMap">
@@ -252,5 +255,11 @@
       </if>
     </set>
     where deleted = 0 and user_id = #{userId,jdbcType=INTEGER} and product_id = #{productId,jdbcType=INTEGER}
+  </update>
+
+  <update id="deleteByProductIdAndUserId">
+    update cskaoyan_mall_cart
+    set deleted = 1
+    where deleted = 0 and product_id = #{productId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

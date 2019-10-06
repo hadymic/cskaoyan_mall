@@ -8,6 +8,7 @@ import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.permission.PermissionVo;
 import com.cskaoyan.mall.vo.permission.PermissionsVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("admin/role/list")
+    @RequiresPermissions(value = "admin:role:list")
     public BaseRespVo role(Page page, Role role) {
         ListBean<Role> roles = roleService.queryRole(page, role.getName());
         return BaseRespVo.success(roles);
@@ -43,6 +45,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("admin/role/options")
+    @RequiresPermissions(value = "admin:role:options")
     public BaseRespVo roleOptions() {
         List<BaseValueLabel> category = roleService.roleOptions();
         return BaseRespVo.success(category);
@@ -56,6 +59,7 @@ public class RoleController {
      * @return
      */
     @RequestMapping("admin/role/update")
+    @RequiresPermissions(value = "admin:role:update")
     public BaseRespVo update(@RequestBody Role role) {
         role.setUpdateTime(new Date());
         role.setAddTime(new Date());
@@ -72,6 +76,7 @@ public class RoleController {
      */
 
     @RequestMapping("admin/role/delete")
+    @RequiresPermissions(value = "admin:role:delete")
     public BaseRespVo delete(@RequestBody Role role) {
         String delete = roleService.delete(role);
         return delete == null ? BaseRespVo.success(null) : BaseRespVo.fail(delete);

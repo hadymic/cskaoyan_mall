@@ -1,24 +1,16 @@
 package com.cskaoyan.mall.service.wx.cart.impl;
 
-import com.cskaoyan.mall.bean.Cart;
-import com.cskaoyan.mall.bean.Goods;
-import com.cskaoyan.mall.bean.GoodsProduct;
-import com.cskaoyan.mall.mapper.CartMapper;
-import com.cskaoyan.mall.mapper.GoodsMapper;
-import com.cskaoyan.mall.mapper.GoodsProductMapper;
+import com.cskaoyan.mall.bean.*;
+import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.wx.cart.CartService;
-import com.cskaoyan.mall.vo.wx.cart.CartAddVo;
-import com.cskaoyan.mall.vo.wx.cart.CartCheckedVo;
-import com.cskaoyan.mall.vo.wx.cart.CartListVo;
-import com.cskaoyan.mall.vo.wx.cart.CartTotal;
+import com.cskaoyan.mall.vo.wx.cart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -31,10 +23,19 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private GoodsProductMapper goodsProductMapper;
 
+    @Autowired
+    private AddressMapper addressMapper;
+
+    @Autowired
+    private GrouponRulesMapper grouponRulesMapper;
+
+    @Autowired
+    private CouponMapper couponMapper;
+
     @Override
     public CartListVo cartList(int id) {
         CartListVo vo = new CartListVo();
-        List<Cart> carts = cartMapper.queryByUserId(id);
+        List<Cart> carts = cartMapper.queryByUserId(id, false);
         vo.setCartList(carts);
         BigDecimal checkedGoodsAmount = BigDecimal.ZERO;
         BigDecimal checkedGoodsCount = BigDecimal.ZERO;
@@ -97,7 +98,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public BigDecimal goodsCount(int userId) {
         //从数据库查询商品总数
-        List<Cart> carts = cartMapper.queryByUserId(userId);
+        List<Cart> carts = cartMapper.queryByUserId(userId, false);
         BigDecimal goodsCount = BigDecimal.ZERO;
         for (Cart cart1 : carts) {
             BigDecimal num = new BigDecimal(cart1.getNumber());
@@ -130,5 +131,87 @@ public class CartServiceImpl implements CartService {
             cartMapper.updateByPrimaryKey(cartFromDb);
             return cartFromDb.getId();
         }
+    }
+
+    @Override
+    public CartCheckoutReturnVo checkout(CartCheckoutVo vo) {
+        int userId = 1;
+        CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
+
+        //商品总价
+        BigDecimal goodsTotalPrice = BigDecimal.ZERO;
+        if (vo.getCartId() != 0) {
+            Cart cart = cartMapper.selectByPrimaryKey(vo.getCartId());
+            List<Cart> carts = new ArrayList<>();
+            carts.add(cart);
+            returnVo.setCheckedGoodsList(carts);
+            goodsTotalPrice = cart.getPrice().multiply(new BigDecimal(cart.getNumber()));
+        } else {
+            List<Cart> carts = cartMapper.queryByUserId(userId, true);
+            returnVo.setCheckedGoodsList(carts);
+            for (Cart cart : carts) {
+                goodsTotalPrice = goodsTotalPrice.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
+            }
+        }
+        returnVo.setGoodsTotalPrice(goodsTotalPrice);
+
+        //地址
+        Address address;
+        if (vo.getAddressId() != 0) {
+            address = addressMapper.selectByPrimaryKey(vo.getAddressId());
+        } else {
+            address = addressMapper.selectDefaultAddressByUserId(userId);
+        }
+        returnVo.setCheckedAddress(address);
+        returnVo.setAddressId(address.getId());
+
+        //团购优惠价格
+        BigDecimal grouponPrice = BigDecimal.ZERO;
+        if (vo.getGrouponRulesId() != 0) {
+            GrouponRules grouponRules = grouponRulesMapper.selectByPrimaryKey(vo.getGrouponRulesId());
+            returnVo.setGrouponRulesId(grouponRules.getId());
+            grouponPrice = grouponRules.getDiscount();
+        }
+        returnVo.setGrouponPrice(grouponPrice);
+
+        //优惠券的价格
+        BigDecimal couponPrice = BigDecimal.ZERO;
+        if (vo.getCouponId() != 0 && vo.getCouponId() != -1) {
+            Coupon coupon = couponMapper.selectByPrimaryKey(vo.getCouponId());
+            returnVo.setCouponId(coupon.getId());
+            couponPrice = coupon.getDiscount();
+        }
+        returnVo.setCouponPrice(couponPrice);
+
+        //订单总价
+        BigDecimal orderTotalPrice = BigDecimal.ZERO;
+        returnVo.setOrderTotalPrice(orderTotalPrice);
+
+        //快递费
+        BigDecimal freightPrice = new BigDecimal(10);
+        returnVo.setFreightPrice(freightPrice);
+        //实际需要支付的总价
+        returnVo.setActualPrice(goodsTotalPrice.add(freightPrice).subtract(couponPrice));
+        return returnVo;
+    }
+
+    @Override
+    public boolean updateCart(CartUpdateVo vo) {
+        Cart cart = new Cart();
+        cart.setId(vo.getId());
+        cart.setNumber(vo.getNumber());
+        cart.setUpdateTime(new Date());
+        cart.setGoodsId(vo.getGoodsId());
+        cart.setProductId(vo.getProductId());
+        return cartMapper.updateByPrimaryKeySelective(cart) == 1;
+    }
+
+    @Override
+    public boolean deleteCart(CartDeleteVo vo, int userId) {
+        boolean flag = true;
+        for (Integer productId : vo.getProductIds()) {
+            flag &= (cartMapper.deleteByProductIdAndUserId(productId, userId) == 1);
+        }
+        return flag;
     }
 }

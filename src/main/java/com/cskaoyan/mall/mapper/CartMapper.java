@@ -24,7 +24,7 @@ public interface CartMapper {
      * @param userId
      * @return
      */
-    List<Cart> queryByUserId(int userId);
+    List<Cart> queryByUserId(@Param("userId") int userId, @Param("checked") boolean checked);
 
     /**
      * 根据商品id更新
@@ -42,4 +42,6 @@ public interface CartMapper {
      * @return
      */
     Cart queryByProductId(@Param("userId") int userId, @Param("productId") int productId);
+
+    int deleteByProductIdAndUserId(Integer productId, Integer userId);
 }

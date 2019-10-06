@@ -15,7 +15,7 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time, 
+    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time,
     share_url, payed, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -24,18 +24,29 @@
     from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUidAndGid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_groupon
+    where groupon_id = #{gid} and user_id = #{uid} and deleted = 0
+  </select>
+  <select id="selectJoinerCountByGid" resultType="java.lang.Integer">
+    select count(id)
+    from cskaoyan_mall_groupon
+    where groupon_id = #{gid} and deleted = 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Groupon">
-    insert into cskaoyan_mall_groupon (id, order_id, groupon_id, 
-      rules_id, user_id, creator_user_id, 
-      add_time, update_time, share_url, 
+    insert into cskaoyan_mall_groupon (id, order_id, groupon_id,
+      rules_id, user_id, creator_user_id,
+      add_time, update_time, share_url,
       payed, deleted)
-    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{grouponId,jdbcType=INTEGER}, 
-      #{rulesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{creatorUserId,jdbcType=INTEGER}, 
-      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{shareUrl,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{grouponId,jdbcType=INTEGER},
+      #{rulesId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{creatorUserId,jdbcType=INTEGER},
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{shareUrl,jdbcType=VARCHAR},
       #{payed,jdbcType=BIT}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Groupon">

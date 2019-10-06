@@ -10,6 +10,7 @@ import com.cskaoyan.mall.vo.wx.goodsmanagement.CommentVo;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.SpecificationList;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,10 +115,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     @Override
     public GoodsByCategory PageGoodsByCategory(Page page, int categoryId) {
-        PageUtils.startPage(page);
         List<Goods> goodsList = goodsMapper.selectGoodsListByCategoryId(categoryId);
         int count = goodsList.size();
-        //ListBean<Goods> goodsListBean = PageUtils.page(goodsList);
         List<Category> filterCategoryList = null;
         for (Goods goods : goodsList) {
             Category category = categoryMapper.selectByPrimaryKey(goods.getCategoryId());
@@ -131,7 +130,6 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     /**
      * 显示相关商品
-     *
      * @param id
      * @return
      */
@@ -147,5 +145,21 @@ public class WxGoodsServiceImpl implements WxGoodsService {
             }
         }
         return goodsList;
+    }
+
+    @Override
+    public GoodsByCategory PageGoodsByBrand(Page page, int brandId) {
+        PageUtils.startPage(page);
+       List<Goods> goodsList = goodsMapper.selectGoodsListByBrandId(brandId);
+       int count = goodsList.size();
+        List<Category> filterCategoryList = null;
+        for (Goods goods : goodsList) {
+            Category category = categoryMapper.selectByPrimaryKey(goods.getBrandId());
+            if (filterCategoryList == null) {
+                filterCategoryList = new ArrayList<>();
+            }
+            filterCategoryList.add(category);
+        }
+        return new GoodsByCategory(goodsList, count, filterCategoryList);
     }
 }

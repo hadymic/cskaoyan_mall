@@ -47,4 +47,10 @@ public interface BrandMapper {
      * @return
      */
     Brand selectById(@Param("id") int id);
+
+    /**
+     * @author hjl 查找所有brand
+     * @return
+     */
+    List<Brand> selectAllBrand();
 }

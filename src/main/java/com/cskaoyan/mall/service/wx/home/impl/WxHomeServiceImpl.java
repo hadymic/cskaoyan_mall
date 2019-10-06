@@ -23,6 +23,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 微信-分类目录service实现类
+ *
+ * author: Zeng-jz
+ */
 @Service
 public class WxHomeServiceImpl implements WxHomeService {
 

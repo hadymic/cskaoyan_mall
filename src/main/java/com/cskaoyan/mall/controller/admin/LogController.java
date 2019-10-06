@@ -6,6 +6,7 @@ import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class LogController {
      * @return
      */
     @RequestMapping("admin/log/list")
+    @RequiresPermissions(value = "admin:log:list")
     public BaseRespVo log(Page page, Log log) {
         ListBean<Log> logs = logService.queryLogs(page, log.getAdmin());
         return BaseRespVo.success(logs);

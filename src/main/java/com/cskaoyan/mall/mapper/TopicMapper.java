@@ -23,4 +23,10 @@ public interface TopicMapper {
     List<Topic> queryTopics(@Param("title") String title, @Param("subtitle") String subtitle);
 
     int insertSelectKey(Topic record);
+
+    /**
+     * @author hjl 专题显示
+     * @return
+     */
+    List<Topic> selectAllTopic();
 }
