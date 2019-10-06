@@ -86,7 +86,7 @@ cskaoyan商城项目
 //
 - [ ] ```ExpressQuery: WxApiRoot + 'express/query', //物流查询```
 
-//
+// 周建达
 - [ ] ```RegionList: WxApiRoot + 'region/list', //获取区域列表```
 
 // 穆杨
