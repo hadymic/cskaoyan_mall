@@ -44,4 +44,12 @@ public interface CartMapper {
     Cart queryByProductId(@Param("userId") int userId, @Param("productId") int productId);
 
     int deleteByProductIdAndUserId(Integer productId, Integer userId);
+
+    /**
+     * 删除购物车中的商品
+     * @param userId
+     * @param checked
+     * @return
+     */
+    int deleteByUserId(@Param("userId") int userId, @Param("checked") boolean checked);
 }

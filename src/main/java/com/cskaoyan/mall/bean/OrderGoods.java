@@ -36,6 +36,25 @@ public class OrderGoods {
 
     private Boolean deleted;
 
+    public OrderGoods() {
+    }
+
+    public OrderGoods(Integer orderId, Integer goodsId, String goodsName, String goodsSn, Integer productId, Short number, BigDecimal price, String[] specifications, String picUrl, Integer comment, Date addTime, Date updateTime, Boolean deleted) {
+        this.orderId = orderId;
+        this.goodsId = goodsId;
+        this.goodsName = goodsName;
+        this.goodsSn = goodsSn;
+        this.productId = productId;
+        this.number = number;
+        this.price = price;
+        this.specifications = specifications;
+        this.picUrl = picUrl;
+        this.comment = comment;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.deleted = deleted;
+    }
+
     public Integer getId() {
         return id;
     }
