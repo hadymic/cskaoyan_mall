@@ -61,15 +61,15 @@ cskaoyan商城项目
 - [ ] ```CollectList: WxApiRoot + 'collect/list', //收藏列表```
 - [ ] ```CollectAddOrDelete: WxApiRoot + 'collect/addordelete', //添加或取消收藏```
 
-//
+//黄俊龙
 - [ ] ```CommentList: WxApiRoot + 'comment/list', //评论列表```
 - [ ] ```CommentCount: WxApiRoot + 'comment/count', //评论总数```
 - [ ] ```CommentPost: WxApiRoot + 'comment/post', //发表评论```
 
 //黄俊龙
-- [ ] ```TopicList: WxApiRoot + 'topic/list', //专题列表```
-- [ ] ```TopicDetail: WxApiRoot + 'topic/detail', //专题详情```
-- [ ] ```TopicRelated: WxApiRoot + 'topic/related', //相关专题```
+- [x] ```TopicList: WxApiRoot + 'topic/list', //专题列表```
+- [x] ```TopicDetail: WxApiRoot + 'topic/detail', //专题详情```
+- [x] ```TopicRelated: WxApiRoot + 'topic/related', //相关专题```
 
 //
 - [ ] ```SearchIndex: WxApiRoot + 'search/index', //搜索关键字```
