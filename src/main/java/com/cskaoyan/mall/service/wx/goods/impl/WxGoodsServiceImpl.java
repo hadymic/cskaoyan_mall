@@ -74,20 +74,20 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         Set<String> set = new TreeSet<>();
-        for (GoodsSpecification specification : specifications) {
+        for (GoodsSpecification specification : specifications) {//商品规格的name
             set.add(specification.getSpecification());
         }
         List<SpecificationList> specificationLists = new ArrayList<>();
-        Iterator iterator =set.iterator();
-        while (iterator.hasNext()){
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {  //筛选同一规格名下的具体规格
             String name = (String) iterator.next();
             List<GoodsSpecification> newSpec = new ArrayList<>();
             for (GoodsSpecification specification : specifications) {
-                if (name.equals(specification.getSpecification())){
+                if (name.equals(specification.getSpecification())) {
                     newSpec.add(specification);
                 }
             }
-            specificationLists.add(new SpecificationList(name,newSpec));
+            specificationLists.add(new SpecificationList(name, newSpec));
         }
         wxGoodsDetailVo.setSpecificationList(specificationLists);
 
@@ -114,22 +114,38 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     }
 
     @Override
-    public GoodsByCategory PageGoodsByCategory(Page page, int categoryId) {
-        List<Goods> goodsList = goodsMapper.selectGoodsListByCategoryId(categoryId);
+    public GoodsByCategory PageGoodsByCategory(Page page, Goods goods) {
+        //还要处理热卖，新品，关键字搜索..........
+        List<Goods> goodsList = goodsMapper.selectNeedGoods(goods);
+        List<Category> filterCategoryList = new ArrayList<>();
+        //goodsList = goodsMapper.selectGoodsListByCategoryId(goods.getCategoryId());
         int count = goodsList.size();
-        List<Category> filterCategoryList = null;
-        for (Goods goods : goodsList) {
-            Category category = categoryMapper.selectByPrimaryKey(goods.getCategoryId());
-            if (filterCategoryList == null) {
-                filterCategoryList = new ArrayList<>();
+        if (goods.getIsHot() == null && goods.getIsNew() == null && goods.getName() == null) {//显示所有分类
+            List<Category> categoryList = categoryMapper.selectCategoryListByPid(0);
+            for (Category category : categoryList) {
+                List<Category> categoryList2 = categoryMapper.selectCategoryListByPid(category.getId());
+                for (Category category1 : categoryList2) {
+                    filterCategoryList.add(category1);
+                }
             }
-            filterCategoryList.add(category);
+        } else {//显示查找到商品的分类,去除重复的
+            Set<Integer> set = new TreeSet<>();
+            for (Goods goods1 : goodsList) {
+                set.add(goods1.getCategoryId());
+            }
+            Iterator iterator = set.iterator();
+            while (iterator.hasNext()){
+                Integer categoryId = (Integer) iterator.next();
+                Category category = categoryMapper.selectByPrimaryKey(categoryId);
+                filterCategoryList.add(category);
+            }
         }
         return new GoodsByCategory(goodsList, count, filterCategoryList);
     }
 
     /**
      * 显示相关商品
+     *
      * @param id
      * @return
      */
@@ -150,11 +166,11 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     @Override
     public GoodsByCategory PageGoodsByBrand(Page page, int brandId) {
         PageUtils.startPage(page);
-       List<Goods> goodsList = goodsMapper.selectGoodsListByBrandId(brandId);
-       int count = goodsList.size();
+        List<Goods> goodsList = goodsMapper.selectGoodsListByBrandId(brandId);
+        int count = goodsList.size();
         List<Category> filterCategoryList = null;
         for (Goods goods : goodsList) {
-            Category category = categoryMapper.selectByPrimaryKey(goods.getBrandId());
+            Category category = categoryMapper.selectByPrimaryKey(goods.getCategoryId());
             if (filterCategoryList == null) {
                 filterCategoryList = new ArrayList<>();
             }

@@ -27,12 +27,15 @@ public class WxGoodsController {
     }
 
     @RequestMapping("list")
-    public BaseRespVo goodsList(Page page, Integer categoryId, Integer brandId) {//商品分页
+    public BaseRespVo goodsList(Page page,Goods goods,String keyword) {//商品分页//isHot,isNew,keyword,categoryId
         GoodsByCategory goodsByCategory;
-        if (brandId ==null) {
-            goodsByCategory = wxGoodsService.PageGoodsByCategory(page, categoryId);
-        } else {
-            goodsByCategory = wxGoodsService.PageGoodsByBrand(page, brandId);
+        if (keyword!=null){
+            goods.setName(keyword);//根据名字模糊查找
+        }
+        if (goods.getBrandId()==null) {
+            goodsByCategory = wxGoodsService.PageGoodsByCategory(page,goods);
+        } else {//(categoryId==null)
+            goodsByCategory = wxGoodsService.PageGoodsByBrand(page, goods.getBrandId());
         }
         return BaseRespVo.success(goodsByCategory);
     }

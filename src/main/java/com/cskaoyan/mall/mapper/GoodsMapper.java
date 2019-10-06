@@ -60,4 +60,11 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectGoodsListByBrandId(@Param("brandId") int brandId);
+
+    /**
+     * @author hjl 按需返回 ，新品，热卖，模糊查找name，
+     * @param goods
+     * @return
+     */
+    List<Goods> selectNeedGoods(@Param("goods") Goods goods);
 }
