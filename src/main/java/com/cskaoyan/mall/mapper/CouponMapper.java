@@ -46,6 +46,8 @@ public interface CouponMapper {
 
 
     Coupon getCoupon(Integer id);
+
+    List<Coupon> showByStatus(Short status);
 }
 
 

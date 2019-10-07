@@ -357,4 +357,12 @@
     insert into   cskaoyan_mall_coupon_user(coupon_id,status,start_time,end_time)
       values (#{coupon_id},#{status},#{start_time},#{end_time})
   </insert>
+
+
+    <select id="showByStatus"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cskaoyan_mall_coupon where status=#{status}
+
+    </select>
 </mapper>

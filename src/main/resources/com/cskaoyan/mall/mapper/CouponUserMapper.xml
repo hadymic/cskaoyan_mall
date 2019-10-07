@@ -199,4 +199,11 @@
       #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}
     )
   </insert>
+
+<select id="queryByUserId"  resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List"/> from
+  cskaoyan_mall_coupon_user  where user_id=#{userId}
+</select>
+
 </mapper>

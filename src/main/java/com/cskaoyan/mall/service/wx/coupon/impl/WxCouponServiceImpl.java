@@ -1,7 +1,9 @@
 package com.cskaoyan.mall.service.wx.coupon.impl;
 
+import com.cskaoyan.mall.bean.Cart;
 import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.bean.CouponUser;
+import com.cskaoyan.mall.mapper.CartMapper;
 import com.cskaoyan.mall.mapper.CouponMapper;
 import com.cskaoyan.mall.mapper.CouponUserMapper;
 import com.cskaoyan.mall.service.wx.coupon.WxCouponService;
@@ -11,6 +13,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +24,9 @@ public class WxCouponServiceImpl implements WxCouponService {
     CouponMapper couponMapper;
 @Autowired
     CouponUserMapper couponUserMapper;
+@Autowired
+    CartMapper cartMapper;
+
     /**
      * 我的优惠券列表
      * author:zt
@@ -30,7 +37,8 @@ public class WxCouponServiceImpl implements WxCouponService {
     @Override
     public WxListBean<Coupon> showMyList(Page page, Coupon coupon) {
         PageUtils.startPage(page);
-        List<Coupon> coupons=couponUserMapper.queryCouponsByStatus(coupon.getStatus());
+        List<Coupon> coupons= couponMapper.showByStatus(coupon.getStatus());
+//        List<Coupon> coupons=couponUserMapper.queryCouponsByStatus(coupon.getStatus());
         return PageUtils.wxPage(coupons);
     }
 
@@ -83,14 +91,53 @@ Coupon coupon = couponMapper.queryCodeExchange(code);
 
     @Override
     public void insertDb(Coupon coupon) {
-//        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         CouponUser user = new CouponUser();
         user.setUpdateTime(new Date());
         user.setStartTime(coupon.getStartTime());
         user.setEndTime(coupon.getEndTime());
         user.setStatus(coupon.getStatus());
         user.setCouponId(coupon.getId());
-        user.setUserId(1);
+        user.setUserId(userId);
         couponUserMapper.insertUser(user);
+    }
+
+    /**
+     * 优惠券列表（没有团购）
+     * @param cartId
+     * @return
+     */
+    @Override
+    public  List<Coupon> couponCanUse(int cartId) {
+        Cart cart = cartMapper.selectByPrimaryKey(cartId);
+        //购物车中商品的总价格
+        Short number = cart.getNumber();
+        BigDecimal price = cart.getPrice();
+        BigDecimal  sum= price.multiply(BigDecimal.valueOf(number));
+        //获得用户的id
+        Integer userId = cart.getUserId();
+        List<Coupon> coupons = new ArrayList<>();
+        List<CouponUser> couponUsers= couponUserMapper.queryByUserId(userId);
+        for (CouponUser couponUser : couponUsers) {
+            Integer couponId = couponUser.getCouponId();
+            Short status = couponUser.getStatus();
+            Date startTime = couponUser.getStartTime();
+            Date endTime = couponUser.getEndTime();
+
+            Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
+            Date date = new Date();
+            //对优惠券进行判断
+            BigDecimal min = coupon.getMin();
+            if(sum.compareTo(min)>-1  && status==0  &&   date.before(startTime)  && date.after(endTime)  )
+            coupons.add(coupon);
+        }
+//        //获得购物车中商品的id;
+//        Integer goodsId = cart.getGoodsId();
+
+//        int sum=number * price;
+
+
+
+        return coupons;
     }
 }

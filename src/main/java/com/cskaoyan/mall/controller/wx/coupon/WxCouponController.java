@@ -33,7 +33,7 @@ public class WxCouponController {
      */
     @RequestMapping("mylist")
     public BaseRespVo showMyList(Page page, Coupon coupon) {
-        WxListBean<Coupon> coupons= wxCouponService.showMyList(page, coupon);
+        WxListBean<Coupon> coupons = wxCouponService.showMyList(page, coupon);
         return BaseRespVo.success(coupons);
     }
 
@@ -55,7 +55,7 @@ public class WxCouponController {
     /**
      * 领取优惠券
      * author:zt
-*/
+     */
     @PostMapping("receive")
     public BaseRespVo receive(@RequestBody CouponUser couponUser) {
         Integer flag = wxCouponService.receiveCoupon(couponUser.getCouponId());
@@ -67,29 +67,28 @@ public class WxCouponController {
     }
 
 
-
     @PostMapping("exchange")
-    public BaseRespVo exchangeCode(@RequestBody Coupon coupon){
-       int flag= wxCouponService.isExistCoupon(coupon.getCode());
-       if(flag==1) {
-           Coupon couponCanUse = wxCouponService.exchangeCode(coupon.getCode());
-           wxCouponService.insertDb(couponCanUse);
-           return BaseRespVo.success(couponCanUse);
-       }
-       else return  BaseRespVo.fail("优惠券不正确");
+    public BaseRespVo exchangeCode(@RequestBody Coupon coupon) {
+        int flag = wxCouponService.isExistCoupon(coupon.getCode());
+        if (flag == 1) {
+            Coupon couponCanUse = wxCouponService.exchangeCode(coupon.getCode());
+            wxCouponService.insertDb(couponCanUse);
+            return BaseRespVo.success(couponCanUse);
+        } else return BaseRespVo.fail("优惠券不正确");
     }
 
 
+    @RequestMapping("selectlist")
+    public BaseRespVo selectList(int cartId, int grouponRulesId) {
+        if (grouponRulesId == 0) {
+            List<Coupon> coupons = wxCouponService.couponCanUse(cartId);
+            return BaseRespVo.success(coupons);
+        } else {
+//            WxListBean<Coupon> coupons = wxCouponService.couponCanUseNoGroupon(cartId);
+            return BaseRespVo.success(null);
+        }
 
 
-
-
-
-
-
-
-
-
-
-
+    }
 }
+

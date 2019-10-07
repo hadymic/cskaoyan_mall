@@ -26,4 +26,6 @@ public interface CouponUserMapper {
     List<Coupon> queryCouponsByStatus(Short status);
 
     void insertUser(CouponUser user);
+
+    List<CouponUser> queryByUserId(Integer userId);
 }
