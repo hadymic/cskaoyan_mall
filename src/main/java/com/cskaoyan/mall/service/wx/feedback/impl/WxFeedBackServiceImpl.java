@@ -8,6 +8,8 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class WxFeedBackServiceImpl  implements WxFeedBackService {
     @Autowired
@@ -16,6 +18,8 @@ public class WxFeedBackServiceImpl  implements WxFeedBackService {
     public void submit(FeedbackVo feedbackVo) {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         feedbackVo.setUserId(userId);
+        feedbackVo.setAddTime(new Date());
+        feedbackVo.setUpdateTime(new Date());
         feedbackMapper.submit(feedbackVo);
 
 

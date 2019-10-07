@@ -23,5 +23,5 @@ public interface WxCouponService {
 
     void insertDb(Coupon couponCanUse);
 
-    List<Coupon> couponCanUse(int cartId);
+    List<Coupon> couponCanUse(int cartId,int grouponRulesId);
 }

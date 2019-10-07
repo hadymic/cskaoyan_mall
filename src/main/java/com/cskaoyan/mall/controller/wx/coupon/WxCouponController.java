@@ -80,13 +80,10 @@ public class WxCouponController {
 
     @RequestMapping("selectlist")
     public BaseRespVo selectList(int cartId, int grouponRulesId) {
-        if (grouponRulesId == 0) {
-            List<Coupon> coupons = wxCouponService.couponCanUse(cartId);
+
+            List<Coupon> coupons = wxCouponService.couponCanUse(cartId,grouponRulesId);
             return BaseRespVo.success(coupons);
-        } else {
-//            WxListBean<Coupon> coupons = wxCouponService.couponCanUseNoGroupon(cartId);
-            return BaseRespVo.success(null);
-        }
+
 
 
     }
