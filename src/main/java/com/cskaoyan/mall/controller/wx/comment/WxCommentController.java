@@ -5,9 +5,13 @@ import com.cskaoyan.mall.service.wx.comment.WxCommentService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 @RestController
@@ -24,7 +28,15 @@ public class WxCommentController {
 
     @RequestMapping("list")
     public BaseRespVo commentList(Page page, Comment comment, Integer showType) {
-        Map<String,Object> map = wxCommentService.showCommentListByShowType(page,comment,showType);
+        Map<String, Object> map = wxCommentService.showCommentListByShowType(page, comment, showType);
         return BaseRespVo.success(map);
     }
+
+    @PostMapping("post")
+    public BaseRespVo postComment(@RequestBody Comment comment) {
+        Comment comment1 = wxCommentService.insertComment(comment);//专题评价
+        System.out.println(Arrays.toString(comment.getPicUrls()));
+        return BaseRespVo.success(comment1);
+    }
+
 }

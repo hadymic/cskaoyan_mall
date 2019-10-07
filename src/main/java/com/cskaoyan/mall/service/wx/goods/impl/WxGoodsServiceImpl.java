@@ -11,6 +11,7 @@ import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.SpecificationList;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     GrouponRulesMapper grouponRulesMapper;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    FootprintMapper footprintMapper;
 
     /**
      * @param id
@@ -53,7 +56,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     public Map<String, Object> showGoodsByCategory(int id) {
         Map<String, Object> map = new HashMap<>();
         Category parentCategory = categoryMapper.selectByPrimaryKey(id);
-        parentCategory.setChildren(null);
+        parentCategory.setChildren(null);//不知道哪来的children字段
         Category currentCategory;
         List<Category> brotherCategory;
         if (parentCategory.getPid() == 0) {//如果传的是父类categoryId,点击父类进入子类显示第一个子类
@@ -63,8 +66,6 @@ public class WxGoodsServiceImpl implements WxGoodsService {
             currentCategory = categoryMapper.selectByPrimaryKey(id);//找到子类
             parentCategory = categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
             brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());//找到兄弟
-
-
         }
         map.put("currentCategory", currentCategory);
         map.put("brotherCategory", brotherCategory);
@@ -79,6 +80,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
      */
     @Override
     public WxGoodsDetailVo selectWxGoodsDatail(int id) {
+        //浏览历史,添加足迹到footprint表
+        Date date = new Date();
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        footprintMapper.insertSelective(new Footprint(userId,id,date,date,false));
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         Set<String> set = new TreeSet<>();
