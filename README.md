@@ -28,13 +28,13 @@ cskaoyan商城项目
 - [x] ```CatalogCurrent: WxApiRoot + 'catalog/current', //分类目录当前分类数据接口```
 
 // 刘鑫
-- [ ] ```AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录```
-- [ ] ```AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录```
-- [ ] ```AuthLogout: WxApiRoot + 'auth/logout', //账号登出```
-- [ ] ```AuthRegister: WxApiRoot + 'auth/register', //账号注册```
-- [ ] ```AuthReset: WxApiRoot + 'auth/reset', //账号密码重置```
-- [ ] ```AuthRegisterCaptcha: WxApiRoot + 'auth/regCaptcha', //验证码```
-- [ ] ```AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号```
+- [x] ```AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录```
+- [x] ```AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录```
+- [x] ```AuthLogout: WxApiRoot + 'auth/logout', //账号登出```
+- [x] ```AuthRegister: WxApiRoot + 'auth/register', //账号注册```
+- [x] ```AuthReset: WxApiRoot + 'auth/reset', //账号密码重置```
+- [x] ```AuthRegisterCaptcha: WxApiRoot + 'auth/regCaptcha', //验证码```
+- [x] ```AuthBindPhone: WxApiRoot + 'auth/bindPhone', //绑定微信手机号```
 
 // 黄俊龙
 - [x] ```GoodsCount: WxApiRoot + 'goods/count', //统计商品总数```
@@ -124,7 +124,7 @@ cskaoyan商城项目
 - [x] ```CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换```
 
 // 刘鑫
-- [ ] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
+- [x] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
 
 // 穆杨
 - [x] ```UserIndex: WxApiRoot + 'user/index', //个人页面用户相关信息```
