@@ -1,10 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Collect;
-import com.cskaoyan.mall.bean.Comment;
-import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.wx.collect.CollectDetail;
-import com.cskaoyan.mall.vo.wx.collect.CollectResultVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public interface CollectMapper {
 
     int updateByPrimaryKey(Collect record);
 
-    List<Comment> selectByTwoId(@Param("userId")String userId,
+    List<Collect> selectByTwoId(@Param("userId")String userid,
                                 @Param("valueId")String valueId);
 
     /**
