@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.*;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.wx.cart.CartService;
 import com.cskaoyan.mall.vo.wx.cart.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CouponMapper couponMapper;
+
+    @Autowired
+    private SystemMapper systemMapper;
 
     @Override
     public CartListVo cartList(int id) {
@@ -135,7 +139,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartCheckoutReturnVo checkout(CartCheckoutVo vo) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         CartCheckoutReturnVo returnVo = new CartCheckoutReturnVo();
 
         //商品总价
@@ -188,10 +192,14 @@ public class CartServiceImpl implements CartService {
         returnVo.setOrderTotalPrice(orderTotalPrice);
 
         //快递费
-        BigDecimal freightPrice = new BigDecimal(10);
+        BigDecimal freightPrice = BigDecimal.ZERO;
+        BigDecimal freightMinPrice = BigDecimal.valueOf(Double.parseDouble(systemMapper.selectByKeyName("cskaoyan_mall_express_freight_min")));
+        if (goodsTotalPrice.compareTo(freightMinPrice) < 0) {
+            freightPrice = BigDecimal.valueOf(Double.parseDouble(systemMapper.selectByKeyName("cskaoyan_mall_express_freight_value")));
+        }
         returnVo.setFreightPrice(freightPrice);
         //实际需要支付的总价
-        returnVo.setActualPrice(goodsTotalPrice.add(freightPrice).subtract(couponPrice));
+        returnVo.setActualPrice(goodsTotalPrice.add(freightPrice).subtract(couponPrice).subtract(grouponPrice));
         return returnVo;
     }
 

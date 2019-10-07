@@ -6,11 +6,14 @@ import com.cskaoyan.mall.service.wx.goods.WxGoodsService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
+import com.cskaoyan.mall.util.RecommendUtils;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.CommentVo;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.SpecificationList;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,20 +54,48 @@ public class WxGoodsServiceImpl implements WxGoodsService {
      */
     @Override
     public Map<String, Object> showGoodsByCategory(int id) {
-        Map<String, Object> map = new HashMap<>();
-        Category parentCategory = categoryMapper.selectByPrimaryKey(id);
-        parentCategory.setChildren(null);
-        Category currentCategory;
+        Session session = SecurityUtils.getSubject().getSession();
+        Map<String, Object> map = new HashMap<>(3);
+        Category parentCategory;
+        Category currentCategory = null;
         List<Category> brotherCategory;
-        if (parentCategory.getPid() == 0) {//如果传的是父类categoryId,点击父类进入子类显示第一个子类
-            brotherCategory = categoryMapper.selectCategoryListByPid(id);
-            currentCategory = brotherCategory.get(0);
-        } else {//如果传的是子类categoryId
-            currentCategory = categoryMapper.selectByPrimaryKey(id);//找到子类
-            parentCategory = categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
-            brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());//找到兄弟
-
-
+        if (id != -2) {
+            parentCategory = categoryMapper.selectByPrimaryKey(id);
+            if (parentCategory.getPid() == 0) {
+                session.removeAttribute("isRecommend");
+            }
+        }
+        // 推荐
+        if (id == -2 || session.getAttribute("isRecommend") != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            parentCategory = RecommendUtils.getCategory();
+            List<Category> subCategory = categoryMapper.selectRecommendCategoryByUserId(userId);
+            Set<Category> set = new HashSet<>();
+            set.addAll(subCategory);
+            brotherCategory = new ArrayList<>();
+            brotherCategory.addAll(set);
+            if (id == -2) {
+                session.setAttribute("isRecommend", 1);
+                currentCategory = brotherCategory.get(0);
+            } else {
+                for (Category category : brotherCategory) {
+                    if (category.getId() == id) {
+                        currentCategory = category;
+                        break;
+                    }
+                }
+            }
+        } else {
+            parentCategory = categoryMapper.selectByPrimaryKey(id);
+            parentCategory.setChildren(null);
+            if (parentCategory.getPid() == 0) {//如果传的是父类categoryId,点击父类进入子类显示第一个子类
+                brotherCategory = categoryMapper.selectCategoryListByPid(id);
+                currentCategory = brotherCategory.get(0);
+            } else {//如果传的是子类categoryId
+                currentCategory = categoryMapper.selectByPrimaryKey(id);//找到子类
+                parentCategory = categoryMapper.selectByPrimaryKey(currentCategory.getPid());//找到父类
+                brotherCategory = categoryMapper.selectCategoryListByPid(parentCategory.getId());//找到兄弟
+            }
         }
         map.put("currentCategory", currentCategory);
         map.put("brotherCategory", brotherCategory);
@@ -108,11 +139,11 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         wxGoodsDetailVo.setUserHasCollect(false);
         //查找商品评论
         List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
-        int size =commentList.size();//总评论数
-        if (commentList.size()>2){
-            commentList = commentList.subList(0,2);//大于两条评论只显示两条
+        int size = commentList.size();//总评论数
+        if (commentList.size() > 2) {
+            commentList = commentList.subList(0, 2);//大于两条评论只显示两条
         }
-        wxGoodsDetailVo.setComment(new CommentVo(commentList,size));
+        wxGoodsDetailVo.setComment(new CommentVo(commentList, size));
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         wxGoodsDetailVo.setAttributes(goodsAttributeMapper.selectAttributesByGoodsId(id));
         wxGoodsDetailVo.setBrand(brandMapper.selectByPrimaryKey(goods.getBrandId()));
@@ -148,7 +179,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
                 set.add(goods1.getCategoryId());
             }
             Iterator iterator = set.iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Integer categoryId = (Integer) iterator.next();
                 Category category = categoryMapper.selectByPrimaryKey(categoryId);
                 filterCategoryList.add(category);

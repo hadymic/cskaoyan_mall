@@ -13,9 +13,11 @@ import com.cskaoyan.mall.service.promotion.CouponService;
 import com.cskaoyan.mall.service.promotion.TopicService;
 import com.cskaoyan.mall.service.wx.home.WxHomeService;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.util.RecommendUtils;
 import com.cskaoyan.mall.vo.wx.home.AppletsConfigVo;
 import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
 import com.cskaoyan.mall.vo.wx.home.GrouponVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,7 @@ public class WxHomeServiceImpl implements WxHomeService {
         returnMap.put("brandList", brands);
 
         List<Category> channel = categoryService.queryChannel();
+        RecommendUtils.addCategoryList(channel);
         for (Category category : channel) {
             category.setIconUrl(addUrl(category.getIconUrl()));
             category.setPicUrl(addUrl(category.getPicUrl()));
