@@ -35,6 +35,7 @@ public class GoodsExceptionHandler {
         }
         //优化，不应该返回全部错误信息，只返回一条
         return BaseRespVo.fail(builder.toString());*/
+
         if (fieldErrors.size() > 1){
             fieldErrors = fieldErrors.subList(0,1);
         }

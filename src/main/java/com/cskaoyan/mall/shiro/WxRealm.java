@@ -52,7 +52,7 @@ public class WxRealm extends AuthorizingRealm {
         String primaryPrincipal = (String) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         //权限信息是根据认证时的用户信息去数据库中查询获得的
-
+        authorizationInfo.addStringPermission("*");
         authorizationInfo.addRole("utilMan");
         return authorizationInfo;
     }
