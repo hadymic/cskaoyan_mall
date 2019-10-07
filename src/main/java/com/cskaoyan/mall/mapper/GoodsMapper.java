@@ -67,4 +67,7 @@ public interface GoodsMapper {
      * @return
      */
     List<Goods> selectNeedGoods(@Param("goods") Goods goods);
+
+    //更改商品时确定是否是原来商品
+    int selectGoodsByIdAndGoodsSn(@Param("goods") Goods goods);
 }

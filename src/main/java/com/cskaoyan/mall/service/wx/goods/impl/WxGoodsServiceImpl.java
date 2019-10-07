@@ -47,6 +47,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     @Autowired
     FootprintMapper footprintMapper;
 
+
     /**
      * @param id
      * @return
@@ -83,7 +84,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         //浏览历史,添加足迹到footprint表
         Date date = new Date();
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
-        footprintMapper.insertSelective(new Footprint(userId,id,date,date,false));
+        int count = footprintMapper.selectByIntUserIdAndGoodsId(userId,id);
+        if (count<1){
+            footprintMapper.insertSelective(new Footprint(userId,id,date,date,false));
+        }
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         Set<String> set = new TreeSet<>();

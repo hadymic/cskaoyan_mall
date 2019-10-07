@@ -35,8 +35,6 @@ public class WxCommentController {
     @PostMapping("post")
     public BaseRespVo postComment(@RequestBody Comment comment) {
         Comment comment1 = wxCommentService.insertComment(comment);//专题评价
-        System.out.println(Arrays.toString(comment.getPicUrls()));
         return BaseRespVo.success(comment1);
     }
-
 }
