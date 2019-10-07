@@ -35,6 +35,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     GoodsProductMapper goodsProductMapper;
     @Autowired
     BrandMapper brandMapper;
+    @Autowired
+    GrouponRulesMapper grouponRulesMapper;
 
     /**
      * @param id
@@ -91,8 +93,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         }
         wxGoodsDetailVo.setSpecificationList(specificationLists);
 
-        List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(id);//位置，不知道要啥
-        wxGoodsDetailVo.setGroupons(groupons);
+        List<GrouponRules> grouponRules = grouponRulesMapper.queryGrouponRuless(id);//位置，不知道要啥
+        wxGoodsDetailVo.setGroupon(grouponRules);
 
         List<Issue> issue = issueMapper.selectAllIssues();
         wxGoodsDetailVo.setIssue(issue);
