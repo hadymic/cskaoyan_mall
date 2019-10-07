@@ -4,6 +4,9 @@ import com.cskaoyan.mall.vo.auth.AdminInfo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserLoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserRegisterVo;
+import com.cskaoyan.mall.vo.wx.auth.UserResetVo;
+
+import java.util.Map;
 
 /**
  * 登录service
@@ -17,5 +20,7 @@ public interface AuthService {
 
     UserLoginVo wxLogin(LoginVo vo, String ip);
 
-    UserLoginVo wxRegister(UserRegisterVo vo, String ip);
+    Map wxRegister(UserRegisterVo vo, String ip);
+
+    boolean wxReset(UserResetVo vo);
 }

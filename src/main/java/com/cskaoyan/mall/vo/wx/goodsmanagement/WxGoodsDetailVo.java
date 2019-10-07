@@ -13,7 +13,7 @@ public class WxGoodsDetailVo {
     private CommentVo comment;
     private Brand brand;
     private List<SpecificationList> specificationList;
-    private List<Groupon> groupons;
+    private List<GrouponRules> groupon;
 
     private List<Issue> Issue;
 
@@ -26,14 +26,13 @@ public class WxGoodsDetailVo {
     public WxGoodsDetailVo() {
     }
 
-
-    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, List<SpecificationList> specificationList, List<Groupon> groupons, List<com.cskaoyan.mall.bean.Issue> issue, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
+    public WxGoodsDetailVo(boolean userHasCollect, String shareImage, CommentVo comment, Brand brand, List<SpecificationList> specificationList, List<GrouponRules> groupon, List<com.cskaoyan.mall.bean.Issue> issue, List<GoodsAttribute> attributes, List<GoodsProduct> productList, Goods info) {
         this.userHasCollect = userHasCollect;
         this.shareImage = shareImage;
         this.comment = comment;
         this.brand = brand;
         this.specificationList = specificationList;
-        this.groupons = groupons;
+        this.groupon = groupon;
         Issue = issue;
         this.attributes = attributes;
         this.productList = productList;
@@ -80,12 +79,12 @@ public class WxGoodsDetailVo {
         this.brand = brand;
     }
 
-    public List<Groupon> getGroupons() {
-        return groupons;
+    public List<GrouponRules> getGroupon() {
+        return groupon;
     }
 
-    public void setGroupons(List<Groupon> groupons) {
-        this.groupons = groupons;
+    public void setGroupon(List<GrouponRules> groupon) {
+        this.groupon = groupon;
     }
 
     public List<com.cskaoyan.mall.bean.Issue> getIssue() {

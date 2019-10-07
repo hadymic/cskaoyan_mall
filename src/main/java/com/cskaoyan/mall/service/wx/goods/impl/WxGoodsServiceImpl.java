@@ -17,6 +17,10 @@ import org.springframework.stereotype.Service;
 import java.lang.System;
 import java.util.*;
 
+/**
+ * @author stark_h
+ * 商品部分
+ */
 @Service
 public class WxGoodsServiceImpl implements WxGoodsService {
     @Autowired
@@ -35,6 +39,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     GoodsProductMapper goodsProductMapper;
     @Autowired
     BrandMapper brandMapper;
+    @Autowired
+    GrouponRulesMapper grouponRulesMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     /**
      * @param id
@@ -91,14 +99,20 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         }
         wxGoodsDetailVo.setSpecificationList(specificationLists);
 
-        List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(id);//位置，不知道要啥
-        wxGoodsDetailVo.setGroupons(groupons);
+        List<GrouponRules> grouponRules = grouponRulesMapper.queryGrouponRuless(id);//位置，不知道要啥
+        wxGoodsDetailVo.setGroupon(grouponRules);
 
         List<Issue> issue = issueMapper.selectAllIssues();
         wxGoodsDetailVo.setIssue(issue);
 
         wxGoodsDetailVo.setUserHasCollect(false);
-        wxGoodsDetailVo.setComment(new CommentVo());
+        //查找商品评论
+        List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
+        int size =commentList.size();//总评论数
+        if (commentList.size()>2){
+            commentList = commentList.subList(0,2);//大于两条评论只显示两条
+        }
+        wxGoodsDetailVo.setComment(new CommentVo(commentList,size));
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         wxGoodsDetailVo.setAttributes(goodsAttributeMapper.selectAttributesByGoodsId(id));
         wxGoodsDetailVo.setBrand(brandMapper.selectByPrimaryKey(goods.getBrandId()));
@@ -115,7 +129,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     @Override
     public GoodsByCategory PageGoodsByCategory(Page page, Goods goods) {
-        //还要处理热卖，新品，关键字搜索..........
+        //还要处理热卖，新品，关键字搜索..........全部使用一个sql处理
         List<Goods> goodsList = goodsMapper.selectNeedGoods(goods);
         List<Category> filterCategoryList = new ArrayList<>();
         //goodsList = goodsMapper.selectGoodsListByCategoryId(goods.getCategoryId());

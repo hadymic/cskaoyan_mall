@@ -10,7 +10,7 @@
         from cskaoyan_mall_goods
        <where>
            deleted = 0
-           <if test="goods.categoryId != 0">
+           <if test="goods.categoryId != 0 and goods.categoryId != null">
                and category_id = #{goods.categoryId}
            </if>
            <if test="goods.isHot != null">

@@ -75,6 +75,9 @@
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.User">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -317,4 +320,23 @@
     from cskaoyan_mall_user
     where deleted = 0 and username = #{username}
   </select>
+
+  <select id="queryCountByToken" resultType="_int">
+    select
+    count(id)
+    from cskaoyan_mall_user
+    where deleted = 0
+    <if test="username != null">
+        and username = #{username}
+    </if>
+    <if test="mobile != null">
+      and mobile = #{mobile}
+    </if>
+  </select>
+
+  <update id="updatePasswordByMobile">
+    update cskaoyan_mall_user
+    set password = #{password,jdbcType=VARCHAR}
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </update>
 </mapper>
