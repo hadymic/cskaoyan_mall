@@ -47,6 +47,8 @@ public class CustomShiroConfig {
         filterChainDefinitionMap.put("/wx/topic/**", "anon");
         filterChainDefinitionMap.put("/wx/brand/**", "anon");
         filterChainDefinitionMap.put("/wx/goods/**", "anon");
+        filterChainDefinitionMap.put("/wx/storage/**", "anon");
+        filterChainDefinitionMap.put("/wx/comment/**", "anon");
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         filterChainDefinitionMap.put("/wx/**", "authc");
