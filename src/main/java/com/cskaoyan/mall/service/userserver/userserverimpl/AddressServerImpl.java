@@ -43,7 +43,7 @@ public class AddressServerImpl implements AddressService {
     @Autowired
     UserMapper userMapper;
     @Override
-    //添加地址
+    //添加地址/修改地址
     public boolean addProfile(Address address,String username) {
         Integer userId = userMapper.selectByNameGetId(username);
         address.setUserId(userId);
