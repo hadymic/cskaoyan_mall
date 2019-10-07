@@ -7,6 +7,8 @@ import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserLoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserRegisterVo;
+import com.cskaoyan.mall.vo.wx.auth.UserResetVo;
+import com.cskaoyan.mall.vo.wx.auth.regCaptchaVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.session.Session;
@@ -52,9 +54,9 @@ public class WxAuthController {
     }
 
     @PostMapping("regCaptcha")
-    public BaseRespVo sendValidateCode(@RequestBody Map map) {
+    public BaseRespVo sendValidateCode(@RequestBody regCaptchaVo vo) {
         String code = (int) ((Math.random() * 9 + 1) * 100000) + "";
-        String mobile = (String) map.get("mobile");
+        String mobile = vo.getMobile();
 
         boolean flag = authService.sendMessage(mobile, code);
 
@@ -76,30 +78,37 @@ public class WxAuthController {
             return BaseRespVo.fail("验证码错误！");
         }
         String ip = IPUtils.getIpAddr(request);
-        UserLoginVo userLoginVo = authService.wxRegister(vo, ip);
-        if (userLoginVo != null) {
-            return BaseRespVo.success(userLoginVo);
+        Map map = authService.wxRegister(vo, ip);
+        if (map.get("userLoginVo") != null) {
+            return BaseRespVo.success(map.get("userLoginVo"));
         } else {
-            return BaseRespVo.fail("用户名已存在，请更换用户名！");
+            return BaseRespVo.fail((String) map.get("msg"));
         }
     }
 
     @PostMapping("login_by_weixin")
-    public BaseRespVo loginByWeixin(@RequestBody LoginVo vo, HttpServletRequest request) {
-        CustomToken token = new CustomToken(vo.getUsername(), vo.getPassword(), "wx");
+    public BaseRespVo loginByWeixin(HttpServletRequest request) {
+        return BaseRespVo.success(null);
+    }
 
+    @RequestMapping("logout")
+    public BaseRespVo logout() {
         /*认证的逻辑*/
         Subject subject = SecurityUtils.getSubject();
-        try {
-            subject.login(token);
-        } catch (AuthenticationException e) {
-            return BaseRespVo.fail("登录失败");
+        subject.logout();
+        return BaseRespVo.success(null);
+    }
+
+    @PostMapping("reset")
+    public BaseRespVo reset(@RequestBody UserResetVo vo) {
+        Session session = SecurityUtils.getSubject().getSession();
+        String codeFromSession = (String) session.getAttribute("code");
+        String code = vo.getCode();
+        if (!code.equals(codeFromSession)) {
+            return BaseRespVo.fail("验证码错误！");
         }
 
-        String ip = IPUtils.getIpAddr(request);
-        //根据username和password查询user信息
-        UserLoginVo userLoginVo = authService.wxLogin(vo, ip);
-
-        return BaseRespVo.success(userLoginVo);
+        boolean flag = authService.wxReset(vo);
+        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("密码重置失败");
     }
 }

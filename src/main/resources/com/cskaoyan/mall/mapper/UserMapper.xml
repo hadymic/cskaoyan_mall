@@ -321,10 +321,22 @@
     where deleted = 0 and username = #{username}
   </select>
 
-  <select id="queryCountByUsername" resultType="_int">
+  <select id="queryCountByToken" resultType="_int">
     select
     count(id)
     from cskaoyan_mall_user
-    where deleted = 0 and username = #{username}
+    where deleted = 0
+    <if test="username != null">
+        and username = #{username}
+    </if>
+    <if test="mobile != null">
+      and mobile = #{mobile}
+    </if>
   </select>
+
+  <update id="updatePasswordByMobile">
+    update cskaoyan_mall_user
+    set password = #{password,jdbcType=VARCHAR}
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </update>
 </mapper>

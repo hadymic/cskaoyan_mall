@@ -6,6 +6,7 @@ import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
 import com.cskaoyan.mall.vo.wx.groupon.WxUserVo;
 import org.apache.ibatis.annotations.Param;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 
@@ -94,8 +95,16 @@ public interface UserMapper {
     /**
      * 查找同名用户名的个数
      *
-     * @param username
      * @return
      */
-    int queryCountByUsername(String username);
+    int queryCountByToken(@Param("username") String username, @Param("mobile") String mobile);
+
+    /**
+     * 更新密码通过手机号
+     *
+     * @param password
+     * @param mobile
+     * @return
+     */
+    int updatePasswordByMobile(@Param("password") String password, @Param("mobile") String mobile);
 }

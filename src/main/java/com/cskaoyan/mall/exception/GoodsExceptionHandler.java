@@ -40,7 +40,6 @@ public class GoodsExceptionHandler {
         FieldError fieldError = fieldErrors1.get(0);
        // FieldError fieldError = fieldErrors.stream().findFirst().orElse(null);
         String message = fieldError.getDefaultMessage();
-
         return BaseRespVo.fail(message);
     }
 
@@ -61,6 +60,7 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public BaseRespVo exceptionHandler(HttpServletRequest request, Exception exception) {
         logger.error(exception.getMessage());
+        exception.printStackTrace();
         //return BaseRespVo.fail(exception.getMessage());
         return BaseRespVo.fail("参数值错误");
     }

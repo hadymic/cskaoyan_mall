@@ -35,8 +35,21 @@ public class CustomShiroConfig {
         HashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/admin/auth/login", "anon");
         filterChainDefinitionMap.put("/pic/**", "anon");
+        filterChainDefinitionMap.put("/wx/home/index", "anon");
+        filterChainDefinitionMap.put("/wx/catalog/index", "anon");
+        filterChainDefinitionMap.put("/wx/catalog/current", "anon");
+        filterChainDefinitionMap.put("/wx/auth/login_by_weixin", "anon");
+        filterChainDefinitionMap.put("/wx/auth/login", "anon");
+        filterChainDefinitionMap.put("/wx/auth/register", "anon");
+        filterChainDefinitionMap.put("/wx/auth/reset", "anon");
+        filterChainDefinitionMap.put("/wx/auth/regCaptcha", "anon");
+        filterChainDefinitionMap.put("/wx/search/**", "anon");
+        filterChainDefinitionMap.put("/wx/topic/**", "anon");
+        filterChainDefinitionMap.put("/wx/brand/**", "anon");
+        filterChainDefinitionMap.put("/wx/goods/**", "anon");
 
         filterChainDefinitionMap.put("/admin/**", "authc");
+        filterChainDefinitionMap.put("/wx/**", "authc");
         //filterChainDefinitionMap.put("/admin/logout","logout");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -48,7 +61,7 @@ public class CustomShiroConfig {
     public DefaultWebSecurityManager securityManager(@Qualifier("adminRealm") AdminRealm adminRealm,
                                                      @Qualifier("wxRealm") WxRealm wxRealm,
                                                      CustomRealmAuthenticator customRealmAuthenticator,
-                                                     DefaultWebSessionManager sessionManager){
+                                                     DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         ArrayList<Realm> realms = new ArrayList<>();
         realms.add(adminRealm);
@@ -61,7 +74,7 @@ public class CustomShiroConfig {
 
     @Bean
     public CustomRealmAuthenticator customRealmAuthenticator(@Qualifier("adminRealm") AdminRealm adminRealm,
-                                                             @Qualifier("wxRealm") WxRealm wxRealm){
+                                                             @Qualifier("wxRealm") WxRealm wxRealm) {
         CustomRealmAuthenticator customRealmAuthenticator = new CustomRealmAuthenticator();
         ArrayList<Realm> realms = new ArrayList<>();
         realms.add(adminRealm);

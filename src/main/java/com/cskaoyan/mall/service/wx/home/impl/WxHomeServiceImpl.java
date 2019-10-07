@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * 微信-首页service实现类
- *
+ * <p>
  * author: Zeng-jz
  */
 @Service
@@ -111,8 +111,8 @@ public class WxHomeServiceImpl implements WxHomeService {
         return returnMap;
     }
 
-    private String addUrl(String url){
-        if (!url.startsWith("http")){
+    private String addUrl(String url) {
+        if (url != null && !url.startsWith("http")) {
             return new MyFileConfig().addPicUrl(url);
         }
         return url;
