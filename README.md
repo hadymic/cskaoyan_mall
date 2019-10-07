@@ -62,8 +62,8 @@ cskaoyan商城项目
 - [ ] ```CollectAddOrDelete: WxApiRoot + 'collect/addordelete', //添加或取消收藏```
 
 //黄俊龙
-- [ ] ```CommentList: WxApiRoot + 'comment/list', //评论列表```
-- [ ] ```CommentCount: WxApiRoot + 'comment/count', //评论总数```
+- [x] ```CommentList: WxApiRoot + 'comment/list', //评论列表```
+- [x] ```CommentCount: WxApiRoot + 'comment/count', //评论总数```
 - [ ] ```CommentPost: WxApiRoot + 'comment/post', //发表评论```
 
 //黄俊龙
