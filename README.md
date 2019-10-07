@@ -123,7 +123,7 @@ cskaoyan商城项目
 - [x] ```CouponReceive: WxApiRoot + 'coupon/receive', //优惠券领取```
 - [x] ```CouponExchange: WxApiRoot + 'coupon/exchange', //优惠券兑换```
 
-//
+// 刘鑫
 - [ ] ```StorageUpload: WxApiRoot + 'storage/upload', //图片上传,```
 
 // 穆杨
