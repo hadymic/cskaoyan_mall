@@ -35,6 +35,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     GoodsProductMapper goodsProductMapper;
     @Autowired
     BrandMapper brandMapper;
+    @Autowired
+    GrouponRulesMapper grouponRulesMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     /**
      * @param id
@@ -91,14 +95,16 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         }
         wxGoodsDetailVo.setSpecificationList(specificationLists);
 
-        List<Groupon> groupons = grouponMapper.queryGrouponsByRuleId(id);//位置，不知道要啥
-        wxGoodsDetailVo.setGroupons(groupons);
+        List<GrouponRules> grouponRules = grouponRulesMapper.queryGrouponRuless(id);//位置，不知道要啥
+        wxGoodsDetailVo.setGroupon(grouponRules);
 
         List<Issue> issue = issueMapper.selectAllIssues();
         wxGoodsDetailVo.setIssue(issue);
 
         wxGoodsDetailVo.setUserHasCollect(false);
-        wxGoodsDetailVo.setComment(new CommentVo());
+        //查找商品评论
+        List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
+        wxGoodsDetailVo.setComment(new CommentVo(commentList,commentList.size()));
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         wxGoodsDetailVo.setAttributes(goodsAttributeMapper.selectAttributesByGoodsId(id));
         wxGoodsDetailVo.setBrand(brandMapper.selectByPrimaryKey(goods.getBrandId()));

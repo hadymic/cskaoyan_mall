@@ -8,6 +8,14 @@ public class CommentVo {
     private List<Comment> data;
     private int count;
 
+    public CommentVo() {
+    }
+
+    public CommentVo(List<Comment> data, int count) {
+        this.data = data;
+        this.count = count;
+    }
+
     public List<Comment> getData() {
         return data;
     }
