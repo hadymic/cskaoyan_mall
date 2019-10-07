@@ -17,6 +17,10 @@ import org.springframework.stereotype.Service;
 import java.lang.System;
 import java.util.*;
 
+/**
+ * @author stark_h
+ * 商品部分
+ */
 @Service
 public class WxGoodsServiceImpl implements WxGoodsService {
     @Autowired
@@ -104,7 +108,11 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         wxGoodsDetailVo.setUserHasCollect(false);
         //查找商品评论
         List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
-        wxGoodsDetailVo.setComment(new CommentVo(commentList,commentList.size()));
+        int size =commentList.size();//总评论数
+        if (commentList.size()>2){
+            commentList = commentList.subList(0,2);//大于两条评论只显示两条
+        }
+        wxGoodsDetailVo.setComment(new CommentVo(commentList,size));
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         wxGoodsDetailVo.setAttributes(goodsAttributeMapper.selectAttributesByGoodsId(id));
         wxGoodsDetailVo.setBrand(brandMapper.selectByPrimaryKey(goods.getBrandId()));
@@ -121,7 +129,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
     @Override
     public GoodsByCategory PageGoodsByCategory(Page page, Goods goods) {
-        //还要处理热卖，新品，关键字搜索..........
+        //还要处理热卖，新品，关键字搜索..........全部使用一个sql处理
         List<Goods> goodsList = goodsMapper.selectNeedGoods(goods);
         List<Category> filterCategoryList = new ArrayList<>();
         //goodsList = goodsMapper.selectGoodsListByCategoryId(goods.getCategoryId());

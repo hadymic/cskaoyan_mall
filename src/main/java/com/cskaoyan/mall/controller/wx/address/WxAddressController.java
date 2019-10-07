@@ -21,9 +21,9 @@ public class WxAddressController {
      */
     @RequestMapping("address/list")
     public BaseRespVo wxAddressDispaly(){
-        //String principal = (String) SecurityUtils.getSubject().getPrincipal();
+        String principal = (String) SecurityUtils.getSubject().getPrincipal();
         //假设"user"为当前用户登陆的账号且唯一
-        String principal = "user";
+        //String principal = "user";
         List wxAddressList = addressService.getWxAddressList(principal);
         return BaseRespVo.success(wxAddressList);
     }
@@ -42,9 +42,9 @@ public class WxAddressController {
      */
     @RequestMapping(value = "address/save",method = RequestMethod.POST)
     public BaseRespVo addProfile(@RequestBody Address address){
-//        String principal = (String) SecurityUtils.getSubject().getPrincipal();
+        String principal = (String) SecurityUtils.getSubject().getPrincipal();
 ////        //没办法直接获取用户账号，展示用user代替
-        String principal = "user";
+        //String principal = "user";
         boolean fale = addressService.addProfile(address,principal);
         return fale?BaseRespVo.success(42):BaseRespVo.fail("添加失败");
     }
@@ -58,9 +58,4 @@ public class WxAddressController {
         Address wxAddress = addressService.getWxAddress(id);
         return BaseRespVo.success(wxAddress);
     }
-//    @RequestMapping(value = "address/save",method = RequestMethod.POST)
-//    public BaseRespVo addressSave(@RequestBody Address address){
-//        boolean fale = addressService.updateAddress(address);
-//        return fale?BaseRespVo.success(36):BaseRespVo.fail("修改失败");
-//    }
 }

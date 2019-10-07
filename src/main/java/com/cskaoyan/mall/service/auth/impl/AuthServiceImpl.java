@@ -14,11 +14,11 @@ import com.cskaoyan.mall.mapper.AdminMapper;
 import com.cskaoyan.mall.mapper.RoleMapper;
 import com.cskaoyan.mall.mapper.UserMapper;
 import com.cskaoyan.mall.service.auth.AuthService;
-import com.cskaoyan.mall.util.IPUtils;
 import com.cskaoyan.mall.vo.auth.AdminInfo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserLoginVo;
 import com.cskaoyan.mall.vo.wx.auth.UserRegisterVo;
+import com.cskaoyan.mall.vo.wx.auth.UserResetVo;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,10 +29,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.rmi.ServerException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 登录service实现类
@@ -91,10 +88,9 @@ public class AuthServiceImpl implements AuthService {
         request.putQueryParameter("PhoneNumbers", mobile);
         request.putQueryParameter("SignName", aliyunConfig.getSmsConfig().getSignName());
         request.putQueryParameter("TemplateCode", aliyunConfig.getSmsConfig().getTemplateCode());
-        request.putQueryParameter("TemplateParam", "{\"code\":\""+code+"\"}");
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
-            System.out.println(response.getData());
             ObjectMapper objectMapper = new ObjectMapper();
             Map map = objectMapper.readValue(response.getData(), Map.class);
             String message = (String) map.get("Message");
@@ -118,25 +114,53 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserLoginVo wxLogin(LoginVo vo, String ip) {
         User user = userMapper.queryByUserNameAndPassword(vo.getUsername(), vo.getPassword());
-        return new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(), LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
+
+        User updateUser = new User();
+        updateUser.setId(user.getId());
+        updateUser.setLastLoginTime(new Date());
+        updateUser.setLastLoginIp(ip);
+        userMapper.updateByPrimaryKeySelective(updateUser);
+
+        SecurityUtils.getSubject().getSession().setAttribute("userId", user.getId());
+        return new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(),
+                LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
     }
 
     @Override
-    public UserLoginVo wxRegister(UserRegisterVo vo, String ip) {
-        /*Date date = new Date();
-        User user = new User();
-        user.setUsername(vo.getUsername());
-        user.setPassword(vo.getPassword());
-        user.setGender((byte) 0);
-        user.setLastLoginTime(date);
-        user.setLastLoginIp(ip);
-        user.setAddTime(date);
-        user.setNickname(vo.getUsername());
-        user.setDeleted(false);
-        userMapper.insert(user);*/
+    public Map wxRegister(UserRegisterVo vo, String ip) {
+        Map map = new HashMap(1);
+        //校验同名
+        int count = userMapper.queryCountByToken(vo.getUsername(), null);
+        if (count >= 1) {
+            map.put("msg", "用户名已存在，请更换用户名！");
+            return map;
+        }
+        //校验手机号
+        count = userMapper.queryCountByToken(null, vo.getMobile());
+        if (count >= 1) {
+            map.put("msg", "手机号已存在，请前往登录");
+            return map;
+        }
+        //插入数据库
+        Date date = new Date();
+        String avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif";
+        User user = new User(null, vo.getUsername(), vo.getPassword(), (byte) 0,
+                null, date, ip, (byte) 0, vo.getUsername(), vo.getMobile(),
+                avatar, null, (byte) 0, date, date, false);
+        int flag = userMapper.insertSelective(user);
+        if (flag == 1) {
+            SecurityUtils.getSubject().getSession().setAttribute("userId", user.getId());
 
-        User user = userMapper.queryByUserNameAndPassword(vo.getUsername(), vo.getPassword());
-        new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(), LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
-        return null;
+            UserLoginVo userLoginVo = new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(),
+                    LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
+            map.put("userLoginVo", userLoginVo);
+        }
+        map.put("msg", "系统错误，注册失败，请稍后重试");
+        return map;
+    }
+
+    @Override
+    public boolean wxReset(UserResetVo vo) {
+        return userMapper.updatePasswordByMobile(vo.getPassword(), vo.getMobile()) == 1;
     }
 }
