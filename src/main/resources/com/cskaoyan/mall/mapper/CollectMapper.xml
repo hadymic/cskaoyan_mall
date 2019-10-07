@@ -125,4 +125,23 @@
         and value_id = #{valueId}
       </if>
   </select>
+
+  <select id="queryForUpdate" resultType="com.cskaoyan.mall.bean.Collect">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_collect
+    where user_id = #{userId} and value_id = #{collect.valueId} and `type` = #{collect.type}
+  </select>
+
+  <resultMap id="collectDetailMap" type="com.cskaoyan.mall.vo.wx.collect.CollectDetail">
+    <id column="retail_price" jdbcType="INTEGER" property="retailPrice" />
+    <result column="pic_url" jdbcType="INTEGER" property="picUrl" />
+    <result column="value_id" jdbcType="TINYINT" property="valueId" />
+  </resultMap>
+  <select id="queryCollectList" resultMap="collectDetailMap">
+    select brief, c.id, `name`, pic_url, retail_price, `type`, value_id
+    from cskaoyan_mall_collect c
+    left join cskaoyan_mall_goods g
+    on c.value_id = g.id
+    where user_id = #{userId} and `type` = #{type}
+  </select>
 </mapper>

@@ -131,7 +131,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus((short)101);
         order.setConsignee(address1.getName());
         order.setMobile(address1.getMobile());
-        order.setAddress(address1.getDetailedAddress());
+        order.setAddress(address1.getOrderAddress());
         order.setMessage(submitVo.getMessage());
         BigDecimal goodsPrice = BigDecimal.ZERO;
         for (Cart cart : carts) {
