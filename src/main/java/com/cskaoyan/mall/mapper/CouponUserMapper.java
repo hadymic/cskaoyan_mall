@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.mapper;
 
+import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.bean.CouponUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,8 @@ public interface CouponUserMapper {
     List<CouponUser> queryCouponUsers(@Param("couponId") int couponId, @Param("status") Integer status, @Param("userId") Integer userId);
 
     void deleteByCouponId(Integer couponId);
+
+    List<Coupon> queryCouponsByStatus(Short status);
+
+    void insertUser(CouponUser user);
 }

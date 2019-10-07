@@ -55,14 +55,13 @@ public class WxCouponController {
     /**
      * 领取优惠券
      * author:zt
-     *
-     * @param couponId
-     * @return
 */
     @PostMapping("receive")
-    public BaseRespVo receive(@RequestBody CouponUser couponId) {
-        Integer flag = wxCouponService.receiveCoupon(couponId.getCouponId());
+    public BaseRespVo receive(@RequestBody CouponUser couponUser) {
+        Integer flag = wxCouponService.receiveCoupon(couponUser.getCouponId());
         if (flag == 1) {
+            //加入到用户的优惠券列表
+            wxCouponService.insertUser(couponUser);
             return BaseRespVo.success(null);
         } else return BaseRespVo.fail("优惠券已领取完");
     }
@@ -74,6 +73,7 @@ public class WxCouponController {
        int flag= wxCouponService.isExistCoupon(coupon.getCode());
        if(flag==1) {
            Coupon couponCanUse = wxCouponService.exchangeCode(coupon.getCode());
+           wxCouponService.insertDb(couponCanUse);
            return BaseRespVo.success(couponCanUse);
        }
        else return  BaseRespVo.fail("优惠券不正确");

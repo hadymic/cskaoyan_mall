@@ -19,6 +19,6 @@ public interface CollectMapper {
 
     int updateByPrimaryKey(Collect record);
 
-    List<Comment> selectByTwoId(@Param("userId")String userid,
+    List<Comment> selectByTwoId(@Param("userId")String userId,
                                 @Param("valueId")String valueId);
 }

@@ -15,11 +15,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, coupon_id, status, used_time, start_time, end_time, order_id, add_time, 
+    id, user_id, coupon_id, status, used_time, start_time, end_time, order_id, add_time,
     update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_coupon_user
     where id = #{id,jdbcType=INTEGER}
@@ -29,13 +29,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.CouponUser">
-    insert into cskaoyan_mall_coupon_user (id, user_id, coupon_id, 
-      status, used_time, start_time, 
-      end_time, order_id, add_time, 
+    insert into cskaoyan_mall_coupon_user (id, user_id, coupon_id,
+      status, used_time, start_time,
+      end_time, order_id, add_time,
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER}, 
-      #{status,jdbcType=SMALLINT}, #{usedTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{couponId,jdbcType=INTEGER},
+      #{status,jdbcType=SMALLINT}, #{usedTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.CouponUser">
@@ -178,4 +178,25 @@
     set deleted = 1
     where coupon_id = #{couponId}
   </update>
+
+
+  <select id="queryCouponsByStatus"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_coupon_user where status=#{status}
+  </select>
+
+
+
+
+  <insert id="insertUser" parameterType="com.cskaoyan.mall.bean.CouponUser">
+    insert into cskaoyan_mall_coupon_user (coupon_id,user_id,
+      status, start_time,
+      end_time,add_time
+     )
+    values ( #{couponId,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},
+      #{status,jdbcType=SMALLINT}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{addTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
 </mapper>
