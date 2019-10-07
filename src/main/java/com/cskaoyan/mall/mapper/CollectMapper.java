@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Collect;
+import com.cskaoyan.mall.vo.wx.collect.CollectDetail;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,4 +21,20 @@ public interface CollectMapper {
 
     List<Collect> selectByTwoId(@Param("userId")String userid,
                                 @Param("valueId")String valueId);
+
+    /**
+     * 查询是否收藏过
+     * @param userId
+     * @param collect
+     * @return
+     */
+    Collect queryForUpdate(@Param("userId") Integer userId, @Param("collect") Collect collect);
+
+    /**
+     *返回collect的list
+     * @param userId
+     * @param type
+     * @return
+     */
+    List<CollectDetail> queryCollectList(int userId, Integer type);
 }

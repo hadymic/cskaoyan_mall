@@ -70,7 +70,11 @@ public class Address {
     private String detailedAddress;
 
     public String getDetailedAddress() {
-        return province+city+area+address;
+        return province + city + area + address;
+    }
+
+    public String getOrderAddress() {
+        return provinceName + cityName + areaName + address;
     }
 
     public Address setDetailedAddress(String detailedAddress) {

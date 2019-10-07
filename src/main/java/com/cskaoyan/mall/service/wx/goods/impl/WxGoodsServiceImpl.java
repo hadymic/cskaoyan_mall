@@ -3,7 +3,6 @@ package com.cskaoyan.mall.service.wx.goods.impl;
 import com.cskaoyan.mall.bean.*;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.wx.goods.WxGoodsService;
-import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.PageUtils;
 import com.cskaoyan.mall.util.RecommendUtils;
@@ -11,13 +10,11 @@ import com.cskaoyan.mall.vo.wx.goodsmanagement.CommentVo;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.GoodsByCategory;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.SpecificationList;
 import com.cskaoyan.mall.vo.wx.goodsmanagement.WxGoodsDetailVo;
-import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.System;
 import java.util.*;
 
 /**
@@ -46,6 +43,9 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     GrouponRulesMapper grouponRulesMapper;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    FootprintMapper footprintMapper;
+
 
     /**
      * @param id
@@ -110,6 +110,13 @@ public class WxGoodsServiceImpl implements WxGoodsService {
      */
     @Override
     public WxGoodsDetailVo selectWxGoodsDatail(int id) {
+        //浏览历史,添加足迹到footprint表
+        Date date = new Date();
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        int count = footprintMapper.selectByIntUserIdAndGoodsId(userId,id);
+        if (count<1){
+            footprintMapper.insertSelective(new Footprint(userId,id,date,date,false));
+        }
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
         Set<String> set = new TreeSet<>();

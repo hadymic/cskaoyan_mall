@@ -20,8 +20,11 @@ public interface FootprintMapper {
 
     int updateByPrimaryKey(Footprint record);
 
-    List<Footprint> selectByUserIdAndGoodsId(@Param("userId")String userId,
-                                             @Param("goodsId")String goodsid);
+    List<Footprint> selectByUserIdAndGoodsId(@Param("userId") String userId,
+                                             @Param("goodsId") String goodsid);
 
     List<FootPrintVo> queryFootPrint();
+
+    //足迹去重
+    int selectByIntUserIdAndGoodsId(@Param("userId") int userId,@Param("goodsId") int id);
 }

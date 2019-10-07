@@ -17,6 +17,17 @@ public class Footprint {
 
     private Boolean deleted;
 
+    public Footprint() {
+    }
+    //没构造id
+    public Footprint(Integer userId, Integer goodsId, Date addTime, Date updateTime, Boolean deleted) {
+        this.userId = userId;
+        this.goodsId = goodsId;
+        this.addTime = addTime;
+        this.updateTime = updateTime;
+        this.deleted = deleted;
+    }
+
     public Integer getId() {
         return id;
     }
