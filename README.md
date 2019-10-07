@@ -64,7 +64,7 @@ cskaoyan商城项目
 //黄俊龙
 - [x] ```CommentList: WxApiRoot + 'comment/list', //评论列表```
 - [x] ```CommentCount: WxApiRoot + 'comment/count', //评论总数```
-- [ ] ```CommentPost: WxApiRoot + 'comment/post', //发表评论```
+- [x] ```CommentPost: WxApiRoot + 'comment/post', //发表评论```
 
 //黄俊龙
 - [x] ```TopicList: WxApiRoot + 'topic/list', //专题列表```
