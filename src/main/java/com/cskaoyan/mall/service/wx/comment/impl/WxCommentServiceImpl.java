@@ -34,7 +34,7 @@ public class WxCommentServiceImpl implements WxCommentService {
         List<Comment> commentList = commentMapper.selectCommentByGoodsId(comment.getValueId());//全部评论，有图评论
         int count = 0;
         for (Comment comment1 : commentList) {
-            if (comment1.getPicUrls() != null) {
+            if (comment1.getHasPicture()) {
                 count++;
             }
         }
@@ -56,7 +56,7 @@ public class WxCommentServiceImpl implements WxCommentService {
                 WxUserVo wxUserVo = userMapper.selectWxUserVoById(userId);
                 wxCommentVoList.add(new WxCommentVo(wxUserVo, comment1.getAddTime(), comment1.getPicUrls(), comment1.getContent()));
             } else {//showType=1
-                if (comment1.getPicUrls() != null) {
+                if (comment1.getHasPicture()) {
                     Integer userId = comment1.getUserId();
                     WxUserVo wxUserVo = userMapper.selectWxUserVoById(userId);
                     wxCommentVoList.add(new WxCommentVo(wxUserVo, comment1.getAddTime(), comment1.getPicUrls(), comment1.getContent()));
