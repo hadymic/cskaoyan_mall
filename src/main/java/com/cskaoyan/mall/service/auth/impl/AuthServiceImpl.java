@@ -91,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
         request.putQueryParameter("PhoneNumbers", mobile);
         request.putQueryParameter("SignName", aliyunConfig.getSmsConfig().getSignName());
         request.putQueryParameter("TemplateCode", aliyunConfig.getSmsConfig().getTemplateCode());
-        request.putQueryParameter("TemplateParam", "{\"code\":\""+code+"\"}");
+        request.putQueryParameter("TemplateParam", "{\"code\":\"" + code + "\"}");
         try {
             CommonResponse response = client.getCommonResponse(request);
             System.out.println(response.getData());
@@ -118,25 +118,29 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserLoginVo wxLogin(LoginVo vo, String ip) {
         User user = userMapper.queryByUserNameAndPassword(vo.getUsername(), vo.getPassword());
-        return new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(), LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
+        return new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(),
+                LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
     }
 
     @Override
     public UserLoginVo wxRegister(UserRegisterVo vo, String ip) {
-        /*Date date = new Date();
-        User user = new User();
-        user.setUsername(vo.getUsername());
-        user.setPassword(vo.getPassword());
-        user.setGender((byte) 0);
-        user.setLastLoginTime(date);
-        user.setLastLoginIp(ip);
-        user.setAddTime(date);
-        user.setNickname(vo.getUsername());
-        user.setDeleted(false);
-        userMapper.insert(user);*/
-
-        User user = userMapper.queryByUserNameAndPassword(vo.getUsername(), vo.getPassword());
-        new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(), LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
-        return null;
+        //校验同名
+        int count = userMapper.queryCountByUsername(vo.getUsername());
+        if (count >= 1) {
+            return null;
+        }
+        //插入数据库
+        Date date = new Date();
+        String avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif";
+        User user = new User(null, vo.getUsername(), vo.getPassword(), (byte) 0,
+                null, date, ip, (byte) 0, vo.getUsername(), vo.getMobile(),
+                avatar, null, (byte) 0, date, date, false);
+        int flag = userMapper.insertSelective(user);
+        if (flag == 1) {
+            return new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(),
+                    LocalDateTime.now().plusDays(1), user.getAvatar(), user.getNickname());
+        } else {
+            return null;
+        }
     }
 }

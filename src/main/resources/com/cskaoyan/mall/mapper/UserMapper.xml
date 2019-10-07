@@ -75,6 +75,9 @@
       #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.User">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -314,6 +317,13 @@
   <select id="queryPasswordByUsername" resultType="string">
     select
     password
+    from cskaoyan_mall_user
+    where deleted = 0 and username = #{username}
+  </select>
+
+  <select id="queryCountByUsername" resultType="_int">
+    select
+    count(id)
     from cskaoyan_mall_user
     where deleted = 0 and username = #{username}
   </select>

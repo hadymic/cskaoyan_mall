@@ -83,4 +83,23 @@ public class WxAuthController {
             return BaseRespVo.fail("用户名已存在，请更换用户名！");
         }
     }
+
+    @PostMapping("login_by_weixin")
+    public BaseRespVo loginByWeixin(@RequestBody LoginVo vo, HttpServletRequest request) {
+        CustomToken token = new CustomToken(vo.getUsername(), vo.getPassword(), "wx");
+
+        /*认证的逻辑*/
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            return BaseRespVo.fail("登录失败");
+        }
+
+        String ip = IPUtils.getIpAddr(request);
+        //根据username和password查询user信息
+        UserLoginVo userLoginVo = authService.wxLogin(vo, ip);
+
+        return BaseRespVo.success(userLoginVo);
+    }
 }

@@ -90,4 +90,12 @@ public interface UserMapper {
      * @return
      */
     WxUserVo selectWxUserVoById(@Param("id") Integer userId);
+
+    /**
+     * 查找同名用户名的个数
+     *
+     * @param username
+     * @return
+     */
+    int queryCountByUsername(String username);
 }
