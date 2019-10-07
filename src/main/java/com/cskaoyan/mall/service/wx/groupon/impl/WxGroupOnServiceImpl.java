@@ -135,16 +135,20 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
         for (WxMyGroupVo wxMyGroupVo : wxMyGroupVos) {
             wxMyGroupVo.setGroupon(grouponMapper.selectByUidAndGid(wxMyGroupVo.getId(),userId));
             GrouponRules rules = grouponRulesMapper.selectByPrimaryKey(wxMyGroupVo.getRulesId());
-            if (!rules.getPicUrl().startsWith("http")){
-                rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
+            if (rules.getPicUrl() != null) {
+                if (!rules.getPicUrl().startsWith("http")) {
+                    rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
+                }
             }
             wxMyGroupVo.setRules(rules);
             wxMyGroupVo.setHandleOption(HandleOption.get(wxMyGroupVo.getStatusCode(), false));
             wxMyGroupVo.setOrderStatusText(wxMyGroupVo.getHandleOption().getStatusText());
             List<OrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsByOrderId(wxMyGroupVo.getOrderId());
             for (OrderGoods orderGoods : goodsList) {
-                if (!orderGoods.getPicUrl().startsWith("http")){
-                    orderGoods.setPicUrl(new MyFileConfig().addPicUrl(orderGoods.getPicUrl()));
+                if (orderGoods.getPicUrl() != null) {
+                    if (!orderGoods.getPicUrl().startsWith("http")) {
+                        orderGoods.setPicUrl(new MyFileConfig().addPicUrl(orderGoods.getPicUrl()));
+                    }
                 }
             }
             wxMyGroupVo.setGoodsList(goodsList);
