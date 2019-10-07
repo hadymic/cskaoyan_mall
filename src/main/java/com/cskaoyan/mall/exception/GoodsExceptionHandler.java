@@ -28,19 +28,17 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public BaseRespVo exception(HttpServletRequest request, MethodArgumentNotValidException exception) {
         BindingResult result = exception.getBindingResult();
-        final List<FieldError> fieldErrors = result.getFieldErrors();
+        List<FieldError> fieldErrors = result.getFieldErrors();
        /*  StringBuilder builder = new StringBuilder();
        for (FieldError error : fieldErrors) {
             builder.append(error.getDefaultMessage() + "\n");
         }
         //优化，不应该返回全部错误信息，只返回一条
         return BaseRespVo.fail(builder.toString());*/
-
-        List<FieldError> fieldErrors1 = fieldErrors.subList(0, 1);
-        FieldError fieldError = fieldErrors1.get(0);
-       // FieldError fieldError = fieldErrors.stream().findFirst().orElse(null);
-        String message = fieldError.getDefaultMessage();
-
+        if (fieldErrors.size() > 1){
+            fieldErrors = fieldErrors.subList(0,1);
+        }
+        String message = fieldErrors.get(0).getDefaultMessage();
         return BaseRespVo.fail(message);
     }
 
@@ -50,6 +48,7 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public BaseRespVo constraintViolationExceptionHandler(HttpServletRequest request, ConstraintViolationException exception) {
         logger.info(exception.getMessage());
+        exception.printStackTrace();
         //return BaseRespVo.fail(exception.getMessage());
         return BaseRespVo.fail("参数值错误");
     }
@@ -61,6 +60,7 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public BaseRespVo exceptionHandler(HttpServletRequest request, Exception exception) {
         logger.error(exception.getMessage());
+        exception.printStackTrace();
         //return BaseRespVo.fail(exception.getMessage());
         return BaseRespVo.fail("参数值错误");
     }
