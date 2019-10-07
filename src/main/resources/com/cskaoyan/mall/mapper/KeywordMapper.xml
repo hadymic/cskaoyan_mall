@@ -46,7 +46,7 @@
     select
     <include refid="Base_Column_List"/>
     from cskaoyan_mall_keyword
-    where is_default = 1 and deleted = 0 and keyword like #{key}
+    where deleted = 0 and keyword like #{key}
     order by update_time desc
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
