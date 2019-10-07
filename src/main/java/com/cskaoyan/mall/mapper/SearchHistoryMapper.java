@@ -18,22 +18,27 @@ public interface SearchHistoryMapper {
 
     int updateByPrimaryKey(SearchHistory record);
 
-    List<SearchHistory> selectByUserIdAndKeyword(@Param("userId")String userId,
-                                                 @Param("keyword")String keyword);
+    List<SearchHistory> selectByUserIdAndKeyword(@Param("userId") String userId,
+                                                 @Param("keyword") String keyword);
 
     /**
      * Zeng-jz
      * 查询历史搜索记录
-     * @return
+     *
      * @param userId
+     * @return
      */
     List<SearchHistory> selectHistoryKeywordList(@Param("uid") int userId);
 
     /**
      * Zeng-jz
      * 根据userId删除历史搜索
+     *
      * @param userId
      * @return
      */
     int deleteByUserId(@Param("uid") int userId);
+
+    //去重
+    int selectUniqueHistory(@Param("userId") Integer userId, @Param("keyword") String keyword);
 }
