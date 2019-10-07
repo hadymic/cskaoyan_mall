@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.mall.mapper.CommentMapper">
+  <select id="selectCommentByGoodsId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_comment
+    where deleted = 0  and value_id = #{goodsId}
+  </select>
+
   <select id="selectCommentList" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from cskaoyan_mall_comment
     <where>

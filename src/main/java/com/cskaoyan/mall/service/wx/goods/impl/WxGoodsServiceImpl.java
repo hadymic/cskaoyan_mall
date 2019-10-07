@@ -37,6 +37,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     BrandMapper brandMapper;
     @Autowired
     GrouponRulesMapper grouponRulesMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     /**
      * @param id
@@ -100,7 +102,9 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         wxGoodsDetailVo.setIssue(issue);
 
         wxGoodsDetailVo.setUserHasCollect(false);
-        wxGoodsDetailVo.setComment(new CommentVo());
+        //查找商品评论
+        List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
+        wxGoodsDetailVo.setComment(new CommentVo(commentList,commentList.size()));
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         wxGoodsDetailVo.setAttributes(goodsAttributeMapper.selectAttributesByGoodsId(id));
         wxGoodsDetailVo.setBrand(brandMapper.selectByPrimaryKey(goods.getBrandId()));
