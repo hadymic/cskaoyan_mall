@@ -3,7 +3,7 @@
 <mapper namespace="com.cskaoyan.mall.mapper.CommentMapper">
   <select id="selectCommentByGoodsId" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from cskaoyan_mall_comment
-    where deleted = 0  and value_id = #{goodsId}
+    where deleted = 0  and value_id = #{goodsId} and type = 0
   </select>
 
   <select id="selectCommentList" resultMap="BaseResultMap">
