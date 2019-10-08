@@ -38,6 +38,9 @@ public class WxOrderController {
 
     /**
      * 提交订单
+     * 如果在这里提交后不支付被系统取消订单，应该是数据库的时区问题，可以在
+     * com.cskaoyan.mall.service.userserver.userserverimpl.UserManageServiceImpl#queryUserOrders
+     * 中取消对unpaid的判断
      * @return
      */
     @RequestMapping("submit")
