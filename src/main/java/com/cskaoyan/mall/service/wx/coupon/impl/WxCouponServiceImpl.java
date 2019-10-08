@@ -70,7 +70,7 @@ public class WxCouponServiceImpl implements WxCouponService {
         Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
         List<CouponUser> couponUsers = couponUserMapper.queryCouponUsers(couponId, 0, userId);
         if (couponUsers.size() >= coupon.getLimit()) {
-            return 1;
+            return 0;
         }
         if (coupon.getTotal() == 0) {
             return 1;
