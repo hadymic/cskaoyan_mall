@@ -10,6 +10,7 @@ import com.cskaoyan.mall.mapper.GrouponRulesMapper;
 import com.cskaoyan.mall.service.wx.coupon.WxCouponService;
 import com.cskaoyan.mall.util.*;
 import com.cskaoyan.mall.vo.wx.coupon.CouponVo;
+import com.cskaoyan.mall.vo.wx.coupon.WxCouponVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,9 +41,11 @@ public class WxCouponServiceImpl implements WxCouponService {
      * @return
      */
     @Override
-    public WxListBean<Coupon> showMyList(Page page, Coupon coupon) {
+    public WxListBean<WxCouponVo> showMyList(Page page, Coupon coupon) {
         PageUtils.startPage(page);
-        List<Coupon> coupons = couponMapper.showByStatus(coupon.getStatus());
+
+        List<WxCouponVo> coupons = couponMapper.showByStatus(coupon.getStatus());
+
 //        List<Coupon> coupons=couponUserMapper.queryCouponsByStatus(coupon.getStatus());
         return PageUtils.wxPage(coupons);
     }

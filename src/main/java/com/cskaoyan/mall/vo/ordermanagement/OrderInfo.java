@@ -39,6 +39,8 @@ public class OrderInfo {
 
     private HandleOption handleOption;
 
+    private Short comments;
+
     public Integer getId() {
         return id;
     }
@@ -149,5 +151,13 @@ public class OrderInfo {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Short getComments() {
+        return comments;
+    }
+
+    public void setComments(Short comments) {
+        this.comments = comments;
     }
 }

@@ -46,6 +46,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cskaoyan.mall.bean.Groupon">
+    <selectKey resultType="int" keyProperty="id" keyColumn="id" order="AFTER">
+      select last_insert_id() as id
+    </selectKey>
     insert into cskaoyan_mall_groupon (id, order_id, groupon_id,
       rules_id, user_id, creator_user_id,
       add_time, update_time, share_url,
@@ -187,4 +190,11 @@
       and rules_id = #{ruleId}
     </if>
   </select>
+
+  <update id="updateGrouponId">
+    update cskaoyan_mall_groupon
+    set groupon_id = #{grouponId,jdbcType=INTEGER},
+      update_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

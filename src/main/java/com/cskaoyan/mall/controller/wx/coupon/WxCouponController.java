@@ -8,6 +8,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.WxListBean;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.wx.coupon.CouponVo;
+import com.cskaoyan.mall.vo.wx.coupon.WxCouponVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class WxCouponController {
      */
     @RequestMapping("mylist")
     public BaseRespVo showMyList(Page page, Coupon coupon) {
-        WxListBean<Coupon> coupons = wxCouponService.showMyList(page, coupon);
+        WxListBean<WxCouponVo> coupons = wxCouponService.showMyList(page, coupon);
         return BaseRespVo.success(coupons);
     }
 

@@ -1,10 +1,12 @@
 package com.cskaoyan.mall.service.goods.impl;
 
 import com.cskaoyan.mall.bean.Comment;
+import com.cskaoyan.mall.bean.Order;
 import com.cskaoyan.mall.bean.OrderGoods;
 import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CommentMapper;
 import com.cskaoyan.mall.mapper.OrderGoodsMapper;
+import com.cskaoyan.mall.mapper.OrderMapper;
 import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -28,6 +30,8 @@ public class CommentServiceImpl implements CommentService {
     MyFileConfig myFileConfig;
     @Autowired
     OrderGoodsMapper orderGoodsMapper;
+    @Autowired
+    OrderMapper orderMapper;
 
     @Override
     public ListBean queryComment(Page page, Comment comment) {
@@ -57,7 +61,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int insertComment(Comment comment, int userId) {
-        comment.setValueId(0);
+        OrderGoods orderGoods = orderGoodsMapper.selectByPrimaryKey(comment.getOrderGoodsId());
+        comment.setValueId(orderGoods.getGoodsId());
         comment.setType((byte) 3);
         comment.setUserId(userId);
         comment.setAddTime(new Date());
@@ -65,9 +70,11 @@ public class CommentServiceImpl implements CommentService {
         comment.setDeleted(false);
         commentMapper.insertSelective(comment);
 
-        OrderGoods orderGoods = new OrderGoods();
-        orderGoods.setId(comment.getOrderGoodsId());
+        Order order = orderMapper.queryOrderComments(orderGoods.getOrderId());
+        order.setComments((short)(order.getComments() - orderGoods.getNumber()));
+        orderMapper.updateByPrimaryKeySelective(order);
         orderGoods.setComment(comment.getId());
+        orderGoods.setUpdateTime(new Date());
         return orderGoodsMapper.updateByPrimaryKeySelective(orderGoods);
     }
 }
