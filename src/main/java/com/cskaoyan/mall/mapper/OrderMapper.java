@@ -2,7 +2,9 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Order;
 
+import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.util.Page;
+import com.cskaoyan.mall.vo.ordermanagement.ExpressInfo;
 import com.cskaoyan.mall.vo.ordermanagement.OrderInfo;
 import com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo;
 import com.cskaoyan.mall.vo.user.UserIndexVo;
@@ -56,10 +58,9 @@ public interface OrderMapper {
     /**
      * 用户订单状态
      * @param id
-     * @param status
      * @return
      */
-    Integer queryUserOrdersNumber(@Param("id")Integer id,@Param("status") Short status);
+    List<Order> queryUserOrdersNumber(@Param("id")Integer id);
 
     /**
      * 查询用户订单
@@ -76,4 +77,17 @@ public interface OrderMapper {
      */
     OrderInfo queryOrderInfo(Integer id);
 
+    /**
+     * 查询物流信息
+     * @param orderId
+     * @return
+     */
+    ExpressInfo queryExpressInfo(Integer orderId);
+
+    /**
+     * 查询订单还有多少没有评价的商品
+     * @param id
+     * @return
+     */
+    Order queryOrderComments(Integer id);
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * 团购模块service实现类
- *
+ * <p>
  * author Zeng-jz
  */
 @Service
@@ -42,6 +42,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
 
     /**
      * 团购列表
+     *
      * @param page
      * @return
      */
@@ -51,7 +52,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
         List<GrouponVo> grouponVoList = grouponRulesMapper.selectAll();
         for (GrouponVo grouponVo : grouponVoList) {
             Goods goods = goodsMapper.selectById(grouponVo.getGoods_id());
-            if (!goods.getPicUrl().startsWith("http")){
+            if (!goods.getPicUrl().startsWith("http")) {
                 goods.setPicUrl(new MyFileConfig().addPicUrl(goods.getPicUrl()));
             }
             grouponVo.setGoods(goods);
@@ -61,6 +62,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
 
     /**
      * userId 写死为1
+     *
      * @param showType
      * @return
      */
@@ -68,13 +70,13 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
     public WxListBean selectMyGroupOn(int showType) {
         int userId = 1;
         boolean isCreator = false;
-        if (showType == 0){
+        if (showType == 0) {
             isCreator = true;
             List<WxMyGroupVo> wxMyGroupVos = userMapper.selectWxGroupVoById(userId);
             wxMyGroupVos = completeWxMyGroupVos(wxMyGroupVos, userId, isCreator);
             WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size(), null);
             return wxListBean;
-        }else {
+        } else {
             List<WxMyGroupVo> wxMyGroupVos = userMapper.selectWxGroupVoJoinById(userId);
             wxMyGroupVos = completeWxMyGroupVos(wxMyGroupVos, userId, isCreator);
             WxListBean wxListBean = new WxListBean(wxMyGroupVos, wxMyGroupVos.size(), null);
@@ -85,6 +87,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
     /**
      * userId 写死
      * 获得商品的详情
+     *
      * @param grouponId
      * @return
      */
@@ -100,21 +103,21 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
             joiners.add(wxUserVo);
             List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsByOrderId(groupon.getOrderId());
             for (OrderGoods goods : orderGoodsList) {
-                if (!goods.getPicUrl().startsWith("http")){
+                if (!goods.getPicUrl().startsWith("http")) {
                     goods.setPicUrl(new MyFileConfig().addPicUrl(goods.getPicUrl()));
                 }
                 orderGoods.add(goods);
             }
-            if (groupon.getUserId().equals(groupon.getCreatorUserId())){
+            if (groupon.getUserId().equals(groupon.getCreatorUserId())) {
                 returnDetail.setCreator(wxUserVo);
                 returnDetail.setLinkGrouponId(groupon.getGrouponId());
                 GrouponRules rules = grouponRulesMapper.selectByPrimaryKey(groupon.getRulesId());
-                if (!rules.getPicUrl().startsWith("http")){
+                if (!rules.getPicUrl().startsWith("http")) {
                     rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
                 }
                 returnDetail.setRules(rules);
             }
-            if (groupon.getUserId().equals(userId)){
+            if (groupon.getUserId().equals(userId)) {
                 returnDetail.setGroupon(groupon);
             }
         }
@@ -129,14 +132,15 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
 
     /**
      * 补全
+     *
      * @param wxMyGroupVos
      * @return
      */
     private List<WxMyGroupVo> completeWxMyGroupVos(List<WxMyGroupVo> wxMyGroupVos, int userId, boolean isCreator) {
         for (WxMyGroupVo wxMyGroupVo : wxMyGroupVos) {
-            wxMyGroupVo.setGroupon(grouponMapper.selectByUidAndGid(wxMyGroupVo.getId(),userId));
+            wxMyGroupVo.setGroupon(grouponMapper.selectByUidAndGid(wxMyGroupVo.getId(), userId));
             GrouponRules rules = grouponRulesMapper.selectByPrimaryKey(wxMyGroupVo.getRulesId());
-            if (!rules.getPicUrl().startsWith("http")){
+            if (rules.getPicUrl() != null && !rules.getPicUrl().startsWith("http")) {
                 rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
             }
             wxMyGroupVo.setRules(rules);
@@ -144,7 +148,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
             wxMyGroupVo.setOrderStatusText(wxMyGroupVo.getHandleOption().getStatusText());
             List<OrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsByOrderId(wxMyGroupVo.getOrderId());
             for (OrderGoods orderGoods : goodsList) {
-                if (!orderGoods.getPicUrl().startsWith("http")){
+                if (!orderGoods.getPicUrl().startsWith("http")) {
                     orderGoods.setPicUrl(new MyFileConfig().addPicUrl(orderGoods.getPicUrl()));
                 }
             }

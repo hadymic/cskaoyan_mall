@@ -6,6 +6,7 @@ import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.ordermanagement.SubmitVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,7 @@ public class WxOrderController {
      */
     @RequestMapping("list")
     public BaseRespVo orderList(Page page, Integer showType){
-        /*String token = (String) SecurityUtils.getSubject().getPrincipal();*/
-        Integer id = 1;
+        Integer id = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         return BaseRespVo.success(orderService.queryUserOrders(id,page,showType));
     }
 
@@ -42,8 +42,12 @@ public class WxOrderController {
      */
     @RequestMapping("submit")
     public BaseRespVo submit(@RequestBody SubmitVo submitVo){
-        int id = 1;
-        return BaseRespVo.success(orderService.insertOrder(id,submitVo));
+        Integer id = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        Map data = orderService.insertOrder(id, submitVo);
+        if (data == null) {
+            return BaseRespVo.fail("货源不足，付款失败");
+        }
+        return BaseRespVo.success(data);
     }
 
     /**
@@ -52,8 +56,14 @@ public class WxOrderController {
      */
     @RequestMapping("prepay")
     public BaseRespVo prepay(@RequestBody Map map){
-        Integer orderId = Integer.valueOf((String) map.get("orderId"));
-        int i = orderService.updateOrderPrepay(orderId);
+        Object orderId1 = map.get("orderId");
+        Integer orderId = 0;
+        if (orderId1 instanceof String) {
+            orderId = Integer.valueOf((String)orderId1);
+        } else if (orderId1 instanceof Integer){
+            orderId = (Integer) orderId1;
+        }
+        orderService.updateOrderPrepay(orderId);
         return BaseRespVo.success("成功");
     }
 
@@ -125,7 +135,7 @@ public class WxOrderController {
      */
     @RequestMapping("comment")
     public BaseRespVo comment(@RequestBody Comment comment){
-        int id = 1;
+        Integer id = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         return BaseRespVo.success(commentService.insertComment(comment, id));
     }
 }

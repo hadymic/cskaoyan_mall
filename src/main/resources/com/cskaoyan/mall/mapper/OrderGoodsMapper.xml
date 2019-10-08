@@ -228,7 +228,7 @@
   </select>
 
   <select id="queryOrderGoodsForPay" resultMap="BaseResultMap">
-    select product_id, `number`
+    select product_id, `number`, price
     from cskaoyan_mall_order_goods
     where order_id = #{orderId} and deleted = 0
   </select>

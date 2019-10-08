@@ -27,7 +27,7 @@ public class WxUserController {
         if (userId == null) {
             return BaseRespVo.fail("请重新登录");
         }
-        UserIndexVo vo = userManageService.queryUserOrders(token);
+        UserIndexVo vo = userManageService.queryUserOrders(userId);
         Map map = new HashMap<>(1);
         map.put("order", vo);
         return BaseRespVo.success(map);
