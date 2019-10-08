@@ -32,6 +32,6 @@ public class WxTopicController {
     public BaseRespVo topicRelated(int id){
         //example的related每次都是同样四条数据,不合常理(搞个随机四条?)
         List<Topic> topicList = wxTopicService.queryRelatedTopic(id);
-        return BaseRespVo.success(topicList);//未写
+        return BaseRespVo.success(topicList);
     }
 }
