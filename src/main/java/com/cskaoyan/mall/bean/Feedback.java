@@ -21,7 +21,7 @@ public class Feedback {
 
     private Boolean hasPicture;
 
-    private String picUrls;
+    private String[] picUrls;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -93,13 +93,14 @@ public class Feedback {
         this.hasPicture = hasPicture;
     }
 
-    public String getPicUrls() {
+    public String[] getPicUrls() {
         return picUrls;
     }
 
-    public void setPicUrls(String picUrls) {
-        this.picUrls = picUrls == null ? null : picUrls.trim();
+    public void setPicUrls(String[] picUrls) {
+        this.picUrls = picUrls;
     }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getAddTime() {
         return addTime;
