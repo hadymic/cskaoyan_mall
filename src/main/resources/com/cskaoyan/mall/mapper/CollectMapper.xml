@@ -13,6 +13,11 @@
   <sql id="Base_Column_List">
     id, user_id as userId, value_id as valueId, `type`, add_time as addTime, update_time as updateTime, deleted
   </sql>
+  <select id="selectCollectByUserIdValueId" resultType="int">
+    select count(id) from cskaoyan_mall_collect where
+    deleted = 0  and value_id = #{valueId} and type = #{type} and user_id = #{userId}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
