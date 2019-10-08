@@ -117,18 +117,28 @@ public class WxCouponServiceImpl implements WxCouponService {
      */
     @Override
     public List<Coupon> couponCanUse(int cartId, int grouponRulesId) {
-        Cart cart = cartMapper.selectByPrimaryKey(cartId);
-        //购物车中商品的总价格
-        Short number = cart.getNumber();
-        BigDecimal price = cart.getPrice();
+        //获得用户的id
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        BigDecimal goodsTotalPrice = BigDecimal.ZERO;
+        if (cartId == 0) {
+            List<Cart> carts = cartMapper.queryByUserId(userId, true);
+            for (Cart cart : carts) {
+                goodsTotalPrice = goodsTotalPrice.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
+            }
+        } else {
+            Cart cart = cartMapper.selectByPrimaryKey(cartId);
+            //购物车中商品的总价格
+            Short number = cart.getNumber();
+            BigDecimal price = cart.getPrice();
+            goodsTotalPrice = price.multiply(BigDecimal.valueOf(number));
+        }
         //有团购
         BigDecimal discount = BigDecimal.ZERO;
         if (grouponRulesId != 0) {
             discount = grouponRulesMapper.getDiscount(grouponRulesId);
         }
-        BigDecimal sum = price.multiply(BigDecimal.valueOf(number)).subtract(discount);
-        //获得用户的id
-        Integer userId = cart.getUserId();
+        BigDecimal sum = goodsTotalPrice.subtract(discount);
+
         List<Coupon> coupons = new ArrayList<>();
         List<CouponUser> couponUsers = couponUserMapper.queryByUserId(userId);
         for (CouponUser couponUser : couponUsers) {

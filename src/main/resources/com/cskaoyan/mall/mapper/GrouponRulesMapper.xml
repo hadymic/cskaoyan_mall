@@ -194,6 +194,6 @@
 
   <select id="getDiscount"  resultType="java.math.BigDecimal">
   SELECT  discount
-FROM `cskaoyan_mall_groupon_rules` where goods_id=#{id}
+FROM `cskaoyan_mall_groupon_rules` where id = #{id}
   </select>
 </mapper>

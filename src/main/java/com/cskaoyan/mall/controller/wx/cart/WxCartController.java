@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.controller.wx.cart;
 
+import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.service.wx.cart.CartService;
+import com.cskaoyan.mall.service.wx.coupon.WxCouponService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.wx.cart.*;
 import org.apache.shiro.SecurityUtils;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 微信购物车
@@ -19,6 +22,8 @@ import java.math.BigDecimal;
 public class WxCartController {
     @Autowired
     private CartService cartService;
+    @Autowired
+    private WxCouponService wxCouponService;
 
     /**
      * 购物车主页
@@ -100,6 +105,11 @@ public class WxCartController {
     @GetMapping("checkout")
     public BaseRespVo checkout(CartCheckoutVo vo) {
         CartCheckoutReturnVo returnVo = cartService.checkout(vo);
+        List<Coupon> coupons = wxCouponService.couponCanUse(vo.getCartId(), vo.getGrouponRulesId());
+        if ((vo.getCouponId() == 0 || vo.getCouponId() == -1) && coupons.size() > 0) {
+            returnVo.setAvailableCouponLength(coupons.size());
+            returnVo.setCouponId(-1);
+        }
         return BaseRespVo.success(returnVo);
     }
 
