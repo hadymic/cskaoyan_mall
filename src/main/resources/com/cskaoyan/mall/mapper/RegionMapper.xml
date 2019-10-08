@@ -103,6 +103,12 @@
     from cskaoyan_mall_region
     where pid = #{pid}
   </select>
+<<<<<<< HEAD
+  <select id="selectByCode" resultType="com.cskaoyan.mall.bean.Region">
+    select  <include refid="Base_Column_List"/>
+    from cskaoyan_mall_region
+    where code = #{code}
+=======
   <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.bean.Region">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -133,5 +139,6 @@
     		 where ra.type = 1)as b)
     		 LEFT JOIN cskaoyan_mall_region rc
     		 ON b.bid = rc.pid
+>>>>>>> b561ea635039713e641b0a54b96eb702d26e95e7
   </select>
 </mapper>
