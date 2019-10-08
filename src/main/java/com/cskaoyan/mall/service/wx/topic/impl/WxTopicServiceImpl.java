@@ -51,6 +51,9 @@ public class WxTopicServiceImpl implements WxTopicService {
                 iterator.remove();
             }
         }
+        if (topicList.size() > 4){
+            topicList =topicList.subList(0,4);
+        }//大于四条显示前四条
         return topicList;
     }
 }
