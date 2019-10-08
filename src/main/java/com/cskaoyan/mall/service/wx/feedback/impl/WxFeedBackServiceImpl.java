@@ -17,6 +17,8 @@ public class WxFeedBackServiceImpl  implements WxFeedBackService {
     @Override
     public void submit(FeedbackVo feedbackVo) {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        feedbackVo.setUsername(username);
         feedbackVo.setUserId(userId);
         feedbackVo.setAddTime(new Date());
         feedbackVo.setUpdateTime(new Date());

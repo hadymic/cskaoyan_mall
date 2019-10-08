@@ -203,11 +203,11 @@
 
 
   <insert id="submit" parameterType="com.cskaoyan.mall.vo.wx.FeedbackVo">
-    insert into cskaoyan_mall_feedback (id,user_id,
+    insert into cskaoyan_mall_feedback (id,user_id,username,
       mobile, feed_type, content,
      has_picture, pic_urls,add_time,update_time
       )
-    values (#{id},#{userId},
+    values (#{id},#{userId},#{username},
       #{mobile}, #{feedType}, #{content},
       #{hasPicture}, #{picUrls},#{addTime},#{updateTime}
       )
