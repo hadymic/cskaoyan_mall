@@ -27,7 +27,6 @@ public class WxAddressController {
         List wxAddressList = addressService.getWxAddressList(principal);
         return BaseRespVo.success(wxAddressList);
     }
-
     /**
      * 获取行政区域表
      */
@@ -48,6 +47,7 @@ public class WxAddressController {
         boolean fale = addressService.addProfile(address,principal);
         return fale?BaseRespVo.success(42):BaseRespVo.fail("添加失败");
     }
+    //删除收货地址
     @RequestMapping(value = "address/delete",method = RequestMethod.POST)
     public BaseRespVo deleteAddress(@RequestBody Address address){
         boolean flag = addressService.deleteAddress(address.getId());

@@ -98,6 +98,8 @@ public class Feedback {
     }
 
     public void setPicUrls(String[] picUrls) {
+        this.picUrls = picUrls == null ? null : picUrls;
+
         this.picUrls = picUrls;
     }
 

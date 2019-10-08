@@ -103,6 +103,11 @@
     from cskaoyan_mall_region
     where pid = #{pid}
   </select>
+  <select id="selectByCode" resultType="com.cskaoyan.mall.bean.Region">
+    select id, pid, `name`, `type`, code
+    from cskaoyan_mall_region
+    where code = #{code}
+  </select>
   <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.bean.Region">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
