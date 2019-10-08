@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
 import com.cskaoyan.mall.bean.Brand;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.mallmanager.BrandService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -23,9 +24,12 @@ public class BrandController {
 
     @Autowired
     BrandService brandService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示品牌商信息
+     *
      * @param page
      * @param id
      * @param name
@@ -33,51 +37,59 @@ public class BrandController {
      */
     @RequestMapping("list")
     @RequiresPermissions(value = "admin:brand:list")
-    public BaseRespVo list(Page page, String id, String name){
+    public BaseRespVo list(Page page, String id, String name) {
         ListBean brandList = brandService.list(page, id, name);
         return BaseRespVo.success(brandList);
     }
 
     /**
      * 删除选定的品牌商
+     *
      * @param brand
      * @return
      */
     @RequestMapping("delete")
     @RequiresPermissions(value = "admin:brand:delete")
-    public BaseRespVo delete(@RequestBody Brand brand){
+    public BaseRespVo delete(@RequestBody Brand brand) {
         brandService.delete(brand);
+        logService.log(1, "删除品牌商", true);
         return BaseRespVo.success(null);
     }
 
     /**
      * 修改选定的品牌商信息
+     *
      * @param brand
      * @return
      */
     @RequestMapping("update")
     @RequiresPermissions(value = "admin:brand:update")
-    public BaseRespVo update(@RequestBody Brand brand){
+    public BaseRespVo update(@RequestBody Brand brand) {
         Brand newBrand = brandService.update(brand);
         if (newBrand != null) {
+            logService.log(1, "修改品牌商", true);
             return BaseRespVo.success(newBrand);
-        }else {
+        } else {
+            logService.log(1, "修改品牌商", false);
             return BaseRespVo.fail("参数不对");
         }
     }
 
     /**
      * 添加品牌制造商
+     *
      * @param brand
      * @return
      */
     @RequestMapping("create")
     @RequiresPermissions(value = "admin:brand:create")
-    public BaseRespVo create(@RequestBody Brand brand){
+    public BaseRespVo create(@RequestBody Brand brand) {
         Brand newBrand = brandService.create(brand);
         if (newBrand != null) {
+            logService.log(1, "添加品牌商", true);
             return BaseRespVo.success(newBrand);
-        }else {
+        } else {
+            logService.log(1, "添加品牌商", false);
             return BaseRespVo.fail("参数不对");
         }
     }

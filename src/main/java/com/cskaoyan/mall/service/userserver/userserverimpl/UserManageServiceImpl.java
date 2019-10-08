@@ -48,17 +48,21 @@ public class UserManageServiceImpl implements UserManageService {
         for (Order order : orders) {
             switch (order.getOrderStatus()) {
                 case 101:
-                    unpaid++;
+                    if (!judgeTimeFroUnpaid(order)){
+                        unpaid++;
+                    }
                     break;
                 case 201:
                     unship++;
                     break;
                 case 301:
-                    unrecv++;
+                    if (!judgeTimeFroUnRecv(order)){
+                        unrecv++;
+                    }
                     break;
                 case 401:
                 case 402:
-                    if (!judgeTimeFromOrder(order)){
+                    if (!judgeTimeFroUnComment(order)){
                         uncomment++;
                     }
                     break;
@@ -73,7 +77,7 @@ public class UserManageServiceImpl implements UserManageService {
         return userIndexVo;
     }
 
-    private boolean judgeTimeFromOrder(Order order){
+    private boolean judgeTimeFroUnComment(Order order){
         if (order.getComments() == 0){
             return true;
         }
@@ -89,6 +93,28 @@ public class UserManageServiceImpl implements UserManageService {
                 }
             }
             order.setComments((short)0);
+            order.setUpdateTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+            return true;
+        }
+    }
+
+    private boolean judgeTimeFroUnpaid(Order order){
+        if (order.getEndTime().getTime() > System.currentTimeMillis()){
+            return false;
+        } else {
+            order.setOrderStatus((short)103);
+            order.setUpdateTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+            return true;
+        }
+    }
+
+    private boolean judgeTimeFroUnRecv(Order order){
+        if (order.getEndTime().getTime() > System.currentTimeMillis()){
+            return false;
+        } else {
+            order.setOrderStatus((short)402);
             order.setUpdateTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
             return true;
