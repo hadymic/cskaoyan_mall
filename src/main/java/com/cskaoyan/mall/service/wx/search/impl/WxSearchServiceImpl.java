@@ -28,13 +28,17 @@ public class WxSearchServiceImpl implements WxSearchService {
     public WxSearchVo index() {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         List<Keyword> defaultKeywordList = keywordMapper.selectDefaultKeyword();
-        List<SearchHistory> historyKeywordList = searchHistoryMapper.selectHistoryKeywordList(userId);
+        List<SearchHistory> historyKeywordList = null;
+        if (userId != null) {
+            historyKeywordList = searchHistoryMapper.selectHistoryKeywordList(userId);
+        }
         List<Keyword> hotKeywordList = keywordMapper.selectHotKeyword();
         return new WxSearchVo(defaultKeywordList.get(0), historyKeywordList, hotKeywordList);
     }
 
     /**
      * 搜索帮助
+     *
      * @param keyword
      * @return
      */

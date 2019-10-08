@@ -86,7 +86,7 @@ public class WxCartController {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         int cartId = cartService.fastAdd(vo, userId);
         if (cartId == -1) {
-            return BaseRespVo.fail("商品太抢手啦，库存已空哦！");
+            return BaseRespVo.fail("商品太抢手啦！库存已空哦！");
         }
         return BaseRespVo.success(cartId);
     }

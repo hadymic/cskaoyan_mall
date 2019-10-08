@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
         // 判断商品是否还有库存
         GoodsProduct product = goodsProductMapper.selectByPrimaryKey(vo.getProductId());
         if (product.getNumber() <= 0) {
-            return "商品太抢手啦，库存已空哦！";
+            return "商品太抢手啦！库存已空哦！";
         }
         //判断数据库中是否已有该商品
         Cart cartFromDb = cartMapper.queryByProductId(userId, vo.getProductId());
