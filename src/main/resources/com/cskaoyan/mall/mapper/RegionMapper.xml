@@ -139,4 +139,9 @@
     		 LEFT JOIN cskaoyan_mall_region rc
     		 ON b.bid = rc.pid
   </select>
+  <select id="selectByIdKey" resultType="com.cskaoyan.mall.bean.Region">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_region
+    where id = #{id}
+  </select>
 </mapper>

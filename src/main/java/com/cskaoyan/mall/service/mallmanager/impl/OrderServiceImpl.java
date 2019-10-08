@@ -222,11 +222,14 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         if (submitVo.getCouponId() != 0 && submitVo.getCouponId() != -1) {
-            CouponUser couponUser = couponUserMapper.queryCouponUserByOrderId(order.getId());
-            couponUser.setStatus((short) 1);
-            couponUser.setUsedTime(new Date());
-            couponUser.setUpdateTime(new Date());
-            couponUserMapper.updateByPrimaryKey(couponUser);
+            List<CouponUser> couponUsers = couponUserMapper.queryCouponUsers(submitVo.getCouponId(), null, userId);
+            for (CouponUser couponUser : couponUsers) {
+                couponUser.setStatus((short) 1);
+                couponUser.setOrderId(order.getId());
+                couponUser.setUsedTime(new Date());
+                couponUser.setUpdateTime(new Date());
+                couponUserMapper.updateByPrimaryKey(couponUser);
+            }
         }
         if (flag) {
             for (OrderGoods orderGoods : orderGoodsList) {
