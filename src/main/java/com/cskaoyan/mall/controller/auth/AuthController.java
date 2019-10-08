@@ -1,11 +1,12 @@
 package com.cskaoyan.mall.controller.auth;
 
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.auth.AuthService;
 import com.cskaoyan.mall.shiro.CustomToken;
 import com.cskaoyan.mall.util.IPUtils;
 import com.cskaoyan.mall.vo.BaseRespVo;
-import com.cskaoyan.mall.vo.auth.LoginVo;
 import com.cskaoyan.mall.vo.auth.AdminInfo;
+import com.cskaoyan.mall.vo.auth.LoginVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
@@ -29,6 +30,8 @@ import java.io.Serializable;
 public class AuthController {
     @Autowired
     private AuthService authService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 后台登录
@@ -49,6 +52,7 @@ public class AuthController {
         Session session = subject.getSession();
         session.setAttribute("ip", IPUtils.getIpAddr(request));
         Serializable id = session.getId();
+        logService.log(1, "登录", true);
         return BaseRespVo.success(id);
     }
 
@@ -83,6 +87,7 @@ public class AuthController {
         /*认证的逻辑*/
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
+        logService.log(1, "退出", true);
         return BaseRespVo.success(null);
     }
 }
