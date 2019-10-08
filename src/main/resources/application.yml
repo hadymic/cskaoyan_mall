@@ -12,7 +12,7 @@ logging:
 # 数据源激活
 spring:
   profiles:
-    active: db5, aliyun
+    active: db8, aliyun
 
 # typeHandler扫描器
 mybatis:

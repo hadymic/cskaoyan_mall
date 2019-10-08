@@ -66,8 +66,11 @@ public class WxCouponServiceImpl implements WxCouponService {
 
     @Override
     public int receiveCoupon(Integer couponId) {
+        Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
+        if (coupon.getTotal() == 0) {
+            return 1;
+        }
         int flag = couponMapper.receiveCoupon(couponId);
-
         return flag;
     }
 
