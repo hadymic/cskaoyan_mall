@@ -189,4 +189,11 @@
       #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP},
       #{deleted,jdbcType=BIT})
   </insert>
+
+
+
+  <select id="getDiscount"  resultType="java.math.BigDecimal">
+  SELECT  discount
+FROM `cskaoyan_mall_groupon_rules` where goods_id=#{id}
+  </select>
 </mapper>

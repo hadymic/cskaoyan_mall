@@ -57,4 +57,6 @@ public interface CategoryMapper {
 
     List<Category> selectChildren(@Param("id") Integer id);
 
+    List<Category> selectRecommendCategoryByUserId(@Param("userId") Integer userId);
+
 }
