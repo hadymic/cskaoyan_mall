@@ -27,4 +27,6 @@ public interface RegionMapper {
 
     List<Region> selectRegions();
 
+    Region selectByIdKey(@Param("id") int id);
+
 }

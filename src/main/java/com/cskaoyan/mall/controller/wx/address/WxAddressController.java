@@ -6,12 +6,14 @@ import com.cskaoyan.mall.service.wx.address.WxAddressService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("wx/")
+@EnableTransactionManagement
 public class WxAddressController {
     @Autowired
     AddressService addressService;
