@@ -161,7 +161,7 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_storage   where deleted=0
 
-      <if test="key != null">
+      <if test="key!= null  &amp;  key!='' "   >
            and    `key`= #{key}
       </if>
       <if test="name!= null">
