@@ -38,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
     GrouponMapper grouponMapper;
     @Autowired
     SystemMapper systemMapper;
+    @Autowired
+    CouponUserMapper couponUserMapper;
 
     @Override
     public ListBean<Order> queryOrderList(Page page, Integer userId, String orderSn, Integer[] orderStatusArray) {
@@ -114,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
         OrderInfo orderInfo = orderMapper.queryOrderInfo(orderId);
 
         boolean comment = true;
-        if(judgeTimeFromOrderInfo(orderInfo)){
+        if (judgeTimeFromOrderInfo(orderInfo)) {
             comment = false;
         }
         HandleOption handleOption = HandleOption.get(orderInfo.getOrderStatus(), comment);
@@ -122,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
         orderInfo.setOrderStatusText(handleOption.getStatusText());
         if (orderInfo.getOrderStatus() == 301) {
             ExpressInfo expressInfo = orderMapper.queryExpressInfo(orderId);
-            map.put("expressInfo",expressInfo);
+            map.put("expressInfo", expressInfo);
         }
         map.put("orderGoods", orderGoodsList);
         map.put("orderInfo", orderInfo);
@@ -133,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
     public Map insertOrder(int userId, SubmitVo submitVo) {
         List<Cart> carts = new ArrayList<>();
         if (submitVo.getCartId() == 0) {
-            carts = cartMapper.queryByUserId(userId,true);
+            carts = cartMapper.queryByUserId(userId, true);
             int i = cartMapper.deleteByUserId(userId, true);
         } else {
             Cart cart = cartMapper.selectByPrimaryKey(submitVo.getCartId());
@@ -148,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         // year + month + day + random
         String dateString = TimeUtils.getDateString(new Date());
         order.setOrderSn(dateString + RandomUtils.getRandom(6));
-        order.setOrderStatus((short)101);
+        order.setOrderStatus((short) 101);
         order.setConsignee(address1.getName());
         order.setMobile(address1.getMobile());
         order.setAddress(address1.getOrderAddress());
@@ -219,6 +221,13 @@ public class OrderServiceImpl implements OrderService {
                 flag = false;
             }
         }
+        if (submitVo.getCouponId() != 0 && submitVo.getCouponId() != -1) {
+            CouponUser couponUser = couponUserMapper.queryCouponUserByOrderId(order.getId());
+            couponUser.setStatus((short) 1);
+            couponUser.setUsedTime(new Date());
+            couponUser.setUpdateTime(new Date());
+            couponUserMapper.updateByPrimaryKey(couponUser);
+        }
         if (flag) {
             for (OrderGoods orderGoods : orderGoodsList) {
                 GoodsProduct goodsProduct = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
@@ -269,7 +278,13 @@ public class OrderServiceImpl implements OrderService {
             goodsProduct.setUpdateTime(new Date());
             goodsProductMapper.updateByPrimaryKey(goodsProduct);
         }
-        order.setOrderStatus((short)102);
+        CouponUser couponUser = couponUserMapper.queryCouponUserByOrderId(order.getId());
+        if (couponUser != null && couponUser.getId() == 1) {
+            couponUser.setStatus((short) 0);
+            couponUser.setUpdateTime(new Date());
+            couponUserMapper.updateByPrimaryKey(couponUser);
+        }
+        order.setOrderStatus((short) 102);
         order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
@@ -278,7 +293,7 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrderRefund(Integer orderId) {
         Order order = new Order();
         order.setId(orderId);
-        order.setOrderStatus((short)202);
+        order.setOrderStatus((short) 202);
         order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
@@ -296,7 +311,7 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrderConfirm(Integer orderId) {
         Order order = new Order();
         order.setId(orderId);
-        order.setOrderStatus((short)401);
+        order.setOrderStatus((short) 401);
         int comment = Integer.parseInt(systemMapper.selectByKeyName("cskaoyan_mall_order_comment"));
         Date endDay = TimeUtils.getEndDay(comment);
         order.setEndTime(endDay);
@@ -310,11 +325,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    private boolean judgeTimeFromOrderInfo(OrderInfo orderInfo){
-        if (orderInfo.getComments() == 0){
+    private boolean judgeTimeFromOrderInfo(OrderInfo orderInfo) {
+        if (orderInfo.getComments() == 0) {
             return true;
         }
-        if (orderInfo.getEndTime().getTime() > System.currentTimeMillis()){
+        if (orderInfo.getEndTime().getTime() > System.currentTimeMillis()) {
             return false;
         } else {
             List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsByOrderId(orderInfo.getId());
@@ -327,7 +342,7 @@ public class OrderServiceImpl implements OrderService {
             }
             Order order = new Order();
             order.setId(orderInfo.getId());
-            order.setComments((short)0);
+            order.setComments((short) 0);
             order.setUpdateTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
             return true;

@@ -28,4 +28,11 @@ public interface CouponUserMapper {
     void insertUser(CouponUser user);
 
     List<CouponUser> queryByUserId(Integer userId);
+
+    /**
+     * 查询CouponUser
+     * @param orderId
+     * @return
+     */
+    CouponUser queryCouponUserByOrderId(Integer orderId);
 }
