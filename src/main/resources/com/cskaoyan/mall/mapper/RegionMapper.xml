@@ -126,19 +126,17 @@
       </collection>
     </collection>
   </resultMap>
-  <!--<select id="selectRegions" resultMap="BaseResultMap1">-->
-    		<!--SELECT b.id,b.name,b.type,b.code,b.pid,-->
-    		<!--bid,bname,btype,bcode,bpid,-->
-    		<!--rc.id, rc.id,rc.name ,rc.name,rc.type r.ctype,-->
-    		<!--rc.code rc.code,rc.pid,cpid-->
-    		 <!--from ((-->
-    		 <!--SELECT ra.id,ra.name,ra.type,ra.code,ra.pid,-->
-    		 <!--rb.id bid,rb.name bname,rb.type btype,rb.code bcode,rb.pid bpid-->
-    		 <!--from cskaoyan_mall_region ra-->
-    		 <!--LEFT JOIN cskaoyan_mall_region rb-->
-    		 <!--on ra.id = rb.pid-->
-    		 <!--where ra.type = 1)as b)-->
-    		 <!--LEFT JOIN cskaoyan_mall_region rc-->
-    		 <!--ON b.bid = rc.pid-->
-  <!--</select>-->
+  <select id="selectRegions" resultMap="BaseResultMap1">
+    		SELECT b.id,b.name,b.type,b.code,b.pid,
+    		bid,bname,btype,bcode,bpid,
+    		rc.id cid,rc.name cname,rc.type ctype,
+    		rc.code ccode,rc.pid cpid
+    		from ((SELECT ra.id,ra.name,ra.type,ra.code,ra.pid,
+    		rb.id bid,rb.name bname,rb.type btype,rb.code bcode,rb.pid bpid
+    		 from cskaoyan_mall_region ra LEFT JOIN
+    		 cskaoyan_mall_region rb  on ra.id = rb.pid
+    		 where ra.type = 1)as b)
+    		 LEFT JOIN cskaoyan_mall_region rc
+    		 ON b.bid = rc.pid
+  </select>
 </mapper>

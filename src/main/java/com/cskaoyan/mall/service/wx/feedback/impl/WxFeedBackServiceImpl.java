@@ -3,6 +3,7 @@ package com.cskaoyan.mall.service.wx.feedback.impl;
 import com.cskaoyan.mall.bean.Feedback;
 import com.cskaoyan.mall.mapper.FeedbackMapper;
 import com.cskaoyan.mall.service.wx.feedback.WxFeedBackService;
+import com.cskaoyan.mall.util.UrlUtils;
 import com.cskaoyan.mall.vo.wx.FeedbackVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class WxFeedBackServiceImpl  implements WxFeedBackService {
     public void submit(FeedbackVo feedbackVo) {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
+        feedbackVo.setPicUrls(UrlUtils.CheckListUrls(feedbackVo.getPicUrls(),false));
         feedbackVo.setUsername(username);
         feedbackVo.setUserId(userId);
         feedbackVo.setAddTime(new Date());
