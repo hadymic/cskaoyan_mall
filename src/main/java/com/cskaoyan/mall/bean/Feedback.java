@@ -98,11 +98,8 @@ public class Feedback {
     }
 
     public void setPicUrls(String[] picUrls) {
-<<<<<<< HEAD
         this.picUrls = picUrls == null ? null : picUrls;
-=======
         this.picUrls = picUrls;
->>>>>>> b561ea635039713e641b0a54b96eb702d26e95e7
     }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
