@@ -23,4 +23,5 @@ public interface RegionMapper {
 
     List selectById(@Param("pid")int pid);
 
+    List<Region> selectRegions();
 }

@@ -1,11 +1,14 @@
 package com.cskaoyan.mall.service.mallmanager.impl;
 
-import com.cskaoyan.mall.mapper.RegionMapper;
-import com.cskaoyan.mall.service.mallmanager.RegionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+        import com.cskaoyan.mall.bean.Region;
+        import com.cskaoyan.mall.mapper.RegionMapper;
+        import com.cskaoyan.mall.service.mallmanager.RegionService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Service;
 
-import java.util.List;
+        import java.lang.reflect.Array;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * 商场Service实现类--行政区域
@@ -24,7 +27,7 @@ public class RegionServiceImpl implements RegionService {
      */
     @Override
     public List list() {
-        List regionList = regionMapper.selectAll();
+        List<Region> regionList = regionMapper.selectRegions();
         return regionList;
     }
 }
