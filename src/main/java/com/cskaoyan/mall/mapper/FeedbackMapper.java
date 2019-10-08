@@ -22,4 +22,6 @@ public interface FeedbackMapper {
     List selectByUsernameAndId(@Param("id") String id, @Param("username") String username);
 
     int submit(FeedbackVo feedbackVo);
+
+    void insertDb(FeedbackVo feedbackVo);
 }

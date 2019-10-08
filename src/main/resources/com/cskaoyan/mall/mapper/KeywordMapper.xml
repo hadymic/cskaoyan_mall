@@ -15,6 +15,12 @@
   <sql id="Base_Column_List">
     id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted
   </sql>
+  <select id="selectUniqueKeyword" resultType="int">
+    select count(keyword) from cskaoyan_mall_keyword
+    where keyword = #{keyword} and deleted = 0
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -40,7 +46,7 @@
     select
     <include refid="Base_Column_List"/>
     from cskaoyan_mall_keyword
-    where is_default = 1 and deleted = 0 and keyword like #{key}
+    where deleted = 0 and keyword like #{key}
     order by update_time desc
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">

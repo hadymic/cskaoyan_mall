@@ -2,6 +2,7 @@ package com.cskaoyan.mall.controller.promotion;
 
 import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.bean.CouponUser;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.promotion.CouponService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class CouponController {
     @Autowired
     private CouponService couponService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示优惠券列表
@@ -73,7 +76,13 @@ public class CouponController {
     @RequiresPermissions("admin:coupon:create")
     public BaseRespVo insertCoupon(@RequestBody Coupon coupon) {
         Coupon newCoupon = couponService.insertCoupon(coupon);
-        return newCoupon != null ? BaseRespVo.success(newCoupon) : BaseRespVo.fail("优惠券添加失败");
+        if (newCoupon != null) {
+            logService.log(1, "添加优惠券", true);
+            return BaseRespVo.success(newCoupon);
+        } else {
+            logService.log(1, "添加优惠券", false);
+            return BaseRespVo.fail("优惠券添加失败");
+        }
     }
 
     /**
@@ -86,7 +95,13 @@ public class CouponController {
     @RequiresPermissions("admin:coupon:update")
     public BaseRespVo updateCoupon(@RequestBody Coupon coupon) {
         Coupon newCoupon = couponService.updateCoupon(coupon);
-        return newCoupon != null ? BaseRespVo.success(newCoupon) : BaseRespVo.fail("优惠券更新失败");
+        if (newCoupon != null) {
+            logService.log(1, "修改优惠券", true);
+            return BaseRespVo.success(newCoupon);
+        } else {
+            logService.log(1, "修改优惠券", false);
+            return BaseRespVo.fail("优惠券修改失败");
+        }
     }
 
     /**
@@ -99,6 +114,12 @@ public class CouponController {
     @RequiresPermissions("admin:coupon:delete")
     public BaseRespVo deleteCoupon(@RequestBody Coupon coupon) {
         boolean flag = couponService.deleteCoupon(coupon.getId());
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("优惠券删除失败");
+        if (flag) {
+            logService.log(1, "删除优惠券", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "删除优惠券", false);
+            return BaseRespVo.fail("优惠券删除失败");
+        }
     }
 }

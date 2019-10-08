@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.service.userserver.userserverimpl;
 
+import com.cskaoyan.mall.bean.Collect;
 import com.cskaoyan.mall.bean.Comment;
 import com.cskaoyan.mall.mapper.CollectMapper;
 import com.cskaoyan.mall.service.userserver.CollectService;
@@ -17,12 +18,13 @@ import java.util.List;
 public class CollectServerImpl implements CollectService {
     @Autowired
     CollectMapper collectMapper;
-    public ListBean getCollectList(Page utipage,String userId,String valueId){
+
+    public ListBean getCollectList(Page utipage, String userId, String valueId) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        if (userId=="")userId=null;
-        if (valueId=="")valueId=null;
-        List<Comment> comments = collectMapper.selectByTwoId(userId, valueId);
-        return PageUtils.page(comments);
+        if (userId == "") userId = null;
+        if (valueId == "") valueId = null;
+        List<Collect> collects = collectMapper.selectByTwoId(userId, valueId);
+        return PageUtils.page(collects);
 
     }
 }

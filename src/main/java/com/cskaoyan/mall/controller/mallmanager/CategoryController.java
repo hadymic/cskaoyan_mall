@@ -2,6 +2,7 @@ package com.cskaoyan.mall.controller.mallmanager;
 
 
 import com.cskaoyan.mall.bean.Category;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,7 +18,9 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示所有的商品及类目信息
@@ -52,8 +55,10 @@ public class CategoryController {
     @RequiresPermissions(value = "admin:category:update")
     public BaseRespVo update(@RequestBody Category category){
         if (categoryService.update(category) != 0) {
+            logService.log(1, "修改类目", true);
             return BaseRespVo.success(null);
         }else {
+            logService.log(1, "修改类目", false);
             return BaseRespVo.fail("参数不对");
         }
     }
@@ -67,6 +72,7 @@ public class CategoryController {
     @RequiresPermissions(value = "admin:category:delete")
     public BaseRespVo delete(@RequestBody Category category){
         categoryService.delete(category);
+        logService.log(1, "删除类目", true);
         return BaseRespVo.success(null);
     }
 
@@ -80,8 +86,10 @@ public class CategoryController {
     public BaseRespVo create(@RequestBody Category category){
         Category newCategory = categoryService.create(category);
         if (newCategory != null) {
+            logService.log(1, "添加类目", true);
             return BaseRespVo.success(newCategory);
         }else {
+            logService.log(1, "添加类目", false);
             return BaseRespVo.fail("参数不对");
         }
     }

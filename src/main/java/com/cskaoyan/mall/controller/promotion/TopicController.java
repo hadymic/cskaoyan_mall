@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.promotion;
 
 import com.cskaoyan.mall.bean.Topic;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.promotion.TopicService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class TopicController {
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示专题列表
@@ -43,7 +46,13 @@ public class TopicController {
     @RequiresPermissions("admin:topic:create")
     public BaseRespVo insertTopic(@RequestBody Topic topic) {
         Topic newTopic = topicService.insertTopic(topic);
-        return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("添加专题失败");
+        if (newTopic != null) {
+            logService.log(1, "添加专题", true);
+            return BaseRespVo.success(newTopic);
+        } else {
+            logService.log(1, "添加专题", false);
+            return BaseRespVo.fail("专题添加失败");
+        }
     }
 
     /**
@@ -56,7 +65,13 @@ public class TopicController {
     @RequiresPermissions("admin:topic:update")
     public BaseRespVo updateTopic(@RequestBody Topic topic) {
         Topic newTopic = topicService.updateTopic(topic);
-        return newTopic != null ? BaseRespVo.success(newTopic) : BaseRespVo.fail("更新专题失败");
+        if (newTopic != null) {
+            logService.log(1, "修改专题", true);
+            return BaseRespVo.success(newTopic);
+        } else {
+            logService.log(1, "修改专题", false);
+            return BaseRespVo.fail("专题修改失败");
+        }
     }
 
     /**
@@ -69,6 +84,12 @@ public class TopicController {
     @RequiresPermissions("admin:topic:delete")
     public BaseRespVo deleteTopic(@RequestBody Topic topic) {
         boolean flag = topicService.deleteTopic(topic.getId());
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("专题删除失败");
+        if (flag) {
+            logService.log(1, "删除专题", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "删除专题", false);
+            return BaseRespVo.fail("专题删除失败");
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.Category;
 import com.cskaoyan.mall.bean.Goods;
 import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.CategoryMapper;
+import com.cskaoyan.mall.mapper.KeywordMapper;
 import com.cskaoyan.mall.service.mallmanager.CategoryService;
 import com.cskaoyan.mall.vo.BaseValueLabel;
 import com.cskaoyan.mall.vo.wx.home.FloorGoodsVo;
@@ -25,6 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryMapper categoryMapper;
     @Autowired
     MyFileConfig myFileConfig;
+    @Autowired
+    KeywordMapper keywordMapper;
 
     /**
      * 获取所有的商品详细信息
@@ -33,10 +36,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List list() {
         List<Category> categories = categoryMapper.selectAll();
+        List<Category> newCategories = new ArrayList<>();
         for (Category category : categories) {
-            category = checkUrl(category);
+            List<Category> children = category.getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                Category newCategory = checkUrl(children.get(i));
+                if (!newCategory.toString().equals(children.get(i).toString())){
+                    children.set(i, newCategory);
+                }
+            }
+            category.setChildren(children);
+            Category newCategory = checkUrl(category);
+            newCategories.add(newCategory);
         }
-        return categories;
+        return newCategories;
     }
 
     /**
@@ -102,17 +115,25 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Override
     public Category create(Category category) {
+        if (category.getLevel().equalsIgnoreCase("l2") && category.getPid() == 0){
+            return null;
+        }
+        if (category.getPicUrl() == null || category.getIconUrl() == null ||
+            category.getKeywords() == null || category.getDesc() == null){
+            return null;
+        }
+
         category.setIconUrl(myFileConfig.parsePicUrl(category.getIconUrl()));
         category.setPicUrl(myFileConfig.parsePicUrl(category.getPicUrl()));
 
+        //int i1 = keywordMapper.insertKeyWord(category.getKeywords());
         int i = categoryMapper.insertNewCategory(category);
         return checkUrl(category);
     }
 
     @Override
     public List<Category> queryChannel() {
-        List<Category> categories = categoryMapper.selectChannel();
-        return categories;
+        return categoryMapper.selectChannel();
     }
 
     @Override
@@ -122,7 +143,7 @@ public class CategoryServiceImpl implements CategoryService {
             List<Goods> goodsList = categoryMapper.selectFloorGoodsList(floorGoodsListSize, floorGoods.getId());
             for (Goods goods : goodsList) {
                 if (!goods.getPicUrl().startsWith("http")){
-                    goods.setPicUrl(new MyFileConfig().addPicUrl(goods.getPicUrl()));
+                    goods.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));
                 }
             }
             floorGoods.setGoodsList(goodsList);

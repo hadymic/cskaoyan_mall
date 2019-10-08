@@ -2,6 +2,7 @@ package com.cskaoyan.mall.bean;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Category {
     private Integer id;
@@ -27,6 +28,25 @@ public class Category {
     private Date updateTime;
 
     private Boolean deleted;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", desc='" + desc + '\'' +
+                ", pid=" + pid +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", level='" + level + '\'' +
+                ", sortOrder=" + sortOrder +
+                ", addTime=" + addTime +
+                ", updateTime=" + updateTime +
+                ", deleted=" + deleted +
+                ", children=" + children +
+                '}';
+    }
 
     private List<Category> children;
 
@@ -132,5 +152,18 @@ public class Category {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -9,6 +9,13 @@
     <result column="code" jdbcType="INTEGER" property="code" />
     <collection property="children" column="id" select="com.cskaoyan.mall.mapper.RegionMapper.selectChildren"/>
   </resultMap>
+  <resultMap id="SimpleResultMap" type="com.cskaoyan.mall.bean.Region">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, pid, `name`, `type`, code
   </sql>
@@ -17,18 +24,6 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_region
     where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from cskaoyan_mall_region
-    where `type` = 1
-  </select>
-  <select id="selectChildren" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from cskaoyan_mall_region
-    where pid = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cskaoyan_mall_region
@@ -108,9 +103,42 @@
     from cskaoyan_mall_region
     where pid = #{pid}
   </select>
+<<<<<<< HEAD
   <select id="selectByCode" resultType="com.cskaoyan.mall.bean.Region">
     select  <include refid="Base_Column_List"/>
     from cskaoyan_mall_region
     where code = #{code}
+=======
+  <resultMap id="BaseResultMap1" type="com.cskaoyan.mall.bean.Region">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <collection property="children"  ofType="com.cskaoyan.mall.bean.Region">
+      <result column="bid" jdbcType="INTEGER" property="id" />
+      <result column="bname" jdbcType="VARCHAR" property="name" />
+      <result column="btype" jdbcType="INTEGER" property="type" />
+      <result column="bcode" jdbcType="INTEGER" property="code" />
+      <collection property="children"  ofType="com.cskaoyan.mall.bean.Region">
+        <result column="cid" jdbcType="INTEGER" property="id" />
+        <result column="cname" jdbcType="VARCHAR" property="name" />
+        <result column="ctype" jdbcType="INTEGER" property="type" />
+        <result column="ccode" jdbcType="INTEGER" property="code" />
+      </collection>
+    </collection>
+  </resultMap>
+  <select id="selectRegions" resultMap="BaseResultMap1">
+    		SELECT b.id,b.name,b.type,b.code,b.pid,
+    		bid,bname,btype,bcode,bpid,
+    		rc.id cid,rc.name cname,rc.type ctype,
+    		rc.code ccode,rc.pid cpid
+    		from ((SELECT ra.id,ra.name,ra.type,ra.code,ra.pid,
+    		rb.id bid,rb.name bname,rb.type btype,rb.code bcode,rb.pid bpid
+    		 from cskaoyan_mall_region ra LEFT JOIN
+    		 cskaoyan_mall_region rb  on ra.id = rb.pid
+    		 where ra.type = 1)as b)
+    		 LEFT JOIN cskaoyan_mall_region rc
+    		 ON b.bid = rc.pid
+>>>>>>> b561ea635039713e641b0a54b96eb702d26e95e7
   </select>
 </mapper>

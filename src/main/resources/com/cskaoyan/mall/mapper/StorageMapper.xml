@@ -38,6 +38,9 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.mall.bean.Storage">
+    <selectKey resultType="int" keyColumn="id" keyProperty="id" order="AFTER">
+      select last_insert_id()
+    </selectKey>
     insert into cskaoyan_mall_storage
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -158,7 +161,7 @@
     <include refid="Base_Column_List" />
     from cskaoyan_mall_storage   where deleted=0
 
-      <if test="key != null">
+      <if test="key!= null  &amp;  key!='' "   >
            and    `key`= #{key}
       </if>
       <if test="name!= null">

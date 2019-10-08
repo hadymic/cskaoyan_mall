@@ -12,8 +12,8 @@ public interface UserManageService {
 
     /**
      * 获取用户的订单状态
-     * @param token
+     * @param userId
      * @return
      */
-    UserIndexVo queryUserOrders(String token);
+    UserIndexVo queryUserOrders(Integer userId);
 }

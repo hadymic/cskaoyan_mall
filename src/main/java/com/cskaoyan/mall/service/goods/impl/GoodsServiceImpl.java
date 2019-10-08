@@ -1,9 +1,6 @@
 package com.cskaoyan.mall.service.goods.impl;
 
-import com.cskaoyan.mall.bean.Goods;
-import com.cskaoyan.mall.bean.GoodsAttribute;
-import com.cskaoyan.mall.bean.GoodsProduct;
-import com.cskaoyan.mall.bean.GoodsSpecification;
+import com.cskaoyan.mall.bean.*;
 import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.goods.GoodsService;
@@ -42,6 +39,8 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsProductMapper goodsProductMapper;
     @Autowired
     private MyFileConfig myFileConfig;
+    @Autowired
+    private  KeywordMapper keywordMapper;
 
     @Override
     public ListBean selectGoods(Page page, Goods goods) {
@@ -104,7 +103,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     /**
      * 商品编辑
-     *
      * @param goodsEditVo
      * @return
      */
@@ -113,12 +111,27 @@ public class GoodsServiceImpl implements GoodsService {
     public String updateGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
-        if (goodsMapper.selectGoodsByGoodsSn(goods) > 0) {//根据goodsSn查询不为0，说明已存在
-            return "商品编号已存在,更新失败";
-        }
+        int goodsId = goods.getId();//取到goodsId
+         String goodsSnById= goodsMapper.selectGoodsSnById(goodsId);
+        if ( !goodsSnById.equals(goods.getGoodsSn()) && goodsMapper.selectGoodsByGoodsSn(goods) > 0) {
+            return "商品编号已存在,更新失败";//根据goodsSn查询为1，说明已存在(本商品)
+        }//商品编号不修改，
 
         if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
             return "商品单位更新错误";
+        }
+        String keywords = goods.getKeywords();
+        if (keywords != null){
+            String[] strings = keywords.split(",");
+            for (String string : strings) {
+                if (keywordMapper.selectUniqueKeyword(string) < 1) {
+                    Keyword keyword = new Keyword();
+                    keyword.setKeyword(string);
+                    keyword.setIsHot(goods.getIsHot());
+                    keyword.setUpdateTime(new Date());
+                    keywordMapper.insertSelective(keyword);
+                }
+            }
         }
         goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
         //去除gallery图片数组前缀
@@ -126,8 +139,7 @@ public class GoodsServiceImpl implements GoodsService {
         String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
         goods.setGallery(listUrls);
 
-        goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
-        int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
+        goodsMapper.updateByPrimaryKey(goods);//更新商品信息
         List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();//更新的specifications
         //查找数据库中的specification
         List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(goodsId);
@@ -195,6 +207,22 @@ public class GoodsServiceImpl implements GoodsService {
 
         if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
             return "商品单位错误";
+        }
+        //将keywords 插入到keyword表中
+        String keywords = goods.getKeywords();
+        if (keywords != null){
+            String[] strings = keywords.split(",");
+            for (String string : strings) {
+                if (keywordMapper.selectUniqueKeyword(string) <1) {
+                    Keyword keyword = new Keyword();
+                    keyword.setKeyword(string);
+                    keyword.setIsHot(goods.getIsHot());
+                    int i = goods.getSortOrder();
+                    keyword.setSortOrder(i);
+                    keyword.setAddTime(new Date());
+                    keywordMapper.insertSelective(keyword);
+                }
+            }
         }
         goods.setAddTime(date);
         goods.setDeleted(false);

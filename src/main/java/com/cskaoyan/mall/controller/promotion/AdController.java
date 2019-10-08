@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.promotion;
 
 import com.cskaoyan.mall.bean.Ad;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.promotion.AdService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class AdController {
     @Autowired
     private AdService adService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示广告列表
@@ -43,7 +46,13 @@ public class AdController {
     @RequiresPermissions("admin:ad:create")
     public BaseRespVo insertAd(@RequestBody Ad ad) {
         Ad newAd = adService.insertAd(ad);
-        return newAd != null ? BaseRespVo.success(newAd) : BaseRespVo.fail("广告添加失败");
+        if (newAd != null) {
+            logService.log(1, "添加广告", true);
+            return BaseRespVo.success(newAd);
+        } else {
+            logService.log(1, "添加广告", false);
+            return BaseRespVo.fail("广告添加失败");
+        }
     }
 
     /**
@@ -56,7 +65,13 @@ public class AdController {
     @RequiresPermissions("admin:ad:update")
     public BaseRespVo updateAd(@RequestBody Ad ad) {
         Ad newAd = adService.updateAd(ad);
-        return newAd != null ? BaseRespVo.success(newAd) : BaseRespVo.fail("广告更新失败");
+        if (newAd != null) {
+            logService.log(1, "修改广告", true);
+            return BaseRespVo.success(newAd);
+        } else {
+            logService.log(1, "修改广告", false);
+            return BaseRespVo.fail("广告修改失败");
+        }
     }
 
     /**
@@ -69,6 +84,12 @@ public class AdController {
     @RequiresPermissions("admin:ad:delete")
     public BaseRespVo deleteAd(@RequestBody Ad ad) {
         boolean flag = adService.deleteAd(ad.getId());
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("广告删除失败");
+        if (flag) {
+            logService.log(1, "删除广告", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "删除广告", false);
+            return BaseRespVo.fail("广告删除失败");
+        }
     }
 }

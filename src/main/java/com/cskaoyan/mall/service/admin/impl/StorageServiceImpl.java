@@ -65,7 +65,7 @@ public class StorageServiceImpl implements StorageService {
         Storage storage = new Storage();
         //注意：存储的是相对路径
         storage.setUrl(myFileConfig.getHashPath() + fileName);
-        storage.setName(file.getName());
+        storage.setName(fileName);
         storage.setAddTime(new Date());
         storage.setDeleted(false);
         storage.setKey(file.getContentType().substring(0, file.getContentType().indexOf("/")));

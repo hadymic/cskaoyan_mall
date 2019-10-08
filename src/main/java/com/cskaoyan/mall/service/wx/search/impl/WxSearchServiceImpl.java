@@ -6,12 +6,16 @@ import com.cskaoyan.mall.mapper.KeywordMapper;
 import com.cskaoyan.mall.mapper.SearchHistoryMapper;
 import com.cskaoyan.mall.service.wx.search.WxSearchService;
 import com.cskaoyan.mall.vo.wx.search.WxSearchVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author Zeng-jz
+ */
 @Service
 public class WxSearchServiceImpl implements WxSearchService {
 
@@ -22,15 +26,19 @@ public class WxSearchServiceImpl implements WxSearchService {
 
     @Override
     public WxSearchVo index() {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         List<Keyword> defaultKeywordList = keywordMapper.selectDefaultKeyword();
-        List<SearchHistory> historyKeywordList = searchHistoryMapper.selectHistoryKeywordList(userId);
+        List<SearchHistory> historyKeywordList = null;
+        if (userId != null) {
+            historyKeywordList = searchHistoryMapper.selectHistoryKeywordList(userId);
+        }
         List<Keyword> hotKeywordList = keywordMapper.selectHotKeyword();
         return new WxSearchVo(defaultKeywordList.get(0), historyKeywordList, hotKeywordList);
     }
 
     /**
      * 搜索帮助
+     *
      * @param keyword
      * @return
      */
@@ -46,7 +54,7 @@ public class WxSearchServiceImpl implements WxSearchService {
 
     @Override
     public boolean deleltedHistoryKeyword() {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         int i = searchHistoryMapper.deleteByUserId(userId);
         return i != 0;
     }

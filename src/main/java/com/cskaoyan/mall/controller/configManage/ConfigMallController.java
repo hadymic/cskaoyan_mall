@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.configManage;
 
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.configManage.ConfigService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.config.ExpressVo;
@@ -18,91 +19,129 @@ import java.util.Map;
 @EnableTransactionManagement
 public class ConfigMallController {
     @Autowired
-    ConfigService configService;
+    private ConfigService configService;
+    @Autowired
+    private LogService logService;
 
-    /**商城配置Get请求（查询）
+    /**
+     * 商城配置Get请求（查询）
+     *
      * @return
      */
     @GetMapping("mall")
     @RequiresPermissions("admin:config:mall:list")
-    public BaseRespVo mallGet(){
+    public BaseRespVo mallGet() {
         MallConfigVo mall = configService.getMall();
         return BaseRespVo.success(mall);
     }
 
-    /**商城配置POST请求（更新）
+    /**
+     * 商城配置POST请求（更新）
+     *
      * @param vo
-     * @return
-     * flag表示操作是否可以继续执行
+     * @return flag表示操作是否可以继续执行
      */
     @PostMapping("mall")
     @RequiresPermissions("admin:config:mall:updateConfigs")
-    public BaseRespVo mallPost(@RequestBody MallConfigVo vo){
-        boolean flag =vo.nonVoid();
-        if (flag) flag= configService.updateMall(vo);
-        return flag?BaseRespVo.success(null):BaseRespVo.fail("更新失败,请检查是否某项为空");
+    public BaseRespVo mallPost(@RequestBody MallConfigVo vo) {
+        boolean flag = vo.nonVoid();
+        if (flag) flag = configService.updateMall(vo);
+        if (flag) {
+            logService.log(1, "修改商城配置", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "修改商城配置", true);
+            return BaseRespVo.fail("更新失败,请检查是否某项为空");
+        }
     }
 
-    /**运费配置的POST请求（更新）
+    /**
+     * 运费配置的POST请求（更新）
+     *
      * @param expressVo
-     * @return
-     * fiag表示操作是否可以继续执行
+     * @return fiag表示操作是否可以继续执行
      */
     @RequiresPermissions("admin:config:express:updateConfigs")
-    @RequestMapping(value = "express",method = RequestMethod.POST)
+    @PostMapping("express")
     public BaseRespVo expressPost(@RequestBody ExpressVo expressVo) {
         //判断传入的参数是否存在空字符串
-        boolean fiag = expressVo.nonVoid();
-        if(fiag)fiag = configService.experess(expressVo);
-        return  fiag?BaseRespVo.success(null):BaseRespVo.fail("更新失败,请检查是否某项为空");
+        boolean flag = expressVo.nonVoid();
+        if (flag) flag = configService.experess(expressVo);
+        if (flag) {
+            logService.log(1, "修改运费配置", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "修改运费配置", true);
+            return BaseRespVo.fail("更新失败,请检查是否某项为空");
+        }
     }
 
-    /**运费配置的GET请求（查询）
+    /**
+     * 运费配置的GET请求（查询）
+     *
      * @return
      */
-    @RequestMapping("express")
+    @GetMapping("express")
     @RequiresPermissions("admin:config:express:list")
-    public BaseRespVo expressGet(){
+    public BaseRespVo expressGet() {
         Map experess = configService.experess();
         return BaseRespVo.success(experess);
     }
 
-    /**订单配置的GET请求，即是查询（查询）
+    /**
+     * 订单配置的GET请求，即是查询（查询）
+     *
      * @return
      */
-    @RequestMapping("order")
+    @GetMapping("order")
     @RequiresPermissions("admin:config:order:list")
-    public BaseRespVo oredrGet(){
+    public BaseRespVo oredrGet() {
         return BaseRespVo.success(configService.getOredr());
     }
-    /**订单配置的POST请求（更新）
+
+    /**
+     * 订单配置的POST请求（更新）
+     *
      * @param
-     * @return
-     * fiag表示操作是否可以继续执行
+     * @return fiag表示操作是否可以继续执行
      */
-    @RequestMapping(value = "order",method = RequestMethod.POST)
+    @PostMapping("order")
     @RequiresPermissions("admin:config:order:updateConfigs")
-    public BaseRespVo orderPost(@RequestBody OrderVo orderVo){
-        boolean fiag = orderVo.nonVoid();
-        if (fiag)fiag = configService.getOredr(orderVo);
-        return fiag?BaseRespVo.success(null):BaseRespVo.fail("更新失败,请检查是否某项为空");
+    public BaseRespVo orderPost(@RequestBody OrderVo orderVo) {
+        boolean flag = orderVo.nonVoid();
+        if (flag) flag = configService.getOredr(orderVo);
+        if (flag) {
+            logService.log(1, "修改订单配置", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "修改订单配置", true);
+            return BaseRespVo.fail("更新失败,请检查是否某项为空");
+        }
     }
 
-    @RequestMapping("wx")
+    @GetMapping("wx")
     @RequiresPermissions("admin:config:wx:list")
-    public BaseRespVo wxGet(){
+    public BaseRespVo wxGet() {
         return BaseRespVo.success(configService.getWx());
     }
-    /**小程序配置的POST请求（更新）
+
+    /**
+     * 小程序配置的POST请求（更新）
+     *
      * @param
-     * @return
-     * fiag表示操作是否可以继续执行
+     * @return fiag表示操作是否可以继续执行
      */
-    @RequestMapping(value = "wx",method = RequestMethod.POST)
+    @PostMapping("wx")
     @RequiresPermissions("admin:config:wx:updateConfigs")
-    public BaseRespVo wxPost(@RequestBody WxVo wxVo){
-        boolean fiag = wxVo.nonVoid();
-        if (fiag) fiag = configService.updateWx(wxVo);
-        return fiag?BaseRespVo.success(null):BaseRespVo.fail("更新失败,请检查是否某项为空");
+    public BaseRespVo wxPost(@RequestBody WxVo wxVo) {
+        boolean flag = wxVo.nonVoid();
+        if (flag) flag = configService.updateWx(wxVo);
+        if (flag) {
+            logService.log(1, "修改商小程序配置", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "修改小程序配置", true);
+            return BaseRespVo.fail("更新失败,请检查是否某项为空");
+        }
     }
 }

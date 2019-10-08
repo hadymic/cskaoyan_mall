@@ -4,8 +4,11 @@ import com.cskaoyan.mall.bean.Feedback;
 import com.cskaoyan.mall.mapper.FeedbackMapper;
 import com.cskaoyan.mall.service.wx.feedback.WxFeedBackService;
 import com.cskaoyan.mall.vo.wx.FeedbackVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class WxFeedBackServiceImpl  implements WxFeedBackService {
@@ -13,7 +16,15 @@ public class WxFeedBackServiceImpl  implements WxFeedBackService {
     FeedbackMapper feedbackMapper;
     @Override
     public void submit(FeedbackVo feedbackVo) {
-        int insert = feedbackMapper.submit(feedbackVo);
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        feedbackVo.setUsername(username);
+        feedbackVo.setUserId(userId);
+        feedbackVo.setAddTime(new Date());
+        feedbackVo.setUpdateTime(new Date());
+        feedbackMapper.submit(feedbackVo);
+
 
     }
+
 }

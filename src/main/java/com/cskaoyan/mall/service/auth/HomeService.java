@@ -19,5 +19,5 @@ public interface HomeService {
      * @param token
      * @return
      */
-    boolean updatePassword(ChangePasswordVo changePasswordVo, String token);
+    String updatePassword(ChangePasswordVo changePasswordVo, String token);
 }

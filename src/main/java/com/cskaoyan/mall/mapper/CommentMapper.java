@@ -25,9 +25,16 @@ public interface CommentMapper {
     void updateCommentDeleted(@Param("id") Integer id);
 
     /**
-     * @author hjl,根据goodsId查找商品的评论
+     * @author hjl,根据goodsId和type查找商品的评论
      * @param id
      * @return
      */
-    List<Comment> selectCommentByGoodsId(@Param("goodsId") int id);
+    List<Comment> selectCommentByGoodsIdAndType(@Param("comment")Comment comment);
+
+    /**
+     * 单个商品根据goodsId显示评价
+     * @param id
+     * @return
+     */
+    List<Comment> selectCommentByGoodsId(@Param("valueId") int id);
 }

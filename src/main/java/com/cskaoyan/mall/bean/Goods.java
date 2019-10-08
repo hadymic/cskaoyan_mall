@@ -1,5 +1,7 @@
 package com.cskaoyan.mall.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -39,13 +41,15 @@ public class Goods {
     private Boolean isHot;
     @NotBlank(message = "商品单位不能为空")
     private String unit;
+    @NotBlank(message = "专柜价格不能为空")
     @Min(value = 0,message = "专柜价格必须不小于0")
     private BigDecimal counterPrice;
+    @NotBlank(message = "当前价格不能为空")
     @Min(value = 0,message = "当前价格必须不小于0")
     private BigDecimal retailPrice;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private Boolean deleted;
