@@ -2,6 +2,7 @@ package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Coupon;
 import com.cskaoyan.mall.bean.CouponUser;
+import com.cskaoyan.mall.vo.wx.coupon.WxCouponVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public interface CouponMapper {
 
     Coupon getCoupon(Integer id);
 
-    List<Coupon> showByStatus(Short status);
+    List<WxCouponVo>showByStatus(Short status);
 }
 
 
