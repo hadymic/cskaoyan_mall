@@ -23,4 +23,6 @@ public interface RegionMapper {
 
     List selectById(@Param("pid")int pid);
 
+    Region selectByCode(@Param("code") int code);
+
 }

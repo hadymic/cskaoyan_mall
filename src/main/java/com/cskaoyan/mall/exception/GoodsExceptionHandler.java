@@ -61,6 +61,7 @@ public class GoodsExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public BaseRespVo exceptionHandler(HttpServletRequest request, Exception exception) {
         logger.error(exception.getMessage());
+        exception.printStackTrace();
         //return BaseRespVo.fail(exception.getMessage());
         return BaseRespVo.fail("参数值错误");
     }

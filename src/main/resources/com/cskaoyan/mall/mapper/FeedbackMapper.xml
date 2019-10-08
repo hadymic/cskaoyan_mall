@@ -188,17 +188,13 @@
     update_time updateTime,
     deleted
     from cskaoyan_mall_feedback
-    <if test="username != null or id != null">
-      where
-    </if>
-    <trim prefixOverrides="and">
+      where deleted = 0
       <if test="id != null">
         and id = #{id}
       </if>
       <if test="username != null">
         and username = #{username}
       </if>
-    </trim>
   </select>
 
 

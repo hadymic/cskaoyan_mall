@@ -23,6 +23,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (id=="") id = null;
         if (username=="") username = null;
         List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id,username);
+        for (Feedback feedback : feedbackList) {
+            String[] utipag = feedback.getPicUrls();
+            for (String picUrl : feedback.getPicUrls()) {
+                    picUrl = "http://"+ picUrl;
+                    picUrl.trim();
+            }
+            feedback.setPicUrls(utipag);
+        }
         return PageUtils.page(feedbackList);
     }
 }
