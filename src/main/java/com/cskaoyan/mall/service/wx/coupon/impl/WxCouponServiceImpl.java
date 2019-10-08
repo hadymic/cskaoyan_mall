@@ -43,8 +43,8 @@ public class WxCouponServiceImpl implements WxCouponService {
     @Override
     public WxListBean<WxCouponVo> showMyList(Page page, Coupon coupon) {
         PageUtils.startPage(page);
-
-        List<WxCouponVo> coupons = couponMapper.showByStatus(coupon.getStatus());
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        List<WxCouponVo> coupons = couponMapper.showByStatus(coupon.getStatus(), userId);
 
 //        List<Coupon> coupons=couponUserMapper.queryCouponsByStatus(coupon.getStatus());
         return PageUtils.wxPage(coupons);

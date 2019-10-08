@@ -362,6 +362,6 @@
     <select id="showByStatus"  resultType="com.cskaoyan.mall.vo.wx.coupon.WxCouponVo">
         select
    c.desc, c.discount, c.end_time  as endTime,c.id,c.min,c.name,c.start_time  as  startTime,c.tag    from   cskaoyan_mall_coupon c
-    left  join  cskaoyan_mall_coupon_user u on  c.id=u.coupon_id   where   u.status=#{status}
+    left  join  cskaoyan_mall_coupon_user u on  c.id=u.coupon_id   where   u.status=#{status} and u.user_id = #{userId}
     </select>
 </mapper>

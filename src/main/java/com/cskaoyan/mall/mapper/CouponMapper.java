@@ -29,7 +29,6 @@ public interface CouponMapper {
     int insertSelectKey(Coupon record);
 
 
-
     int queryCodeCounts(String code);
 
     List<Coupon> queryCouponsByStatus(Short status);
@@ -45,10 +44,9 @@ public interface CouponMapper {
     void insertUserCoupon(CouponUser couponId);
 
 
-
     Coupon getCoupon(Integer id);
 
-    List<WxCouponVo>showByStatus(Short status);
+    List<WxCouponVo> showByStatus(@Param("status") Short status, @Param("userId") Integer userId);
 }
 
 

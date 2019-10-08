@@ -8,11 +8,11 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.cskaoyan.mall.bean.Admin;
+import com.cskaoyan.mall.bean.Coupon;
+import com.cskaoyan.mall.bean.CouponUser;
 import com.cskaoyan.mall.bean.User;
 import com.cskaoyan.mall.config.AliyunConfig;
-import com.cskaoyan.mall.mapper.AdminMapper;
-import com.cskaoyan.mall.mapper.RoleMapper;
-import com.cskaoyan.mall.mapper.UserMapper;
+import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.auth.AuthService;
 import com.cskaoyan.mall.vo.auth.AdminInfo;
 import com.cskaoyan.mall.vo.auth.LoginVo;
@@ -46,6 +46,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private CouponUserMapper couponUserMapper;
+
+    @Autowired
+    private CouponMapper couponMapper;
 
     @Autowired
     private AliyunConfig aliyunConfig;
@@ -149,6 +155,14 @@ public class AuthServiceImpl implements AuthService {
                 avatar, null, (byte) 0, date, date, false);
         int flag = userMapper.insertSelective(user);
         if (flag == 1) {
+            Coupon coupon = couponMapper.selectByPrimaryKey(3);
+            CouponUser couponUser = new CouponUser();
+            couponUser.setCouponId(3);
+            couponUser.setUserId(user.getId());
+            couponUser.setStatus((short) 0);
+            couponUser.setAddTime(date);
+            couponUser.setDeleted(false);
+            couponUserMapper.insertSelective(couponUser);
             SecurityUtils.getSubject().getSession().setAttribute("userId", user.getId());
 
             UserLoginVo userLoginVo = new UserLoginVo(SecurityUtils.getSubject().getSession().getId().toString(),
