@@ -16,6 +16,7 @@ public class WxFeedBackController {
     @PostMapping("wx/feedback/submit")
     public BaseRespVo  submit(@RequestBody FeedbackVo feedbackVo){
           wxFeedBackService.submit(feedbackVo);
+
           return  BaseRespVo.success(null);
     }
 }

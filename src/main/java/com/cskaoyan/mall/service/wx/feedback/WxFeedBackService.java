@@ -5,4 +5,6 @@ import com.cskaoyan.mall.vo.wx.FeedbackVo;
 
 public interface WxFeedBackService {
     void submit(FeedbackVo feedbackVo);
+
+
 }

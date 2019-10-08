@@ -5,6 +5,7 @@ import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.wx.home.GrouponVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface GrouponRulesMapper {
@@ -31,4 +32,6 @@ public interface GrouponRulesMapper {
     List<GrouponVo> selectTopFiveByTime();
 
     List<GrouponVo> selectAll();
+
+    BigDecimal getDiscount(Integer goodsId);
 }

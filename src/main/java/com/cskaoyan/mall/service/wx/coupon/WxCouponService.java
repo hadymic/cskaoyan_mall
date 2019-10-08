@@ -1,9 +1,12 @@
 package com.cskaoyan.mall.service.wx.coupon;
 
 import com.cskaoyan.mall.bean.Coupon;
+import com.cskaoyan.mall.bean.CouponUser;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.util.WxListBean;
+
+import java.util.List;
 
 public interface WxCouponService {
     WxListBean<Coupon> showMyList(Page page, Coupon coupon);
@@ -15,4 +18,10 @@ public interface WxCouponService {
     Coupon exchangeCode(String code);
 
     int isExistCoupon(String code);
+
+    void insertUser(CouponUser couponId);
+
+    void insertDb(Coupon couponCanUse);
+
+    List<Coupon> couponCanUse(int cartId,int grouponRulesId);
 }

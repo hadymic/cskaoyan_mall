@@ -203,14 +203,16 @@
 
 
   <insert id="submit" parameterType="com.cskaoyan.mall.vo.wx.FeedbackVo">
-    insert into cskaoyan_mall_feedback (id,
+    insert into cskaoyan_mall_feedback (id,user_id,
       mobile, feed_type, content,
-     has_picture, pic_urls
-
+     has_picture, pic_urls,add_time,update_time
       )
-    values (#{id,jdbcType=INTEGER},
-      #{mobile,jdbcType=VARCHAR}, #{feedType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
-      #{hasPicture,jdbcType=BIT}, #{picUrls,jdbcType=VARCHAR}
+    values (#{id},#{userId},
+      #{mobile}, #{feedType}, #{content},
+      #{hasPicture}, #{picUrls},#{addTime},#{updateTime}
       )
   </insert>
+
+
+
 </mapper>
