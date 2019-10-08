@@ -13,6 +13,7 @@ import com.cskaoyan.mall.vo.wx.groupon.WxGrouponDetailVo;
 import com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo;
 import com.cskaoyan.mall.vo.wx.groupon.WxUserVo;
 import com.cskaoyan.mall.vo.wx.home.GrouponVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,14 +62,17 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
     }
 
     /**
+<<<<<<< HEAD
      * userId 写死为1
      *
+=======
+>>>>>>> d2e8b5850747f087184a7e994117639eb32ce43f
      * @param showType
      * @return
      */
     @Override
     public WxListBean selectMyGroupOn(int showType) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         boolean isCreator = false;
         if (showType == 0) {
             isCreator = true;
@@ -85,7 +89,6 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
     }
 
     /**
-     * userId 写死
      * 获得商品的详情
      *
      * @param grouponId
@@ -96,7 +99,7 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
         WxGrouponDetailVo returnDetail = new WxGrouponDetailVo();
         List<WxUserVo> joiners = new ArrayList<>();
         List<OrderGoods> orderGoods = new ArrayList<>();
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         List<Groupon> grouponList = grouponMapper.selectGrouponByGrouponId(grouponId);
         for (Groupon groupon : grouponList) {
             WxUserVo wxUserVo = userMapper.selectWxUserVoById(groupon.getUserId());
@@ -140,16 +143,24 @@ public class WxGroupOnServiceImpl implements WxGroupOnService {
         for (WxMyGroupVo wxMyGroupVo : wxMyGroupVos) {
             wxMyGroupVo.setGroupon(grouponMapper.selectByUidAndGid(wxMyGroupVo.getId(), userId));
             GrouponRules rules = grouponRulesMapper.selectByPrimaryKey(wxMyGroupVo.getRulesId());
-            if (rules.getPicUrl() != null && !rules.getPicUrl().startsWith("http")) {
-                rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
+
+            if (rules.getPicUrl() != null) {
+                if (!rules.getPicUrl().startsWith("http")) {
+                    rules.setPicUrl(new MyFileConfig().addPicUrl(rules.getPicUrl()));
+                }
+
             }
             wxMyGroupVo.setRules(rules);
             wxMyGroupVo.setHandleOption(HandleOption.get(wxMyGroupVo.getStatusCode(), false));
             wxMyGroupVo.setOrderStatusText(wxMyGroupVo.getHandleOption().getStatusText());
             List<OrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsByOrderId(wxMyGroupVo.getOrderId());
             for (OrderGoods orderGoods : goodsList) {
-                if (!orderGoods.getPicUrl().startsWith("http")) {
-                    orderGoods.setPicUrl(new MyFileConfig().addPicUrl(orderGoods.getPicUrl()));
+
+                if (orderGoods.getPicUrl() != null) {
+                    if (!orderGoods.getPicUrl().startsWith("http")) {
+                        orderGoods.setPicUrl(new MyFileConfig().addPicUrl(orderGoods.getPicUrl()));
+                    }
+
                 }
             }
             wxMyGroupVo.setGoodsList(goodsList);

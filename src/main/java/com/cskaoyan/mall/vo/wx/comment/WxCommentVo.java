@@ -1,13 +1,14 @@
 package com.cskaoyan.mall.vo.wx.comment;
 
 import com.cskaoyan.mall.vo.wx.groupon.WxUserVo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
 
 public class WxCommentVo {
     private WxUserVo userInfo;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private String[] picList;

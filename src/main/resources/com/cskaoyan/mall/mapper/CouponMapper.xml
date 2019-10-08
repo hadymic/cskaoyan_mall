@@ -311,7 +311,7 @@
   <select id="queryCouponsByStatus"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from cskaoyan_mall_coupon where status=#{status}
+    from cskaoyan_mall_coupon_user where status=#{status}
   </select>
 
 
@@ -344,4 +344,24 @@
   <select id="isExistCoupon"  resultType="_int">
     select count(id)   from cskaoyan_mall_coupon  where code=#{code}
   </select>
+
+
+  <select id="getCoupon"  resultType="com.cskaoyan.mall.bean.Coupon">
+    select
+    <include refid="Base_Column_List"/>
+      from cskaoyan_mall_coupon where id=#{id}
+
+  </select>
+  <!--加入用户的优惠券列表-->
+  <insert id="insertUserCoupon">
+    insert into   cskaoyan_mall_coupon_user(coupon_id,status,start_time,end_time)
+      values (#{coupon_id},#{status},#{start_time},#{end_time})
+  </insert>
+
+
+    <select id="showByStatus"  resultType="com.cskaoyan.mall.vo.wx.coupon.WxCouponVo">
+        select
+   c.desc, c.discount, c.end_time  as endTime,c.id,c.min,c.name,c.start_time  as  startTime,c.tag    from   cskaoyan_mall_coupon c
+    left  join  cskaoyan_mall_coupon_user u on  c.id=u.coupon_id   where   u.status=#{status}
+    </select>
 </mapper>

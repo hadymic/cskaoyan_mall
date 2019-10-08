@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.wx.goods;
 
 import com.cskaoyan.mall.bean.Goods;
+import com.cskaoyan.mall.service.history.WxHistoryService;
 import com.cskaoyan.mall.service.wx.goods.WxGoodsService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 public class WxGoodsController {
     @Autowired
     WxGoodsService wxGoodsService;
+    @Autowired
+    WxHistoryService wxHistoryService;
 
     @RequestMapping("category")
     public BaseRespVo goodsByCategory(int id) {
@@ -31,6 +34,7 @@ public class WxGoodsController {
         GoodsByCategory goodsByCategory;
         if (keyword!=null){
             goods.setName(keyword);//根据名字模糊查找
+            wxHistoryService.insertHistory(keyword);
         }
         if (goods.getBrandId()==null) {
             goodsByCategory = wxGoodsService.PageGoodsByCategory(page,goods);

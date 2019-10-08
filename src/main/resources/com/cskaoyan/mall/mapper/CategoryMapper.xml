@@ -265,4 +265,14 @@
     set deleted = 1
     where id = #{id,jdbcType=INTEGER}
   </update>
+    
+    <select id="selectRecommendCategoryByUserId" resultMap="SimpleResultMap">
+        select DISTINCT c.id, c.`name`, c.keywords, c.`desc`, c.pid, c.icon_url, c.pic_url, c.`level`, c.sort_order, c.add_time, c.update_time, c.deleted, f.update_time as fuptime
+        from cskaoyan_mall_footprint f
+        left join cskaoyan_mall_goods g on f.goods_id = g.id
+        left join cskaoyan_mall_category c on g.category_id = c.id
+        where f.user_id = #{userId}
+        ORDER BY fuptime DESC
+        LIMIT 12
+    </select>
 </mapper>

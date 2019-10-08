@@ -1,6 +1,8 @@
 package com.cskaoyan.mall.mapper;
 
 import com.cskaoyan.mall.bean.Coupon;
+import com.cskaoyan.mall.bean.CouponUser;
+import com.cskaoyan.mall.vo.wx.coupon.WxCouponVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -39,6 +41,14 @@ public interface CouponMapper {
     Coupon queryCodeExchange(String code);
 
     int isExistCoupon(String code);
+
+    void insertUserCoupon(CouponUser couponId);
+
+
+
+    Coupon getCoupon(Integer id);
+
+    List<WxCouponVo>showByStatus(Short status);
 }
 
 

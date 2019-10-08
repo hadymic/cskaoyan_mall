@@ -63,4 +63,7 @@ public interface KeywordMapper {
      * @return
      */
     List<Keyword> selectHotByKeyword(@Param("key") String key);
+
+    //去重
+    int selectUniqueKeyword(@Param("keyword") String keyword);
 }

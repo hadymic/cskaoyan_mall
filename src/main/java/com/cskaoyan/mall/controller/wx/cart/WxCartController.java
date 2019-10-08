@@ -3,11 +3,11 @@ package com.cskaoyan.mall.controller.wx.cart;
 import com.cskaoyan.mall.service.wx.cart.CartService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.wx.cart.*;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * 微信购物车
@@ -27,7 +27,7 @@ public class WxCartController {
      */
     @GetMapping("index")
     public BaseRespVo cartList() {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         CartListVo cartListVo = cartService.cartList(userId);
         return BaseRespVo.success(cartListVo);
     }
@@ -40,7 +40,7 @@ public class WxCartController {
      */
     @PostMapping("add")
     public BaseRespVo addCart(@RequestBody CartAddVo vo) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         String data = cartService.addCart(vo, userId);
         if (data == null) {
             BigDecimal count = cartService.goodsCount(userId);
@@ -57,7 +57,7 @@ public class WxCartController {
      */
     @PostMapping("checked")
     public BaseRespVo checkedCart(@RequestBody CartCheckedVo vo) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         cartService.checkedCart(userId, vo);
         CartListVo cartListVo = cartService.cartList(userId);
         return BaseRespVo.success(cartListVo);
@@ -70,7 +70,7 @@ public class WxCartController {
      */
     @GetMapping("goodscount")
     public BaseRespVo goodsCount() {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         BigDecimal data = cartService.goodsCount(userId);
         return BaseRespVo.success(data);
     }
@@ -83,10 +83,10 @@ public class WxCartController {
      */
     @PostMapping("fastadd")
     public BaseRespVo fastAdd(@RequestBody CartAddVo vo) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         int cartId = cartService.fastAdd(vo, userId);
         if (cartId == -1) {
-            return BaseRespVo.fail("商品太抢手啦，库存已空哦！");
+            return BaseRespVo.fail("商品太抢手啦！库存已空哦！");
         }
         return BaseRespVo.success(cartId);
     }
@@ -123,7 +123,7 @@ public class WxCartController {
      */
     @PostMapping("delete")
     public BaseRespVo deleteCart(@RequestBody CartDeleteVo vo) {
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         boolean flag = cartService.deleteCart(vo, userId);
         if (flag) {
             CartListVo cartListVo = cartService.cartList(userId);
