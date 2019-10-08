@@ -83,7 +83,7 @@
         mg.is_new as isNew,mg.`name`,mg.pic_url as picUrl,mg.retail_price as retailPrice
         FROM cskaoyan_mall_category mc
         RIGHT JOIN cskaoyan_mall_goods mg on mg.category_id = mc.id
-        where mc.pid = #{pid} and deleted = 0
+        where mc.pid = #{pid} and mc.deleted = 0
         limit #{limit} OFFSET 0
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
