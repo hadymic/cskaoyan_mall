@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
 import com.cskaoyan.mall.bean.Keyword;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.mallmanager.KeywordService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin/keyword")
 public class KeywordController {
     @Autowired
-    KeywordService keywordService;
+    private KeywordService keywordService;
+    @Autowired
+    private LogService logService;
 
 
     /**
@@ -45,8 +48,10 @@ public class KeywordController {
     @RequiresPermissions(value = "admin:keyword:create")
     public BaseRespVo createKeyword(@RequestBody Keyword keyword){
         if (StringUtils.isEmpty(keyword.getUrl())) {
+            logService.log(1, "添加关键字", false);
             return BaseRespVo.fail("参数不对");
         }
+        logService.log(1, "添加关键字", true);
         return BaseRespVo.success(keywordService.insertKeyword(keyword));
     }
 
@@ -59,8 +64,10 @@ public class KeywordController {
     @RequiresPermissions(value = "admin:keyword:update")
     public BaseRespVo updateKeyword(@RequestBody Keyword keyword){
         if (StringUtils.isEmpty(keyword.getUrl())) {
+            logService.log(1, "修改关键字", false);
             return BaseRespVo.fail("参数不对");
         }
+        logService.log(1, "修改关键字", true);
         return BaseRespVo.success(keywordService.updateKeyword(keyword));
     }
 
@@ -73,6 +80,7 @@ public class KeywordController {
     @RequiresPermissions(value = "admin:keyword:delete")
     public BaseRespVo deleteKeyword(@RequestBody Keyword keyword){
         keywordService.deleteKeyword(keyword.getId());
+        logService.log(1, "删除关键字", true);
         BaseRespVo baseRespVo = new BaseRespVo<>();
         baseRespVo.setErrmsg("成功");
         return baseRespVo;

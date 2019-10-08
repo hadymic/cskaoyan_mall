@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.admin;
 
 import com.cskaoyan.mall.bean.Storage;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.admin.StorageService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -25,6 +26,8 @@ import java.util.Date;
 public class StorageController {
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 对象存储
@@ -52,6 +55,7 @@ public class StorageController {
     @RequiresPermissions(value = "admin:storage:delete")
     public BaseRespVo delete(@RequestBody Storage storage) {
         storageService.delete(storage);
+        logService.log(1, "删除图片", true);
         return BaseRespVo.success(null);
     }
 
@@ -67,6 +71,7 @@ public class StorageController {
         storage.setAddTime(new Date());
         storage.setUpdateTime(new Date());
         storageService.update(storage);
+        logService.log(1, "修改图片", true);
         return BaseRespVo.success(storage);
 
     }
@@ -82,6 +87,7 @@ public class StorageController {
     @RequiresPermissions(value = "admin:storage:create")
     public BaseRespVo createPic(MultipartFile file) throws IOException {
         Storage storage = storageService.createPic(file);
+        logService.log(1, "添加图片", true);
         return BaseRespVo.success(storage);
     }
 }

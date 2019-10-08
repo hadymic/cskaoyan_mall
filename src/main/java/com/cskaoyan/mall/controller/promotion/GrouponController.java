@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.promotion;
 
 import com.cskaoyan.mall.bean.GrouponRules;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.promotion.GrouponService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 public class GrouponController {
     @Autowired
     private GrouponService grouponService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 显示团购规则列表
@@ -53,7 +56,13 @@ public class GrouponController {
     @RequiresPermissions("admin:groupon:create")
     public BaseRespVo insertGrouponRules(@RequestBody GrouponRules grouponRules) {
         GrouponRules newGrouponRules = grouponService.insertGrouponRules(grouponRules);
-        return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("添加团购规则失败");
+        if (newGrouponRules != null) {
+            logService.log(1, "添加团购规则", true);
+            return BaseRespVo.success(newGrouponRules);
+        } else {
+            logService.log(1, "添加团购规则", false);
+            return BaseRespVo.fail("团购规则添加失败");
+        }
     }
 
     /**
@@ -66,7 +75,13 @@ public class GrouponController {
     @RequiresPermissions("admin:groupon:update")
     public BaseRespVo updateGrouponRules(@RequestBody GrouponRules grouponRules) {
         GrouponRules newGrouponRules = grouponService.updateGrouponRules(grouponRules);
-        return newGrouponRules != null ? BaseRespVo.success(newGrouponRules) : BaseRespVo.fail("更新团购规则失败");
+        if (newGrouponRules != null) {
+            logService.log(1, "修改团购规则", true);
+            return BaseRespVo.success(newGrouponRules);
+        } else {
+            logService.log(1, "修改团购规则", false);
+            return BaseRespVo.fail("团购规则修改失败");
+        }
     }
 
     /**
@@ -79,7 +94,13 @@ public class GrouponController {
     @RequiresPermissions("admin:groupon:delete")
     public BaseRespVo deleteGrouponRules(@RequestBody GrouponRules grouponRules) {
         boolean flag = grouponService.deleteGrouponRules(grouponRules.getId());
-        return flag ? BaseRespVo.success(null) : BaseRespVo.fail("团购规则删除失败");
+        if (flag) {
+            logService.log(1, "删除团购规则", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "删除团购规则", false);
+            return BaseRespVo.fail("团购规则删除失败");
+        }
     }
 
     /**

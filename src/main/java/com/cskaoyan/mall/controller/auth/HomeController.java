@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.auth;
 
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.auth.HomeService;
 import com.cskaoyan.mall.vo.BaseRespVo;
 import com.cskaoyan.mall.vo.ChangePasswordVo;
@@ -17,30 +18,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("admin")
 public class HomeController {
     @Autowired
-    HomeService homeService;
+    private HomeService homeService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 首页显示
+     *
      * @return
      */
     @RequestMapping("dashboard")
-    public BaseRespVo homeInfo(){
+    public BaseRespVo homeInfo() {
         return BaseRespVo.success(homeService.queryHomeInfo());
     }
 
     /**
      * 修改密码
+     *
      * @param changePasswordVo
      * @return
      */
     @RequestMapping("profile/password")
-    public BaseRespVo updatePassword(@RequestBody ChangePasswordVo changePasswordVo){
+    public BaseRespVo updatePassword(@RequestBody ChangePasswordVo changePasswordVo) {
         String token = (String) SecurityUtils.getSubject().getPrincipal();
-        if (homeService.updatePassword(changePasswordVo,token)) {
-            BaseRespVo baseRespVo = new BaseRespVo<>();
-            baseRespVo.setErrmsg("成功");
-            return baseRespVo;
+        String msg = homeService.updatePassword(changePasswordVo, token);
+        if (msg == null) {
+            logService.log(1, "修改密码", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1,"修改密码",false);
+            return BaseRespVo.fail(msg);
         }
-        return BaseRespVo.fail("新旧密码不能相同，输入的密码不能过短或者不包含字母");
     }
 }

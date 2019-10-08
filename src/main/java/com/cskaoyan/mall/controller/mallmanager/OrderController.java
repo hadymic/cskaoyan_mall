@@ -1,5 +1,6 @@
 package com.cskaoyan.mall.controller.mallmanager;
 
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.goods.CommentService;
 import com.cskaoyan.mall.service.mallmanager.OrderService;
 import com.cskaoyan.mall.util.Page;
@@ -24,28 +25,33 @@ import java.util.Map;
 @RequestMapping("admin/order")
 public class OrderController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
+    @Autowired
+    private LogService logService;
+
     /**
      * 分页查询order
+     *
      * @param page
      * @return
      */
     @RequestMapping("list")
     @RequiresPermissions(value = "admin:order:list")
-    public BaseRespVo orderList(Page page, Integer userId, String orderSn, Integer[] orderStatusArray){
-        return BaseRespVo.success(orderService.queryOrderList(page,userId,orderSn,orderStatusArray));
+    public BaseRespVo orderList(Page page, Integer userId, String orderSn, Integer[] orderStatusArray) {
+        return BaseRespVo.success(orderService.queryOrderList(page, userId, orderSn, orderStatusArray));
     }
 
     /**
      * 查询订单详细
+     *
      * @param id
      * @return
      */
     @RequestMapping("detail")
     @RequiresPermissions(value = "admin:order:read")
-    public BaseRespVo detail(int id){
+    public BaseRespVo detail(int id) {
         Map<String, Object> orderDetail = orderService.queryOrderDetail(id);
         if (orderDetail != null) {
             return BaseRespVo.success(orderDetail);
@@ -55,34 +61,39 @@ public class OrderController {
 
     /**
      * 修改订单发货状态
+     *
      * @param shipVo
      * @return
      */
     @RequestMapping("ship")
     @RequiresPermissions(value = "admin:order:ship")
-    public BaseRespVo ship(@RequestBody ShipVo shipVo){
+    public BaseRespVo ship(@RequestBody ShipVo shipVo) {
+        logService.log(2, "订单发货", true);
         return BaseRespVo.success(orderService.updateShip(shipVo));
     }
 
     /**
      * 订单退款
+     *
      * @param refundVo
      * @return
      */
     @RequestMapping("refund")
     @RequiresPermissions(value = "admin:order:refund")
-    public BaseRespVo refund(@RequestBody RefundVo refundVo){
+    public BaseRespVo refund(@RequestBody RefundVo refundVo) {
+        logService.log(2, "订单退款", true);
         return BaseRespVo.success(orderService.updateRefund(refundVo));
     }
 
     /**
      * 回复订单
+     *
      * @param replyVo
      * @return
      */
     @RequestMapping("reply")
     @RequiresPermissions(value = "admin:order:reply")
-    public BaseRespVo reply(@RequestBody ReplyVo replyVo){
+    public BaseRespVo reply(@RequestBody ReplyVo replyVo) {
         if (StringUtils.isEmpty(replyVo.getContent())) {
             return BaseRespVo.fail("请填写回复内容");
         }

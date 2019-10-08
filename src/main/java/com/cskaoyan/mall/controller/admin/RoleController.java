@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.controller.admin;
 
 import com.cskaoyan.mall.bean.Role;
+import com.cskaoyan.mall.service.admin.LogService;
 import com.cskaoyan.mall.service.admin.RoleService;
 import com.cskaoyan.mall.util.ListBean;
 import com.cskaoyan.mall.util.Page;
@@ -23,6 +24,8 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private LogService logService;
 
 
     /**
@@ -64,7 +67,13 @@ public class RoleController {
         role.setUpdateTime(new Date());
         role.setAddTime(new Date());
         String msg = roleService.update(role);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        if (msg == null) {
+            logService.log(1, "修改角色", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "修改角色", false);
+            return BaseRespVo.fail(msg);
+        }
     }
 
 
@@ -79,7 +88,13 @@ public class RoleController {
     @RequiresPermissions(value = "admin:role:delete")
     public BaseRespVo delete(@RequestBody Role role) {
         String delete = roleService.delete(role);
-        return delete == null ? BaseRespVo.success(null) : BaseRespVo.fail(delete);
+        if (delete == null) {
+            logService.log(1, "删除角色", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "删除角色", false);
+            return BaseRespVo.fail(delete);
+        }
     }
 
 
@@ -92,19 +107,38 @@ public class RoleController {
     @RequestMapping("admin/role/create")
     public BaseRespVo create(@RequestBody Role role) {
         Role roleMsg = roleService.insertRole(role);
+        logService.log(1, "添加角色", true);
         return BaseRespVo.success(roleMsg);
     }
 
+    /**
+     * 显示授权列表
+     *
+     * @param roleId
+     * @return
+     */
     @GetMapping("admin/role/permissions")
     public BaseRespVo rolePermission(int roleId) {
         PermissionVo permissionVo = roleService.rolePermission(roleId);
         return BaseRespVo.success(permissionVo);
     }
 
+    /**
+     * 授权
+     *
+     * @param vo
+     * @return
+     */
     @PostMapping("admin/role/permissions")
     public BaseRespVo updateRolePermission(@RequestBody PermissionsVo vo) {
         String msg = roleService.updateRolePermission(vo);
-        return msg == null ? BaseRespVo.success(null) : BaseRespVo.fail(msg);
+        if (msg == null) {
+            logService.log(1, "角色授权", true);
+            return BaseRespVo.success(null);
+        } else {
+            logService.log(1, "角色授权", false);
+            return BaseRespVo.fail(msg);
+        }
     }
 }
 
