@@ -17,6 +17,7 @@ public class WxHistoryServiceImpl implements WxHistoryService {
     @Override
     public void insertHistory(String keyword) {
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
+        if (userId == null) return;
         int count = searchHistoryMapper.selectUniqueHistory(userId, keyword);
         if (count < 1) {
             Date date = new Date();

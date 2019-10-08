@@ -111,82 +111,82 @@ public class GoodsServiceImpl implements GoodsService {
     public String updateGoods(GoodsEditVo goodsEditVo) {
         Date date = new Date();
         Goods goods = goodsEditVo.getGoods();
-        if (goodsMapper.selectGoodsByIdAndGoodsSn(goods) == 1) {
-            if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
-                return "商品单位更新错误";
-            }
-            String keywords = goods.getKeywords();
-            if (keywords != null){
-                String[] strings = keywords.split(",");
-                for (String string : strings) {
-                   if (keywordMapper.selectUniqueKeyword(string) < 1) {
-                       Keyword keyword = new Keyword();
-                       keyword.setKeyword(string);
-                       keyword.setIsHot(goods.getIsHot());
-                       keyword.setUpdateTime(new Date());
-                       keywordMapper.insertSelective(keyword);
-                   }
-                }
-            }
-            goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
-            //去除gallery图片数组前缀
-            String[] gallery = goods.getGallery();
-            String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
-            goods.setGallery(listUrls);
-
-            goodsMapper.updateByPrimaryKeySelective(goods);//更新商品信息
-            int goodsId = goodsEditVo.getGoods().getId();//取到goodsId
-            List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();//更新的specifications
-            //查找数据库中的specification
-            List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(goodsId);
-            for (GoodsSpecification specification : specifications) {
-                if (specification.getId() == null) {//id不存在添加规格
-                    specification.setGoodsId(goodsId);//设置goodsId
-                    specification.setDeleted(false);//deleted置为0
-                    specification.setAddTime(date);//设置添加时间
-                    specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
-                    goodsSpecificationMapper.insertSelective(specification);
-                }
-                for (GoodsSpecification goodsSpecification : goodsSpecifications) {//更新规格信息
-                    if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
-                        goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);//复用，goodsId未改变
-                    } else {//删除规格设置为deleted=1
-                        specification.setUpdateTime(date);//设置更新时间
-                        goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
-                    }
-                }
-            }
-            List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
-            List<GoodsAttribute> goodsAttributes = goodsAttributeMapper.selectAttributesByGoodsId(goodsId); //查找数据库中Attribute
-            for (GoodsAttribute attribute : attributes) {
-                if (attribute.getGoodsId() == null) {//不存在添加attribute
-                    attribute.setGoodsId(goodsId);
-                    attribute.setDeleted(false);
-                    attribute.setAddTime(date);
-                    goodsAttributeMapper.insertSelective(attribute);
-                }
-                for (GoodsAttribute goodsAttribute : goodsAttributes) {
-                    if (goodsAttribute.getId() != attribute.getId()) {//返回数据中未存在的id代表删除
-                        goodsAttributeMapper.updateAttributeDeleted(goodsId, date);
-                    } else {//已存在，更新attribute
-                        attribute.setUpdateTime(date);
-                        goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
-                    }
-                }
-            }
-            //根据["1.5m床垫*1+枕头*2","浅杏粉"]和goodsId找到对应product更新
-            List<GoodsProduct> products = goodsEditVo.getProducts();
-            for (GoodsProduct product : products) {
-                product.setUpdateTime(date);
-                product.setGoodsId(goodsId);
-                product.setUrl(myFileConfig.parsePicUrl(product.getUrl()));//去除图片Url前缀
-                goodsProductMapper.updateProductBySpecAndGoodsId(product);
-            }
-            //逻辑判断
-               return "success";
-        } else if (goodsMapper.selectGoodsByGoodsSn(goods) > 0) {//根据goodsSn查询为1，说明已存在(本商品)
-            return "商品编号已存在,更新失败";
+        int goodsId = goods.getId();//取到goodsId
+         String goodsSnById= goodsMapper.selectGoodsSnById(goodsId);
+        if ( !goodsSnById.equals(goods.getGoodsSn()) && goodsMapper.selectGoodsByGoodsSn(goods) > 0) {
+            return "商品编号已存在,更新失败";//根据goodsSn查询为1，说明已存在(本商品)
         }//商品编号不修改，
+
+        if (!("个".equals(goods.getUnit()) || "件".equals(goods.getUnit()) || "盒".equals(goods.getUnit()))) {
+            return "商品单位更新错误";
+        }
+        String keywords = goods.getKeywords();
+        if (keywords != null){
+            String[] strings = keywords.split(",");
+            for (String string : strings) {
+                if (keywordMapper.selectUniqueKeyword(string) < 1) {
+                    Keyword keyword = new Keyword();
+                    keyword.setKeyword(string);
+                    keyword.setIsHot(goods.getIsHot());
+                    keyword.setUpdateTime(new Date());
+                    keywordMapper.insertSelective(keyword);
+                }
+            }
+        }
+        goods.setPicUrl(myFileConfig.parsePicUrl(goods.getPicUrl()));//去除图片picUrl前缀
+        //去除gallery图片数组前缀
+        String[] gallery = goods.getGallery();
+        String[] listUrls = UrlUtils.CheckListUrls(gallery, false);
+        goods.setGallery(listUrls);
+
+        goodsMapper.updateByPrimaryKey(goods);//更新商品信息
+        List<GoodsSpecification> specifications = goodsEditVo.getSpecifications();//更新的specifications
+        //查找数据库中的specification
+        List<GoodsSpecification> goodsSpecifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(goodsId);
+        for (GoodsSpecification specification : specifications) {
+            if (specification.getId() == null) {//id不存在添加规格
+                specification.setGoodsId(goodsId);//设置goodsId
+                specification.setDeleted(false);//deleted置为0
+                specification.setAddTime(date);//设置添加时间
+                specification.setPicUrl(myFileConfig.parsePicUrl(specification.getPicUrl()));//去除图片picUrl前缀
+                goodsSpecificationMapper.insertSelective(specification);
+            }
+            for (GoodsSpecification goodsSpecification : goodsSpecifications) {//更新规格信息
+                if (specification.getId() != (goodsSpecification.getId())) {//返回数据中未存在的id代表删除
+                    goodsSpecificationMapper.updateSpecificationDeleted(goodsId, date);//复用，goodsId未改变
+                } else {//删除规格设置为deleted=1
+                    specification.setUpdateTime(date);//设置更新时间
+                    goodsSpecificationMapper.updateByPrimaryKeySelective(specification);//可能删除规格，set deleted=1
+                }
+            }
+        }
+        List<GoodsAttribute> attributes = goodsEditVo.getAttributes();//更新商品参数
+        List<GoodsAttribute> goodsAttributes = goodsAttributeMapper.selectAttributesByGoodsId(goodsId); //查找数据库中Attribute
+        for (GoodsAttribute attribute : attributes) {
+            if (attribute.getGoodsId() == null) {//不存在添加attribute
+                attribute.setGoodsId(goodsId);
+                attribute.setDeleted(false);
+                attribute.setAddTime(date);
+                goodsAttributeMapper.insertSelective(attribute);
+            }
+            for (GoodsAttribute goodsAttribute : goodsAttributes) {
+                if (goodsAttribute.getId() != attribute.getId()) {//返回数据中未存在的id代表删除
+                    goodsAttributeMapper.updateAttributeDeleted(goodsId, date);
+                } else {//已存在，更新attribute
+                    attribute.setUpdateTime(date);
+                    goodsAttributeMapper.updateByPrimaryKeySelective(attribute);
+                }
+            }
+        }
+        //根据["1.5m床垫*1+枕头*2","浅杏粉"]和goodsId找到对应product更新
+        List<GoodsProduct> products = goodsEditVo.getProducts();
+        for (GoodsProduct product : products) {
+            product.setUpdateTime(date);
+            product.setGoodsId(goodsId);
+            product.setUrl(myFileConfig.parsePicUrl(product.getUrl()));//去除图片Url前缀
+            goodsProductMapper.updateProductBySpecAndGoodsId(product);
+        }
+        //逻辑判断
         return "success";
     }
 
