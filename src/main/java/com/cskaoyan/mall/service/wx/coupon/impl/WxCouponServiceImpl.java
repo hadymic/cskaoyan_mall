@@ -66,7 +66,12 @@ public class WxCouponServiceImpl implements WxCouponService {
 
     @Override
     public int receiveCoupon(Integer couponId) {
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         Coupon coupon = couponMapper.selectByPrimaryKey(couponId);
+        List<CouponUser> couponUsers = couponUserMapper.queryCouponUsers(couponId, 0, userId);
+        if (couponUsers.size() >= coupon.getLimit()) {
+            return 1;
+        }
         if (coupon.getTotal() == 0) {
             return 1;
         }
