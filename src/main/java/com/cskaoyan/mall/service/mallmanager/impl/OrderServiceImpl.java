@@ -232,6 +232,7 @@ public class OrderServiceImpl implements OrderService {
                 groupon.setOrderId(order.getId());
                 groupon.setRulesId(submitVo.getGrouponRulesId());
                 groupon.setUserId(userId);
+                groupon.setCreatorUserId(userId);
                 groupon.setAddTime(new Date());
                 groupon.setUpdateTime(new Date());
                 groupon.setPayed(false);

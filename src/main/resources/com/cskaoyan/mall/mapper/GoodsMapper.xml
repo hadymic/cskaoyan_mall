@@ -54,7 +54,7 @@
         from cskaoyan_mall_goods
         <where>
             deleted = 0
-            <if test="goods.goodsSn != null">
+            <if test="goods.goodsSn != null &amp; goods.goodsSn != ''">
                 and goods_sn = #{goods.goodsSn}
             </if>
             <if test="goods.name != null">
