@@ -19,12 +19,17 @@ import java.util.List;
 public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     FeedbackMapper feedbackMapper;
+
     @Override
-    public ListBean getFeedbackList(Page utipage,String id,String username) {
+    public ListBean getFeedbackList(Page utipage, String id, String username) {
         PageHelper.startPage(utipage.getPage(), utipage.getLimit());
-        if (id=="") id = null;
-        if (username=="") username = null;
-        List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id,username);
+        if (id == "") id = null;
+        if (username == "") username = null;
+        List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id, username);
+        for (Feedback feedback : feedbackList) {
+            feedback.setPicUrls(UrlUtils.CheckListUrls(feedback.getPicUrls(), true));
+        }
+        //hjl， 增加图片前缀
         return PageUtils.page(feedbackList);
     }
 }
