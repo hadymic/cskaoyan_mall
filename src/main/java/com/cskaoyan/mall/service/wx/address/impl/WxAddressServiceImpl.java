@@ -5,6 +5,7 @@ import com.cskaoyan.mall.mapper.RegionMapper;
 import com.cskaoyan.mall.service.wx.address.WxAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 @Component

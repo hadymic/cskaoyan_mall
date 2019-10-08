@@ -86,11 +86,12 @@ public class AddressServerImpl implements AddressService {
     //servicec层关于删除地址(隐藏地址)的代码
     private void getAddressCode(Address address){
         //获得省份编码
-        address.setProvinceId(regionMapper.selectByPrimaryKey(address.getProvinceId()).getCode());
+        Region region = regionMapper.selectByIdKey(address.getProvinceId());
+        address.setProvinceId(region.getCode());
         //获得城市编码
-        address.setCityId(regionMapper.selectByPrimaryKey(address.getCityId()).getCode());
+        address.setCityId(regionMapper.selectByIdKey(address.getCityId()).getCode());
         //获得地区编码
-        address.setAreaId(regionMapper.selectByPrimaryKey(address.getAreaId()).getCode());
+        address.setAreaId(regionMapper.selectByIdKey(address.getAreaId()).getCode());
         //更新时间
         address.setUpdateTime(new Date());
     }
