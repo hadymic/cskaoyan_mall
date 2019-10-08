@@ -29,6 +29,25 @@ public class Category {
 
     private Boolean deleted;
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", desc='" + desc + '\'' +
+                ", pid=" + pid +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", level='" + level + '\'' +
+                ", sortOrder=" + sortOrder +
+                ", addTime=" + addTime +
+                ", updateTime=" + updateTime +
+                ", deleted=" + deleted +
+                ", children=" + children +
+                '}';
+    }
+
     private List<Category> children;
 
     public List<Category> getChildren() {
