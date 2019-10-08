@@ -45,6 +45,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     CommentMapper commentMapper;
     @Autowired
     FootprintMapper footprintMapper;
+    @Autowired
+    CollectMapper collectMapper;
 
 
     /**
@@ -113,9 +115,11 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         //浏览历史,添加足迹到footprint表
         Date date = new Date();
         Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
-        int count = footprintMapper.selectByIntUserIdAndGoodsId(userId,id);
-        if (count<1){
-            footprintMapper.insertSelective(new Footprint(userId,id,date,date,false));
+        if (userId != null) {
+            int count = footprintMapper.selectByIntUserIdAndGoodsId(userId, id);
+            if (count < 1) {
+                footprintMapper.insertSelective(new Footprint(userId, id, date, date, false));
+            }
         }
         WxGoodsDetailVo wxGoodsDetailVo = new WxGoodsDetailVo();
         List<GoodsSpecification> specifications = goodsSpecificationMapper.selectSpecificationsByGoodsId(id);
@@ -142,8 +146,12 @@ public class WxGoodsServiceImpl implements WxGoodsService {
 
         List<Issue> issue = issueMapper.selectAllIssues();
         wxGoodsDetailVo.setIssue(issue);
-
-        wxGoodsDetailVo.setUserHasCollect(false);
+        //查找该用户是否收藏商品,type=0商品，type=1专题收藏
+        if (collectMapper.selectCollectByUserIdValueId(userId, id, 0) > 0) {
+            wxGoodsDetailVo.setUserHasCollect(true);
+        } else {
+            wxGoodsDetailVo.setUserHasCollect(false);
+        }
         //查找商品评论
         List<Comment> commentList = commentMapper.selectCommentByGoodsId(id);
         int size = commentList.size();//总评论数

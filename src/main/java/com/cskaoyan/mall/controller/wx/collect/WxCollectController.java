@@ -4,6 +4,7 @@ import com.cskaoyan.mall.bean.Collect;
 import com.cskaoyan.mall.service.wx.collect.CollectService;
 import com.cskaoyan.mall.util.Page;
 import com.cskaoyan.mall.vo.BaseRespVo;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,13 @@ public class WxCollectController {
 
     @RequestMapping("addordelete")
     public BaseRespVo addordelete(@RequestBody Collect collect) {
-        int id = 1;
+        Integer id = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         return BaseRespVo.success(collectService.insertOrDelete(id,collect));
     }
 
     @RequestMapping("list")
     public BaseRespVo collectList(Page page, Integer type){
-        int userId = 1;
+        Integer userId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("userId");
         return BaseRespVo.success(collectService.queryCollectList(page,userId,type));
     }
 }

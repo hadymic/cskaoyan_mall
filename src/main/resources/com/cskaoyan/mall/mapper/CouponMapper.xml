@@ -359,10 +359,9 @@
   </insert>
 
 
-    <select id="showByStatus"  resultMap="BaseResultMap">
+    <select id="showByStatus"  resultType="com.cskaoyan.mall.vo.wx.coupon.WxCouponVo">
         select
-        <include refid="Base_Column_List"/>
-        from cskaoyan_mall_coupon where status=#{status}
-
+   c.desc, c.discount, c.end_time  as endTime,c.id,c.min,c.name,c.start_time  as  startTime,c.tag    from   cskaoyan_mall_coupon c
+    left  join  cskaoyan_mall_coupon_user u on  c.id=u.coupon_id   where   u.status=#{status}
     </select>
 </mapper>

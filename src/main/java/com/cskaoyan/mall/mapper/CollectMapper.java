@@ -19,11 +19,12 @@ public interface CollectMapper {
 
     int updateByPrimaryKey(Collect record);
 
-    List<Collect> selectByTwoId(@Param("userId")String userid,
-                                @Param("valueId")String valueId);
+    List<Collect> selectByTwoId(@Param("userId") String userid,
+                                @Param("valueId") String valueId);
 
     /**
      * 查询是否收藏过
+     *
      * @param userId
      * @param collect
      * @return
@@ -31,10 +32,14 @@ public interface CollectMapper {
     Collect queryForUpdate(@Param("userId") Integer userId, @Param("collect") Collect collect);
 
     /**
-     *返回collect的list
+     * 返回collect的list
+     *
      * @param userId
      * @param type
      * @return
      */
     List<CollectDetail> queryCollectList(int userId, Integer type);
+
+    //查找该用户是否收藏
+    int selectCollectByUserIdValueId(@Param("userId") Integer userId,@Param("valueId") int valueId,@Param("type") int type);
 }

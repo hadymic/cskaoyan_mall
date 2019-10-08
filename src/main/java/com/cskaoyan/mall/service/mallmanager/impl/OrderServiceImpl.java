@@ -1,6 +1,5 @@
 package com.cskaoyan.mall.service.mallmanager.impl;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.cskaoyan.mall.bean.*;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.mallmanager.OrderService;
@@ -35,6 +34,10 @@ public class OrderServiceImpl implements OrderService {
     GrouponRulesMapper grouponRulesMapper;
     @Autowired
     GoodsProductMapper goodsProductMapper;
+    @Autowired
+    GrouponMapper grouponMapper;
+    @Autowired
+    SystemMapper systemMapper;
 
     @Override
     public ListBean<Order> queryOrderList(Page page, Integer userId, String orderSn, Integer[] orderStatusArray) {
@@ -72,6 +75,16 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setId(refundVo.getOrderId());
         order.setOrderStatus((short) 203);
+        List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsForPay(refundVo.getOrderId());
+        for (OrderGoods orderGoods : orderGoodsList) {
+            GoodsProduct goodsProduct = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
+            goodsProduct.setNumber(goodsProduct.getNumber() + orderGoods.getNumber());
+            goodsProduct.setUpdateTime(new Date());
+            goodsProductMapper.updateByPrimaryKey(goodsProduct);
+        }
+        int unconfirm = Integer.parseInt(systemMapper.selectByKeyName("cskaoyan_mall_order_unconfirm"));
+        Date endDay = TimeUtils.getEndDay(unconfirm);
+        order.setEndTime(endDay);
         order.setUpdateTime(new Date());
         orderMapper.updateByPrimaryKeySelective(order);
         return order;
@@ -85,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
         for (UserOrdersVo userOrdersVo : pageInfo.getList()) {
             List<UserOrderGoods> goodsList = orderGoodsMapper.queryOrderGoodsList(userOrdersVo.getId());
             userOrdersVo.setGoodsList(goodsList);
-            HandleOption handleOption = HandleOption.get(userOrdersVo.getOrderStatus(), goodsList.get(0).getComment() == 0);
+            HandleOption handleOption = HandleOption.get(userOrdersVo.getOrderStatus(), userOrdersVo.getComments() != 0);
             userOrdersVo.setHandleOption(handleOption);
             userOrdersVo.setOrderStatusText(handleOption.getStatusText());
             userOrdersVo.setIsGroupin(userOrdersVo.getGroupon() != null);
@@ -97,49 +110,58 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Map queryUserOrderInfo(Integer orderId) {
         Map<String, Object> map = new HashMap<>(2);
-        List<OrderGoods> orderGoods = orderGoodsMapper.queryOrderGoodsByOrderId(orderId);
+        List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsByOrderId(orderId);
         OrderInfo orderInfo = orderMapper.queryOrderInfo(orderId);
-        if (orderInfo.getEndTime().getTime() < System.currentTimeMillis()){
-            for (OrderGoods orderGood : orderGoods) {
-                if (orderGood.getComment() == 0) {
-                    orderGood.setComment(-1);
-                    OrderGoods orderGoods1 = new OrderGoods();
-                    orderGoods1.setId(orderGood.getId());
-                    orderGoods1.setComment(-1);
-                    orderGoods1.setUpdateTime(new Date());
-                    orderGoodsMapper.updateByPrimaryKeySelective(orderGoods1);
-                }
-            }
+
+        boolean comment = true;
+        if(judgeTimeFromOrderInfo(orderInfo)){
+            comment = false;
         }
-        HandleOption handleOption = HandleOption.get(orderInfo.getOrderStatus(), orderGoods.get(0).getComment() == 0);
+        HandleOption handleOption = HandleOption.get(orderInfo.getOrderStatus(), comment);
         orderInfo.setHandleOption(handleOption);
         orderInfo.setOrderStatusText(handleOption.getStatusText());
-        map.put("orderGoods", orderGoods);
+        if (orderInfo.getOrderStatus() == 301) {
+            ExpressInfo expressInfo = orderMapper.queryExpressInfo(orderId);
+            map.put("expressInfo",expressInfo);
+        }
+        map.put("orderGoods", orderGoodsList);
         map.put("orderInfo", orderInfo);
         return map;
     }
 
     @Override
     public Map insertOrder(int userId, SubmitVo submitVo) {
-        List<Cart> carts = cartMapper.queryByUserId(userId, true);
-        int i = cartMapper.deleteByUserId(userId, true);
+        List<Cart> carts = new ArrayList<>();
+        if (submitVo.getCartId() == 0) {
+            carts = cartMapper.queryByUserId(userId,true);
+            int i = cartMapper.deleteByUserId(userId, true);
+        } else {
+            Cart cart = cartMapper.selectByPrimaryKey(submitVo.getCartId());
+            carts.add(cart);
+            cart.setDeleted(true);
+            cartMapper.updateByPrimaryKey(cart);
+        }
+
         Address address1 = addressMapper.selectAddressById(submitVo.getAddressId());
         Order order = new Order();
         order.setUserId(userId);
         // year + month + day + random
-        order.setOrderSn("" + 20191008 + RandomUtils.getRandom(6));
+        String dateString = TimeUtils.getDateString(new Date());
+        order.setOrderSn(dateString + RandomUtils.getRandom(6));
         order.setOrderStatus((short)101);
         order.setConsignee(address1.getName());
         order.setMobile(address1.getMobile());
         order.setAddress(address1.getOrderAddress());
         order.setMessage(submitVo.getMessage());
         BigDecimal goodsPrice = BigDecimal.ZERO;
+        Short comments = 0;
         for (Cart cart : carts) {
-            BigDecimal num = new BigDecimal(cart.getNumber());
-            BigDecimal totalPrice = cart.getPrice().multiply(num);
+            BigDecimal totalPrice = cart.getPrice().multiply(new BigDecimal(cart.getNumber()));
             goodsPrice = goodsPrice.add(totalPrice);
+            comments = (short) (comments + cart.getNumber());
         }
         order.setGoodsPrice(goodsPrice);
+        order.setComments(comments);
         BigDecimal freightPrice = new BigDecimal(10);
         order.setFreightPrice(freightPrice);
         BigDecimal couponPrice = BigDecimal.ZERO;
@@ -161,13 +183,13 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal orderPrice = goodsPrice.add(freightPrice).subtract(couponPrice);
         order.setOrderPrice(orderPrice);
         order.setActualPrice(orderPrice.subtract(integralPrice));
-        order.setPayId("" + 20191008 + RandomUtils.getRandom(6));
+
         order.setAddTime(new Date());
         order.setUpdateTime(new Date());
-        Calendar curr = Calendar.getInstance();
-        curr.set(Calendar.YEAR,curr.get(Calendar.YEAR)+1);
-        Date date = curr.getTime();
-        order.setEndTime(date);
+        int unpaid = Integer.parseInt(systemMapper.selectByKeyName("cskaoyan_mall_order_unpaid"));
+        Date endMinutes = TimeUtils.getEndMinutes(unpaid);
+        order.setEndTime(endMinutes);
+
         order.setDeleted(false);
         orderMapper.insertSelective(order);
         Map<String, Integer> data = new HashMap<>(1);
@@ -188,23 +210,48 @@ public class OrderServiceImpl implements OrderService {
             orderGoods.setDeleted(false);
             orderGoodsMapper.insert(orderGoods);
         }
-        data.put("orderId", order.getId());
+        List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsForPay(order.getId());
+        boolean flag = true;
+        for (OrderGoods orderGoods : orderGoodsList) {
+            GoodsProduct goodsProduct = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
+            int num = goodsProduct.getNumber() - orderGoods.getNumber();
+            if (num < 0) {
+                flag = false;
+            }
+        }
+        if (flag) {
+            for (OrderGoods orderGoods : orderGoodsList) {
+                GoodsProduct goodsProduct = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
+                goodsProduct.setNumber(goodsProduct.getNumber() - orderGoods.getNumber());
+                goodsProduct.setUpdateTime(new Date());
+                goodsProductMapper.updateByPrimaryKey(goodsProduct);
+            }
+
+            if (submitVo.getGrouponRulesId() != 0) {
+                Groupon groupon = new Groupon();
+                groupon.setOrderId(order.getId());
+                groupon.setRulesId(submitVo.getGrouponRulesId());
+                groupon.setUserId(userId);
+                groupon.setAddTime(new Date());
+                groupon.setUpdateTime(new Date());
+                groupon.setPayed(false);
+                groupon.setDeleted(false);
+                grouponMapper.insert(groupon);
+                grouponMapper.updateGrouponId(groupon.getId());
+            }
+            data.put("orderId", order.getId());
+        } else {
+            data = null;
+        }
         return data;
     }
 
     @Override
     public int updateOrderPrepay(Integer orderId) {
-        Order order = new Order();
-        order.setId(orderId);
+        Order order = orderMapper.selectByPrimaryKey(orderId);
         order.setOrderStatus((short) 201);
-        List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsForPay(orderId);
-        for (OrderGoods orderGoods : orderGoodsList) {
-            orderGoods.setUpdateTime(new Date());
-            GoodsProduct goodsProduct = new GoodsProduct();
-            goodsProduct.setId(orderGoods.getProductId());
-            goodsProduct.setNumber((int) orderGoods.getNumber());
-            goodsProductMapper.updateByPrimaryKeySelective(goodsProduct);
-        }
+        String dateString = TimeUtils.getDateString(new Date());
+        order.setPayId(dateString + RandomUtils.getRandom(6));
         order.setPayTime(new Date());
         order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
@@ -214,7 +261,15 @@ public class OrderServiceImpl implements OrderService {
     public int updateOrderCancel(Integer orderId) {
         Order order = new Order();
         order.setId(orderId);
+        List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsForPay(orderId);
+        for (OrderGoods orderGoods : orderGoodsList) {
+            GoodsProduct goodsProduct = goodsProductMapper.selectByPrimaryKey(orderGoods.getProductId());
+            goodsProduct.setNumber(goodsProduct.getNumber() + orderGoods.getNumber());
+            goodsProduct.setUpdateTime(new Date());
+            goodsProductMapper.updateByPrimaryKey(goodsProduct);
+        }
         order.setOrderStatus((short)102);
+        order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -223,6 +278,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setId(orderId);
         order.setOrderStatus((short)202);
+        order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -231,6 +287,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setId(orderId);
         order.setDeleted(true);
+        order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -239,11 +296,40 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setId(orderId);
         order.setOrderStatus((short)401);
+        int comment = Integer.parseInt(systemMapper.selectByKeyName("cskaoyan_mall_order_comment"));
+        Date endDay = TimeUtils.getEndDay(comment);
+        order.setEndTime(endDay);
+        order.setUpdateTime(new Date());
         return orderMapper.updateByPrimaryKeySelective(order);
     }
 
     @Override
     public OrderGoods queryOrderGoods(Integer orderId, Integer goodsId) {
         return orderGoodsMapper.queryOrderGoods(orderId, goodsId);
+    }
+
+
+    private boolean judgeTimeFromOrderInfo(OrderInfo orderInfo){
+        if (orderInfo.getComments() == 0){
+            return true;
+        }
+        if (orderInfo.getEndTime().getTime() > System.currentTimeMillis()){
+            return false;
+        } else {
+            List<OrderGoods> orderGoodsList = orderGoodsMapper.queryOrderGoodsByOrderId(orderInfo.getId());
+            for (OrderGoods orderGoods : orderGoodsList) {
+                if (orderGoods.getComment() == 0) {
+                    orderGoods.setComment(-1);
+                    orderGoods.setUpdateTime(new Date());
+                    orderGoodsMapper.updateByPrimaryKeySelective(orderGoods);
+                }
+            }
+            Order order = new Order();
+            order.setId(orderInfo.getId());
+            order.setComments((short)0);
+            order.setUpdateTime(new Date());
+            orderMapper.updateByPrimaryKeySelective(order);
+            return true;
+        }
     }
 }

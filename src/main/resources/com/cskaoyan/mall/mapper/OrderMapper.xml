@@ -374,8 +374,8 @@
         select count(id) from cskaoyan_mall_order where deleted = 0
   </select>
 
-  <select id="queryUserOrdersNumber" resultType="java.lang.Integer">
-        select count(id) from cskaoyan_mall_order where user_id = #{id} and order_status = #{status}
+  <select id="queryUserOrdersNumber" resultMap="BaseResultMap">
+    select id, order_status, comments, end_time from cskaoyan_mall_order where user_id = #{id} and deleted = 0
   </select>
 
   <resultMap id="UserOrderMap" type="com.cskaoyan.mall.vo.ordermanagement.UserOrdersVo">
@@ -383,12 +383,13 @@
     <result column="order_sn" property="orderSn" />
     <result column="order_status" property="orderStatus" />
     <result column="actual_price" property="actualPrice"/>
+    <result column="comments" jdbcType="SMALLINT" property="comments" />
     <association property="groupon" javaType="com.cskaoyan.mall.bean.Groupon">
       <result column="grouponId" property="id"/>
     </association>
   </resultMap>
   <select id="queryUserOrders" resultMap="UserOrderMap">
-    select o.id, o.order_sn, o.order_status, o.actual_price, g.id as grouponId from cskaoyan_mall_order o
+    select o.id, o.order_sn, o.order_status, o.actual_price, comments,g.id as grouponId from cskaoyan_mall_order o
     left join (select id,order_id from cskaoyan_mall_groupon where deleted = 0) g on o.id = g.order_id
     where o.deleted = 0 and o.user_id = #{userId}
     <if test="showType == 1">
@@ -401,7 +402,7 @@
         and order_status = 301
     </if>
     <if test="showType == 4">
-        and order_status = 401 or order_status = 402
+        and (order_status = 401 or order_status = 402) and comments > 0
     </if>
   </select>
 
@@ -418,10 +419,26 @@
     <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="comments" jdbcType="SMALLINT" property="comments" />
   </resultMap>
   <select id="queryOrderInfo" resultMap="OrderInfoMap">
-    select id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_price, actual_price, add_time, end_time
+    select id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_price, actual_price, add_time, end_time,comments
     from cskaoyan_mall_order
     where id = #{id} and deleted = 0
+  </select>
+
+  <resultMap id="ExpressInfoMap" type="com.cskaoyan.mall.vo.ordermanagement.ExpressInfo">
+    <result column="ship_sn" jdbcType="VARCHAR" property="logisticCode" />
+    <result column="ship_channel" jdbcType="VARCHAR" property="shipperName" />
+    <result column="ship_time" jdbcType="TIMESTAMP" property="shipTime" />
+  </resultMap>
+  <select id="queryExpressInfo" resultMap="ExpressInfoMap">
+    select ship_sn,ship_channel,ship_time
+    from cskaoyan_mall_order
+    where id = #{id} and deleted = 0
+  </select>
+
+  <select id="queryOrderComments" resultType="com.cskaoyan.mall.bean.Order">
+    select id, comments from cskaoyan_mall_order where id = #{id} and deleted = 0 and (order_status = 401 or order_status = 402)
   </select>
 </mapper>

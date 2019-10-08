@@ -19,6 +19,7 @@ public class UserOrdersVo {
     private BigDecimal actualPrice;
     private List<UserOrderGoods> goodsList;
     private HandleOption handleOption;
+    private Short comments;
 
     public Groupon getGroupon() {
         return groupon;
@@ -90,5 +91,13 @@ public class UserOrdersVo {
 
     public void setHandleOption(HandleOption handleOption) {
         this.handleOption = handleOption;
+    }
+
+    public Short getComments() {
+        return comments;
+    }
+
+    public void setComments(Short comments) {
+        this.comments = comments;
     }
 }
