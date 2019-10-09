@@ -15,7 +15,7 @@
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_goods_specification
-    where goods_id = #{goodsId,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER} and deleted = 0
   </select>
   <update id="updateSpecificationDeleted">
     update cskaoyan_mall_goods_specification set deleted =1,update_time=#{date}

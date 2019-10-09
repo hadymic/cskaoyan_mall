@@ -86,8 +86,8 @@ public class AuthController {
     public BaseRespVo logout() {
         /*认证的逻辑*/
         Subject subject = SecurityUtils.getSubject();
-        subject.logout();
         logService.log(1, "退出", true);
+        subject.logout();
         return BaseRespVo.success(null);
     }
 }

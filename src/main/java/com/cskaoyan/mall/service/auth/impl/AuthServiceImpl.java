@@ -161,6 +161,13 @@ public class AuthServiceImpl implements AuthService {
             couponUser.setUserId(user.getId());
             couponUser.setStatus((short) 0);
             couponUser.setAddTime(date);
+            couponUser.setStartTime(date);
+            Date date1 = new Date();
+            Calendar cl = Calendar.getInstance();
+            cl.setTime(date1);
+            cl.add(Calendar.DATE, 5);
+            Date time = cl.getTime();
+            couponUser.setEndTime(time);
             couponUser.setDeleted(false);
             couponUserMapper.insertSelective(couponUser);
             SecurityUtils.getSubject().getSession().setAttribute("userId", user.getId());

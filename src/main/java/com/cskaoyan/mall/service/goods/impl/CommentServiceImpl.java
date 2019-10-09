@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     public int insertComment(Comment comment, int userId) {
         OrderGoods orderGoods = orderGoodsMapper.selectByPrimaryKey(comment.getOrderGoodsId());
         comment.setValueId(orderGoods.getGoodsId());
-        comment.setType((byte) 3);
+        comment.setType((byte) 0);
         comment.setUserId(userId);
         comment.setAddTime(new Date());
         comment.setUpdateTime(new Date());

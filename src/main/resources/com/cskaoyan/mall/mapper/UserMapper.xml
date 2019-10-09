@@ -29,9 +29,10 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectUsersByDay" resultType="com.cskaoyan.mall.vo.statisticalform.StatUserVo">
-    select birthday as `day`,count(birthday) as users
+    select add_time as `day`,count(add_time) as users
     from cskaoyan_mall_user
-    group by birthday;
+    group by add_time
+    order by add_time
   </select>
   <select id="selectWxGroupVoById" resultType="com.cskaoyan.mall.vo.wx.groupon.WxMyGroupVo">
     select mg.groupon_id as id,mu.nickname as creator,mg.user_id as userId,

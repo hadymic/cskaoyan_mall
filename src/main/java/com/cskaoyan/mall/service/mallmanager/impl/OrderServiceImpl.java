@@ -164,7 +164,11 @@ public class OrderServiceImpl implements OrderService {
         }
         order.setGoodsPrice(goodsPrice);
         order.setComments(comments);
-        BigDecimal freightPrice = new BigDecimal(10);
+        BigDecimal freightPrice = BigDecimal.ZERO;
+        BigDecimal freightMinPrice = BigDecimal.valueOf(Double.parseDouble(systemMapper.selectByKeyName("cskaoyan_mall_express_freight_min")));
+        if (goodsPrice.compareTo(freightMinPrice) < 0) {
+            freightPrice = BigDecimal.valueOf(Double.parseDouble(systemMapper.selectByKeyName("cskaoyan_mall_express_freight_value")));
+        }
         order.setFreightPrice(freightPrice);
         BigDecimal couponPrice = BigDecimal.ZERO;
         if (submitVo.getCouponId() != 0 && submitVo.getCouponId() != -1) {

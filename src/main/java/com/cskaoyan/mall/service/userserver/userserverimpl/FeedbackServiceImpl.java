@@ -26,9 +26,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         if (id == "") id = null;
         if (username == "") username = null;
         List<Feedback> feedbackList = feedbackMapper.selectByUsernameAndId(id, username);
-        for (Feedback feedback : feedbackList) {
-            feedback.setPicUrls(UrlUtils.CheckListUrls(feedback.getPicUrls(), true));
-        }
         //hjl， 增加图片前缀
         return PageUtils.page(feedbackList);
     }

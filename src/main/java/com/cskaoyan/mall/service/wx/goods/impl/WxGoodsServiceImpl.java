@@ -1,6 +1,7 @@
 package com.cskaoyan.mall.service.wx.goods.impl;
 
 import com.cskaoyan.mall.bean.*;
+import com.cskaoyan.mall.config.MyFileConfig;
 import com.cskaoyan.mall.mapper.*;
 import com.cskaoyan.mall.service.wx.goods.WxGoodsService;
 import com.cskaoyan.mall.util.Page;
@@ -47,6 +48,8 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     FootprintMapper footprintMapper;
     @Autowired
     CollectMapper collectMapper;
+    @Autowired
+    MyFileConfig myFileConfig;
 
 
     /**
@@ -177,6 +180,9 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     public GoodsByCategory PageGoodsByCategory(Page page, Goods goods) {
         //还要处理热卖，新品，关键字搜索..........全部使用一个sql处理
         List<Goods> goodsList = goodsMapper.selectNeedGoods(goods);
+        for (Goods goods1 : goodsList) {
+            goods1.setPicUrl(myFileConfig.addPicUrl(goods1.getPicUrl()));
+        }
         List<Category> filterCategoryList = new ArrayList<>();
         //goodsList = goodsMapper.selectGoodsListByCategoryId(goods.getCategoryId());
         int count = goodsList.size();

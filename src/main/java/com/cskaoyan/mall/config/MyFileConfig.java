@@ -85,6 +85,9 @@ public class MyFileConfig {
         if (StringUtils.isEmpty(url)) {
             return null;
         }
+        if (url.startsWith("http")){
+            return url;
+        }
         if (url.contains("yanxuan.nosdn.127.net/")) {
             return url;
         }

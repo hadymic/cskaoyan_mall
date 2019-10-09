@@ -31,6 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 获取所有的商品详细信息
+     *
      * @return
      */
     @Override
@@ -41,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
             List<Category> children = category.getChildren();
             for (int i = 0; i < children.size(); i++) {
                 Category newCategory = checkUrl(children.get(i));
-                if (!newCategory.toString().equals(children.get(i).toString())){
+                if (!newCategory.toString().equals(children.get(i).toString())) {
                     children.set(i, newCategory);
                 }
             }
@@ -54,11 +55,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 为需要添加url头的数据进行添加
-     * @return
+     *
      * @param category
+     * @return
      */
     private Category checkUrl(Category category) {
-        if (!category.getIconUrl().startsWith("http")){
+        if (!category.getIconUrl().startsWith("http")) {
             category.setIconUrl(myFileConfig.addPicUrl(category.getIconUrl()));
         }
         if (!category.getPicUrl().startsWith("http")) {
@@ -69,6 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 获取L1级别的类目信息
+     *
      * @return
      */
     @Override
@@ -83,13 +86,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 修改选定的商品或商品类目
+     *
      * @param category
      * @return
      */
     @Override
     public int update(Category category) {
-        if (category.getPid() == 0 || category.getPicUrl() == null || category.getIconUrl() == null) {
-            return 0;
+        if (category.getLevel().equalsIgnoreCase("l2")) {
+            if (category.getPid() == 0 || category.getPicUrl() == null || category.getIconUrl() == null) {
+                return 0;
+            }
         }
         return categoryMapper.updateByPrimaryKey(category);
     }
@@ -97,6 +103,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 在库中删除选定的商品类目
      * 库中deleted被修改为1，代表删除
+     *
      * @param category
      */
     @Override
@@ -110,16 +117,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 增加商品
+     *
      * @param category
      * @return
      */
     @Override
     public Category create(Category category) {
-        if (category.getLevel().equalsIgnoreCase("l2") && category.getPid() == 0){
+        if (category.getLevel().equalsIgnoreCase("l2") && category.getPid() == 0) {
             return null;
         }
         if (category.getPicUrl() == null || category.getIconUrl() == null ||
-            category.getKeywords() == null || category.getDesc() == null){
+                category.getKeywords() == null || category.getDesc() == null) {
             return null;
         }
 
@@ -142,7 +150,7 @@ public class CategoryServiceImpl implements CategoryService {
         for (FloorGoodsVo floorGoods : floorGoodsList) {
             List<Goods> goodsList = categoryMapper.selectFloorGoodsList(floorGoodsListSize, floorGoods.getId());
             for (Goods goods : goodsList) {
-                if (!goods.getPicUrl().startsWith("http")){
+                if (!goods.getPicUrl().startsWith("http")) {
                     goods.setPicUrl(myFileConfig.addPicUrl(goods.getPicUrl()));
                 }
             }
